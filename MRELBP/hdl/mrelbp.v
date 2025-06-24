@@ -36,10 +36,11 @@ module mrelbp (
     reg [1:0] current_state, next_state;
 
     wire start = control_reg_i[0];
+    wire reset_reg_cfg = ~control_reg_i[1];
    
 
     always @(posedge clk) begin
-        if(~rst_n) begin
+        if(~(reset_reg_cfg & rst_n)) begin
             current_state <= IP_IDLE;
         end else begin
             current_state <= next_state;
@@ -76,7 +77,7 @@ module mrelbp (
     reg s_axis_tready_d;
     reg irq_d;
     always @(posedge clk) begin 
-        if(~rst_n) begin
+        if(~(reset_reg_cfg & rst_n)) begin
             s_axis_tready_d <= 0;
             irq_d <= 0;
         end else begin
@@ -93,7 +94,7 @@ module mrelbp (
     reg [8:0] IMG_SIZE_R;
     wire [8:0] IMG_SIZE;
     always @(posedge clk) begin 
-        if(~rst_n) begin
+        if(~(reset_reg_cfg & rst_n)) begin
             IMG_SIZE_R <= 0;
         end else begin
             IMG_SIZE_R <= IMG_SIZE;
@@ -109,7 +110,7 @@ module mrelbp (
     median_filter inst_median_filter
         (
             .clk               (clk),
-            .rst_n             (rst_n),
+            .rst_n             (reset_reg_cfg & rst_n),
             .s_axis_tdata      (s_axis_tdata),
             .s_axis_tvalid     (s_axis_tvalid),
             .s_axis_tready     (s_axis_tready),
@@ -135,7 +136,7 @@ module mrelbp (
     ci_top inst_ci_top
         (
             .clk            (clk),
-            .rst_n          (rst_n),
+            .rst_n          (reset_reg_cfg & rst_n),
             .IMG_SIZE_I     (IMG_SIZE_R),
             .m_3x3_i        (m_3x3),
             .m_3x3_valid_i  (m_3x3_valid),
@@ -157,7 +158,7 @@ module mrelbp (
     r2_nird inst_r2_nird
         (
             .clk               (clk),
-            .rst_n             (rst_n),
+            .rst_n             (reset_reg_cfg & rst_n),
             .m_3x3_i           (m_3x3),
             .m_3x3_valid_i     (m_3x3_valid),
             .IMG_SIZE_I        (IMG_SIZE_R),
@@ -176,7 +177,7 @@ module mrelbp (
         r4_nird inst_r4_nird
         (
             .clk           (clk),
-            .rst_n         (rst_n),
+            .rst_n         (reset_reg_cfg & rst_n),
             .IMG_SIZE_I    (IMG_SIZE_R),
             .m_3x3_i       (m_3x3),
             .m_3x3_valid_i (m_3x3_valid),
@@ -195,7 +196,7 @@ module mrelbp (
         r6_nird inst_r6_nird
         (
             .clk           (clk),
-            .rst_n         (rst_n),
+            .rst_n         (reset_reg_cfg & rst_n),
             .m_5x5_i       (m_5x5),
             .m_5x5_valid_i (m_5x5_valid),
             .m_7x7_i       (m_7x7),
@@ -215,7 +216,7 @@ module mrelbp (
         .CYCLE(8)
     ) inst_shift_cir2 (
         .clk(clk),
-        .rst_n(rst_n),
+        .rst_n(reset_reg_cfg & rst_n),
         .data_i(ci_r2),
         .data_o(ci_r2_d)
     );
@@ -224,7 +225,7 @@ module mrelbp (
         .CYCLE(8)
     ) inst_shift_cir2v (
         .clk(clk),
-        .rst_n(rst_n),
+        .rst_n(reset_reg_cfg & rst_n),
         .data_i(ci_r2_valid),
         .data_o(ci_r2_valid_d)
     );
@@ -233,7 +234,7 @@ module mrelbp (
       .CYCLE(18)
       ) inst_shift_cir4 (
           .clk(clk),
-          .rst_n(rst_n),
+          .rst_n(reset_reg_cfg & rst_n),
           .data_i(ci_r4),
           .data_o(ci_r4_d)
       );
@@ -242,7 +243,7 @@ module mrelbp (
       .CYCLE(18)
       ) inst_shift_cir4v (
           .clk(clk),
-          .rst_n(rst_n),
+          .rst_n(reset_reg_cfg & rst_n),
           .data_i(ci_r4_valid),
           .data_o(ci_r4_valid_d)
       );
@@ -251,7 +252,7 @@ module mrelbp (
       .CYCLE(40)
     ) inst_shift_cir6 (
       .clk(clk),
-      .rst_n(rst_n),
+      .rst_n(reset_reg_cfg & rst_n),
       .data_i(ci_r6),
       .data_o(ci_r6_d)
     );
@@ -260,7 +261,7 @@ module mrelbp (
       .CYCLE(40)
     ) inst_shift_cir6v (
       .clk(clk),
-      .rst_n(rst_n),
+      .rst_n(reset_reg_cfg & rst_n),
       .data_i(ci_r6_valid),
       .data_o(ci_r6_valid_d)
     );
@@ -274,8 +275,8 @@ module mrelbp (
     reg [1:0] jh_current_state, jh_next_state;
 
     always @(posedge clk) begin 
-        if(~rst_n) begin
-            jh_current_state <= 0;
+        if(~(reset_reg_cfg & rst_n)) begin
+            jh_current_state <= READ_IDLE;
         end else begin
             jh_current_state <= jh_next_state;
         end
@@ -327,7 +328,7 @@ module mrelbp (
     joint_histogram inst_joint_histogram_r2
         (
             .clk            (clk),
-            .rst_n          (rst_n),
+            .rst_n          (reset_reg_cfg & rst_n),
             .ci_i           (ci_r2_d),
             .ni_i           (r2_ni),
             .rd_i           (r2_rd),
@@ -345,7 +346,7 @@ module mrelbp (
     joint_histogram inst_joint_histogram_r4
         (
             .clk            (clk),
-            .rst_n          (rst_n),
+            .rst_n          (reset_reg_cfg & rst_n),
             .ci_i           (ci_r4_d),
             .ni_i           (r4_ni),
             .rd_i           (r4_rd),
@@ -363,7 +364,7 @@ module mrelbp (
     joint_histogram inst_joint_histogram_r6
         (
             .clk            (clk),
-            .rst_n          (rst_n),
+            .rst_n          (reset_reg_cfg & rst_n),
             .ci_i           (ci_r6_d),
             .ni_i           (r6_ni),
             .rd_i           (r6_rd),
@@ -380,7 +381,7 @@ module mrelbp (
     reg [31:0] tdata_d;
     assign tdata = (read_r2_r) ? cinird_r2 : (read_r4_r) ? cinird_r4 : (read_r6_r) ? cinird_r6 : 32'd0;
     always @(posedge clk) begin 
-        if(~rst_n) begin
+        if(~(reset_reg_cfg & rst_n)) begin
             tdata_d <= 0;
         end else begin
             tdata_d <= tdata;
@@ -394,7 +395,7 @@ module mrelbp (
     assign tvalid = (read_r2_r) ? cinird_r2_data_valid : (read_r4_r) ? cinird_r4_data_valid : (read_r6_r) ? cinird_r6_data_valid : 1'd0;
 
     always @(posedge clk) begin 
-        if(~rst_n) begin
+        if(~(reset_reg_cfg & rst_n)) begin
             tvalid_d <= 0;
         end else begin
             tvalid_d <= tvalid;

@@ -177,17 +177,35 @@ module axi4_lite (
     end
 
     assign start_pulse = reg_0_d[0];
+    assign reset_pulse = reg_0_d[1];
 
-    // Output assignment
+    reg reset_pulse_cnt;
+    reg reset_pulse_active;
+   
     always @(posedge clk) begin
         if (!rst_n) begin
             reg_0_d <= 32'd0;
+            reset_pulse_active <= 0;
+            reset_pulse_cnt <= 0;
+        end else if(reset_pulse & ~reset_pulse_active) begin
+            reset_pulse_active <= 1'b1;
+            reset_pulse_cnt <= reset_pulse_cnt + 1;
+        end else if(reset_pulse_active) begin
+            if(reset_pulse_cnt == 2'd1) begin
+                reg_0_d[1] <= 1'b0;
+                reset_pulse_active <= 1'b0;
+                reset_pulse_cnt <= 1'b0;
+            end else begin
+                reset_pulse_cnt <= reset_pulse_cnt + 1;
+            end
         end else if(start_pulse) begin
             reg_0_d[0] <= 1'b0;
         end else  begin
             reg_0_d <= reg_0;
         end
     end
+
+
     always @(posedge clk) begin 
         if(~rst_n) begin
             reg_1_d <= 0;
