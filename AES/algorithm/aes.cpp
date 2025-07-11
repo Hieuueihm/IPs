@@ -22,9 +22,9 @@ namespace AES {
 		}
 		if(this-> type_err != - 1) {
 			this->key = key;
+			this->prevCipherText = (byte*)calloc(32, sizeof(byte));
+			info("key: ");
 			info_hex_array(this->key, 16);
-
-
 		}
 
 	}
@@ -227,18 +227,24 @@ namespace AES {
 
 	}
 
-	int8_t AES::cipher(bytes input, bytes output){	
-		if(this->type_err == -1){
-			return -1;
-		}
+	bytes AES::cipher(bytes input){	
+	
 		this->keyExpansion();
 
-		// add round key
 		byte b[4 * (this->Nk)];
 		for(int i = 0; i < (4 * this->Nk); i++){
 			b[i] = input[i];
 		}
+		info("first ");
+		info_hex_array(this->prevCipherText, 16);
+		if(mode == AES_CBC){
+			info("ecb mode");
+			for(int i = 0; i < (4 * this->Nk); i++){
+				b[i] = b[i] ^ this->prevCipherText[i];
+			}
+		}
 
+		// add round key
 		this->addRoundKey(0, (4 * this->Nk), b, 0);
 
 		// info_hex_array(b, 16);
@@ -270,13 +276,45 @@ namespace AES {
 
 		// add round key
 		addRoundKey(i * (4 * this->Nk), ((i * (4 * this->Nk)) + (4 * this->Nk)), b, i);
+		info("Cipher Text: ");
 		info_hex_array(b, 16);
-
-
-
-
-		return 0;
+		if(mode == AES_CBC){
+			memcpy(this->prevCipherText, b, 4 * this->Nk);
+			// info_hex_array(this->prevCipherText, 16);
+		}
+		bytes output = (byte*)malloc(4 * this->Nk);
+		memcpy(output, b, 4 * this->Nk);
+		return output;
 	}
 
+
+	void AES::setMode(AES_MODE mode){
+		assert(mode == AES_ECB || mode == AES_CBC || mode == AES_CFB || mode == AES_OFB || mode == AES_CTR);
+		this->mode = mode;
+	}
+	void AES::setInitVector(byte initVec[]){
+		this->iv = initVec;
+		info("Init vector: ");
+		info_hex_array(this->iv, 16);
+	}
+
+	int8_t AES::encrypt(bytes input, bytes * output){
+	
+		if(this->type_err == -1){
+			return -1;
+		}
+		if(this->mode == AES_CBC){
+			info("input: ");
+			info_hex_array(input, 16);
+			for(int i = 0; i < (4 * this->Nk); i++){
+				input[i] = input[i] ^ this->iv[i];
+			}
+		}
+
+		bytes x = this->cipher(input);
+		// this->cipher(x);
+		// info_hex_array(x, 16);
+		return 0;
+	}
 
 }

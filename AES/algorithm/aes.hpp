@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <array>
 #include <iomanip> 
+#include <assert.h>
+#include <cstring>
 #define warning(message) {std::cout << "\033[33m[WARNING]\033[0m " << message << std::endl;}
 #define info(message) {  std::cout << "\033[34m[INFO]\033[0m " << message << std::endl;}
 #define error(message) {    std::cout << "\033[31m[ERROR]\033[0m " << message << std::endl;}
@@ -132,7 +134,14 @@ static const unsigned char mixMatrix[4][4] = {
 
 typedef unsigned char* bytes;
 typedef unsigned char byte;
-
+enum AES_MODE
+{ 
+    AES_ECB,
+    AES_CBC,
+    AES_CFB,
+    AES_OFB,
+    AES_CTR
+};
 namespace AES{
 
 class AES{
@@ -140,15 +149,22 @@ private:
 	int Nk;
 	int Nr;
 	int type_err = 0;
+    int mode = AES_ECB;
+    bytes prevCipherText;
+
 
 	bytes key;
 	byte w[240];
+    byte* iv;
 
 
 public:
 		AES(aes_type_e aes_type, bytes key);
-		int8_t cipher(bytes input, bytes output);
+		bytes cipher(bytes input);
 		void invCipher(bytes input, bytes output);
+        void setMode(AES_MODE mode);
+        void setInitVector(byte initVec[]);
+        int8_t encrypt(bytes input, bytes * output);
 
 private:
 		void keyExpansion();

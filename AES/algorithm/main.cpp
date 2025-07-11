@@ -13,13 +13,23 @@ int main(){
       0x31, 0x31, 0x98, 0xa2, 
       0xe0, 0x37, 0x07, 0x34
     };
+    uint8_t iv[16] = {
+        0x00, 0x01, 0x02, 0x03,
+        0x04, 0x05, 0x06, 0x07,
+        0x08, 0x09, 0x0a, 0x0b,
+        0x0c, 0x0d, 0x0e, 0x0f
+    };
 
-    bytes output;
-	AES::AES aes(AES_128, key); 
-    int8_t flag = aes.cipher(inp, output);	
+    bytes *output;
+
+	  AES::AES aes(AES_128, key); 
+    // aes.setMode(AES_CBC);
+    // aes.setInitVector(iv);
+    int8_t flag = aes.encrypt(inp, output);	
     if(flag == -1){
         std::cout << "err aes type" << std::endl;
     } 
+    // info_hex_array(*output, 16);
     return 0;
 
 }
