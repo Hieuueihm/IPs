@@ -66,13 +66,10 @@ namespace AES {
 		// 	subword
 		//  Rcon (round constant )
 
-		// for(int i = 0; i < Nk; i++){
-		// 	for(int j = 0; j < 4; j++){
-		// 		this->w[i * Nk + j] = this->key[i + j * Nk];
-		// 	}
-		// }
-		for(int i = 0 ; i < 4 * Nk; i++){
-			this->w[i] = this->key[i];
+		for(int i = 0; i < Nk; i++){
+			for(int j = 0; j < 4; j++){
+				this->w[i * Nk + j] = this->key[i + j * Nk];
+			}
 		}
 		byte temp[4];
 		byte rcon[4];
@@ -88,6 +85,8 @@ namespace AES {
 			temp[1] = this->w[i - 4 + 1]; 
 			temp[2] = this->w[i - 4 + 2]; 
 			temp[3] = this->w[i - 4 + 3];
+			info("Word is used");
+			info_hex_array(temp, 4);
 			if(wordIndex % 4 ==0) {
 				// info("wi4");
 				this->rotWord(temp);
