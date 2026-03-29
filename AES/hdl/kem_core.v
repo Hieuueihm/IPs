@@ -92,15 +92,15 @@ module kem_core (
                 r_idx      <= r_idx + 4'd1;
             end
             else begin
+                step_sel <= ~step_sel;
                 if (!step_sel) begin
                     buf[127:0]   <= rk_lower;
                     r_idx        <= r_idx + 4'd1;
-                    step_sel     <= 1'b1;
+                    // step_sel     <= 1'b1;
                 end
                 else begin
-                
                     buf[255:128] <= rk_upper;
-                    step_sel     <= 1'b0;
+                    // step_sel     <= 1'b0;
                 end
             end
         end
