@@ -38,7 +38,7 @@ module controller_fsm (
     output reg        key_expanded,// 1 when KEM has loaded key and is ready to provide round keys, 0 otherwise
     output reg        done_pulse,  // 1 for 1 cycle when DONE, indicating output is ready and KEM is reloaded for next block,
 
-    output reg [3:0] round_dbg     // debug: current round number (0..Nr)
+    output wire [3:0] round_dbg     // debug: current round number (0..Nr)
 );
     localparam [1:0]
         IDLE  = 2'b00,
@@ -46,18 +46,17 @@ module controller_fsm (
         RUN   = 2'b11,
         DONE  = 2'b10;
 
-    reg [1:0] state;
 
  
     wire [3:0] Nr     = key_len ? 4'd14 : 4'd10;
     wire       iv_needed = (mode != 2'b00);  
 
-   
+    reg [1:0] current_state, next_state;
+
     reg [3:0] round_cnt;
     assign round_dbg = (current_state == RUN) ? round_cnt : 4'b0;
 
-    reg [1:0] current_state, next_state;
-    wire is_start = start & (!iv_needed | iv_valid)
+    assign is_start = start & (!iv_needed | iv_valid);
 
 
     always @(posedge clk or negedge rst_n) begin
@@ -102,7 +101,7 @@ module controller_fsm (
         key_expanded= 1'b0;
         done_pulse  = 1'b0;
 
-        case (state)
+        case (current_state)
 
             IDLE: begin
                 if (key_valid)

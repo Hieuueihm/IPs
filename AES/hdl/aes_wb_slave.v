@@ -125,7 +125,6 @@ module aes_wb_slave (
         .wr_en          (wr_en),
         .rd_addr        (rd_addr),
         .rd_data        (rd_data),
-
         .start          (start),
         .mode           (mode),
         .op             (op),

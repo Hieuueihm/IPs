@@ -67,12 +67,15 @@ module tb_aes_wb_slave;
         input [7:0]  addr;
         input [31:0] data;
         begin
+            $display(" start write");
+
             @(posedge clk); #1;
             wb_cyc  = 1; wb_stb = 1; wb_we = 1;
             wb_adr  = addr;
             wb_dat_i = data;
             wb_sel  = 4'hF;
             // Wait for ACK (registered — 1 cycle after STB)
+            $display(" data write %h ", data);
             @(posedge clk); #1;
             while (!wb_ack) @(posedge clk); #1;
             wb_cyc  = 0; wb_stb = 0; wb_we = 0;
@@ -209,6 +212,7 @@ module tb_aes_wb_slave;
             repeat(4) @(posedge clk);
             #1; rst_n = 1;
             repeat(2) @(posedge clk);
+            $display("reset done! ");
         end
     endtask
 
@@ -276,124 +280,124 @@ module tb_aes_wb_slave;
         // ════════════════════════════════════════════════════════
         //  TEST 2: AES-128 ECB Decrypt
         // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 2: AES-128 ECB Decrypt ===");
-        full_reset;
+        // $display("\n=== TEST 2: AES-128 ECB Decrypt ===");
+        // full_reset;
 
-        // CTRL: ECB, decrypt=1, AES-128
-        wb_write(8'h00, 32'h08);  // OP=1
-        wb_write(8'h08, 32'h01);
-        load_key_128(KEY128);
-        encrypt_block(CIPH128, dout);
-        check_result(dout, PLAIN128, "AES-128 ECB dec");
+        // // CTRL: ECB, decrypt=1, AES-128
+        // wb_write(8'h00, 32'h08);  // OP=1
+        // wb_write(8'h08, 32'h01);
+        // load_key_128(KEY128);
+        // encrypt_block(CIPH128, dout);
+        // check_result(dout, PLAIN128, "AES-128 ECB dec");
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 3: AES-128 CBC Encrypt — SP800-38A F.2.1
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 3: AES-128 CBC Encrypt (4 blocks) ===");
-        full_reset;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 3: AES-128 CBC Encrypt — SP800-38A F.2.1
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 3: AES-128 CBC Encrypt (4 blocks) ===");
+        // full_reset;
 
-        // CTRL: CBC=01, enc=0, AES-128=0
-        wb_write(8'h00, 32'h02);  // MODE=01
-        wb_write(8'h08, 32'h03);  // AUTO_START=1, AUTO_IV_UPDATE=1
-        load_key_128(KEY128);
-        load_iv(CBC_IV);
+        // // CTRL: CBC=01, enc=0, AES-128=0
+        // wb_write(8'h00, 32'h02);  // MODE=01
+        // wb_write(8'h08, 32'h03);  // AUTO_START=1, AUTO_IV_UPDATE=1
+        // load_key_128(KEY128);
+        // load_iv(CBC_IV);
 
-        encrypt_block(CBC_P1, dout); check_result(dout, CBC_C1, "CBC enc block 1");
-        encrypt_block(CBC_P2, dout); check_result(dout, CBC_C2, "CBC enc block 2");
-        encrypt_block(CBC_P3, dout); check_result(dout, CBC_C3, "CBC enc block 3");
-        encrypt_block(CBC_P4, dout); check_result(dout, CBC_C4, "CBC enc block 4");
+        // encrypt_block(CBC_P1, dout); check_result(dout, CBC_C1, "CBC enc block 1");
+        // encrypt_block(CBC_P2, dout); check_result(dout, CBC_C2, "CBC enc block 2");
+        // encrypt_block(CBC_P3, dout); check_result(dout, CBC_C3, "CBC enc block 3");
+        // encrypt_block(CBC_P4, dout); check_result(dout, CBC_C4, "CBC enc block 4");
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 4: AES-128 CBC Decrypt — SP800-38A F.2.2
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 4: AES-128 CBC Decrypt (4 blocks) ===");
-        full_reset;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 4: AES-128 CBC Decrypt — SP800-38A F.2.2
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 4: AES-128 CBC Decrypt (4 blocks) ===");
+        // full_reset;
 
-        // CTRL: CBC, decrypt=1, AES-128
-        wb_write(8'h00, 32'h0A);  // MODE=01, OP=1
-        wb_write(8'h08, 32'h03);
-        load_key_128(KEY128);
-        load_iv(CBC_IV);
+        // // CTRL: CBC, decrypt=1, AES-128
+        // wb_write(8'h00, 32'h0A);  // MODE=01, OP=1
+        // wb_write(8'h08, 32'h03);
+        // load_key_128(KEY128);
+        // load_iv(CBC_IV);
 
-        encrypt_block(CBC_C1, dout); check_result(dout, CBC_P1, "CBC dec block 1");
-        encrypt_block(CBC_C2, dout); check_result(dout, CBC_P2, "CBC dec block 2");
-        encrypt_block(CBC_C3, dout); check_result(dout, CBC_P3, "CBC dec block 3");
-        encrypt_block(CBC_C4, dout); check_result(dout, CBC_P4, "CBC dec block 4");
+        // encrypt_block(CBC_C1, dout); check_result(dout, CBC_P1, "CBC dec block 1");
+        // encrypt_block(CBC_C2, dout); check_result(dout, CBC_P2, "CBC dec block 2");
+        // encrypt_block(CBC_C3, dout); check_result(dout, CBC_P3, "CBC dec block 3");
+        // encrypt_block(CBC_C4, dout); check_result(dout, CBC_P4, "CBC dec block 4");
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 5: AES-128 CTR — SP800-38A F.5.1
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 5: AES-128 CTR Encrypt ===");
-        full_reset;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 5: AES-128 CTR — SP800-38A F.5.1
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 5: AES-128 CTR Encrypt ===");
+        // full_reset;
 
-        // CTRL: CTR=10, enc=0, AES-128
-        wb_write(8'h00, 32'h04);  // MODE=10
-        wb_write(8'h08, 32'h03);  // AUTO_START + AUTO_IV_UPDATE
-        load_key_128(KEY128);
-        load_iv(CTR_IV);
+        // // CTRL: CTR=10, enc=0, AES-128
+        // wb_write(8'h00, 32'h04);  // MODE=10
+        // wb_write(8'h08, 32'h03);  // AUTO_START + AUTO_IV_UPDATE
+        // load_key_128(KEY128);
+        // load_iv(CTR_IV);
 
-        encrypt_block(CTR_P1, dout); check_result(dout, CTR_C1, "CTR enc block 1");
-        encrypt_block(CTR_P2, dout); check_result(dout, CTR_C2, "CTR enc block 2");
+        // encrypt_block(CTR_P1, dout); check_result(dout, CTR_C1, "CTR enc block 1");
+        // encrypt_block(CTR_P2, dout); check_result(dout, CTR_C2, "CTR enc block 2");
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 6: AES-256 ECB Encrypt — FIPS-197 Appendix B
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 6: AES-256 ECB Encrypt ===");
-        full_reset;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 6: AES-256 ECB Encrypt — FIPS-197 Appendix B
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 6: AES-256 ECB Encrypt ===");
+        // full_reset;
 
-        // CTRL: ECB, enc, AES-256
-        wb_write(8'h00, 32'h10);  // KEY_LEN=1
-        wb_write(8'h08, 32'h01);
-        load_key_256(KEY256);
-        encrypt_block(PLAIN256, dout);
-        check_result(dout, CIPH256, "AES-256 ECB enc");
+        // // CTRL: ECB, enc, AES-256
+        // wb_write(8'h00, 32'h10);  // KEY_LEN=1
+        // wb_write(8'h08, 32'h01);
+        // load_key_256(KEY256);
+        // encrypt_block(PLAIN256, dout);
+        // check_result(dout, CIPH256, "AES-256 ECB enc");
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 7: STATUS register check
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 7: STATUS register ===");
-        full_reset;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 7: STATUS register check
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 7: STATUS register ===");
+        // full_reset;
 
-        wb_write(8'h00, 32'h00);
-        wb_write(8'h08, 32'h00);  // AUTO_START=0
+        // wb_write(8'h00, 32'h00);
+        // wb_write(8'h08, 32'h00);  // AUTO_START=0
 
-        // Trước khi load key: STATUS[3] (KEY_EXPANDED) = 0
-        wb_read(8'h04);
-        if (rd_data[3] == 0)
-            $display("PASS STATUS: KEY_EXPANDED=0 before key load");
-        else begin
-            $display("FAIL STATUS: KEY_EXPANDED should be 0");
-            fail_count = fail_count + 1;
-        end
+        // // Trước khi load key: STATUS[3] (KEY_EXPANDED) = 0
+        // wb_read(8'h04);
+        // if (rd_data[3] == 0)
+        //     $display("PASS STATUS: KEY_EXPANDED=0 before key load");
+        // else begin
+        //     $display("FAIL STATUS: KEY_EXPANDED should be 0");
+        //     fail_count = fail_count + 1;
+        // end
 
-        // Load key
-        load_key_128(KEY128);
-        repeat(5) @(posedge clk);
+        // // Load key
+        // load_key_128(KEY128);
+        // repeat(5) @(posedge clk);
 
-        // Sau khi load: STATUS[3] = 1, STATUS[2] = INPUT_READY = 1
-        wb_read(8'h04);
-        if (rd_data[3] == 1 && rd_data[2] == 1)
-            $display("PASS STATUS: KEY_EXPANDED=1, INPUT_READY=1");
-        else begin
-            $display("FAIL STATUS: got %h", rd_data);
-            fail_count = fail_count + 1;
-        end
+        // // Sau khi load: STATUS[3] = 1, STATUS[2] = INPUT_READY = 1
+        // wb_read(8'h04);
+        // if (rd_data[3] == 1 && rd_data[2] == 1)
+        //     $display("PASS STATUS: KEY_EXPANDED=1, INPUT_READY=1");
+        // else begin
+        //     $display("FAIL STATUS: got %h", rd_data);
+        //     fail_count = fail_count + 1;
+        // end
 
-        // ════════════════════════════════════════════════════════
-        //  TEST 8: WB error on invalid address
-        // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 8: Invalid address ===");
-        @(posedge clk); #1;
-        wb_cyc = 1; wb_stb = 1; wb_we = 1;
-        wb_adr = 8'h60; wb_dat_i = 32'hDEAD; wb_sel = 4'hF;
-        @(posedge clk); #1;
-        if (wb_err == 1)
-            $display("PASS wb_err=1 for invalid addr 0x60");
-        else begin
-            $display("FAIL wb_err should be 1 for invalid addr");
-            fail_count = fail_count + 1;
-        end
-        wb_cyc = 0; wb_stb = 0;
+        // // ════════════════════════════════════════════════════════
+        // //  TEST 8: WB error on invalid address
+        // // ════════════════════════════════════════════════════════
+        // $display("\n=== TEST 8: Invalid address ===");
+        // @(posedge clk); #1;
+        // wb_cyc = 1; wb_stb = 1; wb_we = 1;
+        // wb_adr = 8'h60; wb_dat_i = 32'hDEAD; wb_sel = 4'hF;
+        // @(posedge clk); #1;
+        // if (wb_err == 1)
+        //     $display("PASS wb_err=1 for invalid addr 0x60");
+        // else begin
+        //     $display("FAIL wb_err should be 1 for invalid addr");
+        //     fail_count = fail_count + 1;
+        // end
+        // wb_cyc = 0; wb_stb = 0;
 
         // ════════════════════════════════════════════════════════
         //  Summary

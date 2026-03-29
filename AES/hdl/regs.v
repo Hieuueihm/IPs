@@ -164,21 +164,21 @@ module regs (
  
                     ADDR_CONFIG: config_reg <= wr_data[2:0];
  
-                    ADDR_KEY_0: key_out[255:224] <= wr_data;
-                    ADDR_KEY_1: key_out[223:192] <= wr_data;
-                    ADDR_KEY_2: key_out[191:160] <= wr_data;
+                    ADDR_KEY_0: key_out[127:96] <= wr_data;
+                    ADDR_KEY_1: key_out[95:64] <= wr_data;
+                    ADDR_KEY_2: key_out[63:32] <= wr_data;
                     ADDR_KEY_3: begin
-                        key_out[159:128] <= wr_data;
+                        key_out[31:0] <= wr_data;
                         if (!ctrl_reg[4]) begin
                             key_valid    <= 1'b1;
                             ctrl_reg[5]  <= 1'b1;
                         end
                     end
-                    ADDR_KEY_4: key_out[127:96]  <= wr_data;
-                    ADDR_KEY_5: key_out[95:64]   <= wr_data;
-                    ADDR_KEY_6: key_out[63:32]   <= wr_data;
+                    ADDR_KEY_4: key_out[255:224]  <= wr_data;
+                    ADDR_KEY_5: key_out[223:192]   <= wr_data;
+                    ADDR_KEY_6: key_out[191:160]   <= wr_data;
                     ADDR_KEY_7: begin
-                        key_out[31:0] <= wr_data;
+                        key_out[159:128] <= wr_data;
                         if (ctrl_reg[4]) begin
                             key_valid    <= 1'b1;
                             ctrl_reg[5]  <= 1'b1;
@@ -220,5 +220,58 @@ module regs (
             ctrl_reg[6] <= iv_valid;
  
         end
+    end
+
+    always @(*) begin
+        rd_data = 32'h0; // default
+ 
+        case (rd_addr)
+            // CTRL
+            ADDR_CTRL:   rd_data = {25'h0, ctrl_reg};
+ 
+            // STATUS — ghép từ các tín hiệu ngoài
+            // [0] BUSY         — từ Controller
+            // [1] OUTPUT_VALID — từ flag nội bộ
+            // [2] INPUT_READY  — khi không busy và output đã được đọc
+            // [3] KEY_EXPANDED — từ KEM
+            ADDR_STATUS: rd_data = {28'h0,
+                                     key_expanded,           // [3]
+                                     !busy & !output_valid,  // [2] INPUT_READY
+                                     output_valid,           // [1]
+                                     busy};                  // [0]
+ 
+            // CONFIG
+            ADDR_CONFIG: rd_data = {29'h0, config_reg};
+ 
+            // KEY — WO, đọc trả về 0 (bảo mật: không để lộ key)
+            ADDR_KEY_0,
+            ADDR_KEY_1,
+            ADDR_KEY_2,
+            ADDR_KEY_3,
+            ADDR_KEY_4,
+            ADDR_KEY_5,
+            ADDR_KEY_6,
+            ADDR_KEY_7:  rd_data = 32'h0;
+ 
+            // IV
+            ADDR_IV_0:   rd_data = iv_out[127:96];
+            ADDR_IV_1:   rd_data = iv_out[95:64];
+            ADDR_IV_2:   rd_data = iv_out[63:32];
+            ADDR_IV_3:   rd_data = iv_out[31:0];
+ 
+            // DIN — WO, trả về 0
+            ADDR_DIN_0,
+            ADDR_DIN_1,
+            ADDR_DIN_2,
+            ADDR_DIN_3:  rd_data = 32'h0;
+ 
+            // DOUT — đọc kết quả từ cipher
+            ADDR_DOUT_0: rd_data = dout_reg[127:96];
+            ADDR_DOUT_1: rd_data = dout_reg[95:64];
+            ADDR_DOUT_2: rd_data = dout_reg[63:32];
+            ADDR_DOUT_3: rd_data = dout_reg[31:0];
+ 
+            default:     rd_data = 32'hDEADBEEF; // invalid address
+        endcase
     end
 endmodule

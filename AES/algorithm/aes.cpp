@@ -66,41 +66,78 @@ namespace AES
         ivSet_ = true;
     }
 
-    void AES::keyExpansion(const byte *key)
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <iomanip>
+
+// Hàm hỗ trợ in 4 byte dưới dạng Hex
+static void printByte4(const char* label, const byte* b) {
+    printf("%s: %02X %02X %02X %02X\n", label, b[0], b[1], b[2], b[3]);
+}
+
+void AES::keyExpansion(const byte *key)
+{
+    memcpy(w, key, 4 * Nk);
+    printf("=== Key Ban Dau: ===\n");
+    printByte4("Key Input", key); 
+
+    for (int i = Nk; i < 4 * (Nr + 1); i++)
     {
-        memcpy(w, key, 4 * Nk);
+        byte temp[4];
+        memcpy(temp, w + (i - 1) * 4, 4);
+        
+        // In giá trị temp trước khi xử lý
+        printf("\n--- Vong lap i = %d ---\n", i);
+        printByte4("Temp (w[i-1])", temp);
 
-        for (int i = Nk; i < 4 * (Nr + 1); i++)
+        if (i % Nk == 0)
         {
-            byte temp[4];
-            memcpy(temp, w + (i - 1) * 4, 4);
+            // --- BẮT ĐẦU TỪ CHỖ BẠN YÊU CẦU ---
+            byte t = temp[0];
+            printf("1. Lay t = temp[0]: %02X\n", t);
 
-            if (i % Nk == 0)
-            {
-                byte t = temp[0];
-                temp[0] = temp[1];
-                temp[1] = temp[2];
-                temp[2] = temp[3];
-                temp[3] = t;
+            // RotWord (Xoay vòng)
+            temp[0] = temp[1];
+            temp[1] = temp[2];
+            temp[2] = temp[3];
+            temp[3] = t;
+            printByte4("2. Sau RotWord (Xoay)", temp);
 
-                for (int j = 0; j < 4; j++)
-                    temp[j] = SBOX[temp[j]];
-
-                temp[0] ^= RCON[i / Nk];
+            // SubWord (Thế qua SBOX)
+            for (int j = 0; j < 4; j++){
+                temp[j] = SBOX[temp[j]];
             }
-            else if (Nk > 6 && i % Nk == 4)
-            {
-                for (int j = 0; j < 4; j++)
-                    temp[j] = SBOX[temp[j]];
-            }
+            printByte4("3. Sau SubWord (SBOX)", temp);
 
-            const byte *prev = w + (i - Nk) * 4;
-            byte *cur = w + i * 4;
-            for (int j = 0; j < 4; j++)
-                cur[j] = prev[j] ^ temp[j];
+            // XOR với RCON
+            temp[0] ^= RCON[i / Nk];
+            printByte4("4. Sau XOR RCON", temp);
+            // --- KẾT THÚC KHỐI IF ĐẦU ---
         }
-    }
+        else if (Nk > 6 && i % Nk == 4)
+        {
+            // Chỉ xảy ra với AES-256
+            for (int j = 0; j < 4; j++)
+                temp[j] = SBOX[temp[j]];
+            printByte4("5. Sau SubWord (AES-256 extra)", temp);
+        }
 
+        // XOR với w[i-Nk]
+        const byte *prev = w + (i - Nk) * 4;
+        byte *cur = w + i * 4;
+        
+        printf("6. Prev (w[i-Nk]): "); printByte4("", prev);
+        
+        for (int j = 0; j < 4; j++)
+            cur[j] = prev[j] ^ temp[j];
+            
+        printByte4("7. Cur (w[i] - Key moi)", cur);
+    }
+}
+
+   
+    
     void AES::addRoundKey(byte *state, int round) const
     {
         const byte *rk = w + round * 16;
@@ -204,9 +241,13 @@ namespace AES
         for (int r = 1; r < Nr; r++)
         {
             subBytes(state);
+
             shiftRows(state);
+
             mixColumns(state);
+
             addRoundKey(state, r);
+
         }
 
         subBytes(state);
@@ -222,6 +263,7 @@ namespace AES
         memcpy(state, in, 16);
 
         addRoundKey(state, Nr);
+
 
         for (int r = Nr - 1; r >= 1; r--)
         {

@@ -3,9 +3,23 @@
 #include <cstddef>
 #include <cstring>
 #include <cstdlib>
-
+#include <iostream>
+#include <iomanip>
 using byte = uint8_t;
 using bytes = uint8_t *;
+
+static void printState(const char* label, const byte state[16])
+{
+    std::cout << label << ":\n";
+    for (int i = 0; i < 16; i++)
+    {
+        std::cout << std::hex << std::setw(2) << std::setfill('0')
+                  << (int)state[i] << " ";
+
+        if ((i % 4) == 3) std::cout << "\n"; // in theo matrix 4x4
+    }
+    std::cout << std::dec << "\n";
+}
 
 namespace AES
 {

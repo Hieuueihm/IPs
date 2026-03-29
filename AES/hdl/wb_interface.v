@@ -54,7 +54,7 @@ module wb_interface (
     assign rd_addr = byte_addr;
 
     always @(posedge CLK_I) begin
-        if (RST_I) begin
+        if (~RST_I) begin
             ACK_O <= 1'b0;
             ERR_O <= 1'b0;
             DAT_O <= 32'h0;
