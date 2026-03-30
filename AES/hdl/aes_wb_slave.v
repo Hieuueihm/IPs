@@ -117,7 +117,7 @@ module aes_wb_slave (
 
 
 
-    regs u_csr (
+    regs u_reg (
         .clk            (clk),
         .rst_n          (rst_n),
         .wr_addr        (wr_addr),

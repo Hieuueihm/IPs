@@ -78,12 +78,12 @@ module controller_fsm (
         end
     end
 
-
+    assign is_last_round = round_cnt == Nr;
     always @(*) begin
         case (current_state)
             IDLE: next_state = (key_valid) ? READY : IDLE;
             READY: next_state = (~key_valid) ? IDLE : is_start ? RUN : READY;
-            RUN: next_state = (round_cnt == Nr) ? DONE : RUN;
+            RUN: next_state = is_last_round ? DONE : RUN;
             DONE: next_state = READY;
             default: next_state = IDLE;
         endcase
@@ -119,13 +119,13 @@ module controller_fsm (
                 key_expanded = 1'b1;
                 cipher_en    = 1'b1;  
                 is_first = (round_cnt == 4'd0);
-                is_last  = (round_cnt == Nr);
+                is_last  = is_last_round;
                 kem_next_rk = (round_cnt < Nr);
+                done_pulse = is_last_round;
             end
 
             DONE: begin
                 key_expanded = 1'b1;
-                done_pulse   = 1'b1;  
                 kem_load     = 1'b1;
             end
 
