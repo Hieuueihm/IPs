@@ -35,7 +35,6 @@ module controller_fsm (
     output reg        is_last,     //  Nr: skip MixColumns
 
     output reg        busy,        // 1 when in RUN, 0 otherwise (ready for new start or key change)
-    output reg        key_expanded,// 1 when KEM has loaded key and is ready to provide round keys, 0 otherwise
     output reg        done_pulse,  // 1 for 1 cycle when DONE, indicating output is ready and KEM is reloaded for next block,
 
     output wire [3:0] round_dbg     // debug: current round number (0..Nr)
@@ -98,7 +97,6 @@ module controller_fsm (
         is_first    = 1'b0;
         is_last     = 1'b0;
         busy        = 1'b0;
-        key_expanded= 1'b0;
         done_pulse  = 1'b0;
 
         case (current_state)
@@ -109,14 +107,12 @@ module controller_fsm (
             end
 
             READY: begin
-                key_expanded = 1'b1; 
                 if (is_start)
                     load_state = 1'b1;
             end
 
             RUN: begin
                 busy         = 1'b1;
-                key_expanded = 1'b1;
                 cipher_en    = 1'b1;  
                 is_first = (round_cnt == 4'd0);
                 is_last  = is_last_round;
@@ -125,7 +121,6 @@ module controller_fsm (
             end
 
             DONE: begin
-                key_expanded = 1'b1;
                 kem_load     = 1'b1;
             end
 

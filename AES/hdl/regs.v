@@ -1,39 +1,3 @@
-// ============================================================
-//  csr_regs.v
-//  Control & Status Registers cho AES Wishbone Slave
-//
-//  Register map (32-bit Wishbone, byte address):
-//
-//  0x00  CTRL    R/W  [0]=START [2:1]=MODE [3]=OP [4]=KEY_LEN
-//                     [5]=KEY_VALID [6]=IV_VALID
-//  0x04  STATUS  RO   [0]=BUSY [1]=OUTPUT_VALID [2]=INPUT_READY
-//                     [3]=KEY_EXPANDED
-//  0x08  CONFIG  R/W  [0]=AUTO_START [1]=AUTO_IV_UPDATE [2]=IRQ_EN
-//
-//  0x10  KEY_0   WO   key[255:224]  (AES-128: key[127:96])
-//  0x14  KEY_1   WO   key[223:192]
-//  0x18  KEY_2   WO   key[191:160]
-//  0x1C  KEY_3   WO   key[159:128]  ghi xong → trigger KEY_VALID (AES-128)
-//  0x20  KEY_4   WO   key[127:96]   (AES-256 only)
-//  0x24  KEY_5   WO   key[95:64]
-//  0x28  KEY_6   WO   key[63:32]
-//  0x2C  KEY_7   WO   key[31:0]     ghi xong → trigger KEY_VALID (AES-256)
-//
-//  0x30  IV_0    WO   iv[127:96]
-//  0x34  IV_1    WO   iv[95:64]
-//  0x38  IV_2    WO   iv[63:32]
-//  0x3C  IV_3    WO   iv[31:0]      ghi xong → set IV_VALID tự động
-//
-//  0x40  DIN_0   WO   data_in[127:96]
-//  0x44  DIN_1   WO   data_in[95:64]
-//  0x48  DIN_2   WO   data_in[63:32]
-//  0x4C  DIN_3   WO   data_in[31:0] ghi xong → trigger START nếu AUTO_START=1
-//
-//  0x50  DOUT_0  RO   data_out[127:96]
-//  0x54  DOUT_1  RO   data_out[95:64]
-//  0x58  DOUT_2  RO   data_out[63:32]
-//  0x5C  DOUT_3  RO   data_out[31:0] đọc xong → clear OUTPUT_VALID
-// ============================================================
 module regs (
     input  wire        clk,
     input  wire        rst_n,
@@ -68,8 +32,6 @@ module regs (
 
      // Status inputs
     input  wire         busy,
-    input  wire         key_expanded,
-    input  wire         auto_start_trig,
     input  wire         iv_upd_trig,     
 
     input  wire [127:0] iv_next,       
@@ -117,6 +79,7 @@ module regs (
      assign mode        = ctrl_reg[2:1];
     assign op          = ctrl_reg[3];
     assign key_len     = ctrl_reg[4];
+
     assign auto_start  = config_reg[0];
     assign auto_iv_upd = config_reg[1];
     assign irq_en      = config_reg[2];
@@ -145,17 +108,17 @@ module regs (
                 if (config_reg[2]) irq <= 1'b1;
             end
  
-            if (iv_upd_trig && config_reg[1]) begin
+            if (iv_upd_trig && auto_iv_upd) begin
                 iv_out <= iv_next;
             end
  
-            if (auto_start_trig) begin
-                start <= 1'b1;
-            end
  
             if (wr_en) begin
                 case (wr_addr)
                     ADDR_CTRL: begin
+                        if(wr_data[4] != ctrl_reg[4]) begin
+                            key_valid <= 1'b0;
+                        end
                         ctrl_reg <= wr_data[6:0];
                         if (wr_data[0]) start <= 1'b1;
                         key_valid <= wr_data[5];
@@ -164,7 +127,11 @@ module regs (
  
                     ADDR_CONFIG: config_reg <= wr_data[2:0];
  
-                    ADDR_KEY_0: key_out[127:96] <= wr_data;
+                    ADDR_KEY_0: begin
+                            key_out[127:96] <= wr_data;
+                            key_valid <= 1'b0;
+
+                    end 
                     ADDR_KEY_1: key_out[95:64] <= wr_data;
                     ADDR_KEY_2: key_out[63:32] <= wr_data;
                     ADDR_KEY_3: begin
@@ -174,7 +141,10 @@ module regs (
                             ctrl_reg[5]  <= 1'b1;
                         end
                     end
-                    ADDR_KEY_4: key_out[255:224]  <= wr_data;
+                    ADDR_KEY_4: begin 
+                        key_out[255:224]  <= wr_data;
+                        key_valid <= 1'b0;
+                    end
                     ADDR_KEY_5: key_out[223:192]   <= wr_data;
                     ADDR_KEY_6: key_out[191:160]   <= wr_data;
                     ADDR_KEY_7: begin
@@ -185,7 +155,10 @@ module regs (
                         end
                     end
  
-                    ADDR_IV_0: iv_out[127:96] <= wr_data;
+                    ADDR_IV_0: begin
+                         iv_out[127:96] <= wr_data;
+                         iv_valid <= 1'b0;
+                    end
                     ADDR_IV_1: iv_out[95:64]  <= wr_data;
                     ADDR_IV_2: iv_out[63:32]  <= wr_data;
                     ADDR_IV_3: begin
@@ -200,7 +173,7 @@ module regs (
                     ADDR_DIN_3: begin
                         din_out[31:0] <= wr_data;
                        
-                        if (config_reg[0] && key_valid &&
+                        if (auto_start && key_valid &&
                             (mode == 2'b00 || iv_valid)) begin
                             start <= 1'b1;
                         end
@@ -226,16 +199,10 @@ module regs (
         rd_data = 32'h0; // default
  
         case (rd_addr)
-            // CTRL
             ADDR_CTRL:   rd_data = {25'h0, ctrl_reg};
  
-            // STATUS — ghép từ các tín hiệu ngoài
-            // [0] BUSY         — từ Controller
-            // [1] OUTPUT_VALID — từ flag nội bộ
-            // [2] INPUT_READY  — khi không busy và output đã được đọc
-            // [3] KEY_EXPANDED — từ KEM
-            ADDR_STATUS: rd_data = {28'h0,
-                                     key_expanded,           // [3]
+            
+            ADDR_STATUS: rd_data = {29'h0,
                                      !busy & !output_valid,  // [2] INPUT_READY
                                      output_valid,           // [1]
                                      busy};                  // [0]

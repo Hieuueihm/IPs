@@ -46,7 +46,6 @@ module aes_wb_slave (
     wire        is_first;
     wire        is_last;
     wire        busy;
-    wire        key_expanded;
     wire        done_pulse;
     wire [3:0]  round_dbg;
 
@@ -84,7 +83,6 @@ module aes_wb_slave (
     end
 
    
-    wire        auto_start_trig;  
     wire        iv_upd_trig;      
 
  
@@ -142,8 +140,6 @@ module aes_wb_slave (
         .dout_in        (dout_data),
         .dout_wr        (done_pulse),
         .busy           (busy),
-        .key_expanded   (key_expanded),
-        .auto_start_trig(1'b0),   
         .iv_upd_trig    (iv_upd_trig),
         .iv_next        (iv_next),
         .irq            (irq)
@@ -164,7 +160,6 @@ module aes_wb_slave (
         .is_first     (is_first),
         .is_last      (is_last),
         .busy         (busy),
-        .key_expanded (key_expanded),
         .done_pulse   (done_pulse),
         .round_dbg    (round_dbg)
     );
