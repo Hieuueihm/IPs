@@ -20,7 +20,7 @@ module regs (
     output wire        auto_start, 
     output wire        auto_iv_upd,
     output wire        irq_en,     
-
+    input wire key_expanded,
     //  Key, IV, Data registers
     output reg  [255:0] key_out,
     output reg  [127:0] iv_out,    
@@ -84,6 +84,8 @@ module regs (
     assign auto_iv_upd = config_reg[1];
     assign irq_en      = config_reg[2];
 
+    reg start_pending;
+
      always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             ctrl_reg     <= 32'h0;
@@ -91,6 +93,7 @@ module regs (
             key_out      <= 256'h0;
             iv_out       <= 128'h0;
             din_out      <= 128'h0;
+            start_pending <= 1'b0; 
             dout_reg     <= 128'h0;
             key_valid    <= 1'b0;
             iv_valid     <= 1'b0;
@@ -111,6 +114,11 @@ module regs (
             if (iv_upd_trig && auto_iv_upd) begin
                 iv_out <= iv_next;
             end
+
+            if (start_pending && key_expanded) begin
+                start         <= 1'b1;   
+                start_pending <= 1'b0;
+            end
  
  
             if (wr_en) begin
@@ -126,34 +134,37 @@ module regs (
                     end
  
                     ADDR_CONFIG: config_reg <= wr_data[2:0];
- 
-                    ADDR_KEY_0: begin
-                            key_out[127:96] <= wr_data;
-                            key_valid <= 1'b0;
 
-                    end 
-                    ADDR_KEY_1: key_out[95:64] <= wr_data;
-                    ADDR_KEY_2: key_out[63:32] <= wr_data;
+
+                    ADDR_KEY_0: begin 
+                        key_out[255:224]  <= wr_data;
+                        key_valid <= 1'b0;
+                    end
+                    ADDR_KEY_1: key_out[223:192]   <= wr_data;
+                    ADDR_KEY_2: key_out[191:160]   <= wr_data;
                     ADDR_KEY_3: begin
-                        key_out[31:0] <= wr_data;
+                        key_out[159:128] <= wr_data;
                         if (!ctrl_reg[4]) begin
                             key_valid    <= 1'b1;
                             ctrl_reg[5]  <= 1'b1;
                         end
                     end
-                    ADDR_KEY_4: begin 
-                        key_out[255:224]  <= wr_data;
-                        key_valid <= 1'b0;
-                    end
-                    ADDR_KEY_5: key_out[223:192]   <= wr_data;
-                    ADDR_KEY_6: key_out[191:160]   <= wr_data;
+ 
+                    ADDR_KEY_4: begin
+                            key_out[127:96] <= wr_data;
+                            key_valid <= 1'b0;
+
+                    end 
+                    ADDR_KEY_5: key_out[95:64] <= wr_data;
+                    ADDR_KEY_6: key_out[63:32] <= wr_data;
                     ADDR_KEY_7: begin
-                        key_out[159:128] <= wr_data;
+                        key_out[31:0] <= wr_data;
                         if (ctrl_reg[4]) begin
                             key_valid    <= 1'b1;
                             ctrl_reg[5]  <= 1'b1;
                         end
                     end
+                    
  
                     ADDR_IV_0: begin
                          iv_out[127:96] <= wr_data;
@@ -172,12 +183,15 @@ module regs (
                     ADDR_DIN_2: din_out[63:32]  <= wr_data;
                     ADDR_DIN_3: begin
                         din_out[31:0] <= wr_data;
-                       
                         if (auto_start && key_valid &&
                             (mode == 2'b00 || iv_valid)) begin
-                            start <= 1'b1;
+                            if (key_expanded)
+                                start <= 1'b1;       
+                            else
+                                start_pending <= 1'b1; 
                         end
                     end
+
                     default: ; 
  
                 endcase
@@ -202,7 +216,8 @@ module regs (
             ADDR_CTRL:   rd_data = {25'h0, ctrl_reg};
  
             
-            ADDR_STATUS: rd_data = {29'h0,
+            ADDR_STATUS: rd_data = {28'h0,
+                                     key_expanded,           // [3] KEY_EXANPADED
                                      !busy & !output_valid,  // [2] INPUT_READY
                                      output_valid,           // [1]
                                      busy};                  // [0]

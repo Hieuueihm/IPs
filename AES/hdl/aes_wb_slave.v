@@ -47,23 +47,21 @@ module aes_wb_slave (
     wire        is_last;
     wire        busy;
     wire        done_pulse;
+    wire kem_load_dec;
+    wire kem_save_dec;
+    wire key_expanded;
     wire [3:0]  round_dbg;
 
     wire [127:0] rk_out;
     wire         rk_valid;
 
- 
     wire [3:0]  round_cnt = round_dbg;
-    wire [127:0] rk_direct_128 = key_out[127:0];
-    wire [127:0] rk_direct_256_0 = key_out[255:128];
-    wire [127:0] rk_direct_256_1 = key_out[127:0];
 
     wire [127:0] round_key =
-        (!key_len && round_cnt == 0) ? rk_direct_128   :
-        ( key_len && round_cnt == 0) ? rk_direct_256_0 :
-        ( key_len && round_cnt == 1) ? rk_direct_256_1 :
-                                       rk_out;
-
+        (!op && !key_len && round_cnt==0) ? key_out[255:128]   :
+        (!op &&  key_len && round_cnt==0) ? key_out[255:128] :
+        (!op &&  key_len && round_cnt==1) ? key_out[127:0]   :
+                                            rk_out;
     wire [127:0] cipher_in_data; 
     wire [127:0] dout_data;       
     wire [127:0] iv_next;
@@ -132,6 +130,7 @@ module aes_wb_slave (
         .auto_start     (auto_start),
         .auto_iv_upd    (auto_iv_upd),
         .irq_en         (irq_en),
+        .key_expanded   (key_expanded),
 
         .key_out        (key_out),
         .iv_out         (iv_out),
@@ -153,6 +152,10 @@ module aes_wb_slave (
         .iv_valid     (iv_valid),
         .mode         (mode),
         .key_len      (key_len),
+        .op           (op),
+        .kem_load_dec (kem_load_dec),
+        .kem_save_dec (kem_save_dec),
+        .key_expanded (key_expanded),
         .kem_load     (kem_load),
         .kem_next_rk  (kem_next_rk),
         .cipher_en    (cipher_en),
@@ -169,6 +172,9 @@ module aes_wb_slave (
         .rst_n    (rst_n),
         .key_in   (key_out),
         .key_len  (key_len),
+        .op       (op),
+        .load_dec (kem_load_dec),
+        .save_dec (kem_save_dec),
         .load     (kem_load),
         .next_rk  (kem_next_rk),
         .rk_out   (rk_out),

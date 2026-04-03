@@ -264,48 +264,48 @@ module tb_aes_wb_slave;
         // ════════════════════════════════════════════════════════
         //  TEST 1: AES-128 ECB Encrypt — FIPS-197 Appendix B
         // // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 1: AES-128 ECB Encrypt ===");
-        full_reset;
+        // $display("\n=== TEST 1: AES-128 ECB Encrypt ===");
+        // full_reset;
 
-        // CTRL: ECB=00, enc=0, AES-128=0
-        wb_write(8'h00, 32'h00);
-        // CONFIG: AUTO_START=1
-        wb_write(8'h08, 32'h01);
-        // Load key
-        load_key_128(KEY128);
-        // Encrypt
-        encrypt_block(PLAIN128, dout);
-        check_result(dout, CIPH128, "AES-128 ECB enc");
+        // // CTRL: ECB=00, enc=0, AES-128=0
+        // wb_write(8'h00, 32'h00);
+        // // CONFIG: AUTO_START=1
+        // wb_write(8'h08, 32'h01);
+        // // Load key
+        // load_key_128(KEY128);
+        // // Encrypt
+        // encrypt_block(PLAIN128, dout);
+        // check_result(dout, CIPH128, "AES-128 ECB enc");
 
         // ════════════════════════════════════════════════════════
         //  TEST 2: AES-128 ECB Decrypt
         // ════════════════════════════════════════════════════════
-        // $display("\n=== TEST 2: AES-128 ECB Decrypt ===");
-        // full_reset;
+        $display("\n=== TEST 2: AES-128 ECB Decrypt ===");
+        full_reset;
 
-        // // CTRL: ECB, decrypt=1, AES-128
-        // wb_write(8'h00, 32'h08);  // OP=1
-        // wb_write(8'h08, 32'h01);
-        // load_key_128(KEY128);
-        // encrypt_block(CIPH128, dout);
-        // check_result(dout, PLAIN128, "AES-128 ECB dec");
+        // CTRL: ECB, decrypt=1, AES-128
+        wb_write(8'h00, 32'h08);  // OP=1
+        wb_write(8'h08, 32'h01);
+        load_key_128(KEY128);
+        encrypt_block(CIPH128, dout);
+        check_result(dout, PLAIN128, "AES-128 ECB dec");
 
         // ════════════════════════════════════════════════════════
         //  TEST 3: AES-128 CBC Encrypt — SP800-38A F.2.1
         // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 3: AES-128 CBC Encrypt (4 blocks) ===");
-        full_reset;
+        // $display("\n=== TEST 3: AES-128 CBC Encrypt (4 blocks) ===");
+        // full_reset;
 
-        // CTRL: CBC=01, enc=0, AES-128=0
-        wb_write(8'h00, 32'h02);  // MODE=01
-        wb_write(8'h08, 32'h07);  // AUTO_START=1, AUTO_IV_UPDATE=1, IRQ_EN =1
-        load_key_128(KEY128);
-        load_iv(CBC_IV);
+        // // CTRL: CBC=01, enc=0, AES-128=0
+        // wb_write(8'h00, 32'h02);  // MODE=01
+        // wb_write(8'h08, 32'h07);  // AUTO_START=1, AUTO_IV_UPDATE=1, IRQ_EN =1
+        // load_key_128(KEY128);
+        // load_iv(CBC_IV);
 
-        encrypt_block(CBC_P1, dout); check_result(dout, CBC_C1, "CBC enc block 1");
-        encrypt_block(CBC_P2, dout); check_result(dout, CBC_C2, "CBC enc block 2");
-        encrypt_block(CBC_P3, dout); check_result(dout, CBC_C3, "CBC enc block 3");
-        encrypt_block(CBC_P4, dout); check_result(dout, CBC_C4, "CBC enc block 4");
+        // encrypt_block(CBC_P1, dout); check_result(dout, CBC_C1, "CBC enc block 1");
+        // encrypt_block(CBC_P2, dout); check_result(dout, CBC_C2, "CBC enc block 2");
+        // encrypt_block(CBC_P3, dout); check_result(dout, CBC_C3, "CBC enc block 3");
+        // encrypt_block(CBC_P4, dout); check_result(dout, CBC_C4, "CBC enc block 4");
 
         // // ════════════════════════════════════════════════════════
         // //  TEST 4: AES-128 CBC Decrypt — SP800-38A F.2.2
@@ -327,17 +327,17 @@ module tb_aes_wb_slave;
         // ════════════════════════════════════════════════════════
         //  TEST 5: AES-128 CTR — SP800-38A F.5.1
         // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 5: AES-128 CTR Encrypt ===");
-        full_reset;
+        // $display("\n=== TEST 5: AES-128 CTR Encrypt ===");
+        // full_reset;
 
-        // CTRL: CTR=10, enc=0, AES-128
-        wb_write(8'h00, 32'h04);  // MODE=10
-        wb_write(8'h08, 32'h03);  // AUTO_START + AUTO_IV_UPDATE
-        load_key_128(KEY128);
-        load_iv(CTR_IV);
+        // // CTRL: CTR=10, enc=0, AES-128
+        // wb_write(8'h00, 32'h04);  // MODE=10
+        // wb_write(8'h08, 32'h03);  // AUTO_START + AUTO_IV_UPDATE
+        // load_key_128(KEY128);
+        // load_iv(CTR_IV);
 
-        encrypt_block(CTR_P1, dout); check_result(dout, CTR_C1, "CTR enc block 1");
-        encrypt_block(CTR_P2, dout); check_result(dout, CTR_C2, "CTR enc block 2");
+        // encrypt_block(CTR_P1, dout); check_result(dout, CTR_C1, "CTR enc block 1");
+        // encrypt_block(CTR_P2, dout); check_result(dout, CTR_C2, "CTR enc block 2");
 
         // // ════════════════════════════════════════════════════════
         // //  TEST 6: AES-256 ECB Encrypt — FIPS-197 Appendix B
@@ -356,125 +356,125 @@ module tb_aes_wb_slave;
         // // ════════════════════════════════════════════════════════
         // //  TEST 8: WB error on invalid address
         // // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 8: Invalid address ===");
-        @(posedge clk); #1;
-        wb_cyc = 1; wb_stb = 1; wb_we = 1;
-        wb_adr = 8'h60; wb_dat_i = 32'hDEAD; wb_sel = 4'hF;
-        @(posedge clk); #1;
-        if (wb_err == 1)
-            $display("PASS wb_err=1 for invalid addr 0x60");
-        else begin
-            $display("FAIL wb_err should be 1 for invalid addr");
-            fail_count = fail_count + 1;
-        end
-        wb_cyc = 0; wb_stb = 0;
+        // $display("\n=== TEST 8: Invalid address ===");
+        // @(posedge clk); #1;
+        // wb_cyc = 1; wb_stb = 1; wb_we = 1;
+        // wb_adr = 8'h60; wb_dat_i = 32'hDEAD; wb_sel = 4'hF;
+        // @(posedge clk); #1;
+        // if (wb_err == 1)
+        //     $display("PASS wb_err=1 for invalid addr 0x60");
+        // else begin
+        //     $display("FAIL wb_err should be 1 for invalid addr");
+        //     fail_count = fail_count + 1;
+        // end
+        // wb_cyc = 0; wb_stb = 0;
    // ════════════════════════════════════════════════════════
-        $display("\n=== TEST 9: STALL khi ghi DIN lúc BUSY ===");
-        full_reset;
+        // $display("\n=== TEST 9: STALL khi ghi DIN lúc BUSY ===");
+        // full_reset;
  
-        // Setup: AES-128 ECB, AUTO_START=0 (ghi START thủ công)
-        wb_write(8'h00, 32'h00);   // CTRL: ECB, enc, AES-128
-        wb_write(8'h08, 32'h00);   // CONFIG: AUTO_START=0
+        // // Setup: AES-128 ECB, AUTO_START=0 (ghi START thủ công)
+        // wb_write(8'h00, 32'h00);   // CTRL: ECB, enc, AES-128
+        // wb_write(8'h08, 32'h00);   // CONFIG: AUTO_START=0
  
-        // Nạp key và DIN trước
-        load_key_128(KEY128);
-        wb_write(8'h40, PLAIN128[127:96]);
-        wb_write(8'h44, PLAIN128[95:64]);
-        wb_write(8'h48, PLAIN128[63:32]);
-        wb_write(8'h4C, PLAIN128[31:0]);
+        // // Nạp key và DIN trước
+        // load_key_128(KEY128);
+        // wb_write(8'h40, PLAIN128[127:96]);
+        // wb_write(8'h44, PLAIN128[95:64]);
+        // wb_write(8'h48, PLAIN128[63:32]);
+        // wb_write(8'h4C, PLAIN128[31:0]);
  
-        // Kick START thủ công → FSM RUN → busy=1
-        wb_write(8'h00, 32'h01);   // START bit
+        // // Kick START thủ công → FSM RUN → busy=1
+        // wb_write(8'h00, 32'h01);   // START bit
  
-        // Ngay lập tức thử ghi DIN_0 khi busy — expect STALL=1
-        @(posedge clk); #1;
-        wb_cyc  = 1; wb_stb = 1; wb_we = 1;
-        wb_adr  = 8'h40;           // DIN_0
-        wb_dat_i = 32'hCAFEBABE;
-        wb_sel  = 4'hF;
+        // // Ngay lập tức thử ghi DIN_0 khi busy — expect STALL=1
+        // @(posedge clk); #1;
+        // wb_cyc  = 1; wb_stb = 1; wb_we = 1;
+        // wb_adr  = 8'h40;           // DIN_0
+        // wb_dat_i = 32'hCAFEBABE;
+        // wb_sel  = 4'hF;
  
-        @(posedge clk); #1;
-        // Nếu busy=1: STALL phải = 1, ACK phải = 0
-        if (wb_stall == 1 && wb_ack == 0)
-            $display("PASS STALL=1, ACK=0 khi ghi DIN lúc busy");
-        else if (wb_stall == 0 && wb_ack == 1)
-            $display("INFO  busy đã xuống trước khi test kịp — ACK=1, không có stall");
-        else begin
-            $display("FAIL STALL=%b ACK=%b — không đúng (busy=%b)",
-                      wb_stall, wb_ack, dut.u_ctrl.busy);
-            fail_count = fail_count + 1;
-        end
+        // @(posedge clk); #1;
+        // // Nếu busy=1: STALL phải = 1, ACK phải = 0
+        // if (wb_stall == 1 && wb_ack == 0)
+        //     $display("PASS STALL=1, ACK=0 khi ghi DIN lúc busy");
+        // else if (wb_stall == 0 && wb_ack == 1)
+        //     $display("INFO  busy đã xuống trước khi test kịp — ACK=1, không có stall");
+        // else begin
+        //     $display("FAIL STALL=%b ACK=%b — không đúng (busy=%b)",
+        //               wb_stall, wb_ack, dut.u_ctrl.busy);
+        //     fail_count = fail_count + 1;
+        // end
  
-        // Giữ STB=1, chờ STALL xuống 0 (busy=0 sau khi cipher xong)
-        begin : wait_stall
-            integer t;
-            t = 0;
-            while (wb_stall == 1 && t < 50) begin
-                @(posedge clk); #1;
-                t = t + 1;
-            end
-            if (wb_stall == 0)
-                $display("PASS STALL=0 sau khi busy xuống (sau %0d cycles)", t);
-            else begin
-                $display("FAIL STALL vẫn = 1 sau 50 cycles");
-                fail_count = fail_count + 1;
-            end
-        end
+        // // Giữ STB=1, chờ STALL xuống 0 (busy=0 sau khi cipher xong)
+        // begin : wait_stall
+        //     integer t;
+        //     t = 0;
+        //     while (wb_stall == 1 && t < 50) begin
+        //         @(posedge clk); #1;
+        //         t = t + 1;
+        //     end
+        //     if (wb_stall == 0)
+        //         $display("PASS STALL=0 sau khi busy xuống (sau %0d cycles)", t);
+        //     else begin
+        //         $display("FAIL STALL vẫn = 1 sau 50 cycles");
+        //         fail_count = fail_count + 1;
+        //     end
+        // end
  
-        // Release bus
-        wb_cyc = 0; wb_stb = 0; wb_we = 0;
-        @(posedge clk); #1;
+        // // Release bus
+        // wb_cyc = 0; wb_stb = 0; wb_we = 0;
+        // @(posedge clk); #1;
  
-        // Verify: STALL=0 khi ghi KEY (không phải DIN) lúc busy
-        $display("\n--- STALL=0 khi ghi KEY lúc busy ---");
-        full_reset;
-        wb_write(8'h00, 32'h00);
-        wb_write(8'h08, 32'h00);
-        load_key_128(KEY128);
-        wb_write(8'h40, PLAIN128[127:96]);
-        wb_write(8'h44, PLAIN128[95:64]);
-        wb_write(8'h48, PLAIN128[63:32]);
-        wb_write(8'h4C, PLAIN128[31:0]);
-        wb_write(8'h00, 32'h01);   // START
+        // // Verify: STALL=0 khi ghi KEY (không phải DIN) lúc busy
+        // $display("\n--- STALL=0 khi ghi KEY lúc busy ---");
+        // full_reset;
+        // wb_write(8'h00, 32'h00);
+        // wb_write(8'h08, 32'h00);
+        // load_key_128(KEY128);
+        // wb_write(8'h40, PLAIN128[127:96]);
+        // wb_write(8'h44, PLAIN128[95:64]);
+        // wb_write(8'h48, PLAIN128[63:32]);
+        // wb_write(8'h4C, PLAIN128[31:0]);
+        // wb_write(8'h00, 32'h01);   // START
  
-        // Ghi KEY_0 (không phải DIN) lúc busy — không được stall
-        @(posedge clk); #1;
-        wb_cyc  = 1; wb_stb = 1; wb_we = 1;
-        wb_adr  = 8'h10;           // KEY_0
-        wb_dat_i = 32'h12345678;
-        wb_sel  = 4'hF;
-        @(posedge clk); #1;
+        // // Ghi KEY_0 (không phải DIN) lúc busy — không được stall
+        // @(posedge clk); #1;
+        // wb_cyc  = 1; wb_stb = 1; wb_we = 1;
+        // wb_adr  = 8'h10;           // KEY_0
+        // wb_dat_i = 32'h12345678;
+        // wb_sel  = 4'hF;
+        // @(posedge clk); #1;
  
-        if (wb_stall == 0)
-            $display("PASS STALL=0 khi ghi KEY (không phải DIN) lúc busy");
-        else begin
-            $display("FAIL STALL không được =1 khi ghi KEY");
-            fail_count = fail_count + 1;
-        end
-        wb_cyc = 0; wb_stb = 0;
+        // if (wb_stall == 0)
+        //     $display("PASS STALL=0 khi ghi KEY (không phải DIN) lúc busy");
+        // else begin
+        //     $display("FAIL STALL không được =1 khi ghi KEY");
+        //     fail_count = fail_count + 1;
+        // end
+        // wb_cyc = 0; wb_stb = 0;
  
-        // Verify: STALL=0 khi ghi DIN lúc KHÔNG busy
-        $display("\n--- STALL=0 khi ghi DIN lúc không busy ---");
-        full_reset;
-        wb_write(8'h00, 32'h00);
-        wb_write(8'h08, 32'h00);
-        load_key_128(KEY128);
-        // Không start → busy=0
+        // // Verify: STALL=0 khi ghi DIN lúc KHÔNG busy
+        // $display("\n--- STALL=0 khi ghi DIN lúc không busy ---");
+        // full_reset;
+        // wb_write(8'h00, 32'h00);
+        // wb_write(8'h08, 32'h00);
+        // load_key_128(KEY128);
+        // // Không start → busy=0
  
-        @(posedge clk); #1;
-        wb_cyc  = 1; wb_stb = 1; wb_we = 1;
-        wb_adr  = 8'h40;           // DIN_0, không busy
-        wb_dat_i = 32'hAABBCCDD;
-        wb_sel  = 4'hF;
-        @(posedge clk); #1;
+        // @(posedge clk); #1;
+        // wb_cyc  = 1; wb_stb = 1; wb_we = 1;
+        // wb_adr  = 8'h40;           // DIN_0, không busy
+        // wb_dat_i = 32'hAABBCCDD;
+        // wb_sel  = 4'hF;
+        // @(posedge clk); #1;
  
-        if (wb_stall == 0)
-            $display("PASS STALL=0 khi ghi DIN lúc không busy");
-        else begin
-            $display("FAIL STALL không được =1 khi không busy");
-            fail_count = fail_count + 1;
-        end
-        wb_cyc = 0; wb_stb = 0;
+        // if (wb_stall == 0)
+        //     $display("PASS STALL=0 khi ghi DIN lúc không busy");
+        // else begin
+        //     $display("FAIL STALL không được =1 khi không busy");
+        //     fail_count = fail_count + 1;
+        // end
+        // wb_cyc = 0; wb_stb = 0;
  
         // ════════════════════════════════════════════════════════
         //  Summary

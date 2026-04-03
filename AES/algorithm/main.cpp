@@ -63,14 +63,14 @@ static bool test_nist_fips197() {
                   (memcmp(ct.data, expected_ct, 16) == 0);
     printf("[%s] encrypt block 0\n", enc_ok ? "PASS" : "FAIL");
 
-    // // Decrypt round-trip
-    // AES::Result pt = aes.decryptECB(ct.data, ct.len);
-    // bool dec_ok = check("decrypt round-trip", pt.data, pt.len, plain, 16);
+    // Decrypt round-trip
+    AES::Result pt = aes.decryptECB(ct.data, ct.len);
+    bool dec_ok = check("decrypt round-trip", pt.data, pt.len, plain, 16);
 
     AES::freeResult(ct);
-    // AES::freeResult(pt);
-    // return enc_ok && dec_ok;
-    return enc_ok;
+    AES::freeResult(pt);
+    return enc_ok && dec_ok;
+    // return enc_ok;
 }
 
 // ================================================================

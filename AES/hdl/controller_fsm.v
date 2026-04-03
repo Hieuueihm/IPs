@@ -1,21 +1,4 @@
-//  States:
-//    IDLE   — wait for key_valid
-//    READY  — wait for start and iv_valid (if needed),
-//    RUN    — cipher and kem  running in parallel, count rounds
-//    DONE   — output ready, wait for next start or key change
-//
-//  Timing RUN (AES-128, Nr=10):
-//
-//    Cycle:   0      1      2    ...   9     10
-//    KEM:    rk1    rk2    rk3  ...  rk10   idle
-//    Cipher: rk0    rk1    rk2  ...   rk9   rk10
-//    Flag:  first                           last
-//
-//  AES-256 (rk0,rk1 từ key_in trực tiếp):
-//    Cycle:   0      1      2      3   ...  13    14
-//    KEM:    rk2    rk3    rk4    rk5  ...  rk15  idle
-//    Cipher: rk0    rk1    rk2    rk3  ...  rk13  rk14
-// ============================================================
+
 module controller_fsm (
     input  wire clk,
     input  wire rst_n,
@@ -25,7 +8,11 @@ module controller_fsm (
     input  wire       iv_valid,   
     input  wire [1:0] mode,      
     input  wire       key_len,     // 0=AES-128 1=AES-256
+    input  wire       op,
 
+    output reg        kem_load_dec,
+    output reg        kem_save_dec,
+    output reg        key_expanded,
     output reg        kem_load,    
     output reg        kem_next_rk, 
 
@@ -39,18 +26,19 @@ module controller_fsm (
 
     output wire [3:0] round_dbg     // debug: current round number (0..Nr)
 );
-    localparam [1:0]
-        IDLE  = 2'b00,
-        READY = 2'b01,
-        RUN   = 2'b11,
-        DONE  = 2'b10;
-
+    localparam [2:0]
+        IDLE       = 3'b000,
+        KEY_EXPAND = 3'b001,
+        READY      = 3'b011,
+        RUN        = 3'b110,
+        DONE       = 3'b100;
 
  
     wire [3:0] Nr     = key_len ? 4'd14 : 4'd10;
     wire       iv_needed = (mode != 2'b00);  
+    reg [3:0] expand_cnt;
 
-    reg [1:0] current_state, next_state;
+    reg [2:0] current_state, next_state;
 
     reg [3:0] round_cnt;
     assign round_dbg = (current_state == RUN) ? round_cnt : 4'b0;
@@ -68,6 +56,16 @@ module controller_fsm (
         end
     end
 
+    always @(posedge clk or negedge rst_n) begin
+        if(~rst_n) begin
+            expand_cnt <= 4'd0;
+        end else if (current_state == KEY_EXPAND) begin
+            expand_cnt  <= expand_cnt  + 4'd1;
+        end else begin
+            expand_cnt <= 4'd0; 
+        end
+    end
+
 
     always @(posedge clk or negedge rst_n) begin
         if(~rst_n) begin
@@ -76,56 +74,69 @@ module controller_fsm (
             current_state <= next_state;
         end
     end
-
+    assign is_expand_done = expand_cnt == Nr;
     assign is_last_round = round_cnt == Nr;
     always @(*) begin
         case (current_state)
-            IDLE: next_state = (key_valid) ? READY : IDLE;
-            READY: next_state = (~key_valid) ? IDLE : is_start ? RUN : READY;
-            RUN: next_state = is_last_round ? DONE : RUN;
-            DONE: next_state = READY;
-            default: next_state = IDLE;
+            IDLE:       next_state = key_valid ? KEY_EXPAND : IDLE;
+            KEY_EXPAND: next_state = is_expand_done ? READY : KEY_EXPAND;
+            READY:      next_state = (~key_valid) ? IDLE
+                                   : is_start    ? RUN : READY;
+            RUN:        next_state = is_last_round ? DONE : RUN;
+            DONE:       next_state = READY;
+            default:    next_state = IDLE;
         endcase
     end
    
    
-    always @(*) begin
-        kem_load    = 1'b0;
-        kem_next_rk = 1'b0;
-        cipher_en   = 1'b0;
-        load_state  = 1'b0;
-        is_first    = 1'b0;
-        is_last     = 1'b0;
-        busy        = 1'b0;
-        done_pulse  = 1'b0;
+     always @(*) begin
+        kem_load     = 1'b0;
+        kem_load_dec = 1'b0;   // ← thêm default
+        kem_save_dec = 1'b0;   // ← thêm default
+        kem_next_rk  = 1'b0;
+        cipher_en    = 1'b0;
+        load_state   = 1'b0;
+        is_first     = 1'b0;
+        is_last      = 1'b0;
+        busy         = 1'b0;
+        key_expanded = 1'b0;   // ← thêm default
+        done_pulse   = 1'b0;
 
         case (current_state)
-
             IDLE: begin
                 if (key_valid)
                     kem_load = 1'b1;
             end
 
+            KEY_EXPAND: begin                         
+                kem_next_rk  = 1'b1;
+                kem_save_dec = is_expand_done;  
+            end
+
             READY: begin
-                if (is_start)
-                    load_state = 1'b1;
+                key_expanded = 1'b1;                   
+                if (is_start) begin
+                    load_state   = 1'b1;
+                    if (!op)
+                        kem_load     = 1'b1;           
+                    else
+                        kem_load_dec = 1'b1;         
+                end
             end
 
             RUN: begin
                 busy         = 1'b1;
-                cipher_en    = 1'b1;  
-                is_first = (round_cnt == 4'd0);
-                is_last  = is_last_round;
-                kem_next_rk = (round_cnt < Nr);
-                done_pulse = is_last_round;
+                key_expanded = 1'b1;                   
+                cipher_en    = 1'b1;
+                is_first     = (round_cnt == 4'd0);
+                is_last      = is_last_round;
+                kem_next_rk  =  key_len ? (round_cnt > 0 & round_cnt < Nr) : round_cnt < Nr;
+                done_pulse   = is_last_round;
             end
 
             DONE: begin
-                kem_load     = 1'b1;
+                key_expanded = 1'b1;                  
             end
-
-            default: ;
-
         endcase
     end
 
