@@ -1,98 +1,64 @@
 #pragma once
+#include <stdio.h>
 #include <cstdint>
-#include <cstddef>
+#include <stdexcept>
 #include <cstring>
-#include <cstdlib>
-#include <iostream>
-#include <iomanip>
 using byte = uint8_t;
 using bytes = uint8_t *;
-
-static void printState(const char* label, const byte state[16])
+byte xtime(byte x);
+enum AESKeyLength
 {
-    std::cout << label << ":\n";
-    for (int i = 0; i < 16; i++)
-    {
-        std::cout << std::hex << std::setw(2) << std::setfill('0')
-                  << (int)state[i] << " ";
+    AES128_L = 16,
+    AES192_L = 24,
+    AES256_L = 32
+};
+enum AESMode
+{
+    AES_ECB,
+    AES_CBC,
+    AES_CTR
+};
+struct Result
+{
+    bytes data;
+    size_t len;
+    bool is_ok;
+    char *err;
 
-        if ((i % 4) == 3) std::cout << "\n"; // in theo matrix 4x4
-    }
-    std::cout << std::dec << "\n";
+    Result() : data(nullptr), len(0), is_ok(false), err(nullptr) {}
+};
+class AES
+{
+public:
+    AES(AESKeyLength key_length, AESMode mode, bytes key, bytes iv = nullptr);
+    ~AES();
+
+    void setMode(AESMode mode);
+    void setIV(bytes iv);
+    void keyExpansion(bytes key, bytes w);
+
+    // Result cipher(bytes data, size_t len);
+    // Result decrypt(bytes data, size_t len);
+
+private:
+    int Nk, Nr;
+    bytes w;
+
+    AESMode mode;
+    bytes key;
+    bytes iv;
+
+    void addRoundKey(bytes state, int round);
+    void subBytes(bytes state);
+    void shiftRows(bytes s);
+    void mixColumns(bytes s);
+};
+
+static void printByte4(const char *label, const byte *b)
+{
+    printf("%s: %02X %02X %02X %02X\n", label, b[0], b[1], b[2], b[3]);
 }
-
-namespace AES
+static void printByte16(const char *label, const byte *b)
 {
-
-    enum KeySize
-    {
-        AES_128 = 16, // Nk=4,  Nr=10
-        AES_256 = 32, // Nk=8,  Nr=14
-    };
-
-    enum Mode
-    {
-        ECB, // Electronic Codebook
-        CBC, // Cipher Block Chaining
-        CFB, // Cipher FeedBack (s=128)
-        OFB, // Output FeedBack
-        CTR, // Counter
-    };
-
-    struct Result
-    {
-        bytes data;
-        size_t len;
-        bool ok;
-        const char *err;
-
-        Result() : data(nullptr), len(0), ok(false), err(nullptr) {}
-    };
-
-    void freeResult(Result &r);
-
-    class AES
-    {
-    public:
-        AES(const byte *key, KeySize keySize);
-        ~AES();
-
-        void setMode(Mode mode);
-        void setIV(const byte *iv); // CBC, CFB, OFB: 16 bytes
-        void setNonce(const byte *nonce);
-
-        Result encryptECB(const byte *plain, size_t plainLen);
-        Result decryptECB(const byte *cipher, size_t cipherLen);
-
-        Result encryptCBC(const byte *plain, size_t plainLen);
-        Result decryptCBC(const byte *cipher, size_t cipherLen);
-
-    private:
-        int Nk;
-        int Nr;
-
-        byte *w;
-        void keyExpansion(const byte *key);
-
-        byte iv_[16];
-        bool ivSet_ = false;
-
-        void encryptBlock(const byte *in, byte *out) const;
-        void decryptBlock(const byte *in, byte *out) const;
-
-        void addRoundKey(byte *state, int round) const;
-        void subBytes(byte *state) const;
-        void shiftRows(byte *state) const;
-        void mixColumns(byte *state) const;
-        void invSubBytes(byte *state) const;
-        void invShiftRows(byte *state) const;
-        void invMixColumns(byte *state) const;
-
-        static bytes pkcs7Pad(const byte *in, size_t inLen, size_t &outLen);
-        static size_t pkcs7Unpad(const byte *in, size_t inLen);
-
-        static byte xtime(byte x);
-        static byte gmul(byte a, byte b);
-    };
-
+    printf("%s: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", label, b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15]);
 }
