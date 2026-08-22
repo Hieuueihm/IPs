@@ -5,7 +5,7 @@ byte xtime(byte x)
 {
     return (x << 1) ^ ((x & 0x80) ? 0x1b : 0x00);
 }
-AES::AES(AESKeyLength key_length, AESMode mode, bytes key, bytes iv)
+AES::AES(AESKeyLength key_length, AESMode mode)
 {
     switch (key_length)
     {
@@ -25,15 +25,14 @@ AES::AES(AESKeyLength key_length, AESMode mode, bytes key, bytes iv)
         throw std::invalid_argument("Invalid key length");
     }
     this->mode = mode;
-    this->key = key;
-    this->iv = iv;
+    this->w = new byte[4 * (Nr + 1) * 4];
+    this->iv = new byte[16];
 }
 
 AES::~AES()
 {
-
-    delete[] key;
-    delete[] iv;
+    delete[] this->w;
+    delete[] this->iv;
 }
 
 void AES::setMode(AESMode mode)
@@ -42,7 +41,7 @@ void AES::setMode(AESMode mode)
 }
 void AES::setIV(bytes iv)
 {
-    this->iv = iv;
+    memcpy(this->iv, iv, 16);
 }
 
 void AES::subBytes(bytes state)
@@ -95,20 +94,23 @@ void AES::addRoundKey(bytes state, int round)
     for (int i = 0; i < 16; i++)
         state[i] ^= rk[i];
 }
-
-void AES::keyExpansion(bytes key, bytes w)
+void AES::keyExpansion(bytes key)
 {
-    memcpy(w, key, 4 * Nk); // Copy the original key into the first Nk words of w
+    printf("=== Key Expansion ===\n");
+    memcpy(this->w, key, 4 * Nk); // Copy the original key into the first Nk words of w
+#ifdef DEBUG_KEY_EXPAN
     printf("=== Original Key ===\n");
     printByte16("Key Input", key);
-
+#endif
     for (int i = Nk; i < 4 * (Nr + 1); i++)
     {
         byte temp[4];
-        memcpy(temp, w + (i - 1) * 4, 4);
+        memcpy(temp, this->w + (i - 1) * 4, 4);
+#ifdef DEBUG_KEY_EXPAN
         printf("================================\n");
         printf("=== Round %d ===\n", i);
         printByte4("Temp", temp);
+#endif
         if (i % Nk == 0)
         {
             byte t = temp[0];
@@ -118,20 +120,23 @@ void AES::keyExpansion(bytes key, bytes w)
             temp[1] = temp[2];
             temp[2] = temp[3];
             temp[3] = t;
-
+#ifdef DEBUG_KEY_EXPAN
             printf("Rotated Temp\n");
             printByte4("Temp", temp);
-
+#endif
             for (int j = 0; j < 4; j++)
             {
                 temp[j] = SBOX[temp[j]];
             }
+#ifdef DEBUG_KEY_EXPAN
             printf("Substituted Temp\n");
             printByte4("Temp", temp);
-
+#endif
             temp[0] ^= RCON[i / Nk];
+#ifdef DEBUG_KEY_EXPAN
             printf("RCON Applied Temp\n");
             printByte4("Temp", temp);
+#endif
         }
         else if (Nk > 6 && i % Nk == 4)
         {
@@ -143,11 +148,84 @@ void AES::keyExpansion(bytes key, bytes w)
 
         for (int j = 0; j < 4; j++)
             cur[j] = prev[j] ^ temp[j];
-
+#ifdef DEBUG_KEY_EXPAN
         printf("Final Word\n");
         printByte4("W", cur);
         printf("========================\n");
+#endif
     }
 }
 
-//
+void AES::cipherBlock(bytes state)
+{
+    addRoundKey(state, 0);
+
+    for (int round = 1; round < Nr; round++)
+    {
+        subBytes(state);
+        shiftRows(state);
+        mixColumns(state);
+        addRoundKey(state, round);
+    }
+
+    subBytes(state);
+    shiftRows(state);
+    addRoundKey(state, Nr);
+}
+
+void AES::incrementCounter()
+{
+    for (int i = 15; i >= 0; i--)
+    {
+        this->iv[i]++;
+
+        if (this->iv[i] != 0)
+            break;
+    }
+}
+bytes AES::cipher(bytes data)
+{
+    bytes state = new byte[16];
+
+    memcpy(state, data, 16);
+
+    if (this->mode == AES_ECB)
+    {
+        cipherBlock(state);
+    }
+
+    else if (this->mode == AES_CBC)
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            state[i] ^= this->iv[i];
+        }
+
+        cipherBlock(state);
+
+        memcpy(this->iv, state, 16);
+    }
+
+    else if (this->mode == AES_CTR)
+    {
+        byte keystream[16];
+
+        memcpy(keystream, this->iv, 16);
+        cipherBlock(keystream);
+        for (int i = 0; i < 16; i++)
+        {
+            state[i] ^= keystream[i];
+        }
+        incrementCounter();
+    }
+
+    else
+    {
+        delete[] state;
+
+        throw std::invalid_argument(
+            "Unsupported AES mode");
+    }
+
+    return state;
+}

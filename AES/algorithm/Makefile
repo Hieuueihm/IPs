@@ -1,8 +1,10 @@
-TARGET = aes_run
+TARGET = run
 
 CXX = g++
 
 CXXFLAGS = -Wall -Wextra -std=c++17
+
+
 
 SRCS = main.cpp aes.cpp
 

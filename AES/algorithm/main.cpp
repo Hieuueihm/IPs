@@ -1,17 +1,322 @@
-#include <iostream>
-#include <cstring>
 #include <cstdio>
+#include <cstring>
+
 #include "aes.hpp"
+#include "nist_vectors.hpp"
+
+// ============================================================
+// Utilities
+// ============================================================
+
+bool equal16(const byte *a, const byte *b)
+{
+    return std::memcmp(a, b, 16) == 0;
+}
+
+void printBytes(const char *label, const byte *data, std::size_t len)
+{
+    std::printf("%-12s: ", label);
+
+    for (std::size_t i = 0; i < len; ++i)
+        std::printf("%02X%s", data[i], (i + 1 == len) ? "" : " ");
+
+    std::printf("\n");
+}
+
+void printMismatch(const byte *got, const byte *expected)
+{
+    for (int i = 0; i < 16; ++i)
+    {
+        if (got[i] != expected[i])
+        {
+            std::printf(
+                "  byte[%2d] : got %02X, expected %02X\n",
+                i, got[i], expected[i]);
+        }
+    }
+}
+
+void printSummary(const char *name, int passed, int total)
+{
+    std::printf("\n========================================\n");
+    std::printf("%s\n", name);
+    std::printf("Passed : %d / %d\n", passed, total);
+    std::printf("Result : %s\n", (passed == total) ? "PASS" : "FAIL");
+    std::printf("========================================\n");
+}
+
+void prepareKey(byte key[32], const byte *source, std::size_t keyLen)
+{
+    std::memset(key, 0, 32);
+    std::memcpy(key, source, keyLen);
+}
+
+// ============================================================
+// FIPS 197 - single-block AES/ECB-style tests
+// ============================================================
+
+bool runECBWithAES(AES &aes, const nist::ECBCase &tc)
+{
+    byte key[32];
+    byte data[16];
+
+    prepareKey(key, tc.key, tc.keyLen);
+    std::memcpy(data, tc.plaintext, 16);
+
+    aes.keyExpansion(key);
+
+    bytes ciphertext = aes.cipher(data);
+    const bool pass = equal16(ciphertext, tc.expected);
+
+    std::printf("\n[%s] %s\n", pass ? "PASS" : "FAIL", tc.name);
+
+    if (!pass)
+    {
+        printBytes("Plaintext", tc.plaintext, 16);
+        printBytes("Key", tc.key, tc.keyLen);
+        printBytes("Got", ciphertext, 16);
+        printBytes("Expected", tc.expected, 16);
+        printMismatch(ciphertext, tc.expected);
+    }
+
+    delete[] ciphertext;
+    return pass;
+}
+
+bool runECBCase(const nist::ECBCase &tc)
+{
+    switch (tc.keyLen)
+    {
+    case 16:
+    {
+        AES aes(AES128_L, AES_ECB);
+        return runECBWithAES(aes, tc);
+    }
+    case 24:
+    {
+        AES aes(AES192_L, AES_ECB);
+        return runECBWithAES(aes, tc);
+    }
+    case 32:
+    {
+        AES aes(AES256_L, AES_ECB);
+        return runECBWithAES(aes, tc);
+    }
+    default:
+        return false;
+    }
+}
+
+void FIPS197()
+{
+    std::printf("\n========================================\n");
+    std::printf("          FIPS-197 CIPHER TEST\n");
+    std::printf("========================================\n");
+
+    int passed = 0;
+
+    for (const auto &tc : nist::FIPS_CASES)
+        passed += runECBCase(tc);
+
+    printSummary(
+        "FIPS-197 SUMMARY",
+        passed,
+        static_cast<int>(nist::FIPS_CASE_COUNT));
+}
+
+// ============================================================
+// Shared multi-block checker
+// ============================================================
+
+bool checkBlock(
+    int block,
+    const byte *plaintext,
+    const byte *ciphertext,
+    const byte *expected)
+{
+    const bool pass = equal16(ciphertext, expected);
+
+    std::printf(
+        "  [%s] Block %d\n",
+        pass ? "PASS" : "FAIL",
+        block + 1);
+
+    if (!pass)
+    {
+        printBytes("Plaintext", plaintext, 16);
+        printBytes("Got", ciphertext, 16);
+        printBytes("Expected", expected, 16);
+        printMismatch(ciphertext, expected);
+    }
+
+    return pass;
+}
+
+// ============================================================
+// CBC - NIST SP 800-38A F.2
+// ============================================================
+
+bool runCBCWithAES(AES &aes, const nist::MultiBlockCase &tc)
+{
+    byte key[32];
+    byte iv[16];
+
+    prepareKey(key, tc.key, tc.keyLen);
+    std::memcpy(iv, nist::CBC_IV, 16);
+
+    aes.keyExpansion(key);
+    aes.setIV(iv);
+
+    bool pass = true;
+
+    for (int block = 0; block < 4; ++block)
+    {
+        byte data[16];
+        std::memcpy(data, nist::SP_PT[block], 16);
+
+        bytes ciphertext = aes.cipher(data);
+        const byte *expected = tc.expected + block * 16;
+
+        pass &= checkBlock(
+            block,
+            nist::SP_PT[block],
+            ciphertext,
+            expected);
+
+        delete[] ciphertext;
+    }
+
+    return pass;
+}
+
+bool runCBCCase(const nist::MultiBlockCase &tc)
+{
+    std::printf("\n%s\n", tc.name);
+
+    switch (tc.keyLen)
+    {
+    case 16:
+    {
+        AES aes(AES128_L, AES_CBC);
+        return runCBCWithAES(aes, tc);
+    }
+    case 24:
+    {
+        AES aes(AES192_L, AES_CBC);
+        return runCBCWithAES(aes, tc);
+    }
+    case 32:
+    {
+        AES aes(AES256_L, AES_CBC);
+        return runCBCWithAES(aes, tc);
+    }
+    default:
+        return false;
+    }
+}
+
+void SP800_38A_CBC()
+{
+    std::printf("\n========================================\n");
+    std::printf("      NIST SP 800-38A CBC TEST\n");
+    std::printf("========================================\n");
+
+    int passed = 0;
+
+    for (const auto &tc : nist::CBC_CASES)
+        passed += runCBCCase(tc);
+
+    printSummary(
+        "SP 800-38A CBC SUMMARY",
+        passed,
+        static_cast<int>(nist::CBC_CASE_COUNT));
+}
+
+// ============================================================
+// CTR - NIST SP 800-38A F.5
+// ============================================================
+
+bool runCTRWithAES(AES &aes, const nist::MultiBlockCase &tc)
+{
+    byte key[32];
+    byte counter[16];
+
+    prepareKey(key, tc.key, tc.keyLen);
+    std::memcpy(counter, nist::CTR_INITIAL_COUNTER, 16);
+
+    aes.keyExpansion(key);
+    aes.setCounter(counter);
+
+    bool pass = true;
+
+    for (int block = 0; block < 4; ++block)
+    {
+        byte data[16];
+        std::memcpy(data, nist::SP_PT[block], 16);
+
+        bytes ciphertext = aes.cipher(data);
+        const byte *expected = tc.expected + block * 16;
+
+        pass &= checkBlock(
+            block,
+            nist::SP_PT[block],
+            ciphertext,
+            expected);
+
+        delete[] ciphertext;
+    }
+
+    return pass;
+}
+
+bool runCTRCase(const nist::MultiBlockCase &tc)
+{
+    std::printf("\n%s\n", tc.name);
+
+    switch (tc.keyLen)
+    {
+    case 16:
+    {
+        AES aes(AES128_L, AES_CTR);
+        return runCTRWithAES(aes, tc);
+    }
+    case 24:
+    {
+        AES aes(AES192_L, AES_CTR);
+        return runCTRWithAES(aes, tc);
+    }
+    case 32:
+    {
+        AES aes(AES256_L, AES_CTR);
+        return runCTRWithAES(aes, tc);
+    }
+    default:
+        return false;
+    }
+}
+
+void SP800_38A_CTR()
+{
+    std::printf("\n========================================\n");
+    std::printf("      NIST SP 800-38A CTR TEST\n");
+    std::printf("========================================\n");
+
+    int passed = 0;
+
+    for (const auto &tc : nist::CTR_CASES)
+        passed += runCTRCase(tc);
+
+    printSummary(
+        "SP 800-38A CTR SUMMARY",
+        passed,
+        static_cast<int>(nist::CTR_CASE_COUNT));
+}
 
 int main()
 {
+    FIPS197();
+    SP800_38A_CBC();
+    SP800_38A_CTR();
 
-    bytes key = new byte[32]{0x60, 0x3d, 0xeb, 0x10, 0x15, 0xca, 0x71, 0xbe,
-                             0x2b, 0x73, 0xae, 0xf0, 0x85, 0x7d, 0x77, 0x81,
-                             0x1f, 0x35, 0x2c, 0x07, 0x3b, 0x61, 0x08, 0xd7,
-                             0x2d, 0x98, 0x10, 0xa3, 0x09, 0x14, 0xdf, 0xf4};
-    AES aes(AES256_L, AES_ECB, key);
-    bytes w = new byte[4 * (14 + 1) * 4];
-    aes.keyExpansion(key, w);
     return 0;
 }

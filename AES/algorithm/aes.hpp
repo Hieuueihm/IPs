@@ -6,6 +6,7 @@
 using byte = uint8_t;
 using bytes = uint8_t *;
 byte xtime(byte x);
+
 enum AESKeyLength
 {
     AES128_L = 16,
@@ -18,40 +19,40 @@ enum AESMode
     AES_CBC,
     AES_CTR
 };
-struct Result
-{
-    bytes data;
-    size_t len;
-    bool is_ok;
-    char *err;
 
-    Result() : data(nullptr), len(0), is_ok(false), err(nullptr) {}
-};
 class AES
 {
 public:
-    AES(AESKeyLength key_length, AESMode mode, bytes key, bytes iv = nullptr);
+    AES(AESKeyLength key_length, AESMode mode);
     ~AES();
-
+    void keyExpansion(bytes key);
+    bytes getExpandedKey()
+    {
+        return this->w;
+    }
     void setMode(AESMode mode);
     void setIV(bytes iv);
-    void keyExpansion(bytes key, bytes w);
+    void setCounter(bytes counter)
+    {
+        memcpy(this->iv, counter, 16);
+    }
 
-    // Result cipher(bytes data, size_t len);
-    // Result decrypt(bytes data, size_t len);
+    bytes cipher(bytes data);
+    // bytes decrypt(bytes data, size_t len);
 
 private:
     int Nk, Nr;
     bytes w;
-
-    AESMode mode;
-    bytes key;
     bytes iv;
+    AESMode mode;
 
     void addRoundKey(bytes state, int round);
     void subBytes(bytes state);
     void shiftRows(bytes s);
     void mixColumns(bytes s);
+
+    void cipherBlock(bytes state);
+    void incrementCounter();
 };
 
 static void printByte4(const char *label, const byte *b)
