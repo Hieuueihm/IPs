@@ -38,7 +38,7 @@ public:
     }
 
     bytes cipher(bytes data);
-    // bytes decrypt(bytes data, size_t len);
+    bytes decrypt(bytes data);
 
 private:
     int Nk, Nr;
@@ -51,6 +51,11 @@ private:
     void shiftRows(bytes s);
     void mixColumns(bytes s);
 
+    void invSubBytes(bytes state);
+    void invShiftRows(bytes s);
+    void invMixColumns(bytes s);
+
+    void invCipherBlock(bytes state);
     void cipherBlock(bytes state);
     void incrementCounter();
 };

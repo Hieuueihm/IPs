@@ -25,7 +25,7 @@ namespace nist
         const char *name;
         const byte *key;
         std::size_t keyLen;
-        const byte *expected; // 4 contiguous 16-byte blocks
+        const byte *expected;
     };
 
     // ============================================================
