@@ -1,0 +1,17 @@
+{
+  "kernels": 15,
+  "output": "PASS AXI kernels=15 writes=1183 reads=757\nsim/src/tb_kernel_axil.sv:97: $finish called at 128590000 (1ps)",
+  "sha256": {
+    "hdl\\mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl\\proto\\flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+    "hdl\\proto\\flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+    "hdl\\proto\\ntt_bank_permute64.sv": "6f5bbd10ca1d5a27554ba669b43998a83416b9ec7408b5803fe1c5279ff45bad",
+    "hdl\\core\\flex_banked_scratch.sv": "ee6054b023c06f3499bb3cf8af7211371c58f002d26217696b7cc815457176e2",
+    "hdl\\core\\flex_kernel_rom.sv": "1b03c2b0c8529157057ac5886539f228d0d22bd8ede153453ce74df3bd3a9f29",
+    "hdl\\core\\flex_kernel_engine.sv": "533bd679ac192c3a66af67b9d3dd4ee80f448abe4fe906dd147b2910d303f03d",
+    "hdl\\core\\flex_kernel_axil.sv": "f45905618c714c4a4a6f9c5d39f749f6ff5d0a555d9ce636a1e8172981f98f66",
+    "sim\\src\\tb_kernel_axil.sv": "e9c2cd30a64cc2e37044779ae27049de80ac5a1105924e19a865ba5f84bbe839",
+    "hdl\\core\\rom\\ntt_init.vh": "593c678e97b7e00a16fafeec15f41327c316a6256262bc30d72e6780ef738147",
+    "scripts\\validate_kernel_axil.py": "23e91d6fd6b91e53b0afe3c5fd262dca59f40e387f4b2664b3dba9560dc254fe"
+  }
+}

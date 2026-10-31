@@ -1,0 +1,48 @@
+{
+  "seed": 20261025,
+  "counts": {
+    "signedness_product_cases": 4896,
+    "fft_mapping_batches": 768,
+    "fft_butterflies": 2816,
+    "ntt_main_product_cases": 1370
+  },
+  "mapping": [
+    {
+      "leaf": 16,
+      "fft_width": 32,
+      "butterflies_per_batch": 8,
+      "issue_count": 1
+    },
+    {
+      "leaf": 16,
+      "fft_width": 64,
+      "butterflies_per_batch": 2,
+      "issue_count": 1
+    },
+    {
+      "leaf": 16,
+      "fft_width": 128,
+      "butterflies_per_batch": 1,
+      "issue_count": 2
+    },
+    {
+      "leaf": 32,
+      "fft_width": 32,
+      "butterflies_per_batch": 8,
+      "issue_count": 1
+    },
+    {
+      "leaf": 32,
+      "fft_width": 64,
+      "butterflies_per_batch": 2,
+      "issue_count": 1
+    },
+    {
+      "leaf": 32,
+      "fft_width": 128,
+      "butterflies_per_batch": 1,
+      "issue_count": 2
+    }
+  ],
+  "limits": "Exact integer products and collision-free issue mapping only; no reduction, timing, RTL/PPA or pinned FN-DSA equivalence."
+}

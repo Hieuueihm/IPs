@@ -1,0 +1,13 @@
+{
+  "profile_result_sha256": "f98c8f6fcbda988610080b188686e745b83cd313d5eb2421792a0a5022353673",
+  "supply_result_sha256": "e7b12c15f0b173444479aa8f899bf33a38da0f299d2c7396937f5070170b21a0",
+  "report_sha256": "5630d206fd444339d3a079ba1d0149446ab64fe09b4ee7cedfdaccff1fa62a1e",
+  "report_script_sha256": "ffaf451c3d6a29f74f793ecdef7fe85280ec88ddc803bf6bd6b4f9a7f4276fa2",
+  "supply_model_sha256": "283607104b80c2b327c91b341a749b64eb685e9c8e365a8b5b356fefa6912f6e",
+  "outputs_identical_to_validated_baseline": true,
+  "measured_tile_count": 16,
+  "alternative_tile_counts_are_bounds_only": true,
+  "no_pause_cycles": 4666411,
+  "random_pause_cycles": 4803964,
+  "next_priority": "controller overlap, narrow FFT feed, small NTT multi-job occupancy"
+}

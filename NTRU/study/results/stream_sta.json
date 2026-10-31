@@ -1,0 +1,212 @@
+{
+  "library": "NangateOpenCellLibrary typical 45nm, 1.1V, 25C",
+  "dependencies": {
+    "openroad_flow_scripts_commit": "64939f3717ad7c694199ba04cb98924b98022868",
+    "files": [
+      {
+        "file": "NangateOpenCellLibrary_typical.lib",
+        "url": "https://raw.githubusercontent.com/The-OpenROAD-Project/OpenROAD-flow-scripts/64939f3717ad7c694199ba04cb98924b98022868/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib",
+        "sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1"
+      },
+      {
+        "file": "opensta.deb",
+        "url": "https://archive.ubuntu.com/ubuntu/pool/universe/o/opensta/opensta_0~20191111gitc018cb2+dfsg-1.1_amd64.deb",
+        "sha256": "9ec29cc74cc66cd82e6fa85aad2d3897c6315aa26adbc380892416e7a5e87a1b"
+      }
+    ]
+  },
+  "mapping": "Yosys synth -flatten -noabc; dfflibmap; ABC fast map at D=10000ps (buffer/upsize/dnsize)",
+  "constraints": {
+    "clock_period_ns": 10,
+    "clock_uncertainty_ns": 0.1,
+    "io_delay_ns": 0.2,
+    "output_load_ff": 5,
+    "input_driver": "BUF_X1",
+    "reset_false_path": true
+  },
+  "synthesis": [
+    {
+      "top": "stream_plain",
+      "cell_area_um2": 349785.478001,
+      "cells": 295779,
+      "ff_cells": 11450,
+      "cell_types": {
+        "AND2_X1": 5107,
+        "AND3_X1": 1125,
+        "AND4_X1": 385,
+        "AOI211_X1": 924,
+        "AOI21_X1": 24893,
+        "AOI22_X1": 92,
+        "BUF_X1": 7408,
+        "CLKBUF_X1": 1568,
+        "DFF_X1": 11450,
+        "INV_X1": 31524,
+        "MUX2_X1": 1465,
+        "NAND2_X1": 55254,
+        "NAND3_X1": 5360,
+        "NAND4_X1": 1251,
+        "NOR2_X1": 44780,
+        "NOR3_X1": 3111,
+        "NOR4_X1": 416,
+        "OAI211_X1": 1352,
+        "OAI21_X1": 23495,
+        "OAI221_X1": 1086,
+        "OAI22_X1": 31,
+        "OR2_X1": 2334,
+        "OR3_X1": 189,
+        "OR4_X1": 93,
+        "XNOR2_X1": 50055,
+        "XOR2_X1": 21031
+      },
+      "reg_to_reg": {
+        "data_arrival_ns": 5.4002,
+        "slack_ns": 4.4644,
+        "startpoint": "_577949_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_585372_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "overall": {
+        "data_arrival_ns": 5.4002,
+        "slack_ns": 4.4644,
+        "startpoint": "_577949_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_585372_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "seconds": 34.0,
+      "rtl_sha256": {
+        "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+        "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+        "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+        "hdl/proto/flex_stream_tops.sv": "8f83e6c7517278e4185c055c7ede25601bcfcdc1af950c9907e5ad951952c8f5",
+        "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2"
+      },
+      "netlist_sha256": "7a9c9fe19ede2b187090457934828b3de0fe0a80823ab27ef24ffb2dfcf5deb5",
+      "sta_netlist_sha256": "19cfc11b0975ed031a824da849028c9069d0f909759e47f140bd1a7f87b89c07"
+    },
+    {
+      "top": "stream_stall",
+      "cell_area_um2": 372342.810001,
+      "cells": 320446,
+      "ff_cells": 11450,
+      "cell_types": {
+        "AND2_X1": 4941,
+        "AND3_X1": 664,
+        "AND4_X1": 372,
+        "AOI211_X1": 990,
+        "AOI21_X1": 27949,
+        "AOI22_X1": 5,
+        "BUF_X1": 9793,
+        "CLKBUF_X1": 2034,
+        "DFF_X1": 11450,
+        "INV_X1": 34609,
+        "MUX2_X1": 1530,
+        "NAND2_X1": 61284,
+        "NAND3_X1": 8820,
+        "NAND4_X1": 1221,
+        "NOR2_X1": 43268,
+        "NOR3_X1": 2844,
+        "NOR4_X1": 402,
+        "OAI211_X1": 1585,
+        "OAI21_X1": 31959,
+        "OAI221_X1": 1062,
+        "OAI22_X1": 157,
+        "OR2_X1": 2278,
+        "OR3_X1": 192,
+        "OR4_X1": 120,
+        "XNOR2_X1": 50310,
+        "XOR2_X1": 20607
+      },
+      "reg_to_reg": {
+        "data_arrival_ns": 5.4023,
+        "slack_ns": 4.4544,
+        "startpoint": "_631280_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_639589_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "overall": {
+        "data_arrival_ns": 5.4023,
+        "slack_ns": 4.4544,
+        "startpoint": "_631280_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_639589_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "seconds": 88.7,
+      "rtl_sha256": {
+        "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+        "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+        "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+        "hdl/proto/flex_stream_tops.sv": "8f83e6c7517278e4185c055c7ede25601bcfcdc1af950c9907e5ad951952c8f5",
+        "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2"
+      },
+      "netlist_sha256": "9ae0a7079bc51c8a72246ef90d577e77321e1c7673c784aa4fe4274594c075f2",
+      "sta_netlist_sha256": "1b2e1c114877d934281df068d2fe308cc87ff84b8d6dc6ebc616d19edc7660b0"
+    },
+    {
+      "top": "stream_buffered",
+      "cell_area_um2": 419044.430002,
+      "cells": 346413,
+      "ff_cells": 17421,
+      "cell_types": {
+        "AND2_X1": 4705,
+        "AND3_X1": 650,
+        "AND4_X1": 370,
+        "AOI211_X1": 978,
+        "AOI21_X1": 27920,
+        "AOI22_X1": 4,
+        "BUF_X1": 11109,
+        "CLKBUF_X1": 2406,
+        "DFF_X1": 17421,
+        "INV_X1": 37898,
+        "MUX2_X1": 4494,
+        "NAND2_X1": 67201,
+        "NAND3_X1": 8631,
+        "NAND4_X1": 1232,
+        "NOR2_X1": 43747,
+        "NOR3_X1": 3080,
+        "NOR4_X1": 414,
+        "OAI211_X1": 1631,
+        "OAI21_X1": 37859,
+        "OAI221_X1": 1061,
+        "OAI22_X1": 149,
+        "OR2_X1": 2312,
+        "OR3_X1": 195,
+        "OR4_X1": 112,
+        "XNOR2_X1": 50581,
+        "XOR2_X1": 20253
+      },
+      "reg_to_reg": {
+        "data_arrival_ns": 5.4514,
+        "slack_ns": 4.4139,
+        "startpoint": "_680227_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_684132_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "overall": {
+        "data_arrival_ns": 5.4514,
+        "slack_ns": 4.4139,
+        "startpoint": "_680227_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_684132_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "seconds": 90.7,
+      "rtl_sha256": {
+        "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+        "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+        "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+        "hdl/proto/flex_stream_tops.sv": "8f83e6c7517278e4185c055c7ede25601bcfcdc1af950c9907e5ad951952c8f5",
+        "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2"
+      },
+      "netlist_sha256": "b909c1091c2adbef2487990fc6e6447528ef3757d9cb01082fa98f5c5b1a1f09",
+      "sta_netlist_sha256": "fed2a094a2072ad1ccaeea96e4857070b46dd01f89af3f960031268c941cc615"
+    }
+  ],
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+    "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+    "hdl/proto/flex_stream_tops.sv": "8f83e6c7517278e4185c055c7ede25601bcfcdc1af950c9907e5ad951952c8f5",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2",
+    "scripts/benchmark_stream_sta.py": "eb3c285e4c351e3c4e6114faa2b93078827d59aca3c6f842676975bedc4984e7",
+    "scripts/bootstrap_stream_sta.py": "733ba45b0f2bc9383b6020288cce3072337f07f189f77a921862618793747c46"
+  },
+  "limits": [
+    "Cell area only; no SRAM, physical placement, extracted RC, CTS, or power. No bank gather/scatter in these three tops.",
+    "Includes FFT limb routing, NTT pack selection, sign control, compact reducers, registered fusion, output, optional queue/CE.",
+    "All modes statically active in STA; no runtime mode case analysis.",
+    "Clock is a reference constraint, not a user technology/Fmax target."
+  ]
+}

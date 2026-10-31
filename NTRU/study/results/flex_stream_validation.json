@@ -1,0 +1,70 @@
+{
+  "counts": {
+    "FFT32_unit": 260,
+    "FFT64_unit": 292,
+    "FFT128_unit": 400,
+    "NTT_packed": 804,
+    "R8_real_product": 19968,
+    "mixed_reconfiguration": 1000
+  },
+  "buffered": {
+    "transactions": 22724,
+    "cycles": 38959,
+    "blocked_in": 16217,
+    "blocked_out": 16217
+  },
+  "direct_stall": {
+    "transactions": 1900,
+    "cycles": 3768,
+    "blocked_in": 1491,
+    "blocked_out": 1492
+  },
+  "plain": {
+    "transactions": 1900,
+    "cycles": 2583,
+    "blocked_in": 0,
+    "blocked_out": 0
+  },
+  "r8_kernel_replay": [
+    {
+      "op": "FFT",
+      "n": 512,
+      "real_products": 3072,
+      "output_words": 512
+    },
+    {
+      "op": "FFT",
+      "n": 1024,
+      "real_products": 6912,
+      "output_words": 1024
+    },
+    {
+      "op": "IFFT",
+      "n": 512,
+      "real_products": 3072,
+      "output_words": 512
+    },
+    {
+      "op": "IFFT",
+      "n": 1024,
+      "real_products": 6912,
+      "output_words": 1024
+    }
+  ],
+  "ntt_transform_traces": 56,
+  "mismatches": 0,
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+    "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2",
+    "sim/src/tb_flex_stream.sv": "82e8631e3b3db73011f8654b3e4072481891cf1ba6397081d28034b27051b105",
+    "scripts/validate_flex_stream.py": "ea20fe269034d9a549f9afd8997291c4e80d73b37702323988a01112d6d81070",
+    "model/r8_golden.py": "4faa52e372d76d6c019e3bf9f725846bb937597f91e63289f276b7932c58bb1b"
+  },
+  "scope": [
+    "FFT128 Q64.64 RTL real products substituted into C-captured full FFT/IFFT vectors.",
+    "FFT32/64 use explicit Q16.16/Q32.32 contracts; no lower-width R8 certification.",
+    "No full FFT butterfly/controller RTL, SRAM macros, or complete FN-DSA integration."
+  ]
+}

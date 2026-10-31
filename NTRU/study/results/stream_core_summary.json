@@ -1,0 +1,68 @@
+{
+  "overheads": {
+    "stall_vs_plain_percent": 6.448904662627397,
+    "queue_vs_stall_percent": 12.542640477165268,
+    "bank_route_vs_buffered_percent": 7.457303274464433,
+    "complete_vs_plain_percent": 28.734287819894178
+  },
+  "sta_audit": [
+    {
+      "top": "stream_plain",
+      "constant_unconstrained_endpoints": 65,
+      "max_transition_report_empty": true,
+      "max_transition_violating_pins": 0,
+      "max_transition_worst_reported_slack_ns": 0,
+      "transition_report_decimal_digits": 2,
+      "critical_ff_signals": {
+        "startpoint_q": "\\u.core.ii [1]",
+        "endpoint_q": "\\u.core.g_tile[4].u.result [29]"
+      }
+    },
+    {
+      "top": "stream_stall",
+      "constant_unconstrained_endpoints": 64,
+      "max_transition_report_empty": true,
+      "max_transition_violating_pins": 0,
+      "max_transition_worst_reported_slack_ns": 0,
+      "transition_report_decimal_digits": 2,
+      "critical_ff_signals": {
+        "startpoint_q": "\\u.core.ii [1]",
+        "endpoint_q": "\\u.core.g_tile[6].u.result [8]"
+      }
+    },
+    {
+      "top": "stream_buffered",
+      "constant_unconstrained_endpoints": 64,
+      "max_transition_report_empty": true,
+      "max_transition_violating_pins": 0,
+      "max_transition_worst_reported_slack_ns": 0,
+      "transition_report_decimal_digits": 2,
+      "critical_ff_signals": {
+        "startpoint_q": "\\u.core.ii [1]",
+        "endpoint_q": "\\u.core.g_tile[14].u.result [28]"
+      }
+    },
+    {
+      "top": "flex_stream_banked",
+      "constant_unconstrained_endpoints": 64,
+      "max_transition_report_empty": false,
+      "max_transition_violating_pins": 110,
+      "max_transition_worst_reported_slack_ns": -0.01,
+      "transition_report_decimal_digits": 2,
+      "critical_ff_signals": {
+        "startpoint_q": "\\core.core.ii [0]",
+        "endpoint_q": "\\core.core.g_tile[7].u.first [25]"
+      }
+    }
+  ],
+  "source_sha256": {
+    "scripts/report_stream_results.py": "69f7a642352b1ad1752193bb46eebd3821ef8e6e5f33973fdd2074b3b4e83a52"
+  },
+  "evidence_sha256": {
+    "study/results/flex_stream_validation.json": "e076a3803a26c5df5b9f1dac429c21c08039b5c3e83a35dfd19a65a50d4b7468",
+    "study/results/banked_stream_validation.json": "68b5e06786a582802a8b7c54e67c1db6378afd9adb21773690bf5347f522586c",
+    "study/results/ntt_banked_supply.json": "c0a6a9f9ee71a4d591ff28ae99a63d22a91337f36535d27392e8b4cb1221a06e",
+    "study/results/stream_sta.json": "65f35fec96d5101b8c6d7ff9f76f3558c41537e92630f7b9d56f3a5e2bda46be",
+    "study/results/banked_stream_sta.json": "0d2c4cfb49998688506c7b3548c06d7cb540cc331e68530e29b5975809a88cae"
+  }
+}

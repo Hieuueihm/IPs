@@ -1,0 +1,2501 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "configuration": "REF16",
+  "parameters": {
+    "TILE_COUNT": 16,
+    "LEAF_WIDTH": 16,
+    "LEAVES_PER_TILE": 4,
+    "CONTEXT_COUNT": 2,
+    "STORE_COUNT": 3,
+    "BANKS_PER_STORE": 64,
+    "BANK_WIDTH": 16,
+    "ROWS": 128,
+    "HOST_LINE_BITS": 128,
+    "FFT_ROOT_READ_PORTS": 1,
+    "NTT_BUNDLE_BANKS": 16,
+    "NTT_BUNDLE_BITS": 48,
+    "NTT_BUNDLE_ROWS": 32,
+    "EPOCH_BITS": 4,
+    "MAX_ACTIVE_CYCLES": 1048576,
+    "MAX_FLUSH_CYCLES": 256
+  },
+  "opcodes": {
+    "FFT": 0,
+    "IFFT": 1,
+    "CMUL": 2,
+    "SPLIT": 3,
+    "MERGE": 4,
+    "NTT": 5,
+    "INTT": 6,
+    "TOMONT": 7,
+    "MODMUL": 8
+  },
+  "formats": [
+    {
+      "code": 0,
+      "bits": 32,
+      "fraction": 16
+    },
+    {
+      "code": 1,
+      "bits": 64,
+      "fraction": 32
+    },
+    {
+      "code": 2,
+      "bits": 128,
+      "fraction": 64
+    },
+    {
+      "code": 3,
+      "bits": 16,
+      "fraction": null
+    }
+  ],
+  "ntt_profiles": [
+    {
+      "code": 0,
+      "q": 12289,
+      "R": 65536,
+      "qprime": 12287,
+      "r_mod_q": 4091,
+      "r2_mod_q": 10952,
+      "root_count": 1024,
+      "logn_min": 3,
+      "logn_max": 10,
+      "intt_factorbar_by_logn": {
+        "3": 8192,
+        "4": 4096,
+        "5": 2048,
+        "6": 1024,
+        "7": 512,
+        "8": 256,
+        "9": 128,
+        "10": 64
+      },
+      "incomplete_logn": null
+    },
+    {
+      "code": 1,
+      "q": 3329,
+      "R": 65536,
+      "qprime": 3327,
+      "r_mod_q": 2285,
+      "r2_mod_q": 1353,
+      "root_count": 128,
+      "logn_min": 3,
+      "logn_max": 8,
+      "intt_factorbar_by_logn": {
+        "3": 1534,
+        "4": 767,
+        "5": 2048,
+        "6": 1024,
+        "7": 512,
+        "8": 512
+      },
+      "incomplete_logn": 8
+    }
+  ],
+  "legal_commands": [
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 0,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 1,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 2,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 3,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 0,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 1,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 1,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 2,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 4,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 6,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 7,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 5,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 6,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 7,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 3,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 4,
+      "jobs": 4,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 5,
+      "jobs": 2,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 6,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 7,
+      "jobs": 1,
+      "reserved": 0
+    },
+    {
+      "op": 8,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 8,
+      "jobs": 1,
+      "reserved": 0
+    }
+  ]
+}

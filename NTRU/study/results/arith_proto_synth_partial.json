@@ -1,0 +1,46 @@
+[
+  {
+    "top": "proto_r32",
+    "comb_ge": 232558.5,
+    "ff": 3078,
+    "total_ge": 246932.8,
+    "depth_cells": 179,
+    "unknown": {},
+    "synthesis_seconds": 58.2,
+    "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "mapping": "abc -fast -g generic gates"
+  },
+  {
+    "top": "proto_f16_common",
+    "comb_ge": 250018.7,
+    "ff": 3078,
+    "total_ge": 264392.9,
+    "depth_cells": 193,
+    "unknown": {},
+    "synthesis_seconds": 69.9,
+    "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "mapping": "abc -fast -g generic gates"
+  },
+  {
+    "top": "proto_f16_mid",
+    "comb_ge": 271084.8,
+    "ff": 3078,
+    "total_ge": 285459.0,
+    "depth_cells": 190,
+    "unknown": {},
+    "synthesis_seconds": 74.0,
+    "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "mapping": "abc -fast -g generic gates"
+  },
+  {
+    "top": "proto_f16_wide",
+    "comb_ge": 324822.4,
+    "ff": 6118,
+    "total_ge": 353393.4,
+    "depth_cells": 193,
+    "unknown": {},
+    "synthesis_seconds": 76.2,
+    "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+    "mapping": "abc -fast -g generic gates"
+  }
+]

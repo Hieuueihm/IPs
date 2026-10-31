@@ -1,0 +1,821 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "test_ids": [
+    "T_CFG",
+    "T_NATIVE",
+    "T_STABILITY",
+    "T_RESET",
+    "T_FLUSH",
+    "T_MEMORY",
+    "T_FP_PRIM",
+    "T_FP_KERNEL",
+    "T_NTT_PRIM",
+    "T_NTT_KERNEL",
+    "T_ARRAY",
+    "T_CONTEXT",
+    "T_JOBS",
+    "T_BANK",
+    "T_ROOT",
+    "T_STRESS",
+    "T_PROFILE",
+    "T_SIGNER",
+    "T_MUTATE",
+    "T_PERF",
+    "T_RELEASE"
+  ],
+  "requirements": [
+    {
+      "id": "FT-SCP-001",
+      "shall": "Implement opcodes 0..8 and reject reserved opcodes.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG",
+        "T_FP_KERNEL",
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-SCP-002",
+      "shall": "Enforce FFT formats 0..2 and RES16 format3 for NTT family.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG"
+      ]
+    },
+    {
+      "id": "FT-SCP-003",
+      "shall": "W128 is bit-exact to pinned scalar LP64 R8 numeric contract.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_FP_KERNEL",
+        "T_SIGNER"
+      ]
+    },
+    {
+      "id": "FT-SCP-004",
+      "shall": "Do not lower precision automatically; W32/64 have only their explicit integer contract.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG",
+        "T_FP_PRIM"
+      ]
+    },
+    {
+      "id": "FT-SCP-005",
+      "shall": "Enforce the N/profile support table including incomplete q3329 N256.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG",
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-SCP-006",
+      "shall": "Enforce jobs limits; FFT jobs1 and NTT N8/16/32 limits8/4/2.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG",
+        "T_JOBS"
+      ]
+    },
+    {
+      "id": "FT-SCP-007",
+      "shall": "All jobs in a batch share op,fmt,profile,N and direction.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_CFG",
+        "T_JOBS"
+      ]
+    },
+    {
+      "id": "FT-SCP-008",
+      "shall": "Keep every batched polynomial and job identity independent.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_JOBS",
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-SCP-009",
+      "shall": "Host owns load/read only in the states defined by protocol; no host requests in RUN.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_NATIVE",
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-SCP-010",
+      "shall": "Issue/address/root/control schedules are independent of coefficient values for identical control state, address footprint and flow trace.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_PROFILE"
+      ]
+    },
+    {
+      "id": "FT-SCP-011",
+      "shall": "Do not depend on unwritten RAM; reset does not implicitly initialize or zeroize data.",
+      "section": "00_scope_profiles.md",
+      "test_ids": [
+        "T_RESET",
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-NUM-001",
+      "shall": "Use W32/64/128 with fractional bits W/2.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM"
+      ]
+    },
+    {
+      "id": "FT-NUM-002",
+      "shall": "Add/sub wrap modulo2^W without saturation.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM"
+      ]
+    },
+    {
+      "id": "FT-NUM-003",
+      "shall": "Multiply with full mathematical product, bias2^(F-1), shiftF, then wrapW.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM",
+        "T_MUTATE"
+      ]
+    },
+    {
+      "id": "FT-NUM-004",
+      "shall": "div2e wraps bias addition before arithmetic shift; shift0 is identity.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM"
+      ]
+    },
+    {
+      "id": "FT-NUM-005",
+      "shall": "Use exact 3M with wrapped pre-add and independent per-real-product rounding.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM",
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-NUM-006",
+      "shall": "Lower limbs are unsigned; only each operand top limb is signed; preserve raw product sign.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-NUM-007",
+      "shall": "Preserve retained W+F product bits, required carries and one final rounding; discard only exact zero-weight terms.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_PRIM",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-NUM-008",
+      "shall": "Use pinned exact FFT ROM bits, no sin/cos regeneration.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_ROOT"
+      ]
+    },
+    {
+      "id": "FT-NUM-009",
+      "shall": "Conjugate in128 before low-width quantization; form root sum after quantization.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_ROOT",
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-NUM-010",
+      "shall": "Require canonical NTT coefficients/roots/results; no lazy/signed residue contract.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_PRIM",
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-NUM-011",
+      "shall": "Montgomery implements full unsigned T, m, carry and canonical conditional subtraction.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_PRIM"
+      ]
+    },
+    {
+      "id": "FT-NUM-012",
+      "shall": "Do not apply FFT product truncation to Montgomery T.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_PRIM",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-NUM-013",
+      "shall": "Implement CT and GS component/domain equations exactly.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_KERNEL",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-NUM-014",
+      "shall": "Root tables encode ordinary root times R; inverse ordinary roots before encoding.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_ROOT",
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-001",
+      "shall": "FFT uses exact split-real/imag indexing, roots and wrapped arithmetic of section01.4.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-002",
+      "shall": "IFFT uses inverse roots and final div2e(logn-1), including N1/N2 identity.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-003",
+      "shall": "CMUL is pointwise complex3M, writes A and preserves B/C.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-004",
+      "shall": "SPLIT preserves input stores and writes concatenated f0/f1 to C including N2 case.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-005",
+      "shall": "MERGE reads half-length A/B and writes interleaved component C including N2 case.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-006",
+      "shall": "NTT uses prescribed CT loop/root/output order and q3329 incomplete stop.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-007",
+      "shall": "INTT uses prescribed inverse GS loop and final inverse2^L normalization.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-008",
+      "shall": "TOMONT returns xR modq.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-009",
+      "shall": "MODMUL returns abR^-1 modq; no implicit ordinary multiply or BASEMUL.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-KER-010",
+      "shall": "Paired/tail/scalar NTT tile modes preserve coefficient order, roots and job schedule.",
+      "section": "01_numeric_kernels.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_NTT_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-IF-001",
+      "shall": "Transfer only on sampled rising edge valid&&ready.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE",
+        "T_STABILITY"
+      ]
+    },
+    {
+      "id": "FT-IF-002",
+      "shall": "Hold valid and complete payload until handshake except reset/canceled internal epoch.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_STABILITY",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-IF-003",
+      "shall": "Avoid combinational valid/ready loops.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_STABILITY",
+        "T_RELEASE"
+      ]
+    },
+    {
+      "id": "FT-IF-004",
+      "shall": "Latch every CMD field on acceptance; later input changes have no effect.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE"
+      ]
+    },
+    {
+      "id": "FT-IF-005",
+      "shall": "Allow one outstanding CMD; host memory wins simultaneous IDLE arbitration.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE"
+      ]
+    },
+    {
+      "id": "FT-IF-006",
+      "shall": "Return exactly one tagged completion per accepted command except reset.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE",
+        "T_RESET",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-IF-007",
+      "shall": "Publish OK only after all writes commit and command pipeline/context drain.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE",
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-IF-008",
+      "shall": "Published completion is immutable through pause/flush until ACK; reset may cancel.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_STABILITY",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-IF-009",
+      "shall": "Internal packets retain sufficient epoch/context/lane/phase identity to retire correctly.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-IF-010",
+      "shall": "Use defined packet packing; zero reserved/inactive bits and preserve active lane masks.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-RST-001",
+      "shall": "Synchronous active-low reset clears all control valids/state and suppresses writes/replies; hold >=2edges.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_RESET"
+      ]
+    },
+    {
+      "id": "FT-RST-002",
+      "shall": "Reset preserves data/ROM content; do not rely on initial for control reset.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_RESET",
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-ERR-001",
+      "shall": "Validate command fields in specified error priority, without evaluating dependent invalid fields.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_CFG"
+      ]
+    },
+    {
+      "id": "FT-ERR-002",
+      "shall": "Invalid CMD returns error/tag/mask0 without arithmetic/data/root issue or RAM change.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_CFG"
+      ]
+    },
+    {
+      "id": "FT-ERR-003",
+      "shall": "Detected internal invariant failure stops command side effects, drains and returns INTERNAL_FAULT unless reset/flush takes priority.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-MEM-001",
+      "shall": "Validate host store/alignment/range/state using specified priority.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-MEM-002",
+      "shall": "Implement byte-enable writes and little-endian raw128 lines; zero-strobe write is ACKed no-op.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-MEM-003",
+      "shall": "One outstanding host request, exactly one stable ordered response.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_MEMORY",
+        "T_STABILITY"
+      ]
+    },
+    {
+      "id": "FT-MEM-004",
+      "shall": "ACK host write OK only after enabled bytes have committed.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-MEM-005",
+      "shall": "Enforce IDLE/RUN/DONE/FLUSH memory ownership and DONE write STATE behavior.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_MEMORY",
+        "T_NATIVE"
+      ]
+    },
+    {
+      "id": "FT-MEM-006",
+      "shall": "Block new command until completion ACK and any earlier memory response drains.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_NATIVE"
+      ]
+    },
+    {
+      "id": "FT-MEM-007",
+      "shall": "Apply fixed bijective bank/row mapping and <=1R+1W per bank per edge.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_BANK"
+      ]
+    },
+    {
+      "id": "FT-MEM-008",
+      "shall": "Bank read adapter latency is >=1 edge and held response cannot be overwritten.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_BANK",
+        "T_STABILITY"
+      ]
+    },
+    {
+      "id": "FT-MEM-009",
+      "shall": "Serialize overlapping read/write; never depend on macro read-during-write behavior.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_BANK"
+      ]
+    },
+    {
+      "id": "FT-MEM-010",
+      "shall": "Map FFT components to consecutive little-endian limbs16 and preserve split-real/imag layout.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_MEMORY",
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-MEM-011",
+      "shall": "Map NTT job j coefficient i at word j*N+i, same map in B for MODMUL.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_JOBS",
+        "T_MEMORY"
+      ]
+    },
+    {
+      "id": "FT-MEM-012",
+      "shall": "Only bytes in output footprint may change; preserve all other bytes/stores.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_JOBS",
+        "T_MEMORY",
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-CTL-001",
+      "shall": "Pause holds datapath/issue/context/command writes while published external responses may ACK.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_STABILITY",
+        "T_CONTEXT",
+        "T_PERF"
+      ]
+    },
+    {
+      "id": "FT-CTL-002",
+      "shall": "Reset/flush override pause and can drain/cancel without pause deadlock.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_RESET",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-FLS-001",
+      "shall": "Implement four-phase level flush handshake and block new requests through release.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-FLS-002",
+      "shall": "Suppress command writes from first sampled flush edge, drain/invalidate all canceled packets.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH",
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-FLS-003",
+      "shall": "Unpublished command gets exactly one ABORTED mask0; no rollback, all batch outputs invalid.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-FLS-004",
+      "shall": "Preserve published completion unchanged and do not wait for cpl_ready to ACK flush.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-FLS-005",
+      "shall": "IDLE flush produces no completion; reset cancels flush/control without reply.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH",
+        "T_RESET"
+      ]
+    },
+    {
+      "id": "FT-FLS-006",
+      "shall": "Flush completes <=256 clocks after accepted host responses drain regardless of pause/completion backpressure.",
+      "section": "02_interfaces_protocol.md",
+      "test_ids": [
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-ARC-001",
+      "shall": "Shared array sustains legal input frame II1 with ready consumer and no pause/flush.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_PERF"
+      ]
+    },
+    {
+      "id": "FT-ARC-002",
+      "shall": "Publish per-mode latency; hold output and identity through backpressure.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_STABILITY"
+      ]
+    },
+    {
+      "id": "FT-ARC-003",
+      "shall": "Align bypass/tail data, roots, valid and metadata.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-ARC-004",
+      "shall": "Service bank conflicts in legal rounds and gather every word into its correct operand slot.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_BANK",
+        "T_FP_KERNEL"
+      ]
+    },
+    {
+      "id": "FT-ARC-005",
+      "shall": "Budget FFT root1/cycle, prefetch complete lane roots, clear cache valid at each CMD/flush.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ROOT",
+        "T_PROFILE"
+      ]
+    },
+    {
+      "id": "FT-ARC-006",
+      "shall": "Pack small independent NTT jobs with per-job index/root schedule and active masks.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_JOBS",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-ARC-007",
+      "shall": "Use specified NTT bundle order/bank mapping, broadcast or serialize conflicts, no padded-row request.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ROOT",
+        "T_BANK"
+      ]
+    },
+    {
+      "id": "FT-ARC-008",
+      "shall": "Preserve limb fusion grouping/sign/shift and retained-width exact product.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_FP_PRIM"
+      ]
+    },
+    {
+      "id": "FT-ARC-009",
+      "shall": "Keep FFT half-operands/cross products and NTT A/sum/root/tail side paths until consumed.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_ARRAY",
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-ARC-010",
+      "shall": "Provide implementation manifest covering all items in03.9 and interface mapping.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_RELEASE"
+      ]
+    },
+    {
+      "id": "FT-CTX-001",
+      "shall": "Use two independently owned microbatch contexts; no reuse until all effects commit.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-CTX-002",
+      "shall": "Collect p0/p1/p2 by logical lane; never combine incomplete or mismatched triplets.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-CTX-003",
+      "shall": "Maintain command tag, job, stage, lane, destination and epoch ownership through retire.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-CTX-004",
+      "shall": "Detect duplicate/unknown current-epoch phase errors; discard canceled-epoch packets without new-command writes.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT"
+      ]
+    },
+    {
+      "id": "FT-CTX-005",
+      "shall": "READY requires all coefficients/roots and output capacity for active lanes.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_ROOT"
+      ]
+    },
+    {
+      "id": "FT-CTX-006",
+      "shall": "Inactive lanes are explicitly masked/zero and have no side effect.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_ARRAY"
+      ]
+    },
+    {
+      "id": "FT-CTX-007",
+      "shall": "Memory-pass barrier waits for committed writes; paired NTT layers fuse inside one pass; resolve in-place RAW/WAW hazards.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_BANK"
+      ]
+    },
+    {
+      "id": "FT-CTX-008",
+      "shall": "Epoch increments on CMD/cancel; modulo wrap never replaces drain; reset clears every pipeline valid.",
+      "section": "03_microarchitecture_memory.md",
+      "test_ids": [
+        "T_CONTEXT",
+        "T_RESET",
+        "T_FLUSH"
+      ]
+    },
+    {
+      "id": "FT-DV-001",
+      "shall": "Map every mandatory requirement to recorded test results or explicitly reviewed waiver; NOT_RUN is not PASS.",
+      "section": "04_verification_acceptance.md",
+      "test_ids": [
+        "T_RELEASE"
+      ]
+    },
+    {
+      "id": "FT-DV-002",
+      "shall": "Check coefficient-independent schedule with identical config/initial state/flow trace.",
+      "section": "04_verification_acceptance.md",
+      "test_ids": [
+        "T_PROFILE"
+      ]
+    },
+    {
+      "id": "FT-DV-003",
+      "shall": "Publish completion <=1048576 active clocks for a valid unflushed/unreset command.",
+      "section": "04_verification_acceptance.md",
+      "test_ids": [
+        "T_STRESS",
+        "T_PERF"
+      ]
+    },
+    {
+      "id": "FT-DV-004",
+      "shall": "Release source/tool/seed/hash/coverage/assertion/provenance/performance/deviation manifest.",
+      "section": "04_verification_acceptance.md",
+      "test_ids": [
+        "T_RELEASE"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "spec": "FlexTransform 2.0, 10_hop_dong_tile.md",
+  "generator": "scripts/build_spec2_tile_vectors.py",
+  "seed": 20261030,
+  "q_lane16_both_variants": [
+    3329,
+    12289
+  ],
+  "q_lane16_on_array_only": [
+    3,
+    7681,
+    65521
+  ],
+  "q_lane32": [
+    8380417,
+    2147473409,
+    2144120833,
+    2140348417,
+    2147483647,
+    12289
+  ],
+  "modes": {
+    "2": "bốn phép nhân modulo độc lập",
+    "3": "nhịp hai tầng",
+    "4": "nhịp một tầng"
+  },
+  "files": [
+    {
+      "file": "raw32.txt",
+      "cases": 2320,
+      "sha256": "b951715a7738ebca18107d45a3850aeb2faf3d9610dd78bec2934dea63f06631"
+    },
+    {
+      "file": "fft32.txt",
+      "cases": 1842,
+      "sha256": "233ac53dcf0c31814a9d63dc0dbdb3b25c6e0103605ca75e1b9502df3b7abf3f"
+    },
+    {
+      "file": "ntt16_pqc.txt",
+      "cases": 2814,
+      "sha256": "b28fd42d83d2a8f2f58621e57d002b8c58e4b09796b5ba7bddb3a50f95e5dacb"
+    },
+    {
+      "file": "ntt16_q_khac.txt",
+      "cases": 3864,
+      "sha256": "7d0fc12ac05f7296871ba79324a9490207e8bc93bb419da36e5785852e5b9947"
+    },
+    {
+      "file": "ntt32.txt",
+      "cases": 11263,
+      "sha256": "6732674e48508d5227873499d800df0e6f51c202ff5916f1c5247f8d5633688d"
+    }
+  ]
+}

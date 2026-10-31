@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "sha256_checks": 92,
+  "local_links": 64,
+  "kernels": 5992,
+  "words": 325492,
+  "origins": {
+    "r8_synthetic": 364,
+    "custom_narrow_contract": 100,
+    "modular_oracle": 56,
+    "application_N512": 1840,
+    "application_N1024": 3632
+  },
+  "byte_identical_signatures": 4,
+  "actual_output_mutation_detected": true,
+  "fpga_confirmed": false,
+  "audit_script_sha256": "0bc4022e48772e9bcf9565c957992fdc7c171140e18cc149c13175a5bfcf8d13"
+}

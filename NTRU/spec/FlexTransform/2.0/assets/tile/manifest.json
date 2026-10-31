@@ -1,0 +1,39 @@
+{
+  "spec": "FlexTransform 2.0, 10_hop_dong_tile.md",
+  "generator": "scripts/build_spec2_tile_vectors.py",
+  "seed": 20261030,
+  "q_ntt": [
+    3,
+    3329,
+    7681,
+    12289,
+    65521,
+    8380417,
+    2140348417,
+    2144120833,
+    2147473409,
+    2147483647
+  ],
+  "montgomery_r": "2^32",
+  "modes": {
+    "2": "một phép nhân modulo",
+    "4": "một butterfly"
+  },
+  "files": [
+    {
+      "file": "raw32.txt",
+      "cases": 2320,
+      "sha256": "b951715a7738ebca18107d45a3850aeb2faf3d9610dd78bec2934dea63f06631"
+    },
+    {
+      "file": "fft32.txt",
+      "cases": 1842,
+      "sha256": "233ac53dcf0c31814a9d63dc0dbdb3b25c6e0103605ca75e1b9502df3b7abf3f"
+    },
+    {
+      "file": "ntt.txt",
+      "cases": 8055,
+      "sha256": "050643681239d31baa3400a4863e5467f50a2dd20a62745879fd3c9a602d1598"
+    }
+  ]
+}

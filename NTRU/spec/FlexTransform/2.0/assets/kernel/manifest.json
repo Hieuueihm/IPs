@@ -1,0 +1,36 @@
+{
+  "spec": "FlexTransform 2.0, 01_so_hoc_kernel.md",
+  "generator": "scripts/build_spec2_kernel_assets.py",
+  "seed": 20261031,
+  "ntrugen_prime_indices": [
+    0,
+    1,
+    161,
+    321,
+    322
+  ],
+  "constants": {
+    "q8380417": {
+      "q": 8380417,
+      "R": "2^32",
+      "qprime": 4236238847,
+      "R_mod_q": 4193792,
+      "R2_mod_q": 2365951,
+      "psi": 1753,
+      "intt_final_factor": 16382
+    }
+  },
+  "cases": {
+    "fft_ntrugen.jsonl": 40,
+    "ntt_q8380417.jsonl": 60,
+    "ntt_prime31.jsonl": 235
+  },
+  "sha256": {
+    "fft_ntrugen_q32_32.mem": "03dd9945697e6d16f2d70edd85f8d055cc3563e82e2e57d0ccd260db411f9e60",
+    "ntt_q8380417_forward.mem": "4d9b68742eb8567435e895bea371c0ddd4dbf8e4886ea14f757bd57c39d89455",
+    "ntt_q8380417_inverse.mem": "271a88012eada20a00c3fd6468a33f3b65cc0a30a56089733e53170e28444367",
+    "kernel/fft_ntrugen.jsonl": "43b104177a1a7d49fb7e8fdbbd34ed7b86d0f23a68e2f6de9c7b52eaa7befadf",
+    "kernel/ntt_q8380417.jsonl": "56ab9547327c1d26d047b6ed7122c3f2b172b454a1e122b15f59604f5b0a11f6",
+    "kernel/ntt_prime31.jsonl": "e5e7990cf677ac4701b21f97cd25e2b101308047b05e16cad6b4a0dd67d93e69"
+  }
+}

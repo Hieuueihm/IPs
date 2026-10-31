@@ -1,0 +1,132 @@
+{
+  "autonomous_kernel_rtl": true,
+  "kernel_calls": 5472,
+  "applications": [
+    {
+      "n": 512,
+      "trial": 0,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 512,
+      "trial": 1,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 1024,
+      "trial": 0,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 1024,
+      "trial": 1,
+      "valid": 0,
+      "wrong_message": -4
+    }
+  ],
+  "artifacts": [
+    {
+      "n": 512,
+      "file": "expanded.bin",
+      "sha256": "0fdc5af21a48bb5e5050bb85041e912a47ebc1489356f9b863203886734380ff",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "msg0.bin",
+      "sha256": "020669d1b5058958306cc13c195aca3040fe8c4857cc2f5e7a1bdba43896b019",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "msg1.bin",
+      "sha256": "ef77995b0f409185f11934613ea185035b3c28cda6eb26f8fdf973628cbcdefd",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "pk.bin",
+      "sha256": "89c43429662e3144c699756d4da7405b708e8f52113de76ad0eb5c81b13f8e4d",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "sig0.bin",
+      "sha256": "f016e1d288e4aba00876e589df63a54cf6a687469f039b3a8ef821e20863d9e6",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "sig1.bin",
+      "sha256": "aa2fb905e48b0525a2718e259b4806b970930a9b8c56475bc1a734fb8b1bfe73",
+      "baseline_equal": true
+    },
+    {
+      "n": 512,
+      "file": "sk.bin",
+      "sha256": "29c52ad368579d1fb4525691e15907ca507ecf4b95be6e44c443cf931dae33cf",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "expanded.bin",
+      "sha256": "c231442ea8282009a523fed31c73f2438f1dbc1dabcd90ea86c4f9d42db9ced6",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "msg0.bin",
+      "sha256": "d22a2c36138ae0fa69f10d44cc3c3a3ee9880392ef3bd395bf4c2692e47c2c27",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "msg1.bin",
+      "sha256": "be3dda1e176f09ddc94975f3fe03b5e3929b72ac2b932c1c0f8640d7a9993a25",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "pk.bin",
+      "sha256": "ac867a5ec99d22eb2ff549ae1a559ef4cde1cc04a3744163983b5df6b99eca24",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "sig0.bin",
+      "sha256": "cac097b7da72d13ef086bb41e5b0eb24c094fffacaf125a3cd136e4f989682dc",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "sig1.bin",
+      "sha256": "9d49f3bbdfeb11ee0bfe65f4c5ae6b6288d6b67d473886dfa70fdf6d30192f85",
+      "baseline_equal": true
+    },
+    {
+      "n": 1024,
+      "file": "sk.bin",
+      "sha256": "c69f9044be02a395f34970d33af8c135f21bae1e4b029bd0b83bb6abd2d9756d",
+      "baseline_equal": true
+    }
+  ],
+  "output_mutation_guards": [
+    {
+      "n": 512,
+      "changed": "first actual RTL kernel output word",
+      "returncode": 7,
+      "stderr": "BRIDGE_FAIL sequence=2 origin=keygen reason=live NTT input a\n"
+    }
+  ],
+  "kernel_result_sha256": "ddbe8b59c5a6227e3860edfee1ff019220e03339a0b6fc25de76779bc99b4f1c",
+  "script_sha256": "65808da617f199efc726769f545ac4e0129aa98c82c2e468af81afc213fa7de0",
+  "c_build_manifest_sha256": "998ec7d8d55d0f0ffeb16dcb9dce338a020eb72b8f72206b44eb9cc6ddab9fbb",
+  "c_bridge_sha256": "71d83b24f971ca74d3666df788bfc8defddad4c3a00914031f34cf7c3e958242",
+  "independent_verifier_sha256": "d37c9151098c850576fed6c2fde1584cfb630d84859ab010b5c90c28704c4b39",
+  "reference_sources_pristine": true,
+  "remaining_in_C": "keygen, sampler, signing orchestration, encoding and SHAKE",
+  "scope": "Fixed deterministic workload; four signatures. Functional co-simulation, no side-channel or standard certification."
+}
