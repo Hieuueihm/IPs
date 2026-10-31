@@ -1,0 +1,83 @@
+{
+  "simulation": {
+    "transactions": 1335,
+    "configurations": 4,
+    "by_mode": {
+      "0": 192,
+      "1": 192,
+      "2": 192,
+      "3": 759
+    },
+    "c_complex_products": 189,
+    "mismatches": 0,
+    "note": "3M sequencing/recombination is performed by the test driver, not a synthesized complex butterfly."
+  },
+  "synthesis": [
+    {
+      "top": "proto_r32",
+      "comb_ge": 232558.5,
+      "ff": 3078,
+      "total_ge": 246932.8,
+      "depth_cells": 179,
+      "unknown": {},
+      "synthesis_seconds": 58.2,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    },
+    {
+      "top": "proto_f16_common",
+      "comb_ge": 250018.7,
+      "ff": 3078,
+      "total_ge": 264392.9,
+      "depth_cells": 193,
+      "unknown": {},
+      "synthesis_seconds": 69.9,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    },
+    {
+      "top": "proto_f16_mid",
+      "comb_ge": 271084.8,
+      "ff": 3078,
+      "total_ge": 285459.0,
+      "depth_cells": 190,
+      "unknown": {},
+      "synthesis_seconds": 74.0,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    },
+    {
+      "top": "proto_f16_wide",
+      "comb_ge": 324822.4,
+      "ff": 6118,
+      "total_ge": 353393.4,
+      "depth_cells": 193,
+      "unknown": {},
+      "synthesis_seconds": 76.2,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    }
+  ],
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_arith_bank.sv": "b0b71389b8bc6f1417203ed326d76ee6963006c04d59736261dcdc697dc2cf60",
+    "sim/src/tb_flex_arith_bank.sv": "059d5d1e229705980188028c27e41c9a078ac4c37fa61e00ba0bbd843a096027"
+  },
+  "capacity": {
+    "FFT32_real_products_per_cycle": 16,
+    "FFT64_real_products_per_cycle": 4,
+    "FFT128_real_products_per_cycle": 1,
+    "NTT_lanes": [
+      16,
+      16,
+      32,
+      64
+    ]
+  },
+  "limits": [
+    "Arithmetic bank only; no complex 3M controller, transform memory or scheduler.",
+    "Generic gate depth is not frequency, nanoseconds or target-library STA.",
+    "GE is approximate NAND2 equivalent; no measured power/energy.",
+    "NTT32/64 lane throughput requires 1024/2048 data bits per direction plus twiddle bandwidth."
+  ]
+}

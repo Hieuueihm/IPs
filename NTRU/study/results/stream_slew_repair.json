@@ -1,0 +1,1128 @@
+{
+  "baseline_cell_area_um2": 450293.844002,
+  "iterations": [
+    {
+      "label": "baseline",
+      "reg_to_reg": {
+        "data_arrival_ns": 5.137,
+        "slack_ns": 4.7197,
+        "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "overall": {
+        "data_arrival_ns": 5.137,
+        "slack_ns": 4.7197,
+        "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "slew_violating_pins": 110,
+      "worst_transition_slack_ns": -0.0079,
+      "violations": [
+        {
+          "pin": "_397692_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397693_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397921_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398285_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398339_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398340_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398570_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398987_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399879_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399880_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400113_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400534_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400814_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400841_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400865_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400889_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400913_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400937_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400962_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401909_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401942_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401975_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402007_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402040_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402076_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402108_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402448_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402480_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402511_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402543_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402575_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402606_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402638_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_395944_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_395945_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396203_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396647_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403472_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403502_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403531_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403562_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403592_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403621_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403651_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2065,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397672_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397673_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397912_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398276_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402444_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402476_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402507_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402539_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402571_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402602_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402634_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396700_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396701_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397030_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_397614_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402970_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403000_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403030_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403060_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403090_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403121_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403152_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_395974_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_395975_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396218_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_396662_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403481_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403511_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403540_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403572_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403601_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403631_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_403660_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398319_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398320_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398560_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_398977_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401901_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401934_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401967_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401999_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402032_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402068_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_402100_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399086_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399087_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399341_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399834_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401357_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401394_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401430_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401465_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401501_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401537_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_401573_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399859_/ZN",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_399860_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400101_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400523_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400808_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400835_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400859_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400883_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400907_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400931_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        },
+        {
+          "pin": "_400956_/A",
+          "limit_ns": 0.1985,
+          "transition_ns": 0.2064,
+          "slack_ns": -0.0079
+        }
+      ],
+      "sta_seconds": 35.4,
+      "netlist_sha256": "edc2b64cfee4e82d74861232af1b526e464e3412ff1dd0fcc4862a5cd32e7dd8",
+      "log_sha256": "4d38f2ec0e8ecb24ba750119804de3d5342158e298d7d1d7a18e5c7be6ed8282"
+    },
+    {
+      "label": "repaired_1",
+      "reg_to_reg": {
+        "data_arrival_ns": 5.137,
+        "slack_ns": 4.7197,
+        "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "overall": {
+        "data_arrival_ns": 5.137,
+        "slack_ns": 4.7197,
+        "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+        "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+      },
+      "slew_violating_pins": 0,
+      "worst_transition_slack_ns": 0,
+      "violations": [],
+      "sta_seconds": 29.5,
+      "netlist_sha256": "757850b0c13a12b77dba04fbb833751bcaed9a99ddb6d56cdbe0e662f362d4bc",
+      "log_sha256": "2914378cbc0efa0a24b7a272421f74b29f250922676877ffb17d2b01d691dc47"
+    }
+  ],
+  "edits": [
+    {
+      "iteration": 1,
+      "instance": "_395944_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_287764_",
+        "A2": "_287735_",
+        "A3": "_286228_",
+        "A4": "_286833_",
+        "ZN": "_287765_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_395974_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_287794_",
+        "A2": "_287729_",
+        "A3": "_286275_",
+        "A4": "_287733_",
+        "ZN": "_287795_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_396700_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_288504_",
+        "A2": "_288491_",
+        "A3": "_287729_",
+        "A4": "_286275_",
+        "ZN": "_288505_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_397672_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_288490_",
+        "A2": "_289460_",
+        "A3": "_286203_",
+        "A4": "_286275_",
+        "ZN": "_289461_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_397692_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_289475_",
+        "A2": "_288490_",
+        "A3": "_289478_",
+        "A4": "_289480_",
+        "ZN": "_289481_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_398319_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_289526_",
+        "A2": "_286205_",
+        "A3": "_290089_",
+        "A4": "_290091_",
+        "ZN": "_290092_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_398339_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_289475_",
+        "A2": "_286205_",
+        "A3": "_290111_",
+        "A4": "_287733_",
+        "ZN": "_290112_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_399086_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_289526_",
+        "A2": "_287736_",
+        "A3": "_290824_",
+        "A4": "_288532_",
+        "ZN": "_290843_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_399859_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_291597_",
+        "A2": "_286833_",
+        "A3": "_286275_",
+        "A4": "_291599_",
+        "ZN": "_291600_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "instance": "_399879_",
+      "old_cell": "NOR4_X1",
+      "new_cell": "NOR4_X2",
+      "area_delta_um2": 1.064,
+      "pin_connections": {
+        "A1": "_289475_",
+        "A2": "_291596_",
+        "A3": "_286225_",
+        "A4": "_289476_",
+        "ZN": "_291620_"
+      },
+      "logic_signature": {
+        "A1": {
+          "direction": "input",
+          "function": null
+        },
+        "A2": {
+          "direction": "input",
+          "function": null
+        },
+        "A3": {
+          "direction": "input",
+          "function": null
+        },
+        "A4": {
+          "direction": "input",
+          "function": null
+        },
+        "ZN": {
+          "direction": "output",
+          "function": "!(((A1|A2)|A3)|A4)"
+        }
+      }
+    }
+  ],
+  "final": {
+    "cell_area_um2": 450304.484002,
+    "area_delta_um2": 10.64,
+    "area_increase_percent": 0.0023629015012589737,
+    "cells": 377950,
+    "ff_cells": 17421,
+    "label": "repaired_1",
+    "reg_to_reg": {
+      "data_arrival_ns": 5.137,
+      "slack_ns": 4.7197,
+      "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+    },
+    "overall": {
+      "data_arrival_ns": 5.137,
+      "slack_ns": 4.7197,
+      "startpoint": "_738037_ (rising edge-triggered flip-flop clocked by core_clk)",
+      "endpoint": "_742499_ (rising edge-triggered flip-flop clocked by core_clk)"
+    },
+    "slew_violating_pins": 0,
+    "worst_transition_slack_ns": 0,
+    "violations": [],
+    "sta_seconds": 29.5,
+    "netlist_sha256": "757850b0c13a12b77dba04fbb833751bcaed9a99ddb6d56cdbe0e662f362d4bc",
+    "log_sha256": "2914378cbc0efa0a24b7a272421f74b29f250922676877ffb17d2b01d691dc47"
+  },
+  "equivalence": {
+    "identical_pin_functions": true,
+    "identical_pin_connections": true,
+    "reversing_cell_types_recovers_exact_baseline": true,
+    "scope": "Zero-delay combinational function equivalence of every resized library cell; complete netlist connectivity/constants/registers unchanged."
+  },
+  "constraints": {
+    "clock_period_ns": 10,
+    "clock_uncertainty_ns": 0.1,
+    "io_delay_ns": 0.2,
+    "output_load_ff": 5,
+    "input_driver": "BUF_X1",
+    "reset_false_path": true
+  },
+  "library": "NangateOpenCellLibrary typical 45nm, 1.1V, 25C",
+  "source_sha256": {
+    "scripts/repair_stream_slew.py": "c30efdba5fed6c4e5b239f8e13d52498dbcb4e61b59c8de0e924956e8dddb24e",
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+    "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+    "hdl/proto/flex_stream_tops.sv": "8f83e6c7517278e4185c055c7ede25601bcfcdc1af950c9907e5ad951952c8f5",
+    "hdl/proto/ntt_bank_permute64.sv": "6f5bbd10ca1d5a27554ba669b43998a83416b9ec7408b5803fe1c5279ff45bad",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2"
+  },
+  "baseline_result_sha256": {
+    "study/results/banked_stream_sta.json": "0d2c4cfb49998688506c7b3548c06d7cb540cc331e68530e29b5975809a88cae"
+  },
+  "limits": [
+    "Reference pre-layout cell timing; no SRAM, CTS, placement, extracted RC or power.",
+    "Setup/max-transition checks only; does not establish hold closure or physical signoff.",
+    "Technology-specific mapped-netlist resize; RTL remains technology independent and unchanged."
+  ]
+}

@@ -1,0 +1,99 @@
+// Generated literal file names for Vivado 2018.1 (no $sformatf support).
+case(b)
+0:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_0.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_0.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_0.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_0.mem"},i1);
+end
+1:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_1.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_1.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_1.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_1.mem"},i1);
+end
+2:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_2.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_2.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_2.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_2.mem"},i1);
+end
+3:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_3.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_3.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_3.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_3.mem"},i1);
+end
+4:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_4.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_4.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_4.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_4.mem"},i1);
+end
+5:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_5.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_5.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_5.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_5.mem"},i1);
+end
+6:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_6.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_6.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_6.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_6.mem"},i1);
+end
+7:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_7.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_7.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_7.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_7.mem"},i1);
+end
+8:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_8.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_8.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_8.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_8.mem"},i1);
+end
+9:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_9.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_9.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_9.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_9.mem"},i1);
+end
+10:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_10.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_10.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_10.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_10.mem"},i1);
+end
+11:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_11.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_11.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_11.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_11.mem"},i1);
+end
+12:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_12.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_12.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_12.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_12.mem"},i1);
+end
+13:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_13.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_13.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_13.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_13.mem"},i1);
+end
+14:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_14.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_14.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_14.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_14.mem"},i1);
+end
+15:begin
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_0_15.mem"},f0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_0_1_15.mem"},i0);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_0_15.mem"},f1);
+    $readmemh({`FLEX_ROM_DIR,"ntt_1_1_15.mem"},i1);
+end
+endcase

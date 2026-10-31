@@ -1,0 +1,298 @@
+{
+  "seed": 20261025,
+  "scope": "Exact algebra/range checks and operation counts; no RTL/PPA",
+  "checks": {
+    "complex_3M_vs_4M_pairs": 6715,
+    "modular_operand_pairs_all_backends": 25125,
+    "modular_half_inputs": 40743,
+    "lazy_montgomery_pairs_valid_bound": 3000,
+    "full_low_product_pairs": 3000,
+    "small_ntt_dft_and_inverse_cases": 100,
+    "negacyclic_convolution_cases": 100,
+    "basemul_karatsuba_pairs": 5000,
+    "rational_split_merge_cases": 100
+  },
+  "counterexamples": {
+    "high_product_dropped_carry": {
+      "exact": 18446744073709551614,
+      "wrong": 18446744073709551613
+    },
+    "shoup_q_near_radix": {
+      "q": 251,
+      "R": 256,
+      "x": 9,
+      "w": 140,
+      "remainder": 256,
+      "correct": 5
+    },
+    "rounding_location": {
+      "round_product_then_add": 1,
+      "round_after_add": 2
+    },
+    "pointwise_not_unit_twiddle": {
+      "rounded_imag": 140737488224256,
+      "signed_W_plus_2_max": 8589934591
+    }
+  },
+  "fft_product_counts_L32": [
+    {
+      "width": 32,
+      "4M": 4,
+      "3M_generic_expanded": 6,
+      "3M_twiddle_expanded": 4,
+      "3M_twiddle_carry_corrected": 3,
+      "GS_expanded_4M": 8
+    },
+    {
+      "width": 64,
+      "4M": 16,
+      "3M_generic_expanded": 17,
+      "3M_twiddle_expanded": 14,
+      "3M_twiddle_carry_corrected": 12,
+      "GS_expanded_4M": 24
+    },
+    {
+      "width": 128,
+      "4M": 64,
+      "3M_generic_expanded": 57,
+      "3M_twiddle_expanded": 52,
+      "3M_twiddle_carry_corrected": 48,
+      "GS_expanded_4M": 80
+    }
+  ],
+  "ntt_profiles": [
+    {
+      "q": 3329,
+      "q_bits": 12,
+      "word": 16,
+      "polarity": "plus",
+      "mont_coefficient": 3327,
+      "q_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          -1,
+          10
+        ],
+        [
+          1,
+          12
+        ]
+      ],
+      "mont_coefficient_naf": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          -1,
+          10
+        ],
+        [
+          1,
+          12
+        ]
+      ],
+      "constant_adds_proxy": 6,
+      "barrett_shift": 24,
+      "barrett_mu": 5039,
+      "barrett_T_bits": 24,
+      "barrett_mu_bits": 13,
+      "barrett_estimate_full_product_slots": 1,
+      "barrett_slots_with_q_generic": 3,
+      "barrett_slots_with_q_constant_network": 2,
+      "mont_generic_slots": 3,
+      "mont_constant_network_product_slots": 1
+    },
+    {
+      "q": 12289,
+      "q_bits": 14,
+      "word": 16,
+      "polarity": "plus",
+      "mont_coefficient": 12287,
+      "q_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          12
+        ],
+        [
+          1,
+          14
+        ]
+      ],
+      "mont_coefficient_naf": [
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          12
+        ],
+        [
+          1,
+          14
+        ]
+      ],
+      "constant_adds_proxy": 4,
+      "barrett_shift": 28,
+      "barrett_mu": 21843,
+      "barrett_T_bits": 28,
+      "barrett_mu_bits": 15,
+      "barrett_estimate_full_product_slots": 1,
+      "barrett_slots_with_q_generic": 3,
+      "barrett_slots_with_q_constant_network": 2,
+      "mont_generic_slots": 3,
+      "mont_constant_network_product_slots": 1
+    },
+    {
+      "q": 8380417,
+      "q_bits": 23,
+      "word": 32,
+      "polarity": "minus",
+      "mont_coefficient": 58728449,
+      "q_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          13
+        ],
+        [
+          1,
+          23
+        ]
+      ],
+      "mont_coefficient_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          -1,
+          23
+        ],
+        [
+          1,
+          26
+        ]
+      ],
+      "constant_adds_proxy": 5,
+      "barrett_shift": 46,
+      "barrett_mu": 8396807,
+      "barrett_T_bits": 46,
+      "barrett_mu_bits": 24,
+      "barrett_estimate_full_product_slots": 2,
+      "barrett_slots_with_q_generic": 4,
+      "barrett_slots_with_q_constant_network": 3,
+      "mont_generic_slots": 3,
+      "mont_constant_network_product_slots": 1
+    },
+    {
+      "q": 2013265921,
+      "q_bits": 31,
+      "word": 32,
+      "polarity": "minus",
+      "mont_coefficient": 2281701377,
+      "q_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          27
+        ],
+        [
+          1,
+          31
+        ]
+      ],
+      "mont_coefficient_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          27
+        ],
+        [
+          1,
+          31
+        ]
+      ],
+      "constant_adds_proxy": 4,
+      "barrett_shift": 62,
+      "barrett_mu": 2290649223,
+      "barrett_T_bits": 62,
+      "barrett_mu_bits": 32,
+      "barrett_estimate_full_product_slots": 2,
+      "barrett_slots_with_q_generic": 4,
+      "barrett_slots_with_q_constant_network": 3,
+      "mont_generic_slots": 3,
+      "mont_constant_network_product_slots": 1
+    },
+    {
+      "q": 4293918721,
+      "q_bits": 32,
+      "word": 32,
+      "polarity": "minus",
+      "mont_coefficient": 1048577,
+      "q_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          20
+        ],
+        [
+          1,
+          32
+        ]
+      ],
+      "mont_coefficient_naf": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          20
+        ]
+      ],
+      "constant_adds_proxy": 3,
+      "barrett_shift": 64,
+      "barrett_mu": 4296016127,
+      "barrett_T_bits": 64,
+      "barrett_mu_bits": 33,
+      "barrett_estimate_full_product_slots": 4,
+      "barrett_slots_with_q_generic": 6,
+      "barrett_slots_with_q_constant_network": 5,
+      "mont_generic_slots": 3,
+      "mont_constant_network_product_slots": 1
+    }
+  ]
+}

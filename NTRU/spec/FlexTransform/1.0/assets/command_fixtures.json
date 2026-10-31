@@ -1,0 +1,156 @@
+[
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 0
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 1
+    },
+    "expected_status": 1
+  },
+  {
+    "command": {
+      "op": 15,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 2
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 3,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 3
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 1,
+      "logn": 10,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 4
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 11,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 5
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 10,
+      "jobs": 2,
+      "reserved": 0
+    },
+    "expected_status": 6
+  },
+  {
+    "command": {
+      "op": 15,
+      "fmt": 3,
+      "profile": 3,
+      "logn": 15,
+      "jobs": 8,
+      "reserved": 1
+    },
+    "expected_status": 1
+  },
+  {
+    "command": {
+      "op": 15,
+      "fmt": 3,
+      "profile": 3,
+      "logn": 15,
+      "jobs": 8,
+      "reserved": 0
+    },
+    "expected_status": 2
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 3,
+      "profile": 3,
+      "logn": 15,
+      "jobs": 8,
+      "reserved": 0
+    },
+    "expected_status": 3
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 3,
+      "logn": 15,
+      "jobs": 8,
+      "reserved": 0
+    },
+    "expected_status": 4
+  },
+  {
+    "command": {
+      "op": 0,
+      "fmt": 2,
+      "profile": 0,
+      "logn": 15,
+      "jobs": 8,
+      "reserved": 0
+    },
+    "expected_status": 5
+  },
+  {
+    "command": {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 9,
+      "jobs": 1,
+      "reserved": 0
+    },
+    "expected_status": 5
+  },
+  {
+    "command": {
+      "op": 5,
+      "fmt": 3,
+      "profile": 1,
+      "logn": 3,
+      "jobs": 8,
+      "reserved": 0
+    },
+    "expected_status": 0
+  }
+]

@@ -1,0 +1,841 @@
+{
+  "simulation": {
+    "transactions": 16102,
+    "configurations": 9,
+    "mismatches": 0,
+    "coverage": {
+      "0/0/False/transform": 170,
+      "0/0/False/unit": 160,
+      "0/0/True/transform": 170,
+      "0/0/True/unit": 160,
+      "0/1/False/transform": 106,
+      "0/1/False/unit": 160,
+      "0/1/True/transform": 106,
+      "0/1/True/unit": 160,
+      "1/0/False/transform": 4436,
+      "1/0/False/unit": 160,
+      "1/0/True/transform": 4436,
+      "1/0/True/unit": 160,
+      "1/1/False/transform": 724,
+      "1/1/False/unit": 160,
+      "1/1/True/transform": 724,
+      "1/1/True/unit": 160,
+      "2/0/False/unit": 160,
+      "2/0/True/unit": 160,
+      "2/1/False/unit": 160,
+      "2/1/True/unit": 160,
+      "3/0/False/R8_partial": 3150,
+      "3/0/False/unit": 27,
+      "3/0/True/unit": 53,
+      "3/1/False/unit": 27,
+      "3/1/True/unit": 53
+    },
+    "transforms": [
+      {
+        "q": 12289,
+        "n": 8,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 3
+      },
+      {
+        "q": 12289,
+        "n": 8,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 3
+      },
+      {
+        "q": 12289,
+        "n": 8,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 3
+      },
+      {
+        "q": 12289,
+        "n": 8,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 3
+      },
+      {
+        "q": 12289,
+        "n": 16,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 8
+      },
+      {
+        "q": 12289,
+        "n": 16,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 8
+      },
+      {
+        "q": 12289,
+        "n": 16,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 8
+      },
+      {
+        "q": 12289,
+        "n": 16,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 8
+      },
+      {
+        "q": 12289,
+        "n": 32,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 20
+      },
+      {
+        "q": 12289,
+        "n": 32,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 20
+      },
+      {
+        "q": 12289,
+        "n": 32,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 20
+      },
+      {
+        "q": 12289,
+        "n": 32,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 20
+      },
+      {
+        "q": 12289,
+        "n": 64,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 48
+      },
+      {
+        "q": 12289,
+        "n": 64,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 48
+      },
+      {
+        "q": 12289,
+        "n": 64,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 48
+      },
+      {
+        "q": 12289,
+        "n": 64,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 48
+      },
+      {
+        "q": 12289,
+        "n": 128,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 112
+      },
+      {
+        "q": 12289,
+        "n": 128,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 112
+      },
+      {
+        "q": 12289,
+        "n": 128,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 112
+      },
+      {
+        "q": 12289,
+        "n": 128,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 112
+      },
+      {
+        "q": 12289,
+        "n": 256,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 256
+      },
+      {
+        "q": 12289,
+        "n": 256,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 256
+      },
+      {
+        "q": 12289,
+        "n": 256,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 256
+      },
+      {
+        "q": 12289,
+        "n": 256,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 256
+      },
+      {
+        "q": 12289,
+        "n": 512,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 576
+      },
+      {
+        "q": 12289,
+        "n": 512,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 576
+      },
+      {
+        "q": 12289,
+        "n": 512,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 576
+      },
+      {
+        "q": 12289,
+        "n": 512,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 576
+      },
+      {
+        "q": 12289,
+        "n": 1024,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 1280
+      },
+      {
+        "q": 12289,
+        "n": 1024,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 1280
+      },
+      {
+        "q": 12289,
+        "n": 1024,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 1280
+      },
+      {
+        "q": 12289,
+        "n": 1024,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 1280
+      },
+      {
+        "q": 3329,
+        "n": 8,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 3
+      },
+      {
+        "q": 3329,
+        "n": 8,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 3
+      },
+      {
+        "q": 3329,
+        "n": 8,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 3
+      },
+      {
+        "q": 3329,
+        "n": 8,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 3
+      },
+      {
+        "q": 3329,
+        "n": 16,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 8
+      },
+      {
+        "q": 3329,
+        "n": 16,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 8
+      },
+      {
+        "q": 3329,
+        "n": 16,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 8
+      },
+      {
+        "q": 3329,
+        "n": 16,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 8
+      },
+      {
+        "q": 3329,
+        "n": 32,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 20
+      },
+      {
+        "q": 3329,
+        "n": 32,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 20
+      },
+      {
+        "q": 3329,
+        "n": 32,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 20
+      },
+      {
+        "q": 3329,
+        "n": 32,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 20
+      },
+      {
+        "q": 3329,
+        "n": 64,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 48
+      },
+      {
+        "q": 3329,
+        "n": 64,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 48
+      },
+      {
+        "q": 3329,
+        "n": 64,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 48
+      },
+      {
+        "q": 3329,
+        "n": 64,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 48
+      },
+      {
+        "q": 3329,
+        "n": 128,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 112
+      },
+      {
+        "q": 3329,
+        "n": 128,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "boundary",
+        "transactions": 112
+      },
+      {
+        "q": 3329,
+        "n": 128,
+        "inverse": false,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 112
+      },
+      {
+        "q": 3329,
+        "n": 128,
+        "inverse": true,
+        "incomplete": false,
+        "pattern": "random",
+        "transactions": 112
+      },
+      {
+        "q": 3329,
+        "n": 256,
+        "inverse": false,
+        "incomplete": true,
+        "pattern": "boundary",
+        "transactions": 224
+      },
+      {
+        "q": 3329,
+        "n": 256,
+        "inverse": true,
+        "incomplete": true,
+        "pattern": "boundary",
+        "transactions": 224
+      },
+      {
+        "q": 3329,
+        "n": 256,
+        "inverse": false,
+        "incomplete": true,
+        "pattern": "random",
+        "transactions": 224
+      },
+      {
+        "q": 3329,
+        "n": 256,
+        "inverse": true,
+        "incomplete": true,
+        "pattern": "random",
+        "transactions": 224
+      }
+    ],
+    "r8_driver_composed_complex_products": 70,
+    "limits": [
+      "W64/W128 assembly and sign fixups are in the driver, not synthesized RTL.",
+      "Full transform traces are compared to integer arithmetic, not Falcon/Kyber C.",
+      "q3329 N256 uses seven layers and normalization 128^-1; no BASEMUL implemented."
+    ]
+  },
+  "synthesis": [
+    {
+      "top": "cluster_ntt_parallel",
+      "comb_ge": 21022.5,
+      "ff": 477,
+      "total_ge": 23250.1,
+      "depth_cells": 118,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 9.2
+    },
+    {
+      "top": "cluster_ntt_pair_only",
+      "comb_ge": 20861.2,
+      "ff": 295,
+      "total_ge": 22238.8,
+      "depth_cells": 120,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 5.4
+    },
+    {
+      "top": "cluster_ntt_configurable",
+      "comb_ge": 26259.3,
+      "ff": 643,
+      "total_ge": 29262.1,
+      "depth_cells": 122,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.1
+    },
+    {
+      "top": "cluster_flex_parallel",
+      "comb_ge": 25843.8,
+      "ff": 640,
+      "total_ge": 28832.6,
+      "depth_cells": 119,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.5
+    },
+    {
+      "top": "cluster_flex_pair",
+      "comb_ge": 26147.3,
+      "ff": 643,
+      "total_ge": 29150.1,
+      "depth_cells": 125,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.3
+    },
+    {
+      "top": "cluster_ntt_pair_q12289",
+      "comb_ge": 17068.8,
+      "ff": 292,
+      "total_ge": 18432.4,
+      "depth_cells": 105,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.3
+    },
+    {
+      "top": "cluster_ntt_pair_q3329",
+      "comb_ge": 14882.0,
+      "ff": 258,
+      "total_ge": 16086.9,
+      "depth_cells": 107,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.1
+    },
+    {
+      "top": "cluster_ntt_pair_bypass",
+      "comb_ge": 23313.6,
+      "ff": 610,
+      "total_ge": 26162.3,
+      "depth_cells": 122,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.2
+    },
+    {
+      "top": "cluster_ntt_parallel_short",
+      "comb_ge": 20637.7,
+      "ff": 318,
+      "total_ge": 22122.7,
+      "depth_cells": 118,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.7
+    }
+  ],
+  "isolated_transform_model": [
+    {
+      "q": 12289,
+      "n": 8,
+      "layers": 3,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 15,
+      "paired_cycles": 9,
+      "ratio": 1.667,
+      "dedicated_short_cycles": 12,
+      "short_ratio": 1.333,
+      "parallel_data_bits_each_direction": 384,
+      "paired_data_bits_each_direction": 256
+    },
+    {
+      "q": 12289,
+      "n": 8,
+      "layers": 3,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 9,
+      "paired_cycles": 7,
+      "ratio": 1.286,
+      "dedicated_short_cycles": 6,
+      "short_ratio": 0.857,
+      "parallel_data_bits_each_direction": 384,
+      "paired_data_bits_each_direction": 256
+    },
+    {
+      "q": 12289,
+      "n": 16,
+      "layers": 4,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 28,
+      "paired_cycles": 12,
+      "ratio": 2.333,
+      "dedicated_short_cycles": 24,
+      "short_ratio": 2.0,
+      "parallel_data_bits_each_direction": 1024,
+      "paired_data_bits_each_direction": 512
+    },
+    {
+      "q": 12289,
+      "n": 16,
+      "layers": 4,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 16,
+      "paired_cycles": 12,
+      "ratio": 1.333,
+      "dedicated_short_cycles": 12,
+      "short_ratio": 1.0,
+      "parallel_data_bits_each_direction": 1024,
+      "paired_data_bits_each_direction": 512
+    },
+    {
+      "q": 12289,
+      "n": 64,
+      "layers": 6,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 114,
+      "paired_cycles": 54,
+      "ratio": 2.111,
+      "dedicated_short_cycles": 108,
+      "short_ratio": 2.0,
+      "parallel_data_bits_each_direction": 6144,
+      "paired_data_bits_each_direction": 3072
+    },
+    {
+      "q": 12289,
+      "n": 64,
+      "layers": 6,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 60,
+      "paired_cycles": 54,
+      "ratio": 1.111,
+      "dedicated_short_cycles": 54,
+      "short_ratio": 1.0,
+      "parallel_data_bits_each_direction": 6144,
+      "paired_data_bits_each_direction": 3072
+    },
+    {
+      "q": 12289,
+      "n": 256,
+      "layers": 8,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 536,
+      "paired_cycles": 264,
+      "ratio": 2.03,
+      "dedicated_short_cycles": 528,
+      "short_ratio": 2.0,
+      "parallel_data_bits_each_direction": 32768,
+      "paired_data_bits_each_direction": 16384
+    },
+    {
+      "q": 12289,
+      "n": 256,
+      "layers": 8,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 272,
+      "paired_cycles": 264,
+      "ratio": 1.03,
+      "dedicated_short_cycles": 264,
+      "short_ratio": 1.0,
+      "parallel_data_bits_each_direction": 32768,
+      "paired_data_bits_each_direction": 16384
+    },
+    {
+      "q": 12289,
+      "n": 512,
+      "layers": 9,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 1179,
+      "paired_cycles": 651,
+      "ratio": 1.811,
+      "dedicated_short_cycles": 1170,
+      "short_ratio": 1.797,
+      "parallel_data_bits_each_direction": 73728,
+      "paired_data_bits_each_direction": 40960
+    },
+    {
+      "q": 12289,
+      "n": 512,
+      "layers": 9,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 594,
+      "paired_cycles": 586,
+      "ratio": 1.014,
+      "dedicated_short_cycles": 585,
+      "short_ratio": 0.998,
+      "parallel_data_bits_each_direction": 73728,
+      "paired_data_bits_each_direction": 40960
+    },
+    {
+      "q": 12289,
+      "n": 1024,
+      "layers": 10,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 2590,
+      "paired_cycles": 1290,
+      "ratio": 2.008,
+      "dedicated_short_cycles": 2580,
+      "short_ratio": 2.0,
+      "parallel_data_bits_each_direction": 163840,
+      "paired_data_bits_each_direction": 81920
+    },
+    {
+      "q": 12289,
+      "n": 1024,
+      "layers": 10,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 1300,
+      "paired_cycles": 1290,
+      "ratio": 1.008,
+      "dedicated_short_cycles": 1290,
+      "short_ratio": 1.0,
+      "parallel_data_bits_each_direction": 163840,
+      "paired_data_bits_each_direction": 81920
+    },
+    {
+      "q": 3329,
+      "n": 256,
+      "layers": 7,
+      "data_bits_each_direction": 64,
+      "parallel_cycles": 469,
+      "paired_cycles": 265,
+      "ratio": 1.77,
+      "dedicated_short_cycles": 462,
+      "short_ratio": 1.743,
+      "parallel_data_bits_each_direction": 28672,
+      "paired_data_bits_each_direction": 16384
+    },
+    {
+      "q": 3329,
+      "n": 256,
+      "layers": 7,
+      "data_bits_each_direction": 128,
+      "parallel_cycles": 238,
+      "paired_cycles": 232,
+      "ratio": 1.026,
+      "dedicated_short_cycles": 231,
+      "short_ratio": 0.996,
+      "parallel_data_bits_each_direction": 28672,
+      "paired_data_bits_each_direction": 16384
+    }
+  ],
+  "modes": {
+    "0": {
+      "ntt_butterflies": 4,
+      "layers": 1,
+      "data_bits_each_direction": 128,
+      "root_bits": 64
+    },
+    "1": {
+      "ntt_butterflies": 4,
+      "layers": 2,
+      "data_bits_each_direction": 64,
+      "root_bits": 48
+    },
+    "2": {
+      "ntt_butterflies": 2,
+      "layers": 1,
+      "data_bits_each_direction": 64,
+      "root_bits": 32
+    },
+    "3": {
+      "exact_signed_32bit_products": 1,
+      "data_input_bits": 64,
+      "data_output_bits": 64
+    }
+  },
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_ntt_cluster.sv": "c12c64a2f2da4aa7ea1ed3f9ed74c564d129f42ba07eb72bd185bca43e222c2c",
+    "sim/src/tb_flex_ntt_cluster.sv": "fd527b799bd86b9ca17c1ce40ac464a4e7cdce3ca7eecb7b74ea123d62094282"
+  },
+  "limits": [
+    "Shared RTL: three sampled edges and II1; dedicated short baseline: two edges and II1. No backpressure or RAM.",
+    "Isolated transform table assumes a barrier after each pass, ideal read/write adapters and externally gathered groups.",
+    "Cycle model covers butterfly layers only; inverse normalization, BASEMUL and domain conversions are excluded.",
+    "Twiddle bandwidth, address gathering, target timing, memory area and energy are not measured.",
+    "GE uses generic mapping and 4.67 GE per FF; depth is not Fmax."
+  ],
+  "area_comparisons": [
+    {
+      "label": "Add stage pairing to FFT-capable cluster",
+      "baseline": "cluster_flex_parallel",
+      "candidate": "cluster_flex_pair",
+      "total_ge_ratio": 1.0110118407635802
+    },
+    {
+      "label": "Add bypass to pair-only NTT",
+      "baseline": "cluster_ntt_pair_only",
+      "candidate": "cluster_ntt_pair_bypass",
+      "total_ge_ratio": 1.1764258862888286
+    },
+    {
+      "label": "Add four-independent-BF mode to pair/bypass NTT",
+      "baseline": "cluster_ntt_pair_bypass",
+      "candidate": "cluster_ntt_configurable",
+      "total_ge_ratio": 1.118483466667686
+    },
+    {
+      "label": "Full shared cluster vs short dedicated NTT",
+      "baseline": "cluster_ntt_parallel_short",
+      "candidate": "cluster_flex_pair",
+      "total_ge_ratio": 1.3176556206972927
+    },
+    {
+      "label": "Runtime q vs fixed12289, pair-only",
+      "baseline": "cluster_ntt_pair_q12289",
+      "candidate": "cluster_ntt_pair_only",
+      "total_ge_ratio": 1.206505935201059
+    },
+    {
+      "label": "Runtime q vs fixed3329, pair-only",
+      "baseline": "cluster_ntt_pair_q3329",
+      "candidate": "cluster_ntt_pair_only",
+      "total_ge_ratio": 1.3824167490318209
+    }
+  ]
+}

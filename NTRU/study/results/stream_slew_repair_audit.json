@@ -1,0 +1,13 @@
+{
+  "full_netlist_cell_count": 377950,
+  "library_area_sum_um2": "450304.484000",
+  "cell_count_matches_resize_only": true,
+  "flipflop_count_unchanged": true,
+  "source_sha256": {
+    "scripts/report_slew_repair.py": "96346c8d2c7c44440696a19334de084fe676d89fdfd2c641c4a4c289f70d8bb2",
+    "scripts/repair_stream_slew.py": "c30efdba5fed6c4e5b239f8e13d52498dbcb4e61b59c8de0e924956e8dddb24e"
+  },
+  "evidence_sha256": {
+    "study/results/stream_slew_repair.json": "d778386cd964c028bf6364fdb4e9d30b8e5d730a89a96c1f34cdc1ec2aec16c0"
+  }
+}

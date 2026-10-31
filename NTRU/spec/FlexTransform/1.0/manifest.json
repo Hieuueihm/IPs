@@ -1,0 +1,33 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "status": "candidate",
+  "files": {
+    "00_scope_profiles.md": "c0edc09e0daad0e79d9b1120156f25df53e96de260396e12f061af274332c3fe",
+    "01_numeric_kernels.md": "44e8403782e0f0c5105fae1f137c7c183eb2724ac242b0a6cce7d0630e28062e",
+    "02_interfaces_protocol.md": "0f250cea899da4a70a4a16a53acd16a7baf25d5d90ff3e445eaaa7986b4ad828",
+    "03_microarchitecture_memory.md": "b46aa49b021b3b20d28db303c9b5f3f8452b92effe3f42e13587f1e659fb6568",
+    "04_verification_acceptance.md": "a13accfbaa3b061577df5bfb12f1e2689ad86a7a45bec9b407aa2173834d8619",
+    "05_requirements.md": "f270dc642a7d6488a18c165e85b9e47931e2095e73375ffd861181d632ec928d",
+    "06_integration_examples.md": "d6f12335ee1eee41bbf1ada386103e48d91cc983d09ce9381ee8641285ab1635",
+    "assets/command_fixtures.json": "a90a3e380fe91b2d55e819240ebadea4aafa4459de5976b33a344b48bc47008e",
+    "assets/fft_q64_64.mem": "ad62f4a8d74b11316ffef4faddef4306fb1ada1c5539d4223393810a433d4c8b",
+    "assets/kernel_fixtures.jsonl": "32744926eee65c88f688c8771ec99c0ccdce702606b9602277bdcc0bc58e6032",
+    "assets/ntt_q12289_forward.mem": "a951bcc67265ca50fe103ab709e22b5bfdc075ead0a1b420207660f89d1a4ab6",
+    "assets/ntt_q12289_inverse.mem": "16b09ea947a7c3c0ca1f746d8634094664cf5c272ddc1cbe168f79891f0f2328",
+    "assets/ntt_q3329_forward.mem": "7585ce9e9291f315b17eed5705081a6fed21e415a65f82d3aa21d2be0de589c4",
+    "assets/ntt_q3329_inverse.mem": "b10c95aa835290c0bce5953eaaf3c8543ad903235132ecea8293bca18c2f31b9",
+    "assets/primitive_fixtures.json": "e1e0c18c216e4e5605f7c8ed329afa88ff65c626c5f5d042cc7baf405cb8f088",
+    "assets/provenance.json": "e75e764d96639c949b38f4048bd33fe8bcace894c93ddcb1f17567df2311652b",
+    "assets/README.md": "0eee63353c7cf5bc8c1e818cfb88eba365ab08ef214f36a6c11828476b957aac",
+    "assets/reference_model.py": "4aa16f15530383654f650c27749fca2f78c1b2f01ee20b949533d544170a1d7f",
+    "CHANGELOG.md": "64f5d392ecd0d8c4f854993ddedab4f6de23de5c2328923341b123ec1513f36f",
+    "interface.json": "875896c6910832056c08e9223f1d077b4bc17215342c0bdb2f9533240311810e",
+    "profiles.json": "f16122b5221c51bfb873a5ee1045c0dd3cd42d9151e544fece1c7756bb518074",
+    "README.md": "4dad894a80c05104b7268c6dc60dc79088f2502af5c9a6a2cb3cc636d1ce14b2",
+    "requirements.json": "ef97255187f352a05e9d3a6d9e0a0e01355445bf57a5563860b39af349253b14"
+  },
+  "tools": {
+    "scripts/build_flextransform_spec_assets.py": "320ac3761cb42f959569c472cc73bbf53690a8bef8f86b01cca07d6b655517f7",
+    "scripts/check_flextransform_spec.py": "990425403eadb2d27d87a68fc2f40e147665bf72ff4eba242658c9b2bfe1a806"
+  }
+}

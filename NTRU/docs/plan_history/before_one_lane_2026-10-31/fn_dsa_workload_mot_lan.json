@@ -1,0 +1,2332 @@
+{
+ "9": {
+  "logn": 9,
+  "keys": 4,
+  "sigs_per_key": 8,
+  "phases": {
+   "keygen": {
+    "ns": 52844981,
+    "io_lines": {
+     "in_all": 148280,
+     "out_all": 148280,
+     "in_miss": 126448,
+     "out_lazy": 94536
+    },
+    "kernels": [
+     {
+      "kind": "q12289_ntt",
+      "logn": 9,
+      "calls": 8,
+      "ns": 116200
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 9,
+      "calls": 4,
+      "ns": 55799
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 1,
+      "calls": 1484,
+      "ns": 41400
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 2,
+      "calls": 768,
+      "ns": 743093
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 3,
+      "calls": 408,
+      "ns": 406397
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 4,
+      "calls": 232,
+      "ns": 406996
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 5,
+      "calls": 132,
+      "ns": 258097
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 6,
+      "calls": 80,
+      "ns": 228799
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 7,
+      "calls": 52,
+      "ns": 277599
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 8,
+      "calls": 36,
+      "ns": 350197
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 9,
+      "calls": 62,
+      "ns": 1154690
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 1,
+      "calls": 1480,
+      "ns": 38800
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 2,
+      "calls": 764,
+      "ns": 630195
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 3,
+      "calls": 404,
+      "ns": 376797
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 4,
+      "calls": 228,
+      "ns": 330399
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 5,
+      "calls": 128,
+      "ns": 230498
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 6,
+      "calls": 76,
+      "ns": 202200
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 7,
+      "calls": 48,
+      "ns": 228598
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 8,
+      "calls": 32,
+      "ns": 277398
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 9,
+      "calls": 12,
+      "ns": 213400
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 0,
+      "calls": 620,
+      "ns": 17900
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 1,
+      "calls": 1128,
+      "ns": 1155091
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 2,
+      "calls": 572,
+      "ns": 1047789
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 3,
+      "calls": 292,
+      "ns": 291195
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 4,
+      "calls": 2232,
+      "ns": 2773481
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 5,
+      "calls": 744,
+      "ns": 1320088
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 6,
+      "calls": 352,
+      "ns": 844397
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 7,
+      "calls": 176,
+      "ns": 840994
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 8,
+      "calls": 264,
+      "ns": 2150086
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 9,
+      "calls": 48,
+      "ns": 815293
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 1,
+      "calls": 1468,
+      "ns": 2542883
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 2,
+      "calls": 744,
+      "ns": 1628592
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 3,
+      "calls": 384,
+      "ns": 900491
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 4,
+      "calls": 2264,
+      "ns": 3575769
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 5,
+      "calls": 748,
+      "ns": 1252288
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 6,
+      "calls": 376,
+      "ns": 1021288
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 7,
+      "calls": 188,
+      "ns": 839797
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 8,
+      "calls": 120,
+      "ns": 1118189
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 9,
+      "calls": 40,
+      "ns": 730596
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 1,
+      "calls": 204,
+      "ns": 16000
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 2,
+      "calls": 104,
+      "ns": 8300
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 3,
+      "calls": 52,
+      "ns": 5200
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 4,
+      "calls": 60,
+      "ns": 8700
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 5,
+      "calls": 36,
+      "ns": 9200
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 6,
+      "calls": 20,
+      "ns": 8600
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 7,
+      "calls": 16,
+      "ns": 12700
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 8,
+      "calls": 68,
+      "ns": 98700
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 9,
+      "calls": 24,
+      "ns": 73099
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 1,
+      "calls": 212,
+      "ns": 16300
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 2,
+      "calls": 108,
+      "ns": 8700
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 3,
+      "calls": 56,
+      "ns": 5800
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 4,
+      "calls": 32,
+      "ns": 4500
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 5,
+      "calls": 16,
+      "ns": 3600
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 6,
+      "calls": 12,
+      "ns": 4700
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 7,
+      "calls": 8,
+      "ns": 6400
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 8,
+      "calls": 68,
+      "ns": 98198
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 9,
+      "calls": 20,
+      "ns": 74099
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 1,
+      "calls": 620,
+      "ns": 52299
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 2,
+      "calls": 312,
+      "ns": 34999
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 3,
+      "calls": 160,
+      "ns": 20800
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 4,
+      "calls": 2136,
+      "ns": 333397
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 5,
+      "calls": 684,
+      "ns": 172898
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 6,
+      "calls": 328,
+      "ns": 140597
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 7,
+      "calls": 156,
+      "ns": 126800
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 8,
+      "calls": 8,
+      "ns": 12200
+     }
+    ],
+    "p31_batches": [
+     {
+      "dir": 0,
+      "logn": 0,
+      "jobs": 1,
+      "count": 620
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 1,
+      "count": 1128
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 1,
+      "count": 572
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 1,
+      "count": 292
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 1,
+      "count": 2232
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 1,
+      "count": 744
+     },
+     {
+      "dir": 0,
+      "logn": 6,
+      "jobs": 1,
+      "count": 352
+     },
+     {
+      "dir": 0,
+      "logn": 7,
+      "jobs": 1,
+      "count": 176
+     },
+     {
+      "dir": 0,
+      "logn": 8,
+      "jobs": 1,
+      "count": 24
+     },
+     {
+      "dir": 0,
+      "logn": 8,
+      "jobs": 2,
+      "count": 120
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 1,
+      "count": 8
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 2,
+      "count": 20
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 1,
+      "count": 620
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 2,
+      "count": 424
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 1,
+      "count": 312
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 2,
+      "count": 216
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 1,
+      "count": 160
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 2,
+      "count": 112
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 1,
+      "count": 2136
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 2,
+      "count": 64
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 1,
+      "count": 748
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 1,
+      "count": 328
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 2,
+      "count": 24
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 1,
+      "count": 156
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 2,
+      "count": 16
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 1,
+      "count": 40
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 2,
+      "count": 40
+     },
+     {
+      "dir": 1,
+      "logn": 9,
+      "jobs": 2,
+      "count": 20
+     }
+    ],
+    "p31_cross_prime_batches": [
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 4,
+      "count": 4
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 6,
+      "count": 4
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 8,
+      "count": 136
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 3,
+      "count": 4
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 4,
+      "count": 4
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 8,
+      "count": 68
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 2,
+      "count": 8
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 5,
+      "count": 4
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 8,
+      "count": 32
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 1,
+      "count": 232
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 4,
+      "count": 500
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 1,
+      "count": 136
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 2,
+      "count": 304
+     },
+     {
+      "dir": 0,
+      "logn": 6,
+      "jobs": 1,
+      "count": 352
+     },
+     {
+      "dir": 0,
+      "logn": 7,
+      "jobs": 1,
+      "count": 176
+     },
+     {
+      "dir": 0,
+      "logn": 8,
+      "jobs": 1,
+      "count": 264
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 1,
+      "count": 48
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 7,
+      "count": 4
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 8,
+      "count": 180
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 4,
+      "count": 4
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 6,
+      "count": 4
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 8,
+      "count": 88
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 4,
+      "count": 8
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 8,
+      "count": 44
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 1,
+      "count": 232
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 4,
+      "count": 508
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 1,
+      "count": 132
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 2,
+      "count": 308
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 1,
+      "count": 376
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 1,
+      "count": 188
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 1,
+      "count": 120
+     },
+     {
+      "dir": 1,
+      "logn": 9,
+      "jobs": 1,
+      "count": 40
+     }
+    ]
+   },
+   "expand": {
+    "ns": 10752616,
+    "io_lines": {
+     "in_all": 28416,
+     "out_all": 28160,
+     "in_miss": 20480,
+     "out_lazy": 13312
+    },
+    "kernels": [
+     {
+      "kind": "r8_fft",
+      "logn": 9,
+      "calls": 16,
+      "ns": 804995
+     },
+     {
+      "kind": "r8_split",
+      "logn": 1,
+      "calls": 1024,
+      "ns": 3682270
+     },
+     {
+      "kind": "r8_split",
+      "logn": 2,
+      "calls": 512,
+      "ns": 1814591
+     },
+     {
+      "kind": "r8_split",
+      "logn": 3,
+      "calls": 256,
+      "ns": 1006095
+     },
+     {
+      "kind": "r8_split",
+      "logn": 4,
+      "calls": 128,
+      "ns": 648693
+     },
+     {
+      "kind": "r8_split",
+      "logn": 5,
+      "calls": 64,
+      "ns": 342397
+     },
+     {
+      "kind": "r8_split",
+      "logn": 6,
+      "calls": 32,
+      "ns": 218699
+     },
+     {
+      "kind": "r8_split",
+      "logn": 7,
+      "calls": 16,
+      "ns": 179796
+     },
+     {
+      "kind": "r8_split",
+      "logn": 8,
+      "calls": 8,
+      "ns": 132399
+     },
+     {
+      "kind": "r8_split",
+      "logn": 9,
+      "calls": 4,
+      "ns": 142999
+     },
+     {
+      "kind": "q12289_ntt",
+      "logn": 9,
+      "calls": 12,
+      "ns": 156299
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 9,
+      "calls": 4,
+      "ns": 55099
+     },
+     {
+      "kind": "q12289_tomont",
+      "logn": 9,
+      "calls": 4,
+      "ns": 16100
+     },
+     {
+      "kind": "q12289_modmul",
+      "logn": 9,
+      "calls": 4,
+      "ns": 22999
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   },
+   "sign": {
+    "ns": 132301253,
+    "io_lines": {
+     "in_all": 999424,
+     "out_all": 786432,
+     "in_miss": 627708,
+     "out_lazy": 359936
+    },
+    "kernels": [
+     {
+      "kind": "r8_fft",
+      "logn": 9,
+      "calls": 96,
+      "ns": 5073857
+     },
+     {
+      "kind": "r8_ifft",
+      "logn": 9,
+      "calls": 128,
+      "ns": 8195632
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 3,
+      "calls": 2048,
+      "ns": 4606463
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 4,
+      "calls": 1024,
+      "ns": 4080562
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 5,
+      "calls": 512,
+      "ns": 3053075
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 6,
+      "calls": 256,
+      "ns": 2135988
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 7,
+      "calls": 128,
+      "ns": 1899981
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 8,
+      "calls": 64,
+      "ns": 1759183
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 9,
+      "calls": 224,
+      "ns": 14107385
+     },
+     {
+      "kind": "r8_split",
+      "logn": 3,
+      "calls": 4096,
+      "ns": 15166890
+     },
+     {
+      "kind": "r8_split",
+      "logn": 4,
+      "calls": 2048,
+      "ns": 8445929
+     },
+     {
+      "kind": "r8_split",
+      "logn": 5,
+      "calls": 1024,
+      "ns": 5229957
+     },
+     {
+      "kind": "r8_split",
+      "logn": 6,
+      "calls": 512,
+      "ns": 3507083
+     },
+     {
+      "kind": "r8_split",
+      "logn": 7,
+      "calls": 256,
+      "ns": 2722079
+     },
+     {
+      "kind": "r8_split",
+      "logn": 8,
+      "calls": 128,
+      "ns": 2294788
+     },
+     {
+      "kind": "r8_split",
+      "logn": 9,
+      "calls": 64,
+      "ns": 2222587
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 3,
+      "calls": 4096,
+      "ns": 14812477
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 4,
+      "calls": 2048,
+      "ns": 5483657
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 5,
+      "calls": 1024,
+      "ns": 3675270
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 6,
+      "calls": 512,
+      "ns": 2667475
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 7,
+      "calls": 256,
+      "ns": 2245080
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 8,
+      "calls": 128,
+      "ns": 2401780
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 9,
+      "calls": 64,
+      "ns": 2114986
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   },
+   "verify": {
+    "ns": 3001674,
+    "io_lines": {
+     "in_all": 12288,
+     "out_all": 10240,
+     "in_miss": 4096,
+     "out_lazy": 4096
+    },
+    "kernels": [
+     {
+      "kind": "q12289_ntt",
+      "logn": 9,
+      "calls": 64,
+      "ns": 1018994
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 9,
+      "calls": 32,
+      "ns": 513593
+     },
+     {
+      "kind": "q12289_tomont",
+      "logn": 9,
+      "calls": 32,
+      "ns": 136899
+     },
+     {
+      "kind": "q12289_modmul",
+      "logn": 9,
+      "calls": 32,
+      "ns": 198800
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   }
+  },
+  "site_pairs": [
+   {
+    "first": "0x4158fc",
+    "joined": "0x4160dc",
+    "count": 4
+   },
+   {
+    "first": "0x415b32",
+    "joined": "0x415b4a",
+    "count": 448
+   },
+   {
+    "first": "0x416726",
+    "joined": "0x41673f",
+    "count": 432
+   },
+   {
+    "first": "0x4158fc",
+    "joined": "0x417a14",
+    "count": 8
+   },
+   {
+    "first": "0x419898",
+    "joined": "0x4198c4",
+    "count": 60
+   },
+   {
+    "first": "0x419951",
+    "joined": "0x41996a",
+    "count": 60
+   },
+   {
+    "first": "0x419b9d",
+    "joined": "0x419cc9",
+    "count": 28
+   },
+   {
+    "first": "0x41714f",
+    "joined": "0x41722f",
+    "count": 4
+   },
+   {
+    "first": "0x41763e",
+    "joined": "0x417657",
+    "count": 4
+   },
+   {
+    "first": "0x4177cd",
+    "joined": "0x4177e0",
+    "count": 4
+   },
+   {
+    "first": "0x41793c",
+    "joined": "0x41794f",
+    "count": 4
+   }
+  ]
+ },
+ "10": {
+  "logn": 10,
+  "keys": 4,
+  "sigs_per_key": 8,
+  "phases": {
+   "keygen": {
+    "ns": 235434891,
+    "io_lines": {
+     "in_all": 658502,
+     "out_all": 658502,
+     "in_miss": 601856,
+     "out_lazy": 515342
+    },
+    "kernels": [
+     {
+      "kind": "q12289_ntt",
+      "logn": 10,
+      "calls": 8,
+      "ns": 264800
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 10,
+      "calls": 4,
+      "ns": 139400
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 1,
+      "calls": 5740,
+      "ns": 158400
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 2,
+      "calls": 2169,
+      "ns": 2044600
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 3,
+      "calls": 893,
+      "ns": 920899
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 4,
+      "calls": 460,
+      "ns": 681698
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 5,
+      "calls": 256,
+      "ns": 750400
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 6,
+      "calls": 148,
+      "ns": 442800
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 7,
+      "calls": 88,
+      "ns": 435600
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 8,
+      "calls": 56,
+      "ns": 545400
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 9,
+      "calls": 40,
+      "ns": 705200
+     },
+     {
+      "kind": "ng_fft",
+      "logn": 10,
+      "calls": 524,
+      "ns": 19196588
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 1,
+      "calls": 5733,
+      "ns": 167700
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 2,
+      "calls": 2162,
+      "ns": 1889200
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 3,
+      "calls": 888,
+      "ns": 821500
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 4,
+      "calls": 456,
+      "ns": 580699
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 5,
+      "calls": 252,
+      "ns": 571899
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 6,
+      "calls": 144,
+      "ns": 377400
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 7,
+      "calls": 84,
+      "ns": 399900
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 8,
+      "calls": 52,
+      "ns": 540299
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 9,
+      "calls": 36,
+      "ns": 612100
+     },
+     {
+      "kind": "ng_ifft",
+      "logn": 10,
+      "calls": 36,
+      "ns": 1251699
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 0,
+      "calls": 2156,
+      "ns": 66700
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 1,
+      "calls": 3955,
+      "ns": 7654898
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 2,
+      "calls": 1818,
+      "ns": 2240799
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 3,
+      "calls": 779,
+      "ns": 982599
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 4,
+      "calls": 7270,
+      "ns": 7813196
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 5,
+      "calls": 2484,
+      "ns": 4500398
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 6,
+      "calls": 848,
+      "ns": 2094098
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 7,
+      "calls": 390,
+      "ns": 1816500
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 8,
+      "calls": 202,
+      "ns": 1704800
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 9,
+      "calls": 310,
+      "ns": 5166696
+     },
+     {
+      "kind": "p31_ntt",
+      "logn": 10,
+      "calls": 66,
+      "ns": 2205699
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 1,
+      "calls": 5068,
+      "ns": 15317393
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 2,
+      "calls": 2569,
+      "ns": 6250398
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 3,
+      "calls": 1038,
+      "ns": 2223097
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 4,
+      "calls": 7308,
+      "ns": 8648497
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 5,
+      "calls": 2528,
+      "ns": 5551898
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 6,
+      "calls": 852,
+      "ns": 2776098
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 7,
+      "calls": 426,
+      "ns": 1988900
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 8,
+      "calls": 228,
+      "ns": 2091097
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 9,
+      "calls": 146,
+      "ns": 2492099
+     },
+     {
+      "kind": "p31_intt",
+      "logn": 10,
+      "calls": 54,
+      "ns": 1950199
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 1,
+      "calls": 721,
+      "ns": 154500
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 2,
+      "calls": 357,
+      "ns": 32000
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 3,
+      "calls": 182,
+      "ns": 17800
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 4,
+      "calls": 151,
+      "ns": 20100
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 5,
+      "calls": 78,
+      "ns": 18600
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 6,
+      "calls": 48,
+      "ns": 19100
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 7,
+      "calls": 23,
+      "ns": 16500
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 8,
+      "calls": 23,
+      "ns": 32800
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 9,
+      "calls": 83,
+      "ns": 242500
+     },
+     {
+      "kind": "p31_mkgm",
+      "logn": 10,
+      "calls": 35,
+      "ns": 195500
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 1,
+      "calls": 728,
+      "ns": 55300
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 2,
+      "calls": 371,
+      "ns": 28900
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 3,
+      "calls": 189,
+      "ns": 17600
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 4,
+      "calls": 98,
+      "ns": 12900
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 5,
+      "calls": 56,
+      "ns": 12700
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 6,
+      "calls": 28,
+      "ns": 10500
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 7,
+      "calls": 21,
+      "ns": 14700
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 8,
+      "calls": 22,
+      "ns": 30100
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 9,
+      "calls": 83,
+      "ns": 229500
+     },
+     {
+      "kind": "p31_mkigm",
+      "logn": 10,
+      "calls": 27,
+      "ns": 148499
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 1,
+      "calls": 2156,
+      "ns": 198800
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 2,
+      "calls": 1085,
+      "ns": 101700
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 3,
+      "calls": 390,
+      "ns": 39600
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 4,
+      "calls": 7000,
+      "ns": 994800
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 5,
+      "calls": 2352,
+      "ns": 678100
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 6,
+      "calls": 764,
+      "ns": 343699
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 7,
+      "calls": 360,
+      "ns": 284899
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 8,
+      "calls": 168,
+      "ns": 255200
+     },
+     {
+      "kind": "p31_mkgmigm",
+      "logn": 9,
+      "calls": 8,
+      "ns": 23800
+     }
+    ],
+    "p31_batches": [
+     {
+      "dir": 0,
+      "logn": 0,
+      "jobs": 1,
+      "count": 2156
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 1,
+      "count": 3955
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 1,
+      "count": 1818
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 1,
+      "count": 779
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 1,
+      "count": 7270
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 1,
+      "count": 2484
+     },
+     {
+      "dir": 0,
+      "logn": 6,
+      "jobs": 1,
+      "count": 848
+     },
+     {
+      "dir": 0,
+      "logn": 7,
+      "jobs": 1,
+      "count": 390
+     },
+     {
+      "dir": 0,
+      "logn": 8,
+      "jobs": 1,
+      "count": 202
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 1,
+      "count": 38
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 2,
+      "count": 136
+     },
+     {
+      "dir": 0,
+      "logn": 10,
+      "jobs": 1,
+      "count": 12
+     },
+     {
+      "dir": 0,
+      "logn": 10,
+      "jobs": 2,
+      "count": 27
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 1,
+      "count": 2156
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 2,
+      "count": 1456
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 1,
+      "count": 1085
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 2,
+      "count": 742
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 1,
+      "count": 390
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 2,
+      "count": 324
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 1,
+      "count": 7000
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 2,
+      "count": 154
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 1,
+      "count": 2528
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 1,
+      "count": 764
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 2,
+      "count": 44
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 1,
+      "count": 360
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 2,
+      "count": 33
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 1,
+      "count": 168
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 2,
+      "count": 30
+     },
+     {
+      "dir": 1,
+      "logn": 9,
+      "jobs": 1,
+      "count": 44
+     },
+     {
+      "dir": 1,
+      "logn": 9,
+      "jobs": 2,
+      "count": 51
+     },
+     {
+      "dir": 1,
+      "logn": 10,
+      "jobs": 2,
+      "count": 27
+     }
+    ],
+    "p31_cross_prime_batches": [
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 2,
+      "count": 7
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 3,
+      "count": 7
+     },
+     {
+      "dir": 0,
+      "logn": 1,
+      "jobs": 8,
+      "count": 490
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 6,
+      "count": 19
+     },
+     {
+      "dir": 0,
+      "logn": 2,
+      "jobs": 8,
+      "count": 213
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 3,
+      "count": 5
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 4,
+      "count": 7
+     },
+     {
+      "dir": 0,
+      "logn": 3,
+      "jobs": 8,
+      "count": 92
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 2,
+      "count": 11
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 3,
+      "count": 456
+     },
+     {
+      "dir": 0,
+      "logn": 4,
+      "jobs": 4,
+      "count": 1470
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 1,
+      "count": 256
+     },
+     {
+      "dir": 0,
+      "logn": 5,
+      "jobs": 2,
+      "count": 1114
+     },
+     {
+      "dir": 0,
+      "logn": 6,
+      "jobs": 1,
+      "count": 848
+     },
+     {
+      "dir": 0,
+      "logn": 7,
+      "jobs": 1,
+      "count": 390
+     },
+     {
+      "dir": 0,
+      "logn": 8,
+      "jobs": 1,
+      "count": 202
+     },
+     {
+      "dir": 0,
+      "logn": 9,
+      "jobs": 1,
+      "count": 310
+     },
+     {
+      "dir": 0,
+      "logn": 10,
+      "jobs": 1,
+      "count": 66
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 4,
+      "count": 7
+     },
+     {
+      "dir": 1,
+      "logn": 1,
+      "jobs": 8,
+      "count": 630
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 2,
+      "count": 7
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 5,
+      "count": 7
+     },
+     {
+      "dir": 1,
+      "logn": 2,
+      "jobs": 8,
+      "count": 315
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 4,
+      "count": 5
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 6,
+      "count": 7
+     },
+     {
+      "dir": 1,
+      "logn": 3,
+      "jobs": 8,
+      "count": 122
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 3,
+      "count": 456
+     },
+     {
+      "dir": 1,
+      "logn": 4,
+      "jobs": 4,
+      "count": 1485
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 1,
+      "count": 256
+     },
+     {
+      "dir": 1,
+      "logn": 5,
+      "jobs": 2,
+      "count": 1136
+     },
+     {
+      "dir": 1,
+      "logn": 6,
+      "jobs": 1,
+      "count": 852
+     },
+     {
+      "dir": 1,
+      "logn": 7,
+      "jobs": 1,
+      "count": 426
+     },
+     {
+      "dir": 1,
+      "logn": 8,
+      "jobs": 1,
+      "count": 228
+     },
+     {
+      "dir": 1,
+      "logn": 9,
+      "jobs": 1,
+      "count": 146
+     },
+     {
+      "dir": 1,
+      "logn": 10,
+      "jobs": 1,
+      "count": 54
+     }
+    ]
+   },
+   "expand": {
+    "ns": 27693888,
+    "io_lines": {
+     "in_all": 60928,
+     "out_all": 60416,
+     "in_miss": 43008,
+     "out_lazy": 26624
+    },
+    "kernels": [
+     {
+      "kind": "r8_fft",
+      "logn": 10,
+      "calls": 16,
+      "ns": 1761399
+     },
+     {
+      "kind": "r8_split",
+      "logn": 1,
+      "calls": 2048,
+      "ns": 10087098
+     },
+     {
+      "kind": "r8_split",
+      "logn": 2,
+      "calls": 1024,
+      "ns": 5138798
+     },
+     {
+      "kind": "r8_split",
+      "logn": 3,
+      "calls": 512,
+      "ns": 2500799
+     },
+     {
+      "kind": "r8_split",
+      "logn": 4,
+      "calls": 256,
+      "ns": 1519000
+     },
+     {
+      "kind": "r8_split",
+      "logn": 5,
+      "calls": 128,
+      "ns": 739799
+     },
+     {
+      "kind": "r8_split",
+      "logn": 6,
+      "calls": 64,
+      "ns": 526500
+     },
+     {
+      "kind": "r8_split",
+      "logn": 7,
+      "calls": 32,
+      "ns": 359700
+     },
+     {
+      "kind": "r8_split",
+      "logn": 8,
+      "calls": 16,
+      "ns": 276700
+     },
+     {
+      "kind": "r8_split",
+      "logn": 9,
+      "calls": 8,
+      "ns": 237199
+     },
+     {
+      "kind": "r8_split",
+      "logn": 10,
+      "calls": 4,
+      "ns": 317200
+     },
+     {
+      "kind": "q12289_ntt",
+      "logn": 10,
+      "calls": 12,
+      "ns": 420200
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 10,
+      "calls": 4,
+      "ns": 131300
+     },
+     {
+      "kind": "q12289_tomont",
+      "logn": 10,
+      "calls": 4,
+      "ns": 32400
+     },
+     {
+      "kind": "q12289_modmul",
+      "logn": 10,
+      "calls": 4,
+      "ns": 45399
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   },
+   "sign": {
+    "ns": 288444190,
+    "io_lines": {
+     "in_all": 2195456,
+     "out_all": 1736704,
+     "in_miss": 1474548,
+     "out_lazy": 883712
+    },
+    "kernels": [
+     {
+      "kind": "r8_fft",
+      "logn": 10,
+      "calls": 96,
+      "ns": 11491997
+     },
+     {
+      "kind": "r8_ifft",
+      "logn": 10,
+      "calls": 128,
+      "ns": 14832090
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 3,
+      "calls": 4096,
+      "ns": 10497593
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 4,
+      "calls": 2048,
+      "ns": 8920494
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 5,
+      "calls": 1024,
+      "ns": 6343197
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 6,
+      "calls": 512,
+      "ns": 4671499
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 7,
+      "calls": 256,
+      "ns": 4106799
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 8,
+      "calls": 128,
+      "ns": 4897797
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 9,
+      "calls": 64,
+      "ns": 5288297
+     },
+     {
+      "kind": "r8_cmul",
+      "logn": 10,
+      "calls": 224,
+      "ns": 25071494
+     },
+     {
+      "kind": "r8_split",
+      "logn": 3,
+      "calls": 8192,
+      "ns": 32419788
+     },
+     {
+      "kind": "r8_split",
+      "logn": 4,
+      "calls": 4096,
+      "ns": 17931891
+     },
+     {
+      "kind": "r8_split",
+      "logn": 5,
+      "calls": 2048,
+      "ns": 11743597
+     },
+     {
+      "kind": "r8_split",
+      "logn": 6,
+      "calls": 1024,
+      "ns": 7434398
+     },
+     {
+      "kind": "r8_split",
+      "logn": 7,
+      "calls": 512,
+      "ns": 5396398
+     },
+     {
+      "kind": "r8_split",
+      "logn": 8,
+      "calls": 256,
+      "ns": 4402700
+     },
+     {
+      "kind": "r8_split",
+      "logn": 9,
+      "calls": 128,
+      "ns": 4147699
+     },
+     {
+      "kind": "r8_split",
+      "logn": 10,
+      "calls": 64,
+      "ns": 4080999
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 3,
+      "calls": 8192,
+      "ns": 28373688
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 4,
+      "calls": 4096,
+      "ns": 11957295
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 5,
+      "calls": 2048,
+      "ns": 7781299
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 6,
+      "calls": 1024,
+      "ns": 5649398
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 7,
+      "calls": 512,
+      "ns": 4845898
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 8,
+      "calls": 256,
+      "ns": 6656198
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 9,
+      "calls": 128,
+      "ns": 4319196
+     },
+     {
+      "kind": "r8_merge",
+      "logn": 10,
+      "calls": 64,
+      "ns": 7261897
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   },
+   "verify": {
+    "ns": 5547999,
+    "io_lines": {
+     "in_all": 24576,
+     "out_all": 20480,
+     "in_miss": 8192,
+     "out_lazy": 8192
+    },
+    "kernels": [
+     {
+      "kind": "q12289_ntt",
+      "logn": 10,
+      "calls": 64,
+      "ns": 1946700
+     },
+     {
+      "kind": "q12289_intt",
+      "logn": 10,
+      "calls": 32,
+      "ns": 990000
+     },
+     {
+      "kind": "q12289_tomont",
+      "logn": 10,
+      "calls": 32,
+      "ns": 240199
+     },
+     {
+      "kind": "q12289_modmul",
+      "logn": 10,
+      "calls": 32,
+      "ns": 359500
+     }
+    ],
+    "p31_batches": [],
+    "p31_cross_prime_batches": []
+   }
+  },
+  "site_pairs": [
+   {
+    "first": "0x4158fc",
+    "joined": "0x4160dc",
+    "count": 7
+   },
+   {
+    "first": "0x415b32",
+    "joined": "0x415b4a",
+    "count": 1491
+   },
+   {
+    "first": "0x416726",
+    "joined": "0x41673f",
+    "count": 1330
+   },
+   {
+    "first": "0x4158fc",
+    "joined": "0x417a14",
+    "count": 12
+   },
+   {
+    "first": "0x419898",
+    "joined": "0x4198c4",
+    "count": 68
+   },
+   {
+    "first": "0x419951",
+    "joined": "0x41996a",
+    "count": 68
+   },
+   {
+    "first": "0x419b9d",
+    "joined": "0x419cc9",
+    "count": 32
+   },
+   {
+    "first": "0x41714f",
+    "joined": "0x41722f",
+    "count": 4
+   },
+   {
+    "first": "0x41763e",
+    "joined": "0x417657",
+    "count": 4
+   },
+   {
+    "first": "0x4177cd",
+    "joined": "0x4177e0",
+    "count": 4
+   },
+   {
+    "first": "0x41793c",
+    "joined": "0x41794f",
+    "count": 4
+   }
+  ]
+ }
+}

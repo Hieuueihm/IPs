@@ -1,0 +1,276 @@
+{
+  "profiles": [
+    {
+      "q": 12289,
+      "a": 12,
+      "k": 3,
+      "constants": [
+        {
+          "c": 1479,
+          "montgomery_constant": 4401,
+          "csd_terms": [
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              -1
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              8,
+              1
+            ],
+            [
+              12,
+              1
+            ]
+          ],
+          "shift_add_terms": 5,
+          "max_t_bits": 26
+        },
+        {
+          "c": 10810,
+          "montgomery_constant": 7888,
+          "csd_terms": [
+            [
+              4,
+              1
+            ],
+            [
+              6,
+              -1
+            ],
+            [
+              8,
+              -1
+            ],
+            [
+              13,
+              1
+            ]
+          ],
+          "shift_add_terms": 4,
+          "max_t_bits": 27
+        }
+      ],
+      "all_m_words_checked": 65536,
+      "all_t_low_words_checked": 65536,
+      "exhaustive_constant_inputs": 24578,
+      "random_boundary_product_cases": 5016,
+      "full_s_max_bound": 956354559,
+      "full_s_bits": 30,
+      "compact_low_carry_bits": 18,
+      "compact_mq_high_bits": 14,
+      "compact_u_max_bound": 14593,
+      "compact_u_bits": 14
+    },
+    {
+      "q": 3329,
+      "a": 8,
+      "k": 13,
+      "constants": [
+        {
+          "c": 1729,
+          "montgomery_constant": 2571,
+          "csd_terms": [
+            [
+              0,
+              -1
+            ],
+            [
+              2,
+              -1
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              9,
+              1
+            ],
+            [
+              11,
+              1
+            ]
+          ],
+          "shift_add_terms": 5,
+          "max_t_bits": 24
+        },
+        {
+          "c": 1600,
+          "montgomery_constant": 758,
+          "csd_terms": [
+            [
+              1,
+              -1
+            ],
+            [
+              3,
+              -1
+            ],
+            [
+              8,
+              -1
+            ],
+            [
+              10,
+              1
+            ]
+          ],
+          "shift_add_terms": 4,
+          "max_t_bits": 22
+        }
+      ],
+      "all_m_words_checked": 65536,
+      "all_t_low_words_checked": 65536,
+      "exhaustive_constant_inputs": 6658,
+      "random_boundary_product_cases": 5016,
+      "full_s_max_bound": 229241599,
+      "full_s_bits": 28,
+      "compact_low_carry_bits": 20,
+      "compact_mq_high_bits": 12,
+      "compact_u_max_bound": 3498,
+      "compact_u_bits": 12
+    }
+  ],
+  "actual_stage_pair_cases": 5160,
+  "contexts": [
+    {
+      "q": 12289,
+      "n": 8,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 1,
+      "radix2_tail": 1
+    },
+    {
+      "q": 12289,
+      "n": 16,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 2,
+      "radix2_tail": 0
+    },
+    {
+      "q": 12289,
+      "n": 32,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 2,
+      "radix2_tail": 1
+    },
+    {
+      "q": 12289,
+      "n": 64,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 3,
+      "radix2_tail": 0
+    },
+    {
+      "q": 12289,
+      "n": 128,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 3,
+      "radix2_tail": 1
+    },
+    {
+      "q": 12289,
+      "n": 256,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 4,
+      "radix2_tail": 0
+    },
+    {
+      "q": 12289,
+      "n": 512,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 4,
+      "radix2_tail": 1
+    },
+    {
+      "q": 12289,
+      "n": 1024,
+      "forward_c": 1479,
+      "inverse_c": 10810,
+      "paired_layers": 5,
+      "radix2_tail": 0
+    },
+    {
+      "q": 3329,
+      "n": 8,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 1,
+      "radix2_tail": 1
+    },
+    {
+      "q": 3329,
+      "n": 16,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 2,
+      "radix2_tail": 0
+    },
+    {
+      "q": 3329,
+      "n": 32,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 2,
+      "radix2_tail": 1
+    },
+    {
+      "q": 3329,
+      "n": 64,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 3,
+      "radix2_tail": 0
+    },
+    {
+      "q": 3329,
+      "n": 128,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 3,
+      "radix2_tail": 1
+    },
+    {
+      "q": 3329,
+      "n": 256,
+      "forward_c": 1729,
+      "inverse_c": 1600,
+      "paired_layers": 3,
+      "radix2_tail": 1
+    }
+  ],
+  "fft32_csa_cases": 5016,
+  "mismatches": 0,
+  "negative_controls": [
+    "q12289: omitted low-half carry detected",
+    "q12289: unencoded c used in Montgomery detected",
+    "q3329: omitted low-half carry detected",
+    "q3329: unencoded c used in Montgomery detected",
+    "compressor and final-CPA cross-lane carry leakage detected"
+  ],
+  "source_sha256": {
+    "model/radix4_shared_accum.py": "260bda7d64cbf6a16f709d27e4715e68945f856d1e48375085862c045e0afb93",
+    "scripts/prototype_ntt_cluster.py": "1c13a6a14e8efc5d59c3bd0d4191cde74a36625fa6a5872e786be9ee81a67114"
+  },
+  "limits": [
+    "Integer arithmetic model only; no RTL or area/timing measurements for these two new candidates.",
+    "Radix4 variable-product count does not include the fixed-c multiplication and its reduction.",
+    "Shared compressor capacity is 1x64 FFT or 2x32 NTT; not four full NTT reductions/cycle.",
+    "Compact Montgomery is profile-specific, not arbitrary-modulus or lazy-input support."
+  ]
+}

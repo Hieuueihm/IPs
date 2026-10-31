@@ -1,0 +1,66 @@
+{
+  "simulation": {
+    "transactions": 1335,
+    "configurations": 3,
+    "by_mode": {
+      "0": 192,
+      "1": 192,
+      "2": 192,
+      "3": 759
+    },
+    "c_complex_products": 189,
+    "mismatches": 0,
+    "note": "3M sequencing/recombination is performed by the test driver, not a synthesized complex butterfly."
+  },
+  "synthesis": [
+    {
+      "top": "proto_r32",
+      "comb_ge": 232643.9,
+      "ff": 3078,
+      "total_ge": 247018.1,
+      "depth_cells": 434,
+      "unknown": {},
+      "synthesis_seconds": 73.4,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    },
+    {
+      "top": "proto_f16_common",
+      "comb_ge": 250528.7,
+      "ff": 3078,
+      "total_ge": 264903.0,
+      "depth_cells": 445,
+      "unknown": {},
+      "synthesis_seconds": 83.2,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    },
+    {
+      "top": "proto_f16_wide",
+      "comb_ge": 324694.8,
+      "ff": 6118,
+      "total_ge": 353265.8,
+      "depth_cells": 807,
+      "unknown": {},
+      "synthesis_seconds": 103.0,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "mapping": "abc -fast -g generic gates"
+    }
+  ],
+  "capacity": {
+    "FFT32_real_products_per_cycle": 16,
+    "FFT64_real_products_per_cycle": 4,
+    "FFT128_real_products_per_cycle": 1,
+    "NTT_lanes": [
+      16,
+      16,
+      64
+    ]
+  },
+  "limits": [
+    "Arithmetic bank only; no complex 3M controller, transform memory or scheduler.",
+    "Generic gate depth is not frequency, nanoseconds or target-library STA.",
+    "GE is approximate NAND2 equivalent; no measured power/energy.",
+    "NTT64 lane throughput requires 2048 data bits per direction plus twiddle bandwidth."
+  ]
+}

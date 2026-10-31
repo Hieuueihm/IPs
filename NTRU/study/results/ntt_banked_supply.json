@@ -1,0 +1,1414 @@
+{
+  "configuration": {
+    "data_banks": 64,
+    "data_word_bits": 16,
+    "ports_per_bank": "1R+1W",
+    "bank_function": "(i&63)^((i>>2)&0x30)^((i>>4)&0x30)",
+    "data_depth_at_n1024": 16,
+    "data_capacity_bits_at_n1024": 16384,
+    "root_banks": 16,
+    "root_bundle_bits": 48,
+    "root_depth_at_n1024": 32,
+    "root_capacity_bits_per_direction_at_n1024": 24576
+  },
+  "cases": [
+    {
+      "q": 12289,
+      "n": 8,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 8
+        },
+        {
+          "stage": 2,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 8
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 12289,
+      "n": 8,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 8
+        },
+        {
+          "stage": 2,
+          "paired": false,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 8
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 12289,
+      "n": 16,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 16
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 16
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 12289,
+      "n": 16,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 16
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 16
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 12289,
+      "n": 32,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 4,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 32
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 12289,
+      "n": 32,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 4,
+          "paired": false,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 32
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 12289,
+      "n": 64,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 12289,
+      "n": 64,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 12289,
+      "n": 128,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 5,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 8,
+      "modulo_bank_read_beats": 10
+    },
+    {
+      "q": 12289,
+      "n": 128,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 6,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 8,
+      "modulo_bank_read_beats": 10
+    },
+    {
+      "q": 12289,
+      "n": 256,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 16,
+      "modulo_bank_read_beats": 28
+    },
+    {
+      "q": 12289,
+      "n": 256,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 16,
+      "modulo_bank_read_beats": 28
+    },
+    {
+      "q": 12289,
+      "n": 512,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 7,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 32,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 5,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 8,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 40,
+      "modulo_bank_read_beats": 72
+    },
+    {
+      "q": 12289,
+      "n": 512,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 32,
+          "xor_without_tail_reorder_beats": 8,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 8,
+          "paired": false,
+          "low_stride_bit": 8,
+          "data_read_beats": 8,
+          "data_write_beats": 8,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 8,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 40,
+      "modulo_bank_read_beats": 72
+    },
+    {
+      "q": 12289,
+      "n": 1024,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 8,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 64,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 64,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 8,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 80,
+      "modulo_bank_read_beats": 176
+    },
+    {
+      "q": 12289,
+      "n": 1024,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 64,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 8,
+          "paired": true,
+          "low_stride_bit": 8,
+          "data_read_beats": 16,
+          "data_write_beats": 16,
+          "modulo_bank_read_beats": 64,
+          "xor_without_tail_reorder_beats": 16,
+          "root_bundle_beats": 16,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 80,
+      "modulo_bank_read_beats": 176
+    },
+    {
+      "q": 3329,
+      "n": 8,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 8
+        },
+        {
+          "stage": 2,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 8
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 3329,
+      "n": 8,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 8
+        },
+        {
+          "stage": 2,
+          "paired": false,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 8
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 3329,
+      "n": 16,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 16
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 16
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 3329,
+      "n": 16,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 16
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 16
+        }
+      ],
+      "total_read_beats": 2,
+      "modulo_bank_read_beats": 2
+    },
+    {
+      "q": 3329,
+      "n": 32,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 4,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 32
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 3329,
+      "n": 32,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 32
+        },
+        {
+          "stage": 4,
+          "paired": false,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 32
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 3329,
+      "n": 64,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 3329,
+      "n": 64,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 1,
+          "data_write_beats": 1,
+          "modulo_bank_read_beats": 1,
+          "xor_without_tail_reorder_beats": 1,
+          "root_bundle_beats": 1,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 3,
+      "modulo_bank_read_beats": 3
+    },
+    {
+      "q": 3329,
+      "n": 128,
+      "incomplete": false,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 5,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 0,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 8,
+      "modulo_bank_read_beats": 10
+    },
+    {
+      "q": 3329,
+      "n": 128,
+      "incomplete": false,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 0,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 16,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 2,
+          "xor_without_tail_reorder_beats": 2,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 6,
+          "data_read_beats": 2,
+          "data_write_beats": 2,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 2,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 8,
+      "modulo_bank_read_beats": 10
+    },
+    {
+      "q": 3329,
+      "n": 256,
+      "incomplete": true,
+      "inverse": false,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 6,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 16,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 4,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 2,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 4,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 1,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 16,
+      "modulo_bank_read_beats": 28
+    },
+    {
+      "q": 3329,
+      "n": 256,
+      "incomplete": true,
+      "inverse": true,
+      "passes": [
+        {
+          "stage": 0,
+          "paired": true,
+          "low_stride_bit": 1,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 8,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 2,
+          "paired": true,
+          "low_stride_bit": 3,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 4,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 2,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 4,
+          "paired": true,
+          "low_stride_bit": 5,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        },
+        {
+          "stage": 6,
+          "paired": false,
+          "low_stride_bit": 7,
+          "data_read_beats": 4,
+          "data_write_beats": 4,
+          "modulo_bank_read_beats": 8,
+          "xor_without_tail_reorder_beats": 4,
+          "root_bundle_beats": 4,
+          "max_distinct_bundles_per_beat": 1,
+          "active_coefficients_per_full_beat": 64
+        }
+      ],
+      "total_read_beats": 16,
+      "modulo_bank_read_beats": 24
+    }
+  ],
+  "mismatches": 0,
+  "data_bank_conflicts": 0,
+  "root_bank_conflicts": 0,
+  "source_sha256": {
+    "model/ntt_banked_supply.py": "b7de3ae746633e9d88aaee64243c3cb1bcb19d2123bfe6d84f33069c566f08f0",
+    "scripts/prototype_ntt_cluster.py": "1c13a6a14e8efc5d59c3bd0d4191cde74a36625fa6a5872e786be9ee81a67114"
+  },
+  "limits": [
+    "Pass-level bank and exact arithmetic model, not SRAM/controller RTL.",
+    "Bundles store GM[g],GM[2g],GM[2g+1]; repeated requests broadcast.",
+    "Root bundle RAM duplicates roots (about 1.5x flat table per direction).",
+    "Read/write beats exclude RAM latency, pipeline drain, stalls and normalization.",
+    "Mode0 four-BF/tile needs 128 coefficients/cycle; 64 banks feed only mode1 or mode2 at II=1."
+  ]
+}

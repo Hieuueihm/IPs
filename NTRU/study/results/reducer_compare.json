@@ -1,0 +1,154 @@
+{
+  "simulation": {
+    "reducer_transactions": 139292,
+    "reducer_configurations": 9,
+    "exhaustive_tlow_per_q": 65536,
+    "cluster_transactions": 16102,
+    "cluster_configurations": 3,
+    "transform_traces": 56,
+    "r8_composed_complex_products": 70,
+    "mismatches": 0
+  },
+  "synthesis": [
+    {
+      "top": "reduce_original_dynamic",
+      "comb_ge": 1744.8,
+      "ff": 78,
+      "total_ge": 2109.1,
+      "depth_cells": 51,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.9
+    },
+    {
+      "top": "reduce_csa_dynamic",
+      "comb_ge": 1784.9,
+      "ff": 78,
+      "total_ge": 2149.2,
+      "depth_cells": 41,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.9
+    },
+    {
+      "top": "reduce_compact_dynamic",
+      "comb_ge": 1464.6,
+      "ff": 78,
+      "total_ge": 1828.9,
+      "depth_cells": 50,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.9
+    },
+    {
+      "top": "reduce_original_q12289",
+      "comb_ge": 843.2,
+      "ff": 76,
+      "total_ge": 1198.2,
+      "depth_cells": 39,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.5
+    },
+    {
+      "top": "reduce_csa_q12289",
+      "comb_ge": 912.4,
+      "ff": 76,
+      "total_ge": 1267.4,
+      "depth_cells": 36,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.5
+    },
+    {
+      "top": "reduce_compact_q12289",
+      "comb_ge": 650.6,
+      "ff": 76,
+      "total_ge": 1005.5,
+      "depth_cells": 42,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.4
+    },
+    {
+      "top": "reduce_original_q3329",
+      "comb_ge": 1075.5,
+      "ff": 70,
+      "total_ge": 1402.4,
+      "depth_cells": 41,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.7
+    },
+    {
+      "top": "reduce_csa_q3329",
+      "comb_ge": 1180.7,
+      "ff": 70,
+      "total_ge": 1507.6,
+      "depth_cells": 38,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.8
+    },
+    {
+      "top": "reduce_compact_q3329",
+      "comb_ge": 861.9,
+      "ff": 70,
+      "total_ge": 1188.8,
+      "depth_cells": 45,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 0.6
+    },
+    {
+      "top": "reduce_cluster_original",
+      "comb_ge": 26297.2,
+      "ff": 643,
+      "total_ge": 29300.0,
+      "depth_cells": 124,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.3
+    },
+    {
+      "top": "reduce_cluster_csa",
+      "comb_ge": 26486.1,
+      "ff": 643,
+      "total_ge": 29488.9,
+      "depth_cells": 109,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.4
+    },
+    {
+      "top": "reduce_cluster_compact",
+      "comb_ge": 25194.7,
+      "ff": 643,
+      "total_ge": 28197.5,
+      "depth_cells": 118,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.2
+    }
+  ],
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/mont_reduce16_bench.sv": "eeea429175a80ddc0840850c05c4c3c79bd879215fb70cf7e605858733bdefea",
+    "hdl/proto/flex_reduce_cluster.sv": "8506bef6c54e600b473d575f28c3ecf53b55813e06be00ee7866ff20aa62b2c5",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2",
+    "sim/src/tb_mont_reducers.sv": "8782d3acf99a49c92fde49757cafe34bff32e831aa9e7ab8ac5ac891f02cb7cd",
+    "sim/src/tb_reduce_cluster.sv": "64555cd9fd10add5153cbd7bbf6bf16b4b2fb42239673b2adca7071b6c5e0899"
+  },
+  "limits": [
+    "Canonical products only; R=2^16, q3329/q12289.",
+    "Original/CSA/compact use the same m generator, pipeline and II.",
+    "Generic GE/depth only, not target-library area/Fmax/energy."
+  ],
+  "selection": {
+    "name": "compact",
+    "implementation": 2,
+    "rule": "minimum cluster total GE among candidates with generic gate depth no worse than original",
+    "total_ge": 28197.5,
+    "depth_cells": 118
+  }
+}

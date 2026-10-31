@@ -1,0 +1,25 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "r8_commit": "ad1e5bf7714d53230ad457364db8a46a1b459c94",
+  "c_contract": {
+    "abi": "LP64",
+    "FPR_MODE": 2,
+    "AVX2": 0
+  },
+  "source_files": [
+    {
+      "path": "study/vectors/r8/twiddle_q64_64.json",
+      "sha256": "6b056e6c3e482fccf3d63b2707b94fdd7aace52398799c0d7671348098a5564b"
+    },
+    {
+      "path": "study/build/pqc_application/N512/capture/trace.jsonl",
+      "sha256": "578d2b2138c04e5293e7ab8ad65de8c7c9e595c61f54e13bab55e12259e3aef6"
+    },
+    {
+      "path": "study/build/kernel_engine/cases.json",
+      "sha256": "6508fef6128698db5a9e595e36147ad6b27f362363d23ac286022f17d594c61a"
+    }
+  ],
+  "generated_by": "scripts/build_flextransform_spec_assets.py",
+  "note": "Only baseline_expected fixtures inherit captured expected bits; multi-job/custom widths have integer-contract evidence, not signer-precision approval."
+}

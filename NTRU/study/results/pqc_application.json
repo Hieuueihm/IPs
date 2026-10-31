@@ -1,0 +1,322 @@
+{
+  "commit": "ad1e5bf7714d53230ad457364db8a46a1b459c94",
+  "configuration": {
+    "FALCON_FPR_MODE": 2,
+    "FALCON_AVX2": 0,
+    "FALCON_RAND_WIN32": 0
+  },
+  "source_pristine": true,
+  "c_kernel_calls": 5472,
+  "c_output_words": 223232,
+  "kernel_counts": {
+    "keygen/NTT/N512": 2,
+    "keygen/INTT/N512": 1,
+    "expand_privkey/NTT/N512": 3,
+    "expand_privkey/TOMONT/N512": 1,
+    "expand_privkey/MODMUL/N512": 1,
+    "expand_privkey/INTT/N512": 1,
+    "expand_privkey/FFT/N512": 4,
+    "expand_privkey/SPLIT/N512": 3,
+    "expand_privkey/SPLIT/N256": 6,
+    "expand_privkey/SPLIT/N128": 12,
+    "expand_privkey/SPLIT/N64": 24,
+    "expand_privkey/SPLIT/N32": 48,
+    "expand_privkey/SPLIT/N16": 96,
+    "expand_privkey/SPLIT/N8": 192,
+    "expand_privkey/SPLIT/N4": 384,
+    "expand_privkey/SPLIT/N2": 768,
+    "sign_tree/FFT/N512": 6,
+    "sign_tree/CMUL/N512": 18,
+    "sign_tree/IFFT/N512": 8,
+    "sign_tree/SPLIT/N512": 12,
+    "sign_tree/SPLIT/N256": 24,
+    "sign_tree/SPLIT/N128": 48,
+    "sign_tree/SPLIT/N64": 96,
+    "sign_tree/SPLIT/N32": 192,
+    "sign_tree/SPLIT/N16": 384,
+    "sign_tree/SPLIT/N8": 768,
+    "sign_tree/MERGE/N8": 768,
+    "sign_tree/CMUL/N8": 384,
+    "sign_tree/MERGE/N16": 384,
+    "sign_tree/CMUL/N16": 192,
+    "sign_tree/MERGE/N32": 192,
+    "sign_tree/CMUL/N32": 96,
+    "sign_tree/MERGE/N64": 96,
+    "sign_tree/CMUL/N64": 48,
+    "sign_tree/MERGE/N128": 48,
+    "sign_tree/CMUL/N128": 24,
+    "sign_tree/MERGE/N256": 24,
+    "sign_tree/CMUL/N256": 12,
+    "sign_tree/MERGE/N512": 12,
+    "verify_valid/NTT/N512": 4,
+    "verify_valid/TOMONT/N512": 2,
+    "verify_valid/MODMUL/N512": 2,
+    "verify_valid/INTT/N512": 2,
+    "verify_wrong_message/NTT/N512": 4,
+    "verify_wrong_message/TOMONT/N512": 2,
+    "verify_wrong_message/MODMUL/N512": 2,
+    "verify_wrong_message/INTT/N512": 2,
+    "keygen/NTT/N1024": 2,
+    "keygen/INTT/N1024": 1,
+    "expand_privkey/NTT/N1024": 3,
+    "expand_privkey/TOMONT/N1024": 1,
+    "expand_privkey/MODMUL/N1024": 1,
+    "expand_privkey/INTT/N1024": 1,
+    "expand_privkey/FFT/N1024": 4,
+    "expand_privkey/SPLIT/N1024": 1,
+    "sign_tree/FFT/N1024": 6,
+    "sign_tree/CMUL/N1024": 14,
+    "sign_tree/IFFT/N1024": 8,
+    "sign_tree/SPLIT/N1024": 4,
+    "sign_tree/MERGE/N1024": 4,
+    "verify_valid/NTT/N1024": 4,
+    "verify_valid/TOMONT/N1024": 2,
+    "verify_valid/MODMUL/N1024": 2,
+    "verify_valid/INTT/N1024": 2,
+    "verify_wrong_message/NTT/N1024": 4,
+    "verify_wrong_message/TOMONT/N1024": 2,
+    "verify_wrong_message/MODMUL/N1024": 2,
+    "verify_wrong_message/INTT/N1024": 2
+  },
+  "array_frame_uses": {
+    "NTT_banked_pass": 2280,
+    "NTT_scalar_montgomery": 384,
+    "FFT128_real_product": 323328
+  },
+  "exact_cache_hits": {
+    "NTT_banked_pass": 1080,
+    "FFT128_real_product": 8991,
+    "NTT_scalar_montgomery": 168
+  },
+  "unique_rtl_transactions": 315753,
+  "simulation": [
+    {
+      "transactions": 60000,
+      "cycles": 102829,
+      "blocked_in": 42809,
+      "blocked_out": 42811
+    },
+    {
+      "transactions": 60000,
+      "cycles": 102829,
+      "blocked_in": 42809,
+      "blocked_out": 42811
+    },
+    {
+      "transactions": 60000,
+      "cycles": 102829,
+      "blocked_in": 42809,
+      "blocked_out": 42811
+    },
+    {
+      "transactions": 60000,
+      "cycles": 102829,
+      "blocked_in": 42809,
+      "blocked_out": 42811
+    },
+    {
+      "transactions": 60000,
+      "cycles": 102829,
+      "blocked_in": 42809,
+      "blocked_out": 42811
+    },
+    {
+      "transactions": 15753,
+      "cycles": 26987,
+      "blocked_in": 11216,
+      "blocked_out": 11216
+    }
+  ],
+  "mismatches": 0,
+  "applications": [
+    {
+      "type": "application",
+      "logn": 9,
+      "trial": 0,
+      "keygen": 0,
+      "expand": 0,
+      "sign": 0,
+      "verify": 0,
+      "wrong_message": -4,
+      "wrong_signature": -3,
+      "signature_bytes": 651
+    },
+    {
+      "type": "application",
+      "logn": 9,
+      "trial": 1,
+      "keygen": 0,
+      "expand": 0,
+      "sign": 0,
+      "verify": 0,
+      "wrong_message": -4,
+      "wrong_signature": -3,
+      "signature_bytes": 654
+    },
+    {
+      "type": "application",
+      "logn": 10,
+      "trial": 0,
+      "keygen": 0,
+      "expand": 0,
+      "sign": 0,
+      "verify": 0,
+      "wrong_message": -4,
+      "wrong_signature": -3,
+      "signature_bytes": 1273
+    },
+    {
+      "type": "application",
+      "logn": 10,
+      "trial": 1,
+      "keygen": 0,
+      "expand": 0,
+      "sign": 0,
+      "verify": 0,
+      "wrong_message": -4,
+      "wrong_signature": -3,
+      "signature_bytes": 1271
+    }
+  ],
+  "artifact_comparisons": [
+    {
+      "n": 512,
+      "identical_to_original_C": [
+        {
+          "file": "sk.bin",
+          "sha256": "29c52ad368579d1fb4525691e15907ca507ecf4b95be6e44c443cf931dae33cf"
+        },
+        {
+          "file": "pk.bin",
+          "sha256": "89c43429662e3144c699756d4da7405b708e8f52113de76ad0eb5c81b13f8e4d"
+        },
+        {
+          "file": "expanded.bin",
+          "sha256": "0fdc5af21a48bb5e5050bb85041e912a47ebc1489356f9b863203886734380ff"
+        },
+        {
+          "file": "sig0.bin",
+          "sha256": "f016e1d288e4aba00876e589df63a54cf6a687469f039b3a8ef821e20863d9e6"
+        },
+        {
+          "file": "sig1.bin",
+          "sha256": "aa2fb905e48b0525a2718e259b4806b970930a9b8c56475bc1a734fb8b1bfe73"
+        },
+        {
+          "file": "msg0.bin",
+          "sha256": "020669d1b5058958306cc13c195aca3040fe8c4857cc2f5e7a1bdba43896b019"
+        },
+        {
+          "file": "msg1.bin",
+          "sha256": "ef77995b0f409185f11934613ea185035b3c28cda6eb26f8fdf973628cbcdefd"
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "identical_to_original_C": [
+        {
+          "file": "sk.bin",
+          "sha256": "c69f9044be02a395f34970d33af8c135f21bae1e4b029bd0b83bb6abd2d9756d"
+        },
+        {
+          "file": "pk.bin",
+          "sha256": "ac867a5ec99d22eb2ff549ae1a559ef4cde1cc04a3744163983b5df6b99eca24"
+        },
+        {
+          "file": "expanded.bin",
+          "sha256": "c231442ea8282009a523fed31c73f2438f1dbc1dabcd90ea86c4f9d42db9ced6"
+        },
+        {
+          "file": "sig0.bin",
+          "sha256": "cac097b7da72d13ef086bb41e5b0eb24c094fffacaf125a3cd136e4f989682dc"
+        },
+        {
+          "file": "sig1.bin",
+          "sha256": "9d49f3bbdfeb11ee0bfe65f4c5ae6b6288d6b67d473886dfa70fdf6d30192f85"
+        },
+        {
+          "file": "msg0.bin",
+          "sha256": "d22a2c36138ae0fa69f10d44cc3c3a3ee9880392ef3bd395bf4c2692e47c2c27"
+        },
+        {
+          "file": "msg1.bin",
+          "sha256": "be3dda1e176f09ddc94975f3fe03b5e3929b72ac2b932c1c0f8640d7a9993a25"
+        }
+      ]
+    }
+  ],
+  "independent_original_C_verifier": [
+    {
+      "n": 512,
+      "trial": 0,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 512,
+      "trial": 1,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 1024,
+      "trial": 0,
+      "valid": 0,
+      "wrong_message": -4
+    },
+    {
+      "n": 1024,
+      "trial": 1,
+      "valid": 0,
+      "wrong_message": -4
+    }
+  ],
+  "negative_controls": {
+    "wrong_message_rejected": true,
+    "wrong_signature_rejected": true,
+    "corrupted_live_input_rejected": true,
+    "mutated_RTL_product_detected": true
+  },
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_stream_tile.sv": "1102247933be11750f417bf02c9d0718f5b12b7622fef24430b0786cedba2f58",
+    "hdl/proto/flex_stream_array.sv": "1201639720f0515425a176de1a6977a0c4f6166729f53efadc9d2c4179623fd7",
+    "hdl/proto/ntt_bank_permute64.sv": "6f5bbd10ca1d5a27554ba669b43998a83416b9ec7408b5803fe1c5279ff45bad",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2",
+    "sim/src/tb_flex_stream.sv": "82e8631e3b3db73011f8654b3e4072481891cf1ba6397081d28034b27051b105",
+    "scripts/validate_flex_stream.py": "ea20fe269034d9a549f9afd8997291c4e80d73b37702323988a01112d6d81070",
+    "scripts/validate_pqc_application.py": "39e9a0e62c1c614abc00b26803329f7be2ccfc2977a681564cbafb925aa93610",
+    "scripts/pqc_c_bridge.py": "38007d2f26adb6eceb3cc01f428487089e39516bddd137babc7d0754ce6c4f51",
+    "model/pqc_kernel_adapter.py": "718ecb6fd9802e72bc1cd891149f65757e1bd2ae359d8465fd5d3e05b54e578d",
+    "model/r8_golden.py": "4faa52e372d76d6c019e3bf9f725846bb937597f91e63289f276b7932c58bb1b",
+    "model/ntt_banked_supply.py": "b7de3ae746633e9d88aaee64243c3cb1bcb19d2123bfe6d84f33069c566f08f0",
+    "scripts/prototype_ntt_cluster.py": "1c13a6a14e8efc5d59c3bd0d4191cde74a36625fa6a5872e786be9ee81a67114",
+    "sim/ref/r8_pqc_bridge.h": "d79e60b2c4c6ca633677507a9f60dbd7b24cd40c90e50decb34064edd2eb5d9b",
+    "sim/ref/r8_pqc_ntt.inc": "05b9365af60fde52a02ef200c5a29cb2eac2be2758b0726b4ea33f85fa869f20",
+    "sim/ref/r8_pqc_cosim.c": "8979f1041c8f9f84bd0ab57e843555fea506dfd25ad2bbee8e1c091a313426c2",
+    "sim/ref/r8_verify_file.c": "134beca9f562d50511060a46328b0b651136df784c1a1a940c4603f582b522e9"
+  },
+  "evidence_sha256": {
+    "study/build/pqc_application/c/manifest.json": "998ec7d8d55d0f0ffeb16dcb9dce338a020eb72b8f72206b44eb9cc6ddab9fbb",
+    "study/build/pqc_application/independent_verify.json": "c09095fec8098c4852e8c8c016fa2835f8dfc78a17502fbb263e4804660c5116",
+    "study/build/pqc_application/c/pqc_bridge": "71d83b24f971ca74d3666df788bfc8defddad4c3a00914031f34cf7c3e958242",
+    "study/build/pqc_application/c/independent_verify": "d37c9151098c850576fed6c2fde1584cfb630d84859ab010b5c90c28704c4b39",
+    "study/build/pqc_application/c/vrfy_instrumented.c": "04be8e88a2092b780759a3a56d896e96571cefea80015dd44053140c8671f191",
+    "study/build/pqc_application/N512/capture/trace.jsonl": "578d2b2138c04e5293e7ab8ad65de8c7c9e595c61f54e13bab55e12259e3aef6",
+    "study/build/pqc_application/N512/replay/trace.jsonl": "d2a24ea708f0039782e9f7dbc6a4dd0d27d29239535009579c8045ec58b5d033",
+    "study/build/pqc_application/N1024/capture/trace.jsonl": "bacb4b92ea868b9cfbcd14195977ac37c210a593db34c1b6234269311ece066b",
+    "study/build/pqc_application/N1024/replay/trace.jsonl": "fca5f721ad1771b16913ec745fc85dede399e477ab81b738e0baac44a7f79826",
+    "study/build/pqc_application/N512/replacement.txt": "489ca813bb32ab3b928e39fa46cf511ec7921f943121adbb27a77155f8c01b25",
+    "study/build/pqc_application/N1024/replacement.txt": "a672ffef9804d6529bf47ba8a35d22b6116e48dd1d8c14107d2b56068086285c"
+  },
+  "seconds": 30.2,
+  "limits": [
+    "Functional deterministic co-simulation, not an RTL implementation of the complete signature scheme.",
+    "Actual shared banked-array RTL handles FFT real products, NTT butterflies, modular products and iNTT normalization.",
+    "FFT add/sub, 3M sequencing, scaling and all RAM/stage orchestration run in the host adapter.",
+    "Other signing operations, sampling, divisions, NTRUGen keygen and protocol run in C.",
+    "Only pinned R8 scalar Q64.64 and q12289, N512/N1024, two messages per generated key.",
+    "No claim of full FN-DSA standard conformance, constant-time hardware or side-channel validation."
+  ]
+}
