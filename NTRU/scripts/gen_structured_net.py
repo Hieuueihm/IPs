@@ -12,7 +12,10 @@ of 2P + 1 roots (P banks x children 1, 2, plus root1). One register stage on eve
 the crossbar draft.
 
 P = 4 (default): the on-array v1 design with staggered tile phases (model/staggered_net.py: 99.4% of the 16/3 rate),
-module ntt_bank_net_s. P = 8: the network the dedicated-reduction baseline needs (16 butterflies per cycle), module
+module ntt_bank_net_s. Its root path also serves FFT 32 bit (tile mode 5): each pack ROM bank has two read ports, tiles
+0..7 read port A and 8..15 port B, and a tile takes the 64-bit pair {child 2, child 1} of one bank (an NTT pack's two
+children, or an FFT word {wi, wr}) or {0, root1}; op_w is 64 bit and loads only when load_w is set, so an FFT root read
+ahead of its beats stays. The NTT child is picked by the core (low or high half). P = 8: the network the dedicated-reduction baseline needs (16 butterflies per cycle), module
 ntt_bank_net_s_p8 in hdl/net/ntt_bank_net_s_p8.sv.
 
 Run: python scripts/gen_structured_net.py [--pbanks 4|8]
@@ -48,13 +51,22 @@ def main():
     say(f"module {NAME} #(parameter integer TILES = 16, BANKS = 64, PBANKS = {PB}) (")
     say("    input  wire                     clk, en,")
     say("    input  wire [BANKS*16-1:0]      bank_rd,")
-    say("    input  wire [PBANKS*96-1:0]     pack_rd,")
+    if PB == 4:
+        say("    input  wire [2*PBANKS*64-1:0]   pack_rd,        // {child 2, child 1} of each bank: port A banks 0..3, port B")
+    else:
+        say("    input  wire [PBANKS*96-1:0]     pack_rd,")
     say(f"    input  wire [TILES*{wlo}-1:0]       sel_xlo, sel_ylo,")
     say(f"    input  wire [TILES*{whi}-1:0]       sel_xhi, sel_yhi,")
     say("    input  wire [TILES-1:0]         hold_x,")
     say("    input  wire [31:0]              root1,")
-    say(f"    input  wire [TILES*{wrt}-1:0]       sel_root,       // 2*bank + child - 1 (0..{2 * PB - 1}), {2 * PB} = root1")
-    say("    output reg  [TILES*32-1:0]      op_x, op_y, op_w,")
+    if PB == 4:
+        say("    input  wire [TILES*4-1:0]       sel_root,       // {root1, bank, child}; the child bit is used by the core")
+        say("    input  wire [TILES-1:0]         load_w,")
+        say("    output reg  [TILES*32-1:0]      op_x, op_y,")
+        say("    output reg  [TILES*64-1:0]      op_w,")
+    else:
+        say(f"    input  wire [TILES*{wrt}-1:0]       sel_root,       // 2*bank + child - 1 (0..{2 * PB - 1}), {2 * PB} = root1")
+        say("    output reg  [TILES*32-1:0]      op_x, op_y, op_w,")
     say("    input  wire [TILES*64-1:0]      tile_z,")
     say(f"    input  wire [BANKS*{wwr}-1:0]       wsel,")
     say("    input  wire [BANKS-1:0]         wen,")
@@ -91,21 +103,35 @@ def main():
         say(f"    reg [31:0] xh_{t};")
         say(f"    wire [31:0] xn_{t} = {{xhi_{t}, xlo_{t}}};")
         say(f"    wire [31:0] yn_{t} = {{yhi_{t}, ylo_{t}}};")
-        say(f"    reg  [31:0] wn_{t};")
-        say("    always @* begin")
-        say(f"        case (sel_root[{wrt}*{t} +: {wrt}])")
-        for b in range(PB):
-            for c in (1, 2):
-                say(f"            {wrt}'d{2 * b + c - 1}: wn_{t} = pack_rd[{96 * b + 32 * c} +: 32];")
-        say(f"            default: wn_{t} = root1;")
-        say("        endcase")
-        say("    end")
+        if PB == 4:
+            port = 0 if t < 8 else 1
+            say(f"    reg  [63:0] wn_{t};")
+            say("    always @* begin")
+            say(f"        case (sel_root[4*{t} +: 4] >> 1)")
+            for b in range(PB):
+                say(f"            3'd{b}: wn_{t} = pack_rd[{64 * (4 * port + b)} +: 64];")
+            say(f"            default: wn_{t} = {{32'd0, root1}};")
+            say("        endcase")
+            say("    end")
+        else:
+            say(f"    reg  [31:0] wn_{t};")
+            say("    always @* begin")
+            say(f"        case (sel_root[{wrt}*{t} +: {wrt}])")
+            for b in range(PB):
+                for c in (1, 2):
+                    say(f"            {wrt}'d{2 * b + c - 1}: wn_{t} = pack_rd[{96 * b + 32 * c} +: 32];")
+            say(f"            default: wn_{t} = root1;")
+            say("        endcase")
+            say("    end")
         say("    always @(posedge clk)")
         say("        if (en) begin")
         say(f"            xh_{t} <= xn_{t};")
         say(f"            op_x[32*{t} +: 32] <= hold_x[{t}] ? xh_{t} : xn_{t};")
         say(f"            op_y[32*{t} +: 32] <= yn_{t};")
-        say(f"            op_w[32*{t} +: 32] <= wn_{t};")
+        if PB == 4:
+            say(f"            if (load_w[{t}]) op_w[64*{t} +: 64] <= wn_{t};")
+        else:
+            say(f"            op_w[32*{t} +: 32] <= wn_{t};")
         say("        end")
     for b in range(BANKS):
         srcs = wr[str(b)]

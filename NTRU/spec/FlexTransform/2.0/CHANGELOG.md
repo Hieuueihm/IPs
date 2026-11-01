@@ -4,6 +4,16 @@
 
 Nguồn: [kiến trúc v1](../../../docs/architecture_v1.md). Bản 1.0 giữ nguyên.
 
+### 2026-11-01, lần 10: chế độ 5 của tile, FFT 32 bit trên lõi
+
+- Hợp đồng tile (10, lần 8): chế độ 5, một butterfly FFT 32 bit trong hai nhịp request, chạy trên đường butterfly NTT
+  (cộng/trừ với q = 0, bộ nhân ghép làm 3 tích, làm tròn chế độ 1); `cfg_q[3:0]` = độ dịch div2e, `req_sign[0]` = chia;
+  độ trễ 9, một butterfly mỗi 3 chu kỳ; chỉ với `EN_REG` = 0. Kiểm thử (11, lần 6): `fft32bf.txt`, `+KIND=3`.
+- Lõi tối thiểu chạy FFT / FFT ngược định dạng 0 qua chế độ 5: 18/18 ca vàng 1.0; N1024 539 chu kỳ (ngưỡng giả thuyết 3:
+  700 / 770). Mạng: nguồn cho cặp ảo; đường root 64 bit có nạp/giữ; ROM gói hai cổng, mỗi từ FFT một root.
+- Vivado lõi: 33 423 LUT / 64 DSP / 44 BRAM tile, WNS −0,061 ns (chỉ NTT: 17 748 LUT, +0,098 ns).
+- Bản trước: [docs/plan_history/before_tile_mode5_2026-11-01/](../../../docs/plan_history/before_tile_mode5_2026-11-01/).
+
 ### 2026-11-01, lần 9: tile lệch pha, 4 bank gói root
 
 - v1 trên mảng chỉ cần 16 butterfly mỗi 3 chu kỳ. Tile t bắt đầu ở pha t / 6 (tham số `PHASE` của tile, lịch phát do

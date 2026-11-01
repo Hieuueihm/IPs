@@ -2,7 +2,7 @@
 // ports of 10_hop_dong_tile.md section 2, so it runs on any RTL with that interface.
 //
 // Vector source (one of):
-//   +FILE=<vector file> +KIND=0 raw32 | 1 fft32 | 2 ntt
+//   +FILE=<vector file> +KIND=0 raw32 | 1 fft32 | 2 ntt | 3 fft32bf (mode 5, two beats per line)
 //   +CHAIN=<asset dir>  mode-change chain over raw32, fft32, ntt (group B case
 //                       "Đổi chế độ và hằng số"): q12289 butterfly -> FFT32 -> q8380417 ->
 //                       raw product -> NTRUGen prime GS with halving -> q3329 modmul
@@ -82,7 +82,7 @@ module tb_tile_thu;
     task load(input [8*256-1:0] path, input integer k);
         integer fd, c, rc;
         reg [31:0] a, b, sa, sb, fl, q, qi, md, dr, hv;
-        reg [31:0] d0, d1, r0, z0, z1;
+        reg [31:0] d0, d1, r0, z0, z1, ar, br, ai, bi, wr, wi, zr0, zr1, zi0, zi1, sc, sh;
         reg [64:0] p65;
         reg [8*512-1:0] line;
         begin
@@ -104,6 +104,16 @@ module tb_tile_thu;
                         rc = $fscanf(fd, "%h %h %h %h", fl, a, b, z0);
                         v_mode[n] = 1; v_floor[n] = fl[0];
                         v_d[n] = {b, a}; v_z[n] = {33'd0, z0};
+                    end else if (k == 3) begin
+                        // mode 5: two entries, the real beat then the imaginary beat
+                        rc = $fscanf(fd, "%h %h %h %h %h %h %h %h %h %h %h %h %h",
+                                     dr, sc, sh, ar, br, ai, bi, wr, wi, zr0, zr1, zi0, zi1);
+                        v_mode[n] = 5; v_dir[n] = dr[0]; v_q[n] = sh; v_sign[n] = {1'b0, sc[0]};
+                        v_d[n] = {br, ar}; v_r[n] = wr; v_z[n] = {1'b0, zr1, zr0};
+                        n = n + 1;
+                        v_d[n] = 0; v_r[n] = 0; v_z[n] = 0; v_halve[n] = 0; v_floor[n] = 0; v_qi[n] = 0;
+                        v_mode[n] = 5; v_dir[n] = dr[0]; v_q[n] = sh; v_sign[n] = {1'b0, sc[0]};
+                        v_d[n] = {bi, ai}; v_r[n] = wi; v_z[n] = {1'b0, zi1, zi0};
                     end else begin
                         rc = $fscanf(fd, "%h %h %h %h %h %h %h %h %h %h",
                                      q, qi, md, dr, hv, d0, d1, r0, z0, z1);
@@ -128,13 +138,14 @@ module tb_tile_thu;
     integer acc_cyc [0:255];
     integer total_cases, total_err, lat_min, lat_max, first_acc, last_acc, timeout;
     integer burst_left, trace_h, trace_n;
+    integer pair_pending;   // mode 5: the real beat was taken, the imaginary beat must follow in the next en cycle
 
     task cycle_inputs(input integer want_req);
         begin
             if (burst != 0 && burst_left == 0 && rnd(1000) < 3) burst_left = 1 + rnd(64);
             if (burst_left > 0) begin en = 1'b0; burst_left = burst_left - 1; end
             else en = (stall == 0) ? 1'b1 : (rnd(100) >= stall);
-            req_valid = want_req && (sparse == 0 || rnd(100) >= sparse);
+            req_valid = want_req && (pair_pending != 0 || sparse == 0 || rnd(100) >= sparse);
         end
     endtask
 
@@ -176,7 +187,7 @@ module tb_tile_thu;
                 @(negedge clk); rst = 1'b0;
             end
             write_cfg(g0);
-            tot = cnt * rep; i = 0; j = 0; e = 0; did_reset = 0;
+            tot = cnt * rep; i = 0; j = 0; e = 0; did_reset = 0; pair_pending = 0;
             lat_min = 1 << 30; lat_max = 0; first_acc = -1; last_acc = 0; timeout = 0; first = 1;
             trace_h = 17; trace_n = 0; prev_ok = 0; prev_en = 1'b1;
             while (j < tot) begin
@@ -213,6 +224,7 @@ module tb_tile_thu;
                     if (first_acc < 0) first_acc = ecyc;
                     last_acc = ecyc;
                     i = i + 1;
+                    pair_pending = (v_mode[g0] == 5) && (i % 2 == 1);
                 end
                 if (rsp_valid) begin
                     idx = g0 + (j % cnt);
@@ -243,7 +255,7 @@ module tb_tile_thu;
                         @(negedge clk);
                     end
                     write_cfg(g0);
-                    i = 0; j = 0; first = 1; prev_ok = 0;
+                    i = 0; j = 0; first = 1; prev_ok = 0; pair_pending = 0;
                 end
                 timeout = timeout + 1;
                 if (timeout > 200 * tot + 10000) begin
@@ -273,7 +285,7 @@ module tb_tile_thu;
                 e = e + 1;
             end
             rate = (last_acc > first_acc) ? (1.0 * cnt * rep) / (last_acc - first_acc + 1) : 1.0;
-            want = (v_mode[g0] >= 2 && TREN_MANG == 1) ? 1.0 / 3.0 : 1.0;
+            want = (v_mode[g0] == 5) ? 2.0 / 3.0 : (v_mode[g0] >= 2 && TREN_MANG == 1) ? 1.0 / 3.0 : 1.0;
             if (stall == 0 && burst == 0 && sparse == 0 && resetat < 0 && cnt * rep >= 1000 && rate < 0.98 * want) begin
                 $display("  ERROR rate %0.4f below 98%% of %0.4f", rate, want);
                 e = e + 1;
@@ -402,7 +414,7 @@ module tb_tile_thu;
         $display("TREN_MANG=%0d source=%0s vectors=%0d stall=%0d burst=%0d sparse=%0d rep=%0d cfgbusy=%0d resetat=%0d sched=%0d",
                  TREN_MANG, fname, n, stall, burst, sparse, rep, cfgbusy, resetat, sched);
 
-        rst = 1'b1; en = 1'b1; cfg_we = 1'b0; cfg_floor = 0; cfg_halve = 0;
+        rst = 1'b1; en = 1'b1; cfg_we = 1'b0; cfg_floor = 0; cfg_halve = 0; pair_pending = 0;
         cfg_q = 0; cfg_qinv = 0; req_valid = 0; req_dir = 0; req_mode = 0; req_sign = 0;
         req_data = 0; req_root = 0; req_tag = 0;
         ecyc = 0; total_cases = 0; total_err = 0; burst_left = 0; rs = seed;
@@ -429,7 +441,7 @@ module tb_tile_thu;
                                      v_dir[gstart[gj]] == v_dir[gstart[gi]] && v_halve[gstart[gj]] == v_halve[gstart[gi]] &&
                                      v_q[gstart[gj]] != v_q[gstart[gi]]))
                     gj = (gj + 1) % ng;
-                if (gj != gi && v_mode[gstart[gi]] >= 2) run_mix(gstart[gi], glen[gi], gstart[gj], glen[gj]);
+                if (gj != gi && (v_mode[gstart[gi]] == 2 || v_mode[gstart[gi]] == 4)) run_mix(gstart[gi], glen[gi], gstart[gj], glen[gj]);
             end
         end else begin
             g = 0;

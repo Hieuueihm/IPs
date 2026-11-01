@@ -29,6 +29,15 @@
 // Mont(x - y, w)) and after it for CT ((x + t, x - t) with t = Mont(y, w)). Mode and direction are
 // fixed while the tile is busy (spec 10, 4.2), so the unit serves one place per stream.
 //
+// Mode 5 (FFT 32 bit butterfly, spec 10 since 01/11/2026): two request beats per complex butterfly, the real pair
+// (d0 = A.re, d1 = B.re, root = wr) then the imaginary pair (A.im, B.im, wi) in the next cycle, beats at issue
+// phase 0 and 1 of a free-running period-3 counter (fph; the same in every tile). The beats run through the NTT
+// butterfly path: the modular add/sub with q = 0 (plain 32-bit wrap) before the engine for direction 1 (inverse FFT,
+// A + B and A - B) and after it for direction 0 (forward, A + T and A - T); the engine is the fused 32x32 multiplier
+// making p0 = a_r * wr, p1 = a_i * wi (operand stage of each beat) and p2 = (a_r + a_i) * (wr + wi) (phase 2), rounded
+// as mode 1; T = p0 - p1 for the real beat, p2 - p0 - p1 for the imaginary beat. req_sign[0] = 1 divides both outputs
+// by 2^s with rounding (div2e, s = cfg_q[3:0]): the last layer of the inverse FFT.
+//
 // Every register holds when en = 0. Latency per mode is fixed and does not depend on data
 // or on the direction. The handshake drives valid bits only, never an operand select.
 
@@ -181,6 +190,9 @@ module tile_thu #(parameter integer TREN_MANG = 1,
     // Cycles from the operand stage to the engine result: three fused passes (on the array) or T plus
     // the dedicated chain, then u and the result.
     localparam integer E32  = ARR32 ? 3 * FUSE + 2 : FUSE + DED + 2;
+    // Mode 5: operand stage to T (p1 at +FUSE + 1 for the real beat, p2 at +FUSE + 2 for the imaginary beat), then the
+    // post stage at +FUSE + 2 for both beats.
+    localparam integer E5   = FUSE + 2;
 
     generate if (TREN_MANG != 1 && TREN_MANG != 3) begin : g_bad_param
         tl_tren_mang_must_be_1_or_3 u_stop ();      // elaboration error on purpose
@@ -227,12 +239,23 @@ module tile_thu #(parameter integer TREN_MANG = 1,
     // Mode and direction follow the request while idle and freeze while busy. A request whose
     // mode or direction differs from the latched value waits (spec 10, 4.2).
     reg  [2:0] md;
-    reg        dir;
+    reg        dir, m5;                       // m5: mode 5, kept as its own register (it steers the add/sub's q)
     always @(posedge clk)
-        if (rst) begin md <= 3'd0; dir <= 1'b0; end
-        else if (en && idle) begin md <= req_mode; dir <= req_dir; end
+        if (rst) begin md <= 3'd0; dir <= 1'b0; m5 <= 1'b0; end
+        else if (en && idle) begin md <= req_mode; dir <= req_dir; m5 <= (req_mode == 3'd5); end
     wire same = (req_mode == md) && (req_dir == dir);
     wire ntt  = (md == 3'd2) || (md == 3'd4);
+
+    // FFT butterfly issue phase: free-running period 3 from reset, the same in every tile (no PHASE offset). The real
+    // beat is taken only at phase 0; the imaginary beat only at phase 1, right after a real beat.
+    reg [1:0] fph;
+    reg       got_r;
+    always @(posedge clk)
+        if (rst) begin fph <= 2'd0; got_r <= 1'b0; end
+        else if (ce && en) begin               // accepting cycles only (EN_REG: the extra datapath cycle does not count)
+            fph <= (fph == 2'd2) ? 2'd0 : fph + 2'd1;
+            got_r <= req_valid && m5 && same && fph == 2'd0;
+        end
 
     // Issue slot of the on-array engine (period 3); always open with the dedicated engine.
     reg [1:0] ph;
@@ -240,33 +263,37 @@ module tile_thu #(parameter integer TREN_MANG = 1,
         if (rst) ph <= ARR32 ? PH0 : 2'd0;
         else if (ce) ph <= (!ARR32 || ph == 2'd2) ? 2'd0 : ph + 2'd1;
 
-    assign req_ready = same && (!ENREG || ce) && ((md <= 3'd1) || (ntt && ph == 2'd0));
+    assign req_ready = same && (!ENREG || ce) && ((md <= 3'd1) || (ntt && ph == 2'd0) || (m5 && (fph == 2'd0 || (fph == 2'd1 && got_r))));
     wire fire = en && req_valid && req_ready;
     wire f01  = fire && (md <= 3'd1);
+    wire f5   = fire && m5;
 
     // Request as the datapath sees it: the ports, or one register stage after acceptance (IN_REG).
-    wire        rq_ntt, rq_01, rq_slot;
+    wire        rq_ntt, rq_01, rq_slot, rq_5, rq_5i;
     wire [63:0] rq_data;
     wire [31:0] rq_root;
     wire [7:0]  rq_tag;
     wire [1:0]  rq_sign;
     generate if (INREG) begin : g_in_reg
-        reg        rn, r01, rslot;
+        reg        rn, r01, rslot, r5, r5i;
         reg [63:0] rdat;
         reg [31:0] rroot;
         reg [7:0]  rtag;
         reg [1:0]  rsign;
         always @(posedge clk) begin
-            if (rst) begin rn <= 1'b0; r01 <= 1'b0; end
-            else if (ce) begin rn <= fire && ntt; r01 <= f01; end
+            if (rst) begin rn <= 1'b0; r01 <= 1'b0; r5 <= 1'b0; end
+            else if (ce) begin rn <= fire && ntt; r01 <= f01; r5 <= f5; end
+            if (ce) r5i <= (fph == 2'd1);
             if (ce) begin
                 rdat <= req_data; rroot <= req_root; rtag <= req_tag; rsign <= req_sign; rslot <= `TL_SLOT(req_slot);
             end
         end
         assign rq_ntt = rn;  assign rq_01 = r01;  assign rq_data = rdat;  assign rq_slot = rslot;
+        assign rq_5 = r5;  assign rq_5i = r5i;
         assign rq_root = rroot;  assign rq_tag = rtag;  assign rq_sign = rsign;
     end else begin : g_in_wire
         assign rq_ntt = fire && ntt;  assign rq_01 = f01;  assign rq_data = req_data;  assign rq_slot = `TL_SLOT(req_slot);
+        assign rq_5 = f5;  assign rq_5i = (fph == 2'd1);
         assign rq_root = req_root;  assign rq_tag = req_tag;  assign rq_sign = req_sign;
     end endgenerate
 
@@ -280,21 +307,25 @@ module tile_thu #(parameter integer TREN_MANG = 1,
     wire [31:0] side_t, t;          // side data and engine result at the post stage
     wire        slot_t;             // modulus slot at the post stage
     wire [31:0] us, ud;
+    // mode 5: q = 0, so the modular add/sub is the plain 32-bit wrap add/sub
     tl_addsub #(.W(32)) u_as (
-        .a(dir ? xin : side_t), .b(dir ? yin : t), .q(((dir ? rq_slot : slot_t) ? q1 : q0)), .s(us), .d(ud));
+        .a(dir ? xin : side_t), .b(dir ? yin : t),
+        .q(m5 ? 32'd0 : ((dir ? rq_slot : slot_t) ? q1 : q0)), .s(us), .d(ud));
 
     // Operand stage: engine operand a1 (times w1) and side data s1 (x for CT, x + y for GS).
-    reg         v1;
+    reg         v1, v5, b5i, sc1;
     reg  [31:0] a1, w1, s1;
     reg  [7:0]  g1;
     always @(posedge clk) begin
-        if (rst) v1 <= 1'b0;
-        else if (ce) v1 <= rq_ntt;
+        if (rst) begin v1 <= 1'b0; v5 <= 1'b0; end
+        else if (ce) begin v1 <= rq_ntt; v5 <= rq_5; end
         if (ce) begin
             a1 <= (md == 3'd2) ? d0 : dir ? ud : yin;
             s1 <= dir ? us : xin;
             w1 <= rq_root;
             g1 <= rq_tag;
+            b5i <= rq_5i;
+            sc1 <= rq_sign[0];
         end
     end
 
@@ -306,20 +337,25 @@ module tile_thu #(parameter integer TREN_MANG = 1,
     // Side data and valid wait for the engine.
     reg [40:0]    sd [1:E32];
     reg [E32:1]   vd;
+    reg [E5:1]    vd5;
     integer i;
     always @(posedge clk) begin
-        if (rst) vd <= {E32{1'b0}};
-        else if (ce) vd <= {vd[E32-1:1], v1};
+        if (rst) begin vd <= {E32{1'b0}}; vd5 <= {E5{1'b0}}; end
+        else if (ce) begin vd <= {vd[E32-1:1], v1}; vd5 <= {vd5[E5-1:1], v5}; end
         if (ce) begin
             sd[1] <= {ks[0], g1, s1};
             for (i = 2; i <= E32; i = i + 1) sd[i] <= sd[i-1];
         end
     end
-    wire        tv  = vd[E32];
-    wire [40:0] tap = sd[E32];
+    // NTT results at +E32; mode-5 beats at +E5, on their own short side-data line (both stay shift-register LUTs)
+    wire [41:0] sd5;
+    tl_delay #(.W(42), .D(E5)) d_sd5 (.clk(clk), .en(ce), .d({sc1, 1'b0, g1, s1}), .q(sd5));
+    wire        tv  = m5 ? vd5[E5] : vd[E32];
+    wire [40:0] tap = m5 ? sd5[40:0] : sd[E32];
     assign side_t = tap[31:0];
     wire [7:0]  tag_t = tap[39:32];
     assign slot_t = tap[40];
+    wire        sc_t = sd5[41];
 
     // ---------------- multiplier leaves and modmul engine ----------------
     reg  [63:0]  la, lb;
@@ -328,7 +364,18 @@ module tile_thu #(parameter integer TREN_MANG = 1,
     wire [64:0]  lf;
     tl_leaves #(.PD(LEAF_PD)) leaves (.clk(clk), .en(ce), .a(la), .b(lb), .sa(lsa), .sb(lsb), .p(lp), .f(lf));
 
-    wire [31:0] A32, B32, r32;
+    wire [31:0] A32e, B32e, r32;
+    // mode 5: the third pass (p2) one cycle after the imaginary beat's operand stage uses the two sums
+    reg  [31:0] a5r, w5r, sa5, sw5;
+    reg         p2v;
+    always @(posedge clk) begin
+        if (rst) p2v <= 1'b0;
+        else if (ce) p2v <= v5 && b5i;
+        if (ce && v5 && !b5i) begin a5r <= a1; w5r <= w1; end
+        if (ce && v5 && b5i) begin sa5 <= a5r + a1; sw5 <= w5r + w1; end
+    end
+    wire [31:0] A32 = p2v ? sa5 : A32e;
+    wire [31:0] B32 = p2v ? sw5 : B32e;
     generate if (ARR32) begin : g_arr32
         // On the fused leaves: T at +0, m = T_lo*q' at +FUSE, m*q at +2*FUSE (three different
         // residues mod 3, so ops issued 3 cycles apart never collide); result at +3*FUSE+2 = E32.
@@ -347,8 +394,8 @@ module tile_thu #(parameter integer TREN_MANG = 1,
             end
         end
         tl_delay #(.W(33), .D(2 * FUSE)) d_th32 (.clk(clk), .en(ce), .d({|lf[31:0], lf[63:32]}), .q(th32));
-        assign A32 = (vs[FUSE] | vs[2*FUSE]) ? lf[31:0] : a1;
-        assign B32 = vs[2*FUSE] ? ((ks[2*FUSE]) ? q1 : q0) : vs[FUSE] ? ((ks[FUSE]) ? qi1 : qi0) : w1;
+        assign A32e = (vs[FUSE] | vs[2*FUSE]) ? lf[31:0] : a1;
+        assign B32e = vs[2*FUSE] ? ((ks[2*FUSE]) ? q1 : q0) : vs[FUSE] ? ((ks[FUSE]) ? qi1 : qi0) : w1;
         assign r32 = r32r;
     end else begin : g_ded32
         // Dedicated: fused leaves compute T (+FUSE); m = T_lo*q' and m*q with behavioral *
@@ -373,11 +420,27 @@ module tile_thu #(parameter integer TREN_MANG = 1,
                 r32r <= `TL_GE(!u32q[33]) ? u32q[31:0] : u32[31:0];
             end
         tl_delay #(.W(33), .D(DED)) d_th32 (.clk(clk), .en(ce), .d({|lf[31:0], lf[63:32]}), .q(th32));
-        assign A32 = a1;
-        assign B32 = w1;
+        assign A32e = a1;
+        assign B32e = w1;
         assign r32 = r32r;
     end endgenerate
-    assign t = r32;
+    // mode 5: rounded products in order p0, p1, p2; t = p0 - p1 (real beat), then p2 - (p0 + p1) (imaginary beat)
+    reg  [FUSE+2:1] f5d;                           // f5d[k]: a mode-5 pass entered the leaves k cycles ago
+    reg  [31:0] pp0, s01, t5;
+    wire [31:0] pr = lf[47:16] + {31'd0, ~floor_r & lf[15]};   // the mode 1 rounding (cfg_floor = 0: half up)
+    reg  [1:0]  pk;                                // which product: 0 p0, 1 p1, 2 p2
+    always @(posedge clk) begin
+        if (rst) f5d <= 0;
+        else if (ce) f5d <= {f5d[FUSE+1:1], v5 | p2v};
+        if (rst) pk <= 2'd0;
+        else if (ce && f5d[FUSE]) pk <= (pk == 2'd2) ? 2'd0 : pk + 2'd1;
+        if (ce && f5d[FUSE]) begin
+            if (pk == 2'd0) pp0 <= pr;
+            if (pk == 2'd1) begin t5 <= pp0 - pr; s01 <= pp0 + pr; end
+            if (pk == 2'd2) t5 <= pr - s01;
+        end
+    end
+    assign t = m5 ? t5 : r32;
 
     // Leaf operands: mode 0/1 request or the modmul engine, both on the fused 32x32 multiplier.
     wire sa01 = (md == 3'd1) | rq_sign[0];
@@ -391,8 +454,8 @@ module tile_thu #(parameter integer TREN_MANG = 1,
         end else begin
             la  = {A32[31:16], A32[15:0], A32[31:16], A32[15:0]};
             lb  = {B32[15:0], B32[31:16], B32[31:16], B32[15:0]};
-            lsa = 4'd0;
-            lsb = 4'd0;
+            lsa = {m5, 1'b0, m5, 1'b0};             // mode 5: signed products, as mode 1
+            lsb = {1'b0, m5, m5, 1'b0};
         end
     end
 
@@ -410,8 +473,19 @@ module tile_thu #(parameter integer TREN_MANG = 1,
 `else
     wire [31:0] gs0 = halve_r ? half(side_t, q_t) : side_t;
 `endif
-    wire [31:0] z0 = (md == 3'd2) ? t : dir ? gs0 : us;
-    wire [31:0] z1 = (md == 3'd2) ? 32'd0 : dir ? t : ud;
+    wire [31:0] zn0 = (md == 3'd2) ? t : dir ? (m5 ? side_t : gs0) : us;
+    wire [31:0] zn1 = (md == 3'd2) ? 32'd0 : dir ? t : ud;
+    // mode 5, scale (inverse FFT only): div2e(v, s) = (v + 2^(s-1)) >>> s after a 32-bit wrap, s = q0[3:0]. The
+    // inverse outputs are the side data (A + B) and T, both registers, so the division does not follow the add/sub.
+    reg  signed [31:0] dz0, dz1;
+    always @* begin
+        dz0 = side_t + ((32'd1 << q0[3:0]) >> 1);
+        dz1 = t5 + ((32'd1 << q0[3:0]) >> 1);
+        dz0 = dz0 >>> q0[3:0];
+        dz1 = dz1 >>> q0[3:0];
+    end
+    wire [31:0] z0 = (m5 && sc_t) ? dz0 : zn0;
+    wire [31:0] z1 = (m5 && sc_t) ? dz1 : zn1;
 
     // Mode 0/1: operands presented in cycle 0, fused product in cycle FUSE.
     reg  [FUSE:1] v01;

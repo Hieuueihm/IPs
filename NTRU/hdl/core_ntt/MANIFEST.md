@@ -8,11 +8,11 @@ RTL: [ntt_core.sv](ntt_core.sv) và bảng sinh tự động [ntt_core_gen.sv](n
 
 | Có | Chưa làm (kiểm thử ghi "chưa chạy") |
 |---|---|
-| NTT (0x5) và NTT ngược (0x6), một đa thức | Nhiều đa thức trong một lệnh, xen kẽ hai đa thức (dự báo "xen kẽ ≤ 240" của giả thuyết 4) |
+| NTT (0x5) và NTT ngược (0x6), một đa thức; FFT (0x0) và FFT ngược (0x1) định dạng 0 (32 bit), logn 0..10 | Nhiều đa thức trong một lệnh, xen kẽ hai đa thức (dự báo "xen kẽ ≤ 240" của giả thuyết 4) |
 | Profile 0 (12289, logn 3..10), 1 (3329, logn 3..8, 7 tầng ở N = 256), 2 (8380417, logn 8) | Profile 3, nạp prime 0x9, khe prime |
 | Vùng nhớ A, dạng 4 | Phép 0x7, 0x8; vùng B, C; địa chỉ trong lệnh |
 | Cổng host đơn giản: một dòng 128 bit mỗi lần, chỉ khi rảnh | Giải mã lệnh và mã lỗi của spec 2.0 (chỉ có cờ lỗi cho tổ hợp không hỗ trợ); cổng host có pipeline |
-| 16 tile trên mảng lệch pha, mạng 4 bank gói root | FFT (mọi độ rộng) |
+| 16 tile trên mảng lệch pha, mạng 4 bank gói root | FFT 64 / 128 bit (định dạng 1, 2), FFT NTRUGen (định dạng 5), CMUL, SPLIT, MERGE |
 
 ## Cách làm
 
@@ -34,6 +34,20 @@ RTL: [ntt_core.sv](ntt_core.sv) và bảng sinh tự động [ntt_core_gen.sv](n
 - **Root:** ROM gói 4 bank × 384 dòng × 96 bit (profile 0 / 1 / 2, xuôi rồi ngược). Root 12289 / 3329 là bảng 1.0 nhân
   2¹⁶ mod q (R = 2³²). Root 1 lấy từ hằng số, không đọc ROM.
 
+## FFT 32 bit (01/11/2026)
+
+Cách (A) đã chọn ([study/results/fft_core_plan.md](../../study/results/fft_core_plan.md)): mỗi tile làm trọn một butterfly
+phức bằng **chế độ 5 của chính tile** (hợp đồng tile mục 4.7); lõi chỉ cấp toán hạng, root và địa chỉ ghi. Lịch:
+[model/fft_core_sched.py](../../model/fft_core_sched.py).
+- Tile của butterfly = tile gán theo bank của cặp phần thực (bảng tầng NTT cho logn − 1); cặp ảo nằm xa hn phần tử, mạng
+  thêm nguồn cho nó (đọc trung bình 4,5 → 8,75 nguồn mỗi cổng, lớn nhất 16; ghi 4,5 → 8,75, lớn nhất 14).
+- Dữ liệu đọc cùng nhịp ở mọi tile (không xung đột); root đọc trước dữ liệu 2 chu kỳ, lệch theo nhóm (t >> 2) mod 3, mỗi
+  từ ROM một root ({wi, wr} ở hai "ô con" của gói NTT), ROM gói hai cổng (tile 0..7 cổng a, 8..15 cổng b); root chờ trong
+  thanh ghi `op_w` 64 bit của mạng (tín hiệu `load_w`). Không xung đột cổng ROM.
+- Tầng cuối FFT ngược: cờ chia ở nhịp, tile làm div2e. Rào chắn mỗi tầng.
+- Đã thử rồi bỏ: (1) một khối `fft_lane` riêng ở mỗi tile: 51 049 LUT, WNS −0,766 ns; (2) cùng khối đó với bộ cộng dùng chung
+  theo thời gian; (3) chế độ 5 với mux bắt root 64 bit ở lõi: 38 407 LUT. Bản sao trong `study/build/`.
+
 ## Kiểm thử
 
 [sim/core_ntt/run.sh](../../sim/core_ntt/run.sh): 48 ca vàng (1.0 `kernel_fixtures.jsonl` cho profile 0, 1, mỗi logn
@@ -44,6 +58,10 @@ Verilog 14.0): **48/48 khớp**, không request nào gặp tile chưa sẵn sàn
 `ab7b54e93516cc4d`, sau khi sửa timing ở dưới): 48/48 khớp, chu kỳ không đổi. Lần chạy 3 (chồng tầng, RTL `275aa612b8066a4c`,
 bảng `6b1636f7504f77f6`): 48/48 khớp; chu kỳ (a) trùng từng chu kỳ với [mô hình chồng tầng](../../study/results/ntt_core_overlap.md).
 
+Lần chạy 4 (FFT 32 bit, RTL `677796d0c00d7eae`, tile `29326f6d2523a117`): 48/48 NTT và 18/18 FFT định dạng 0 (1.0 `kernel_fixtures.jsonl`,
+logn 2..10, xuôi và ngược; logn 0, 1 là đồng nhất, lõi báo xong ngay). FFT: (a) = 14 / 29 / 44 / 59 / 74 / 107 / 167 / 287 /
+539 chu kỳ cho N = 4 .. 1024, như nhau hai chiều, trùng mô hình từng chu kỳ; độ trễ đọc → ghi một butterfly 14.
+
 ## Số đo (Vivado 2018.1, `xczu7ev-ffvc1156-2-e`, 3,0 ns, sau route; `fpga/zcu106/ntt_core.tcl`)
 
 | Bản | LUT | FF | DSP | BRAM tile (RAMB18) | URAM | WNS |
@@ -51,6 +69,14 @@ bảng `6b1636f7504f77f6`): 48/48 khớp; chu kỳ (a) trùng từng chu kỳ v�
 | Lần 1 (`ecd9bc98`) | 25 944 | 12 710 | 64 | 32 (64) | 0 | **−1,244 ns** |
 | Lần 2 (`34fe7264`) | **17 493** | 13 191 | 64 | 38 (76) | 0 | **+0,200 ns** |
 | Lần 3, chồng tầng (`275aa612`) | **17 748** | 13 408 | 64 | 38 (76) | 0 | **+0,098 ns** |
+| Lần 4, thêm FFT 32 bit qua chế độ 5 (`677796d0`) | **33 423** | 22 076 | 64 | 44 (88) | 0 | **−0,061 ns** |
+
+Đường găng lần 4: `dir` → mux toán hạng → bộ cộng/trừ modulo (cộng rồi trừ q, nối tiếp) → đường dữ liệu phụ chế độ 5
+(`d_sd5`, shift-register LUT). Hai cách sửa đã thử và bỏ (RTL giữ như lần 4):
+- viết phần hiệu chỉnh thành tổng ba đầu vào a + b − q để chạy song song với a + b: Vivado vẫn dựng hai chuỗi carry nối
+  tiếp; 34 981 LUT, WNS −0,034 ns;
+- cho `d_sd5` lấy tổng thô a + b (chế độ 5 có q = 0) qua một thanh ghi riêng: 35 058 LUT, WNS −0,250 ns (đường găng chuyển
+  sang chỗ khác, xếp đặt xấu hơn).
 
 Lần 1 không đạt: đường dài nhất đi từ `hlog` qua bảng tầng (tổ hợp), cờ `same`, mux chọn tầng, tới địa chỉ ROM gói
 (12 mức logic); ROM gói thành LUT-ROM; cổng host chọn 1 trong 8 làn cho mỗi bank. Lần 2: bảng tầng nạp vào thanh ghi

@@ -14,7 +14,8 @@ coefficient c of polynomial j in cells 2(j*N + c) and 2(j*N + c) + 1, superbank 
 banks 2s (low half) and 2s + 1 (high half).
 
 For every supported case (N = 2..1024; jobs 1 or min(8, 64/N) below 64, 1 or 2 from 64; the 1-job cases
-below 64 are the former 16-bit-lane ones), the script collects:
+below 64 are the former 16-bit-lane ones), and for FFT 32 bit (format 0, model/fft_core_sched.py: the tile of the real
+pair, which also reads and writes the imaginary pair), the script collects:
   - per tile, the banks its x low half, y low half and the high halves can read;
   - per bank, the (tile, result, half) it can be written from;
   - per tile, the root-pack banks it reads when every slot's pack base is a multiple of 8 (P = 8);
@@ -119,6 +120,27 @@ def main():
                 cyc_total += cyc + extra
                 root_extra += extra
                 slow += (cyc + extra) > -(-bf // TILES)
+    # FFT 32 bit (format 0, model/fft_core_sched.py): tile of the real pair (A.re, B.re) as above over the hn real
+    # parts; the port also reads and writes the imaginary pair (A.im, B.im), hn elements further.
+    ntt_ports = {k: set(v) for k, v in rd_lo.items()}
+    for logn in range(2, 11):
+        hn = (1 << logn) // 2
+        h = hn // 2
+        while h >= 1:
+            for i in range(hn // 2):
+                lo_ = i % h
+                ar = ((i - lo_) << 1) | lo_
+                br = ar + h
+                t = tile_of(unit(ar), unit(br))
+                for op, es in (("x", (ar, ar + hn)), ("y", (br, br + hn))):
+                    for e in es:
+                        u = unit(e)
+                        rd_lo[(t, op)].add(2 * u)
+                        wr[2 * u].add((t, op, "lo"))
+                        rd_hi[(t, op)].add(2 * u + 1)
+                        wr[2 * u + 1].add((t, op, "hi"))
+            h //= 2
+    fft_added = sum(len(rd_lo[k] - ntt_ports[k]) for k in rd_lo)
     summary = {
         "read_lo_sources_max": max(len(v) for v in rd_lo.values()),
         "read_lo_sources_avg": sum(len(v) for v in rd_lo.values()) / len(rd_lo),
@@ -128,6 +150,7 @@ def main():
         "moduli_per_tile_max": max(len(v) for v in moduli.values()),
         "butterflies": bf_total, "cycles": cyc_total, "rate": bf_total / cyc_total,
         "root_extra_cycles": root_extra, "layers_slower_than_ideal": slow,
+        "fft32_added_read_sources": fft_added,
     }
     tables = {
         "read_lo": {f"{t}{op}": sorted(v) for (t, op), v in rd_lo.items()},

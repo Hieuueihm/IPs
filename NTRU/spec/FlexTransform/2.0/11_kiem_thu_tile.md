@@ -1,5 +1,11 @@
 # 11 — Kiểm thử cấp tile
 
+> **Thay đổi 01/11/2026, lần 6:** chế độ 5 (butterfly FFT 32 bit, [10](10_hop_dong_tile.md) mục 4.7). Vector mới
+> `fft32bf.txt` (1 470 butterfly, mỗi dòng hai nhịp), testbench đọc bằng `+KIND=3` và luôn đưa nhịp 2 ngay sau nhịp 1;
+> regression thêm chế độ 5 ở nhóm A, B (dừng, request thưa, ghi hằng số lúc bận, reset giữa chừng, lịch không phụ thuộc
+> dữ liệu) và lỗi `FAULT_SWAP_XY`; cấu hình `-DTL_EN_REG=1` bỏ chế độ 5 (hợp đồng chỉ định nghĩa nó với `EN_REG` = 0).
+> Bản trước: [trước khi thêm chế độ 5](../../../docs/plan_history/before_tile_mode5_2026-11-01/11_kiem_thu_tile.md).
+
 > **Thay đổi 31/10/2026, lần 5:** theo hợp đồng một lane 32 bit ([10](10_hop_dong_tile.md), lần 6). Ba file
 > `ntt16_pqc.txt`, `ntt16_q_khac.txt`, `ntt32.txt` gộp thành `ntt.txt` (mọi q, R = 2³², không còn cột lane32); testbench
 > bỏ `cfg_lane32`; hai ô modulus và lỗi `FAULT_IGNORE_SLOT` nay kiểm cả q nhỏ; script mặc định chạy RTL nghiệm thu. Bản
@@ -30,6 +36,7 @@ tích 16×16, vì đó chính là thứ cần kiểm. Hash SHA-256 của từng 
 |---|---:|---|---|
 | `raw32.txt` | 2 320 | Chế độ 0, bốn tổ hợp dấu, giá trị biên (0, 1, −1, −2³¹, 2³¹ − 1, 2³² − 1, …) và ngẫu nhiên | Cả hai |
 | `fft32.txt` | 1 842 | Chế độ 1, nửa-lên và cắt bớt, 264 ca đúng điểm giữa (16 bit thấp của tích = 0x8000) và lân cận ±1 | Cả hai |
+| `fft32bf.txt` | 1 470 | Chế độ 5, xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2³¹ − 1, −2³¹, ±2¹⁶, …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_core_plan.py | Cả hai |
 | `ntt.txt` | 8 055 | Chế độ 2 và 4, R = 2³², q tăng dần: 3, 3329, 7681, 12289, 65521, 8380417; prime đầu, giữa và cuối của NTRUGen; 2³¹ − 1 | Cả hai |
 
 Với mỗi q, vector NTT phủ đủ bốn tổ hợp: chế độ 2; chế độ 4 CT; chế độ 4 GS; chế độ 4 GS có chia đôi.
@@ -151,6 +158,12 @@ tới chân cho phép của thanh ghi đầu vào bộ nhân.
 ## 3. Bảng kết quả
 
 Điền sau mỗi lần chạy. Ghi kèm phiên bản RTL, phiên bản trình mô phỏng và hash của manifest vector.
+
+Lần chạy 9, 01/11/2026: RTL thêm chế độ 5 (hash `29326f6d2523a117`). Năm cấu hình, hai biến thể: mặc định, `IN_REG`, `LEAF_PD = 4`,
+`PHASE = 2` mỗi cấu hình 66 lần chạy đạt, 18/18 lỗi bị bắt; `EN_REG` 50 lần chạy, 16/16 (không có chế độ 5). Độ trễ chế
+độ 5: 9 (`IN_REG`: 10; `LEAF_PD = 4`: 11); tốc độ 2/3 request mỗi chu kỳ. Lỗi đã gặp và sửa: với `EN_REG` = 1 hai nhịp có thể
+vào đường dữ liệu cách nhau hai chu kỳ (chế độ 5 vì vậy chỉ định nghĩa với `EN_REG` = 0). Vivado (biến thể 1, vỏ đo): 1 299
+LUT / 1 213 FF / 4 DSP, WNS −0,009 ns (trước chế độ 5: 781 LUT).
 
 Lần chạy 8, 01/11/2026: RTL thêm tham số `PHASE` (hash `4f7b721872c531da`). Năm cấu hình (mặc định; `-DTL_IN_REG=1`; `-DTL_EN_REG=1`; `-DTL_LEAF_PD=4`; `-DTL_PHASE=2`), hai biến thể: mỗi cấu hình 50 lần chạy đạt, 16/16 lỗi bị bắt (log `sim/tile_thu/build/lech_<cấu hình>.log`). Với `PHASE = 2`, độ trễ và tốc độ không đổi. Tile lệch pha (`PHASE` = t / 6) và 4 bank gói root: mạng 5 216 LUT / 6 001 FF, WNS +0,487 ns (root 1 536 LUT, trước 2 560); 16 tile 12 495 LUT / 14 872 FF / 64 DSP, WNS +0,063 ns; phần tính + mạng 17 711 LUT, 64 DSP.
 
