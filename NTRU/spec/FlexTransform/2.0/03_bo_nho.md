@@ -121,6 +121,8 @@ phần tử có chỉ số ≥ N đặt bằng 0 và không bao giờ được d
     Mạng đo được 5 216 LUT (8 bank: 6 239).
   - **Bản đối chứng rút gọn riêng: P = 8.** Ở các tầng cuối, 16 butterfly của một chu kỳ cần 16 root liên tiếp, tức 8
     gói liên tiếp, nằm ở 8 bank khác nhau. Với 4 bank, mô hình chỉ đạt khoảng 14–14,5 butterfly/chu kỳ ở N ≥ 64.
+- **NTT ngược của profile 0, 1, 2 trong lõi tối thiểu** ([hdl/core_ntt](../../../hdl/core_ntt/MANIFEST.md)): mỗi tầng chia
+  đôi nhánh tổng và root ngược trong ROM đã nhân 2⁻¹ mod q, nên không có lượt nhân 2⁻ᴸ ở cuối; kết quả như 1.0.
 - Bảng root của 12289 và 3329 (ROM) dùng cùng cách xếp gói và P bank, với giá trị `GM16[k]·2¹⁶ mod q` để dùng với
   Montgomery R = 2³² ([01 mục 3.0](01_so_hoc_kernel.md)); mỗi giá trị vẫn < 2¹⁶. Tile nhận mọi q lẻ < 2³¹, nhưng lõi chỉ
   có bảng ROM cho hai modulus này và 8380417; q nhỏ khác cần nạp bảng, **ngoài phạm vi v1**.

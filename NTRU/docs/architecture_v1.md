@@ -461,6 +461,21 @@ Sửa sau khi khóa:
 | 11 | **Mỗi tile một modulus làm sinh khóa nhanh lên mà gần như không tốn tài nguyên** | Mỗi đa thức của lệnh nhiều khe khớp từng bit với chạy riêng; LUT thêm ≤ 2% lõi; thời gian NTT của sinh khóa (đếm như [study/results/fn_dsa_workload.md](../study/results/fn_dsa_workload.md), với chu kỳ đo trên RTL) giảm ≥ 1,5 lần so với một đa thức mỗi lệnh (dự báo 1,8–2,0) | Giảm < 1,2 lần, hoặc LUT thêm > 5% |
 | 12 | **Cổng host có pipeline và địa chỉ trong lệnh làm giảm thời gian chép** | Cổng host đạt ≥ 0,9 dòng/chu kỳ khi đọc và ghi liên tục; trình điều khiển giữ dữ liệu trong lõi làm số dòng chép của phép ký N = 1024 ≤ 0,85 lần so với không giữ (dự báo 0,82 khi chỉ giữ đầu vào); LUT thêm cho hai thay đổi ≤ 2% lõi | Cổng host < 0,5 dòng/chu kỳ, hoặc giữ dữ liệu giảm < 5% số dòng |
 
+**Cách đo giả thuyết 4 trên lõi NTT tối thiểu** (ghi ngày 01/11/2026, **trước** khi có RTL lõi):
+- Mỗi lệnh đo hai số: (a) từ chu kỳ đọc RAM đầu tiên của lệnh tới chu kỳ ghi RAM cuối cùng, cộng 1, là số so với ngưỡng;
+  (b) từ lúc nhận lệnh tới lúc báo xong, báo thêm.
+- NTT xuôi và ngược báo riêng. NTT ngược không có lượt chuẩn hóa riêng: mỗi tầng chia đôi nhánh tổng và root ngược đã
+  nhân 2⁻¹ (spec 03), nên con số (a) đã gồm cả chuẩn hóa.
+- "Độ trễ butterfly đo được" trong công thức là độ trễ của riêng tile (19 chu kỳ với biến thể trên mảng); 2 chu kỳ RAM
+  giữ như công thức. Thanh ghi của mạng và tầng địa chỉ thuộc phần lõi đo được, không đưa vào mô hình.
+- Mô hình lịch của lõi ([model/ntt_core_sched.py](../model/ntt_core_sched.py)) dự báo trước: q12289 N1024 1 182, N256
+  368, NTT 32 bit N256 368 chu kỳ (mô hình khóa: 1 173 / 360 / 360). Lõi tối thiểu chạy một đa thức, nên dự báo "xen kẽ"
+  chưa đo được.
+- **Kết quả** (RTL lõi NTT tối thiểu, [hdl/core_ntt/MANIFEST.md](../hdl/core_ntt/MANIFEST.md)): 48/48 ca vàng khớp
+  (profile 0, 1, 2, xuôi và ngược). Chu kỳ (a): q12289 N1024 1 182 / 1 182 (xuôi / ngược), N256 368 / 368, NTT 32 bit N256
+  368 / 368, đúng như mô hình lịch đã ghi trước; so với mô hình khóa 1,008 × và 1,022 ×, **đạt** (≤ 1,25 ×). Xen kẽ hai đa
+  thức: chưa chạy. Vivado: 17 493 LUT / 13 191 FF / 64 DSP / 38 BRAM tile, WNS +0,200 ns ở 3,0 ns.
+
 **Cách đo tài nguyên** (giả thuyết 1, 2, 5): trên FPGA, bằng Vivado.
 - Linh kiện **xczu7ev-ffvc1156-2-e** (board ZCU106, đã dùng trong `fpga/zcu106/`); cùng phiên bản Vivado và cùng
   cài đặt cho mọi thiết kế; tổng hợp và place-and-route out-of-context.
