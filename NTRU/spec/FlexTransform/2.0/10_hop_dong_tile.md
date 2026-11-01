@@ -1,5 +1,12 @@
 # 10 — Hợp đồng cấp tile
 
+> **Thay đổi 01/11/2026, lần 8** (người dùng duyệt): **chế độ 5, butterfly FFT 32 bit.** Butterfly FFT phức chạy trên chính
+> đường butterfly NTT của tile thay vì một khối FFT riêng ngoài tile: bộ cộng/trừ modulo với q = 0 (cộng/trừ quay vòng 32
+> bit) đứng trước bộ nhân cho FFT ngược và sau bộ nhân cho FFT xuôi; bộ nhân ghép 32×32 làm 3 tích; bộ làm tròn của chế độ
+> 1; đường dữ liệu phụ giữ A. Xem mục 4.7. Lý do: bản lõi đặt FFT trong một khối riêng ở mỗi tile tốn khoảng 1 350 LUT mỗi
+> tile; chế độ 5 thêm khoảng 520 LUT mỗi tile (tile 1 299 so với 781 LUT). Bản trước:
+> [trước khi thêm chế độ 5](../../../docs/plan_history/before_tile_mode5_2026-11-01/10_hop_dong_tile.md).
+>
 > **Thay đổi 01/11/2026, lần 7** (người dùng chọn): **thiết kế v1 là biến thể trên mảng** (mục 5.1, tham số 1). Với một lane
 > 32 bit, giả thuyết 2 đạt ở cấp tile (khóa lại lần 5: trên mảng 781 LUT / 4 DSP so với riêng 777 LUT / 11 DSP), nên theo
 > mục 8 lõi dùng rút gọn trên mảng: không DSP nào ngoài 4 bộ nhân của tile, NTT 1/3 request/chu kỳ mỗi tile. Bộ Montgomery
@@ -144,7 +151,8 @@ theo `req_valid & req_ready`. Bản nháp vi phạm điều này mất 17% Fmax 
 | 1 | Tích FFT 32 bit đã làm tròn | FFT 32 bit |
 | 2 | Một phép nhân modulo | Đưa vào miền Montgomery, nhân từng điểm, chuẩn hóa cuối NTT ngược |
 | 4 | Một butterfly NTT | Mọi tầng của NTT xuôi và ngược |
-| 3, 5–7 | Dự trữ | Không được gửi |
+| 5 | Một butterfly FFT 32 bit (hai nhịp request) | Mọi tầng của FFT / FFT ngược định dạng 0 |
+| 3, 6, 7 | Dự trữ | Không được gửi |
 
 Chế độ của các request liên tiếp phải giống nhau. Chỉ đổi chế độ, hướng hoặc `req_sign` khi `idle = 1`; `req_slot`
 được đổi ở mọi request. Bộ điều khiển
@@ -209,6 +217,31 @@ nào giữ trong tile giữa hai tầng.
 Phép tính trên từng butterfly giống hệt các nhịp cũ, nên NTT đầy đủ vẫn khớp `mp_NTT` / `mp_iNTT` của NTRUGen nếu bộ
 điều khiển phát đúng các cặp. [model/ntrugen_mp31.py](../../../model/ntrugen_mp31.py) đã chạy lại với lịch một tầng
 (`tile_request`, mỗi tầng phát butterfly theo thứ tự ngẫu nhiên) và khớp.
+
+### 4.7 Chế độ 5 — butterfly FFT 32 bit
+
+Một butterfly phức gồm **hai nhịp request liền nhau**: nhịp 1 là cặp thực (`d0` = A.re, `d1` = B.re, `req_root` = wr), nhịp
+2 là cặp ảo (`d0` = A.im, `d1` = B.im, `req_root` = wi). Mọi phép tính quay vòng 32 bit (spec 1.0, 01.1); tích làm tròn
+nửa-lên như chế độ 1 (`cfg_floor` = 0); nhân phức 3 tích.
+
+```text
+xuôi (req_dir = 0):  o = B;            T = cmul(o, w);   kết quả  (A + T, A − T)
+ngược (req_dir = 1): o = A − B;        T = cmul(o, w);   kết quả  (A + B, T)
+cmul(o, w):  p0 = mul(o.re, wr);  p1 = mul(o.im, wi);  p2 = mul(o.re + o.im, wr + wi)
+             T.re = p0 − p1;  T.im = p2 − p0 − p1
+nhịp 1 trả (z0, z1) = (phần thực của kết quả thứ nhất, phần thực của kết quả thứ hai); nhịp 2 trả phần ảo
+req_sign[0] = 1: mọi giá trị trả về là div2e(v, s) = (wrap32(v + 2^(s−1))) >>> s, với s = cfg_q[3:0]
+```
+
+- **Nhịp:** tile có bộ đếm chu kỳ 3 chạy tự do từ reset, giống nhau ở mọi tile (không có độ lệch `PHASE`). Nhịp 1 chỉ được
+  nhận ở pha 0; nhịp 2 chỉ ở pha 1, ngay sau một nhịp 1; pha 2 không nhận (tích p2 dùng bộ nhân). Bộ điều khiển phải đưa
+  nhịp 2 ở chu kỳ `en` kế tiếp sau nhịp 1. Tốc độ: một butterfly mỗi 3 chu kỳ (2/3 request mỗi chu kỳ).
+- **Chỉ dùng với `EN_REG` = 0:** hai nhịp phải vào đường dữ liệu ở hai chu kỳ liền nhau; với `EN_REG` = 1 đường dữ liệu
+  chạy thêm một chu kỳ sau khi `en` xuống nên điều đó không bảo đảm.
+- **Hằng số:** `cfg_q[3:0]` là độ dịch s của div2e; `cfg_qinv`, `cfg_halve`, `req_slot` không dùng.
+- **Độ trễ** mỗi nhịp: `LEAF_PD` + 7 (9 với mặc định), cả hai biến thể rút gọn.
+- **Dùng lại của tile:** bộ cộng/trừ modulo (q ép bằng 0), bộ nhân ghép, bộ làm tròn chế độ 1, đường dữ liệu phụ, thanh ghi
+  cổng ra. **Thêm:** hai bộ cộng cho o.re + o.im và wr + wi, hai bộ cộng cho T, hai bộ div2e.
 
 ## 5. Hai biến thể rút gọn
 
@@ -279,6 +312,7 @@ Chỉ để so sánh, không thuộc nghiệm thu (đều có lane 16 bit, nên 
 |---|---:|---:|
 | 0, 1 | 1 | 1 |
 | 2, 4 (mọi q) | 1/3 | 1 |
+| 5 (FFT 32 bit) | 2/3 (một butterfly mỗi 3 chu kỳ) | 2/3 |
 
 Con số của biến thể trên mảng suy từ số lượt bộ nhân: một phép nhân modulo chiếm cả tile 3 chu kỳ, và mỗi request ở chế
 độ 2 hay 4 có đúng một phép nhân modulo.

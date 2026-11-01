@@ -23,6 +23,7 @@ _s.loader.exec_module(sched)
 
 TILES = 16
 IW, SW, RW = 9, 5, 7          # butterfly index, superbank, row widths
+XW = 4                        # network select width (from the network lists, set in main)
 SEG_ROWS = {0: 128, 1: 32, 2: 32}
 QS = {0: 12289, 1: 3329, 2: 8380417}
 
@@ -56,10 +57,17 @@ def layer_rom(L):
             if k in rows:
                 assert rows[k][1] == kern and rows[k][3] == delta, ("plans differ between profiles", key, hlog)
             rows[k] = row
-    say("// Layer table (one entry per min-stride-2 flag, direction, logn, log2 h): tiles in use, first butterfly of each")
-    say("// tile, kernel basis in the order of the overlap plan, same-superbank flag, cycles to the next layer's start.")
+    fsched = _fft_sched()
+    for logn in range(2, 11):                         # FFT 32 bit: key (fft = 1, ms2 = 0, inverse = 0)
+        for hlog in range(logn - 1):
+            firsts, kernel, count = fsched.layer_config(logn, 1 << hlog)
+            # barrier per layer: last write e + 13 of the last butterfly; next start rounded up to the issue phase
+            rows[("f", 0, logn, hlog)] = (firsts, kernel, False, 3 * count + 12)
+    say("// Layer table (one entry per FFT flag, min-stride-2 flag, direction, logn, log2 h): tiles in use, first butterfly")
+    say("// of each tile, kernel basis in the order of the overlap plan, same-superbank flag, cycles to the next layer's")
+    say("// start. FFT 32 bit entries (model/fft_core_sched.py) use the FFT's logn and direction 0.")
     say("module ntt_core_layer_rom (")
-    say("    input  wire              ms2, inverse,")
+    say("    input  wire              fft, ms2, inverse,")
     say("    input  wire [3:0]        logn, hlog,")
     say("    output reg  [15:0]       tv,")
     say(f"    output reg  [16*{IW}-1:0]  p,")
@@ -70,13 +78,15 @@ def layer_rom(L):
     say(");")
     say("    always @* begin")
     say("        tv = 16'd0; p = 0; kb = 0; kdim = 3'd0; same = 1'b0; delta = 8'd0;")
-    say("        case ({ms2, inverse, logn, hlog})")
-    for (ms2, inv, logn, hlog), (firsts, kern, same, delta) in sorted(rows.items()):
+    say("        case ({fft, ms2, inverse, logn, hlog})")
+    for (ms2, inv, logn, hlog), (firsts, kern, same, delta) in sorted(rows.items(), key=lambda kv: str(kv[0])):
+        fft = int(ms2 == "f")
+        ms2 = 0 if fft else ms2
         assert len(kern) <= 5 and delta < 256
         tv = sum(1 << t for t in firsts)
         pv = sum(firsts.get(t, 0) << (IW * t) for t in range(TILES))
         kv = sum(v << (IW * j) for j, v in enumerate(kern))
-        say(f"            10'b{ms2}{inv}_{logn:04b}_{hlog:04b}: begin tv = 16'h{tv:04x}; p = {16 * IW}'h{pv:x}; "
+        say(f"            11'b{fft}{ms2}{inv}_{logn:04b}_{hlog:04b}: begin tv = 16'h{tv:04x}; p = {16 * IW}'h{pv:x}; "
             f"kb = {5 * IW}'h{kv:x}; kdim = 3'd{len(kern)}; same = 1'b{int(same)}; delta = 8'd{delta}; end")
     say("            default: ;")
     say("        endcase")
@@ -90,7 +100,7 @@ def sel_module(L, net):
     say("// Index of a superbank in each tile's read source lists (ntt_bank_net_s: read_lo / read_hi).")
     say("module ntt_core_sel (")
     say(f"    input  wire [16*{SW}-1:0]  sx, sy,")
-    say("    output reg  [16*3-1:0]   sel_xlo, sel_xhi, sel_ylo, sel_yhi")
+    say(f"    output reg  [16*{XW}-1:0]   sel_xlo, sel_xhi, sel_ylo, sel_yhi")
     say(");")
     say("    always @* begin")
     say("        sel_xlo = 0; sel_xhi = 0; sel_ylo = 0; sel_yhi = 0;")
@@ -101,8 +111,8 @@ def sel_module(L, net):
             assert sb == sorted({b >> 1 for b in hi})
             say(f"        case ({s}[{SW}*{t} +: {SW}])")
             for v in sb:
-                say(f"            5'd{v}: begin sel_{op}lo[3*{t} +: 3] = 3'd{lo.index(2 * v)}; "
-                    f"sel_{op}hi[3*{t} +: 3] = 3'd{hi.index(2 * v + 1)}; end")
+                say(f"            5'd{v}: begin sel_{op}lo[{XW}*{t} +: {XW}] = {XW}'d{lo.index(2 * v)}; "
+                    f"sel_{op}hi[{XW}*{t} +: {XW}] = {XW}'d{hi.index(2 * v + 1)}; end")
             say("            default: ;")
             say("        endcase")
     say("    end")
@@ -128,7 +138,7 @@ def route_module(L, net):
     say(f"    output reg  [64*{RW}-1:0]  ra,")
     say("    input  wire [16*32-1:0]  wxo, wyo,          // write superbank one-hot, already gated by valid")
     say(f"    input  wire [16*{RW}-1:0]  wxr, wyr,")
-    say("    output reg  [64*3-1:0]   wsel,")
+    say(f"    output reg  [64*{XW}-1:0]   wsel,")
     say("    output reg  [63:0]       wen,")
     say(f"    output reg  [64*{RW}-1:0]  wa          // registered: RAM write one cycle after wsel / wen")
     say(");")
@@ -155,8 +165,8 @@ def route_module(L, net):
                     assert f"{t}{op}hi" in hi
                     o = "wxo" if op == "x" else "wyo"
                     say(f"        if ({o}[{32 * t + s}]) begin wen[{2 * s}] = 1'b1; wen[{2 * s + 1}] = 1'b1; "
-                        f"wsel[3*{2 * s} +: 3] = 3'd{lo.index(f'{t}{op}lo')}; "
-                        f"wsel[3*{2 * s + 1} +: 3] = 3'd{hi.index(f'{t}{op}hi')}; end")
+                        f"wsel[{XW}*{2 * s} +: {XW}] = {XW}'d{lo.index(f'{t}{op}lo')}; "
+                        f"wsel[{XW}*{2 * s + 1} +: {XW}] = {XW}'d{hi.index(f'{t}{op}hi')}; end")
     say("    end")
     say("    // write row of each superbank, registered to meet the network's registered write data")
     say("    always @(posedge clk) begin")
@@ -175,8 +185,28 @@ def route_module(L, net):
     say("")
 
 
+FFT_BASE = {False: 384, True: 576}   # FFT 32 bit root rows: 192 per bank per direction (roots 0..767)
+ROM_ROWS = 768
+
+
+def _fft_sched():
+    s = importlib.util.spec_from_file_location("fft_sched", ROOT / "model" / "fft_core_sched.py")
+    m = importlib.util.module_from_spec(s)
+    s.loader.exec_module(m)
+    return m
+
+
 def root_roms(tabs):
-    banks = [[0] * 384 for _ in range(4)]
+    """4 banks x 768 rows x 96 bit, read through two ports. NTT packs [GM[g], GM[2g], GM[2g+1]] in rows 0..383; FFT 32 bit
+    roots from row 384: root k of a direction at bank k mod 4, row base + k div 4, as [95:64] = wi, [63:32] = wr (the
+    two "children" the network takes as one 64-bit pair), [31:0] = 0."""
+    banks = [[0] * ROM_ROWS for _ in range(4)]
+    fs = _fft_sched()
+    for inverse in (False, True):
+        tab = fs.plan.roots_inv(32) if inverse else fs.plan.roots(32)
+        for k in range(768):                        # root index N/2 + N/4 - 1 <= 767 for N <= 1024
+            wr, wi = tab[k]
+            banks[k % 4][FFT_BASE[inverse] + k // 4] = ((wr & 0xFFFFFFFF) << 32) | ((wi & 0xFFFFFFFF) << 64)
     root1 = {}
     for prof in (0, 1, 2):
         q = QS[prof]
@@ -227,11 +257,21 @@ def vectors():
             out.append(f"{prof} {logn} {op} " + " ".join(f"{x:x}" for x in a) + " " + " ".join(f"{x:x}" for x in e))
     (ROOT / "sim" / "core_ntt").mkdir(parents=True, exist_ok=True)
     (ROOT / "sim" / "core_ntt" / "vectors.txt").write_text("\n".join(out) + "\n", encoding="ascii", newline="\n")
-    return len(out)
+    # FFT 32 bit (format 0), 1.0 kernel fixtures, logn >= 2: "3 logn op ..." with op 0 = FFT, 1 = FFT ngược
+    fft = []
+    for line in (ROOT / "spec" / "FlexTransform" / "1.0" / "assets" / "kernel_fixtures.jsonl").read_text().splitlines():
+        d = json.loads(line)
+        c = d["command"]
+        if c["op"] in (0, 1) and c["fmt"] == 0 and c["logn"] >= 2:
+            fft.append(f"3 {c['logn']} {c['op']} " + " ".join(d["a"][0]) + " " + " ".join(d["expected"][0]))
+    (ROOT / "sim" / "core_ntt" / "vectors_fft.txt").write_text("\n".join(fft) + "\n", encoding="ascii", newline="\n")
+    return len(out) + len(fft)
 
 
 def main():
+    global XW
     net = json.loads((ROOT / "study" / "results" / "structured_net.json").read_text())
+    XW = (max(len(v) for v in list(net["read_lo"].values()) + list(net["write"].values())) - 1).bit_length()
     (ROOT / "hdl" / "core_ntt").mkdir(parents=True, exist_ok=True)
     tabs = sched.Tables()
     root1 = root_roms(tabs)

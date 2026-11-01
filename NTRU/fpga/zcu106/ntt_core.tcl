@@ -1,5 +1,5 @@
 # vivado -mode batch -source fpga/zcu106/ntt_core.tcl
-# Minimal NTT core (hdl/core_ntt/ntt_core.sv): OOC synthesis + default opt/place/route, 3.0 ns, no Xilinx primitives.
+# Minimal core, NTT and FFT 32 bit (hdl/core_ntt/ntt_core.sv): OOC synthesis + default opt/place/route, 3.0 ns, no Xilinx primitives.
 # Reports go to study/build/ntt_core.
 set root [file normalize [file join [file dirname [info script]] ../..]]
 cd $root

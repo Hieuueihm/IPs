@@ -4,9 +4,9 @@ Mô hình: [model/structured_net.py](../../model/structured_net.py). Tile của 
 
 | Cổng | Số nguồn lớn nhất | Trung bình | Crossbar |
 |---|---:|---:|---:|
-| Đọc, nửa thấp mỗi toán hạng | 6 | 4.5 | 64 |
-| Đọc, nửa cao mỗi toán hạng | 6 | | 32 |
-| Ghi, mỗi bank | 7 | 4.5 | 32 |
+| Đọc, nửa thấp mỗi toán hạng | 16 | 8.8 | 64 |
+| Đọc, nửa cao mỗi toán hạng | 16 | | 32 |
+| Ghi, mỗi bank | 14 | 8.8 | 32 |
 
 Tốc độ: 55634 butterfly trong 3532 chu kỳ = 15.75 mỗi chu kỳ; chu kỳ thêm do xung đột bank gói root: 40; số tầng chậm hơn lý tưởng: 20. Không có xung đột bank dữ liệu (do cách gán).
 

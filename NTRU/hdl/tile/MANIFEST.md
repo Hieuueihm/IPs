@@ -37,12 +37,21 @@ Tham số khác:
 
 Giá trị khác của `TREN_MANG` gây lỗi lúc elaboration.
 
+## Chế độ 5: butterfly FFT 32 bit (01/11/2026)
+
+Hai nhịp request mỗi butterfly (hợp đồng mục 4.7). Trong tile: bộ cộng/trừ modulo với q = 0 (cờ `m5` là thanh ghi riêng để
+không nằm trên đường găng), tích p0, p1 ở tầng toán hạng của mỗi nhịp và p2 một chu kỳ sau nhịp 2 (thanh ghi tổng `sa5`,
+`sw5`), làm tròn bằng bộ của chế độ 1, `t5` = p0 − p1 rồi p2 − (p0 + p1), dữ liệu phụ trên một đường trễ ngắn riêng
+(`d_sd5`, độ sâu FUSE + 2) để cả hai đường trễ vẫn là shift-register LUT, div2e trên hai đầu ra của nhánh ngược. Bộ đếm
+pha `fph` và cờ `got_r` chỉ tiến ở chu kỳ có cả `en` và `ce`. Chỉ dùng với `EN_REG` = 0.
+
 ## Độ trễ (chu kỳ có `en = 1`, từ lúc nhận request đến lúc `rsp_valid`)
 
 | Chế độ | Biến thể 1 | Biến thể 3 | Biến thể 3, `IN_REG = 1` |
 |---|---:|---:|---:|
 | 0, 1 | 6 | 6 | 7 |
 | 2, 4 (mọi q) | 19 | 15 | 16 |
+| 5 (mỗi nhịp) | 9 | 9 | 10 |
 
 Với `LEAF_PD` khác 2: chế độ 0, 1 là LEAF_PD + 4; NTT riêng LEAF_PD + 13, trên mảng 3·LEAF_PD + 13 (cộng thêm 1 nếu
 `IN_REG = 1`). (Khi còn lane 16 bit, NTT q < 2¹⁶ trễ 13.)
@@ -72,6 +81,7 @@ Với `LEAF_PD` khác 2: chế độ 0, 1 là LEAF_PD + 4; NTT riêng LEAF_PD + 
 
 | | LUT | FF | DSP | BRAM / URAM | WNS |
 |---|---:|---:|---:|---:|---:|
+| Biến thể 1 (v1), có chế độ 5 | 1 299 | 1 213 | 4 | 0 / 0 | −0,009 ns |
 | Biến thể 1 (v1), một lane | 781 | 937 | 4 | 0 / 0 | +0,371 ns |
 | Biến thể 3, một lane | 777 | 1 004 | 11 | 0 / 0 | +0,261 ns |
 | Biến thể 3, hai lane (trước) | 913 | 1 155 | 11 | 0 / 0 | +0,234 ns |

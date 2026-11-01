@@ -6,15 +6,17 @@
 module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     input  wire                     clk, en,
     input  wire [BANKS*16-1:0]      bank_rd,
-    input  wire [PBANKS*96-1:0]     pack_rd,
-    input  wire [TILES*3-1:0]       sel_xlo, sel_ylo,
-    input  wire [TILES*3-1:0]       sel_xhi, sel_yhi,
+    input  wire [2*PBANKS*64-1:0]   pack_rd,        // {child 2, child 1} of each bank: port A banks 0..3, port B
+    input  wire [TILES*4-1:0]       sel_xlo, sel_ylo,
+    input  wire [TILES*4-1:0]       sel_xhi, sel_yhi,
     input  wire [TILES-1:0]         hold_x,
     input  wire [31:0]              root1,
-    input  wire [TILES*4-1:0]       sel_root,       // 2*bank + child - 1 (0..7), 8 = root1
-    output reg  [TILES*32-1:0]      op_x, op_y, op_w,
+    input  wire [TILES*4-1:0]       sel_root,       // {root1, bank, child}; the child bit is used by the core
+    input  wire [TILES-1:0]         load_w,
+    output reg  [TILES*32-1:0]      op_x, op_y,
+    output reg  [TILES*64-1:0]      op_w,
     input  wire [TILES*64-1:0]      tile_z,
-    input  wire [BANKS*3-1:0]       wsel,
+    input  wire [BANKS*4-1:0]       wsel,
     input  wire [BANKS-1:0]         wen,
     output reg  [BANKS*16-1:0]      bank_wd,
     output reg  [BANKS-1:0]         bank_we
@@ -25,61 +27,83 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // tile 0
     reg [15:0] xlo_0;
     always @* begin
-        case (sel_xlo[3*0 +: 3])
-            3'd0: xlo_0 = bk(bank_rd, 0);
-            3'd1: xlo_0 = bk(bank_rd, 16);
-            3'd2: xlo_0 = bk(bank_rd, 32);
+        case (sel_xlo[4*0 +: 4])
+            4'd0: xlo_0 = bk(bank_rd, 0);
+            4'd1: xlo_0 = bk(bank_rd, 4);
+            4'd2: xlo_0 = bk(bank_rd, 8);
+            4'd3: xlo_0 = bk(bank_rd, 16);
+            4'd4: xlo_0 = bk(bank_rd, 32);
+            4'd5: xlo_0 = bk(bank_rd, 48);
             default: xlo_0 = 16'd0;
         endcase
     end
     reg [15:0] xhi_0;
     always @* begin
-        case (sel_xhi[3*0 +: 3])
-            3'd0: xhi_0 = bk(bank_rd, 1);
-            3'd1: xhi_0 = bk(bank_rd, 17);
-            3'd2: xhi_0 = bk(bank_rd, 33);
+        case (sel_xhi[4*0 +: 4])
+            4'd0: xhi_0 = bk(bank_rd, 1);
+            4'd1: xhi_0 = bk(bank_rd, 5);
+            4'd2: xhi_0 = bk(bank_rd, 9);
+            4'd3: xhi_0 = bk(bank_rd, 17);
+            4'd4: xhi_0 = bk(bank_rd, 33);
+            4'd5: xhi_0 = bk(bank_rd, 49);
             default: xhi_0 = 16'd0;
         endcase
     end
     reg [15:0] ylo_0;
     always @* begin
-        case (sel_ylo[3*0 +: 3])
-            3'd0: ylo_0 = bk(bank_rd, 0);
-            3'd1: ylo_0 = bk(bank_rd, 2);
-            3'd2: ylo_0 = bk(bank_rd, 4);
-            3'd3: ylo_0 = bk(bank_rd, 8);
-            3'd4: ylo_0 = bk(bank_rd, 16);
-            3'd5: ylo_0 = bk(bank_rd, 32);
+        case (sel_ylo[4*0 +: 4])
+            4'd0: ylo_0 = bk(bank_rd, 0);
+            4'd1: ylo_0 = bk(bank_rd, 2);
+            4'd2: ylo_0 = bk(bank_rd, 4);
+            4'd3: ylo_0 = bk(bank_rd, 6);
+            4'd4: ylo_0 = bk(bank_rd, 8);
+            4'd5: ylo_0 = bk(bank_rd, 10);
+            4'd6: ylo_0 = bk(bank_rd, 12);
+            4'd7: ylo_0 = bk(bank_rd, 16);
+            4'd8: ylo_0 = bk(bank_rd, 18);
+            4'd9: ylo_0 = bk(bank_rd, 20);
+            4'd10: ylo_0 = bk(bank_rd, 24);
+            4'd11: ylo_0 = bk(bank_rd, 32);
+            4'd12: ylo_0 = bk(bank_rd, 34);
+            4'd13: ylo_0 = bk(bank_rd, 36);
+            4'd14: ylo_0 = bk(bank_rd, 40);
+            4'd15: ylo_0 = bk(bank_rd, 48);
             default: ylo_0 = 16'd0;
         endcase
     end
     reg [15:0] yhi_0;
     always @* begin
-        case (sel_yhi[3*0 +: 3])
-            3'd0: yhi_0 = bk(bank_rd, 1);
-            3'd1: yhi_0 = bk(bank_rd, 3);
-            3'd2: yhi_0 = bk(bank_rd, 5);
-            3'd3: yhi_0 = bk(bank_rd, 9);
-            3'd4: yhi_0 = bk(bank_rd, 17);
-            3'd5: yhi_0 = bk(bank_rd, 33);
+        case (sel_yhi[4*0 +: 4])
+            4'd0: yhi_0 = bk(bank_rd, 1);
+            4'd1: yhi_0 = bk(bank_rd, 3);
+            4'd2: yhi_0 = bk(bank_rd, 5);
+            4'd3: yhi_0 = bk(bank_rd, 7);
+            4'd4: yhi_0 = bk(bank_rd, 9);
+            4'd5: yhi_0 = bk(bank_rd, 11);
+            4'd6: yhi_0 = bk(bank_rd, 13);
+            4'd7: yhi_0 = bk(bank_rd, 17);
+            4'd8: yhi_0 = bk(bank_rd, 19);
+            4'd9: yhi_0 = bk(bank_rd, 21);
+            4'd10: yhi_0 = bk(bank_rd, 25);
+            4'd11: yhi_0 = bk(bank_rd, 33);
+            4'd12: yhi_0 = bk(bank_rd, 35);
+            4'd13: yhi_0 = bk(bank_rd, 37);
+            4'd14: yhi_0 = bk(bank_rd, 41);
+            4'd15: yhi_0 = bk(bank_rd, 49);
             default: yhi_0 = 16'd0;
         endcase
     end
     reg [31:0] xh_0;
     wire [31:0] xn_0 = {xhi_0, xlo_0};
     wire [31:0] yn_0 = {yhi_0, ylo_0};
-    reg  [31:0] wn_0;
+    reg  [63:0] wn_0;
     always @* begin
-        case (sel_root[4*0 +: 4])
-            4'd0: wn_0 = pack_rd[32 +: 32];
-            4'd1: wn_0 = pack_rd[64 +: 32];
-            4'd2: wn_0 = pack_rd[128 +: 32];
-            4'd3: wn_0 = pack_rd[160 +: 32];
-            4'd4: wn_0 = pack_rd[224 +: 32];
-            4'd5: wn_0 = pack_rd[256 +: 32];
-            4'd6: wn_0 = pack_rd[320 +: 32];
-            4'd7: wn_0 = pack_rd[352 +: 32];
-            default: wn_0 = root1;
+        case (sel_root[4*0 +: 4] >> 1)
+            3'd0: wn_0 = pack_rd[0 +: 64];
+            3'd1: wn_0 = pack_rd[64 +: 64];
+            3'd2: wn_0 = pack_rd[128 +: 64];
+            3'd3: wn_0 = pack_rd[192 +: 64];
+            default: wn_0 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -87,66 +111,84 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_0 <= xn_0;
             op_x[32*0 +: 32] <= hold_x[0] ? xh_0 : xn_0;
             op_y[32*0 +: 32] <= yn_0;
-            op_w[32*0 +: 32] <= wn_0;
+            if (load_w[0]) op_w[64*0 +: 64] <= wn_0;
         end
     // tile 1
     reg [15:0] xlo_1;
     always @* begin
-        case (sel_xlo[3*1 +: 3])
-            3'd0: xlo_1 = bk(bank_rd, 2);
-            3'd1: xlo_1 = bk(bank_rd, 4);
-            3'd2: xlo_1 = bk(bank_rd, 18);
-            3'd3: xlo_1 = bk(bank_rd, 34);
+        case (sel_xlo[4*1 +: 4])
+            4'd0: xlo_1 = bk(bank_rd, 2);
+            4'd1: xlo_1 = bk(bank_rd, 4);
+            4'd2: xlo_1 = bk(bank_rd, 10);
+            4'd3: xlo_1 = bk(bank_rd, 12);
+            4'd4: xlo_1 = bk(bank_rd, 18);
+            4'd5: xlo_1 = bk(bank_rd, 20);
+            4'd6: xlo_1 = bk(bank_rd, 34);
+            4'd7: xlo_1 = bk(bank_rd, 36);
+            4'd8: xlo_1 = bk(bank_rd, 50);
             default: xlo_1 = 16'd0;
         endcase
     end
     reg [15:0] xhi_1;
     always @* begin
-        case (sel_xhi[3*1 +: 3])
-            3'd0: xhi_1 = bk(bank_rd, 3);
-            3'd1: xhi_1 = bk(bank_rd, 5);
-            3'd2: xhi_1 = bk(bank_rd, 19);
-            3'd3: xhi_1 = bk(bank_rd, 35);
+        case (sel_xhi[4*1 +: 4])
+            4'd0: xhi_1 = bk(bank_rd, 3);
+            4'd1: xhi_1 = bk(bank_rd, 5);
+            4'd2: xhi_1 = bk(bank_rd, 11);
+            4'd3: xhi_1 = bk(bank_rd, 13);
+            4'd4: xhi_1 = bk(bank_rd, 19);
+            4'd5: xhi_1 = bk(bank_rd, 21);
+            4'd6: xhi_1 = bk(bank_rd, 35);
+            4'd7: xhi_1 = bk(bank_rd, 37);
+            4'd8: xhi_1 = bk(bank_rd, 51);
             default: xhi_1 = 16'd0;
         endcase
     end
     reg [15:0] ylo_1;
     always @* begin
-        case (sel_ylo[3*1 +: 3])
-            3'd0: ylo_1 = bk(bank_rd, 2);
-            3'd1: ylo_1 = bk(bank_rd, 6);
-            3'd2: ylo_1 = bk(bank_rd, 10);
-            3'd3: ylo_1 = bk(bank_rd, 18);
-            3'd4: ylo_1 = bk(bank_rd, 34);
+        case (sel_ylo[4*1 +: 4])
+            4'd0: ylo_1 = bk(bank_rd, 2);
+            4'd1: ylo_1 = bk(bank_rd, 6);
+            4'd2: ylo_1 = bk(bank_rd, 10);
+            4'd3: ylo_1 = bk(bank_rd, 14);
+            4'd4: ylo_1 = bk(bank_rd, 18);
+            4'd5: ylo_1 = bk(bank_rd, 22);
+            4'd6: ylo_1 = bk(bank_rd, 26);
+            4'd7: ylo_1 = bk(bank_rd, 34);
+            4'd8: ylo_1 = bk(bank_rd, 38);
+            4'd9: ylo_1 = bk(bank_rd, 42);
+            4'd10: ylo_1 = bk(bank_rd, 50);
             default: ylo_1 = 16'd0;
         endcase
     end
     reg [15:0] yhi_1;
     always @* begin
-        case (sel_yhi[3*1 +: 3])
-            3'd0: yhi_1 = bk(bank_rd, 3);
-            3'd1: yhi_1 = bk(bank_rd, 7);
-            3'd2: yhi_1 = bk(bank_rd, 11);
-            3'd3: yhi_1 = bk(bank_rd, 19);
-            3'd4: yhi_1 = bk(bank_rd, 35);
+        case (sel_yhi[4*1 +: 4])
+            4'd0: yhi_1 = bk(bank_rd, 3);
+            4'd1: yhi_1 = bk(bank_rd, 7);
+            4'd2: yhi_1 = bk(bank_rd, 11);
+            4'd3: yhi_1 = bk(bank_rd, 15);
+            4'd4: yhi_1 = bk(bank_rd, 19);
+            4'd5: yhi_1 = bk(bank_rd, 23);
+            4'd6: yhi_1 = bk(bank_rd, 27);
+            4'd7: yhi_1 = bk(bank_rd, 35);
+            4'd8: yhi_1 = bk(bank_rd, 39);
+            4'd9: yhi_1 = bk(bank_rd, 43);
+            4'd10: yhi_1 = bk(bank_rd, 51);
             default: yhi_1 = 16'd0;
         endcase
     end
     reg [31:0] xh_1;
     wire [31:0] xn_1 = {xhi_1, xlo_1};
     wire [31:0] yn_1 = {yhi_1, ylo_1};
-    reg  [31:0] wn_1;
+    reg  [63:0] wn_1;
     always @* begin
-        case (sel_root[4*1 +: 4])
-            4'd0: wn_1 = pack_rd[32 +: 32];
-            4'd1: wn_1 = pack_rd[64 +: 32];
-            4'd2: wn_1 = pack_rd[128 +: 32];
-            4'd3: wn_1 = pack_rd[160 +: 32];
-            4'd4: wn_1 = pack_rd[224 +: 32];
-            4'd5: wn_1 = pack_rd[256 +: 32];
-            4'd6: wn_1 = pack_rd[320 +: 32];
-            4'd7: wn_1 = pack_rd[352 +: 32];
-            default: wn_1 = root1;
+        case (sel_root[4*1 +: 4] >> 1)
+            3'd0: wn_1 = pack_rd[0 +: 64];
+            3'd1: wn_1 = pack_rd[64 +: 64];
+            3'd2: wn_1 = pack_rd[128 +: 64];
+            3'd3: wn_1 = pack_rd[192 +: 64];
+            default: wn_1 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -154,66 +196,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_1 <= xn_1;
             op_x[32*1 +: 32] <= hold_x[1] ? xh_1 : xn_1;
             op_y[32*1 +: 32] <= yn_1;
-            op_w[32*1 +: 32] <= wn_1;
+            if (load_w[1]) op_w[64*1 +: 64] <= wn_1;
         end
     // tile 2
     reg [15:0] xlo_2;
     always @* begin
-        case (sel_xlo[3*2 +: 3])
-            3'd0: xlo_2 = bk(bank_rd, 4);
-            3'd1: xlo_2 = bk(bank_rd, 8);
-            3'd2: xlo_2 = bk(bank_rd, 20);
-            3'd3: xlo_2 = bk(bank_rd, 36);
+        case (sel_xlo[4*2 +: 4])
+            4'd0: xlo_2 = bk(bank_rd, 4);
+            4'd1: xlo_2 = bk(bank_rd, 8);
+            4'd2: xlo_2 = bk(bank_rd, 20);
+            4'd3: xlo_2 = bk(bank_rd, 24);
+            4'd4: xlo_2 = bk(bank_rd, 36);
+            4'd5: xlo_2 = bk(bank_rd, 40);
+            4'd6: xlo_2 = bk(bank_rd, 52);
             default: xlo_2 = 16'd0;
         endcase
     end
     reg [15:0] xhi_2;
     always @* begin
-        case (sel_xhi[3*2 +: 3])
-            3'd0: xhi_2 = bk(bank_rd, 5);
-            3'd1: xhi_2 = bk(bank_rd, 9);
-            3'd2: xhi_2 = bk(bank_rd, 21);
-            3'd3: xhi_2 = bk(bank_rd, 37);
+        case (sel_xhi[4*2 +: 4])
+            4'd0: xhi_2 = bk(bank_rd, 5);
+            4'd1: xhi_2 = bk(bank_rd, 9);
+            4'd2: xhi_2 = bk(bank_rd, 21);
+            4'd3: xhi_2 = bk(bank_rd, 25);
+            4'd4: xhi_2 = bk(bank_rd, 37);
+            4'd5: xhi_2 = bk(bank_rd, 41);
+            4'd6: xhi_2 = bk(bank_rd, 53);
             default: xhi_2 = 16'd0;
         endcase
     end
     reg [15:0] ylo_2;
     always @* begin
-        case (sel_ylo[3*2 +: 3])
-            3'd0: ylo_2 = bk(bank_rd, 4);
-            3'd1: ylo_2 = bk(bank_rd, 10);
-            3'd2: ylo_2 = bk(bank_rd, 12);
-            3'd3: ylo_2 = bk(bank_rd, 20);
-            3'd4: ylo_2 = bk(bank_rd, 36);
+        case (sel_ylo[4*2 +: 4])
+            4'd0: ylo_2 = bk(bank_rd, 4);
+            4'd1: ylo_2 = bk(bank_rd, 10);
+            4'd2: ylo_2 = bk(bank_rd, 12);
+            4'd3: ylo_2 = bk(bank_rd, 20);
+            4'd4: ylo_2 = bk(bank_rd, 26);
+            4'd5: ylo_2 = bk(bank_rd, 28);
+            4'd6: ylo_2 = bk(bank_rd, 36);
+            4'd7: ylo_2 = bk(bank_rd, 42);
+            4'd8: ylo_2 = bk(bank_rd, 44);
+            4'd9: ylo_2 = bk(bank_rd, 52);
             default: ylo_2 = 16'd0;
         endcase
     end
     reg [15:0] yhi_2;
     always @* begin
-        case (sel_yhi[3*2 +: 3])
-            3'd0: yhi_2 = bk(bank_rd, 5);
-            3'd1: yhi_2 = bk(bank_rd, 11);
-            3'd2: yhi_2 = bk(bank_rd, 13);
-            3'd3: yhi_2 = bk(bank_rd, 21);
-            3'd4: yhi_2 = bk(bank_rd, 37);
+        case (sel_yhi[4*2 +: 4])
+            4'd0: yhi_2 = bk(bank_rd, 5);
+            4'd1: yhi_2 = bk(bank_rd, 11);
+            4'd2: yhi_2 = bk(bank_rd, 13);
+            4'd3: yhi_2 = bk(bank_rd, 21);
+            4'd4: yhi_2 = bk(bank_rd, 27);
+            4'd5: yhi_2 = bk(bank_rd, 29);
+            4'd6: yhi_2 = bk(bank_rd, 37);
+            4'd7: yhi_2 = bk(bank_rd, 43);
+            4'd8: yhi_2 = bk(bank_rd, 45);
+            4'd9: yhi_2 = bk(bank_rd, 53);
             default: yhi_2 = 16'd0;
         endcase
     end
     reg [31:0] xh_2;
     wire [31:0] xn_2 = {xhi_2, xlo_2};
     wire [31:0] yn_2 = {yhi_2, ylo_2};
-    reg  [31:0] wn_2;
+    reg  [63:0] wn_2;
     always @* begin
-        case (sel_root[4*2 +: 4])
-            4'd0: wn_2 = pack_rd[32 +: 32];
-            4'd1: wn_2 = pack_rd[64 +: 32];
-            4'd2: wn_2 = pack_rd[128 +: 32];
-            4'd3: wn_2 = pack_rd[160 +: 32];
-            4'd4: wn_2 = pack_rd[224 +: 32];
-            4'd5: wn_2 = pack_rd[256 +: 32];
-            4'd6: wn_2 = pack_rd[320 +: 32];
-            4'd7: wn_2 = pack_rd[352 +: 32];
-            default: wn_2 = root1;
+        case (sel_root[4*2 +: 4] >> 1)
+            3'd0: wn_2 = pack_rd[0 +: 64];
+            3'd1: wn_2 = pack_rd[64 +: 64];
+            3'd2: wn_2 = pack_rd[128 +: 64];
+            3'd3: wn_2 = pack_rd[192 +: 64];
+            default: wn_2 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -221,66 +275,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_2 <= xn_2;
             op_x[32*2 +: 32] <= hold_x[2] ? xh_2 : xn_2;
             op_y[32*2 +: 32] <= yn_2;
-            op_w[32*2 +: 32] <= wn_2;
+            if (load_w[2]) op_w[64*2 +: 64] <= wn_2;
         end
     // tile 3
     reg [15:0] xlo_3;
     always @* begin
-        case (sel_xlo[3*3 +: 3])
-            3'd0: xlo_3 = bk(bank_rd, 6);
-            3'd1: xlo_3 = bk(bank_rd, 10);
-            3'd2: xlo_3 = bk(bank_rd, 12);
-            3'd3: xlo_3 = bk(bank_rd, 22);
-            3'd4: xlo_3 = bk(bank_rd, 38);
+        case (sel_xlo[4*3 +: 4])
+            4'd0: xlo_3 = bk(bank_rd, 6);
+            4'd1: xlo_3 = bk(bank_rd, 10);
+            4'd2: xlo_3 = bk(bank_rd, 12);
+            4'd3: xlo_3 = bk(bank_rd, 22);
+            4'd4: xlo_3 = bk(bank_rd, 26);
+            4'd5: xlo_3 = bk(bank_rd, 28);
+            4'd6: xlo_3 = bk(bank_rd, 38);
+            4'd7: xlo_3 = bk(bank_rd, 42);
+            4'd8: xlo_3 = bk(bank_rd, 44);
+            4'd9: xlo_3 = bk(bank_rd, 54);
             default: xlo_3 = 16'd0;
         endcase
     end
     reg [15:0] xhi_3;
     always @* begin
-        case (sel_xhi[3*3 +: 3])
-            3'd0: xhi_3 = bk(bank_rd, 7);
-            3'd1: xhi_3 = bk(bank_rd, 11);
-            3'd2: xhi_3 = bk(bank_rd, 13);
-            3'd3: xhi_3 = bk(bank_rd, 23);
-            3'd4: xhi_3 = bk(bank_rd, 39);
+        case (sel_xhi[4*3 +: 4])
+            4'd0: xhi_3 = bk(bank_rd, 7);
+            4'd1: xhi_3 = bk(bank_rd, 11);
+            4'd2: xhi_3 = bk(bank_rd, 13);
+            4'd3: xhi_3 = bk(bank_rd, 23);
+            4'd4: xhi_3 = bk(bank_rd, 27);
+            4'd5: xhi_3 = bk(bank_rd, 29);
+            4'd6: xhi_3 = bk(bank_rd, 39);
+            4'd7: xhi_3 = bk(bank_rd, 43);
+            4'd8: xhi_3 = bk(bank_rd, 45);
+            4'd9: xhi_3 = bk(bank_rd, 55);
             default: xhi_3 = 16'd0;
         endcase
     end
     reg [15:0] ylo_3;
     always @* begin
-        case (sel_ylo[3*3 +: 3])
-            3'd0: ylo_3 = bk(bank_rd, 6);
-            3'd1: ylo_3 = bk(bank_rd, 14);
-            3'd2: ylo_3 = bk(bank_rd, 22);
-            3'd3: ylo_3 = bk(bank_rd, 38);
+        case (sel_ylo[4*3 +: 4])
+            4'd0: ylo_3 = bk(bank_rd, 6);
+            4'd1: ylo_3 = bk(bank_rd, 14);
+            4'd2: ylo_3 = bk(bank_rd, 22);
+            4'd3: ylo_3 = bk(bank_rd, 30);
+            4'd4: ylo_3 = bk(bank_rd, 38);
+            4'd5: ylo_3 = bk(bank_rd, 46);
+            4'd6: ylo_3 = bk(bank_rd, 54);
             default: ylo_3 = 16'd0;
         endcase
     end
     reg [15:0] yhi_3;
     always @* begin
-        case (sel_yhi[3*3 +: 3])
-            3'd0: yhi_3 = bk(bank_rd, 7);
-            3'd1: yhi_3 = bk(bank_rd, 15);
-            3'd2: yhi_3 = bk(bank_rd, 23);
-            3'd3: yhi_3 = bk(bank_rd, 39);
+        case (sel_yhi[4*3 +: 4])
+            4'd0: yhi_3 = bk(bank_rd, 7);
+            4'd1: yhi_3 = bk(bank_rd, 15);
+            4'd2: yhi_3 = bk(bank_rd, 23);
+            4'd3: yhi_3 = bk(bank_rd, 31);
+            4'd4: yhi_3 = bk(bank_rd, 39);
+            4'd5: yhi_3 = bk(bank_rd, 47);
+            4'd6: yhi_3 = bk(bank_rd, 55);
             default: yhi_3 = 16'd0;
         endcase
     end
     reg [31:0] xh_3;
     wire [31:0] xn_3 = {xhi_3, xlo_3};
     wire [31:0] yn_3 = {yhi_3, ylo_3};
-    reg  [31:0] wn_3;
+    reg  [63:0] wn_3;
     always @* begin
-        case (sel_root[4*3 +: 4])
-            4'd0: wn_3 = pack_rd[32 +: 32];
-            4'd1: wn_3 = pack_rd[64 +: 32];
-            4'd2: wn_3 = pack_rd[128 +: 32];
-            4'd3: wn_3 = pack_rd[160 +: 32];
-            4'd4: wn_3 = pack_rd[224 +: 32];
-            4'd5: wn_3 = pack_rd[256 +: 32];
-            4'd6: wn_3 = pack_rd[320 +: 32];
-            4'd7: wn_3 = pack_rd[352 +: 32];
-            default: wn_3 = root1;
+        case (sel_root[4*3 +: 4] >> 1)
+            3'd0: wn_3 = pack_rd[0 +: 64];
+            3'd1: wn_3 = pack_rd[64 +: 64];
+            3'd2: wn_3 = pack_rd[128 +: 64];
+            3'd3: wn_3 = pack_rd[192 +: 64];
+            default: wn_3 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -288,66 +354,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_3 <= xn_3;
             op_x[32*3 +: 32] <= hold_x[3] ? xh_3 : xn_3;
             op_y[32*3 +: 32] <= yn_3;
-            op_w[32*3 +: 32] <= wn_3;
+            if (load_w[3]) op_w[64*3 +: 64] <= wn_3;
         end
     // tile 4
     reg [15:0] xlo_4;
     always @* begin
-        case (sel_xlo[3*4 +: 3])
-            3'd0: xlo_4 = bk(bank_rd, 8);
-            3'd1: xlo_4 = bk(bank_rd, 16);
-            3'd2: xlo_4 = bk(bank_rd, 24);
-            3'd3: xlo_4 = bk(bank_rd, 40);
+        case (sel_xlo[4*4 +: 4])
+            4'd0: xlo_4 = bk(bank_rd, 0);
+            4'd1: xlo_4 = bk(bank_rd, 8);
+            4'd2: xlo_4 = bk(bank_rd, 16);
+            4'd3: xlo_4 = bk(bank_rd, 24);
+            4'd4: xlo_4 = bk(bank_rd, 40);
+            4'd5: xlo_4 = bk(bank_rd, 48);
+            4'd6: xlo_4 = bk(bank_rd, 56);
             default: xlo_4 = 16'd0;
         endcase
     end
     reg [15:0] xhi_4;
     always @* begin
-        case (sel_xhi[3*4 +: 3])
-            3'd0: xhi_4 = bk(bank_rd, 9);
-            3'd1: xhi_4 = bk(bank_rd, 17);
-            3'd2: xhi_4 = bk(bank_rd, 25);
-            3'd3: xhi_4 = bk(bank_rd, 41);
+        case (sel_xhi[4*4 +: 4])
+            4'd0: xhi_4 = bk(bank_rd, 1);
+            4'd1: xhi_4 = bk(bank_rd, 9);
+            4'd2: xhi_4 = bk(bank_rd, 17);
+            4'd3: xhi_4 = bk(bank_rd, 25);
+            4'd4: xhi_4 = bk(bank_rd, 41);
+            4'd5: xhi_4 = bk(bank_rd, 49);
+            4'd6: xhi_4 = bk(bank_rd, 57);
             default: xhi_4 = 16'd0;
         endcase
     end
     reg [15:0] ylo_4;
     always @* begin
-        case (sel_ylo[3*4 +: 3])
-            3'd0: ylo_4 = bk(bank_rd, 8);
-            3'd1: ylo_4 = bk(bank_rd, 18);
-            3'd2: ylo_4 = bk(bank_rd, 20);
-            3'd3: ylo_4 = bk(bank_rd, 24);
-            3'd4: ylo_4 = bk(bank_rd, 40);
+        case (sel_ylo[4*4 +: 4])
+            4'd0: ylo_4 = bk(bank_rd, 2);
+            4'd1: ylo_4 = bk(bank_rd, 4);
+            4'd2: ylo_4 = bk(bank_rd, 8);
+            4'd3: ylo_4 = bk(bank_rd, 18);
+            4'd4: ylo_4 = bk(bank_rd, 20);
+            4'd5: ylo_4 = bk(bank_rd, 24);
+            4'd6: ylo_4 = bk(bank_rd, 40);
+            4'd7: ylo_4 = bk(bank_rd, 50);
+            4'd8: ylo_4 = bk(bank_rd, 52);
+            4'd9: ylo_4 = bk(bank_rd, 56);
             default: ylo_4 = 16'd0;
         endcase
     end
     reg [15:0] yhi_4;
     always @* begin
-        case (sel_yhi[3*4 +: 3])
-            3'd0: yhi_4 = bk(bank_rd, 9);
-            3'd1: yhi_4 = bk(bank_rd, 19);
-            3'd2: yhi_4 = bk(bank_rd, 21);
-            3'd3: yhi_4 = bk(bank_rd, 25);
-            3'd4: yhi_4 = bk(bank_rd, 41);
+        case (sel_yhi[4*4 +: 4])
+            4'd0: yhi_4 = bk(bank_rd, 3);
+            4'd1: yhi_4 = bk(bank_rd, 5);
+            4'd2: yhi_4 = bk(bank_rd, 9);
+            4'd3: yhi_4 = bk(bank_rd, 19);
+            4'd4: yhi_4 = bk(bank_rd, 21);
+            4'd5: yhi_4 = bk(bank_rd, 25);
+            4'd6: yhi_4 = bk(bank_rd, 41);
+            4'd7: yhi_4 = bk(bank_rd, 51);
+            4'd8: yhi_4 = bk(bank_rd, 53);
+            4'd9: yhi_4 = bk(bank_rd, 57);
             default: yhi_4 = 16'd0;
         endcase
     end
     reg [31:0] xh_4;
     wire [31:0] xn_4 = {xhi_4, xlo_4};
     wire [31:0] yn_4 = {yhi_4, ylo_4};
-    reg  [31:0] wn_4;
+    reg  [63:0] wn_4;
     always @* begin
-        case (sel_root[4*4 +: 4])
-            4'd0: wn_4 = pack_rd[32 +: 32];
-            4'd1: wn_4 = pack_rd[64 +: 32];
-            4'd2: wn_4 = pack_rd[128 +: 32];
-            4'd3: wn_4 = pack_rd[160 +: 32];
-            4'd4: wn_4 = pack_rd[224 +: 32];
-            4'd5: wn_4 = pack_rd[256 +: 32];
-            4'd6: wn_4 = pack_rd[320 +: 32];
-            4'd7: wn_4 = pack_rd[352 +: 32];
-            default: wn_4 = root1;
+        case (sel_root[4*4 +: 4] >> 1)
+            3'd0: wn_4 = pack_rd[0 +: 64];
+            3'd1: wn_4 = pack_rd[64 +: 64];
+            3'd2: wn_4 = pack_rd[128 +: 64];
+            3'd3: wn_4 = pack_rd[192 +: 64];
+            default: wn_4 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -355,66 +433,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_4 <= xn_4;
             op_x[32*4 +: 32] <= hold_x[4] ? xh_4 : xn_4;
             op_y[32*4 +: 32] <= yn_4;
-            op_w[32*4 +: 32] <= wn_4;
+            if (load_w[4]) op_w[64*4 +: 64] <= wn_4;
         end
     // tile 5
     reg [15:0] xlo_5;
     always @* begin
-        case (sel_xlo[3*5 +: 3])
-            3'd0: xlo_5 = bk(bank_rd, 10);
-            3'd1: xlo_5 = bk(bank_rd, 18);
-            3'd2: xlo_5 = bk(bank_rd, 20);
-            3'd3: xlo_5 = bk(bank_rd, 26);
-            3'd4: xlo_5 = bk(bank_rd, 42);
+        case (sel_xlo[4*5 +: 4])
+            4'd0: xlo_5 = bk(bank_rd, 2);
+            4'd1: xlo_5 = bk(bank_rd, 4);
+            4'd2: xlo_5 = bk(bank_rd, 10);
+            4'd3: xlo_5 = bk(bank_rd, 18);
+            4'd4: xlo_5 = bk(bank_rd, 20);
+            4'd5: xlo_5 = bk(bank_rd, 26);
+            4'd6: xlo_5 = bk(bank_rd, 42);
+            4'd7: xlo_5 = bk(bank_rd, 50);
+            4'd8: xlo_5 = bk(bank_rd, 52);
+            4'd9: xlo_5 = bk(bank_rd, 58);
             default: xlo_5 = 16'd0;
         endcase
     end
     reg [15:0] xhi_5;
     always @* begin
-        case (sel_xhi[3*5 +: 3])
-            3'd0: xhi_5 = bk(bank_rd, 11);
-            3'd1: xhi_5 = bk(bank_rd, 19);
-            3'd2: xhi_5 = bk(bank_rd, 21);
-            3'd3: xhi_5 = bk(bank_rd, 27);
-            3'd4: xhi_5 = bk(bank_rd, 43);
+        case (sel_xhi[4*5 +: 4])
+            4'd0: xhi_5 = bk(bank_rd, 3);
+            4'd1: xhi_5 = bk(bank_rd, 5);
+            4'd2: xhi_5 = bk(bank_rd, 11);
+            4'd3: xhi_5 = bk(bank_rd, 19);
+            4'd4: xhi_5 = bk(bank_rd, 21);
+            4'd5: xhi_5 = bk(bank_rd, 27);
+            4'd6: xhi_5 = bk(bank_rd, 43);
+            4'd7: xhi_5 = bk(bank_rd, 51);
+            4'd8: xhi_5 = bk(bank_rd, 53);
+            4'd9: xhi_5 = bk(bank_rd, 59);
             default: xhi_5 = 16'd0;
         endcase
     end
     reg [15:0] ylo_5;
     always @* begin
-        case (sel_ylo[3*5 +: 3])
-            3'd0: ylo_5 = bk(bank_rd, 10);
-            3'd1: ylo_5 = bk(bank_rd, 22);
-            3'd2: ylo_5 = bk(bank_rd, 26);
-            3'd3: ylo_5 = bk(bank_rd, 42);
+        case (sel_ylo[4*5 +: 4])
+            4'd0: ylo_5 = bk(bank_rd, 6);
+            4'd1: ylo_5 = bk(bank_rd, 10);
+            4'd2: ylo_5 = bk(bank_rd, 22);
+            4'd3: ylo_5 = bk(bank_rd, 26);
+            4'd4: ylo_5 = bk(bank_rd, 42);
+            4'd5: ylo_5 = bk(bank_rd, 54);
+            4'd6: ylo_5 = bk(bank_rd, 58);
             default: ylo_5 = 16'd0;
         endcase
     end
     reg [15:0] yhi_5;
     always @* begin
-        case (sel_yhi[3*5 +: 3])
-            3'd0: yhi_5 = bk(bank_rd, 11);
-            3'd1: yhi_5 = bk(bank_rd, 23);
-            3'd2: yhi_5 = bk(bank_rd, 27);
-            3'd3: yhi_5 = bk(bank_rd, 43);
+        case (sel_yhi[4*5 +: 4])
+            4'd0: yhi_5 = bk(bank_rd, 7);
+            4'd1: yhi_5 = bk(bank_rd, 11);
+            4'd2: yhi_5 = bk(bank_rd, 23);
+            4'd3: yhi_5 = bk(bank_rd, 27);
+            4'd4: yhi_5 = bk(bank_rd, 43);
+            4'd5: yhi_5 = bk(bank_rd, 55);
+            4'd6: yhi_5 = bk(bank_rd, 59);
             default: yhi_5 = 16'd0;
         endcase
     end
     reg [31:0] xh_5;
     wire [31:0] xn_5 = {xhi_5, xlo_5};
     wire [31:0] yn_5 = {yhi_5, ylo_5};
-    reg  [31:0] wn_5;
+    reg  [63:0] wn_5;
     always @* begin
-        case (sel_root[4*5 +: 4])
-            4'd0: wn_5 = pack_rd[32 +: 32];
-            4'd1: wn_5 = pack_rd[64 +: 32];
-            4'd2: wn_5 = pack_rd[128 +: 32];
-            4'd3: wn_5 = pack_rd[160 +: 32];
-            4'd4: wn_5 = pack_rd[224 +: 32];
-            4'd5: wn_5 = pack_rd[256 +: 32];
-            4'd6: wn_5 = pack_rd[320 +: 32];
-            4'd7: wn_5 = pack_rd[352 +: 32];
-            default: wn_5 = root1;
+        case (sel_root[4*5 +: 4] >> 1)
+            3'd0: wn_5 = pack_rd[0 +: 64];
+            3'd1: wn_5 = pack_rd[64 +: 64];
+            3'd2: wn_5 = pack_rd[128 +: 64];
+            3'd3: wn_5 = pack_rd[192 +: 64];
+            default: wn_5 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -422,66 +512,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_5 <= xn_5;
             op_x[32*5 +: 32] <= hold_x[5] ? xh_5 : xn_5;
             op_y[32*5 +: 32] <= yn_5;
-            op_w[32*5 +: 32] <= wn_5;
+            if (load_w[5]) op_w[64*5 +: 64] <= wn_5;
         end
     // tile 6
     reg [15:0] xlo_6;
     always @* begin
-        case (sel_xlo[3*6 +: 3])
-            3'd0: xlo_6 = bk(bank_rd, 12);
-            3'd1: xlo_6 = bk(bank_rd, 20);
-            3'd2: xlo_6 = bk(bank_rd, 24);
-            3'd3: xlo_6 = bk(bank_rd, 28);
-            3'd4: xlo_6 = bk(bank_rd, 44);
+        case (sel_xlo[4*6 +: 4])
+            4'd0: xlo_6 = bk(bank_rd, 4);
+            4'd1: xlo_6 = bk(bank_rd, 8);
+            4'd2: xlo_6 = bk(bank_rd, 12);
+            4'd3: xlo_6 = bk(bank_rd, 20);
+            4'd4: xlo_6 = bk(bank_rd, 24);
+            4'd5: xlo_6 = bk(bank_rd, 28);
+            4'd6: xlo_6 = bk(bank_rd, 44);
+            4'd7: xlo_6 = bk(bank_rd, 52);
+            4'd8: xlo_6 = bk(bank_rd, 56);
+            4'd9: xlo_6 = bk(bank_rd, 60);
             default: xlo_6 = 16'd0;
         endcase
     end
     reg [15:0] xhi_6;
     always @* begin
-        case (sel_xhi[3*6 +: 3])
-            3'd0: xhi_6 = bk(bank_rd, 13);
-            3'd1: xhi_6 = bk(bank_rd, 21);
-            3'd2: xhi_6 = bk(bank_rd, 25);
-            3'd3: xhi_6 = bk(bank_rd, 29);
-            3'd4: xhi_6 = bk(bank_rd, 45);
+        case (sel_xhi[4*6 +: 4])
+            4'd0: xhi_6 = bk(bank_rd, 5);
+            4'd1: xhi_6 = bk(bank_rd, 9);
+            4'd2: xhi_6 = bk(bank_rd, 13);
+            4'd3: xhi_6 = bk(bank_rd, 21);
+            4'd4: xhi_6 = bk(bank_rd, 25);
+            4'd5: xhi_6 = bk(bank_rd, 29);
+            4'd6: xhi_6 = bk(bank_rd, 45);
+            4'd7: xhi_6 = bk(bank_rd, 53);
+            4'd8: xhi_6 = bk(bank_rd, 57);
+            4'd9: xhi_6 = bk(bank_rd, 61);
             default: xhi_6 = 16'd0;
         endcase
     end
     reg [15:0] ylo_6;
     always @* begin
-        case (sel_ylo[3*6 +: 3])
-            3'd0: ylo_6 = bk(bank_rd, 12);
-            3'd1: ylo_6 = bk(bank_rd, 26);
-            3'd2: ylo_6 = bk(bank_rd, 28);
-            3'd3: ylo_6 = bk(bank_rd, 44);
+        case (sel_ylo[4*6 +: 4])
+            4'd0: ylo_6 = bk(bank_rd, 10);
+            4'd1: ylo_6 = bk(bank_rd, 12);
+            4'd2: ylo_6 = bk(bank_rd, 26);
+            4'd3: ylo_6 = bk(bank_rd, 28);
+            4'd4: ylo_6 = bk(bank_rd, 44);
+            4'd5: ylo_6 = bk(bank_rd, 58);
+            4'd6: ylo_6 = bk(bank_rd, 60);
             default: ylo_6 = 16'd0;
         endcase
     end
     reg [15:0] yhi_6;
     always @* begin
-        case (sel_yhi[3*6 +: 3])
-            3'd0: yhi_6 = bk(bank_rd, 13);
-            3'd1: yhi_6 = bk(bank_rd, 27);
-            3'd2: yhi_6 = bk(bank_rd, 29);
-            3'd3: yhi_6 = bk(bank_rd, 45);
+        case (sel_yhi[4*6 +: 4])
+            4'd0: yhi_6 = bk(bank_rd, 11);
+            4'd1: yhi_6 = bk(bank_rd, 13);
+            4'd2: yhi_6 = bk(bank_rd, 27);
+            4'd3: yhi_6 = bk(bank_rd, 29);
+            4'd4: yhi_6 = bk(bank_rd, 45);
+            4'd5: yhi_6 = bk(bank_rd, 59);
+            4'd6: yhi_6 = bk(bank_rd, 61);
             default: yhi_6 = 16'd0;
         endcase
     end
     reg [31:0] xh_6;
     wire [31:0] xn_6 = {xhi_6, xlo_6};
     wire [31:0] yn_6 = {yhi_6, ylo_6};
-    reg  [31:0] wn_6;
+    reg  [63:0] wn_6;
     always @* begin
-        case (sel_root[4*6 +: 4])
-            4'd0: wn_6 = pack_rd[32 +: 32];
-            4'd1: wn_6 = pack_rd[64 +: 32];
-            4'd2: wn_6 = pack_rd[128 +: 32];
-            4'd3: wn_6 = pack_rd[160 +: 32];
-            4'd4: wn_6 = pack_rd[224 +: 32];
-            4'd5: wn_6 = pack_rd[256 +: 32];
-            4'd6: wn_6 = pack_rd[320 +: 32];
-            4'd7: wn_6 = pack_rd[352 +: 32];
-            default: wn_6 = root1;
+        case (sel_root[4*6 +: 4] >> 1)
+            3'd0: wn_6 = pack_rd[0 +: 64];
+            3'd1: wn_6 = pack_rd[64 +: 64];
+            3'd2: wn_6 = pack_rd[128 +: 64];
+            3'd3: wn_6 = pack_rd[192 +: 64];
+            default: wn_6 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -489,66 +591,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_6 <= xn_6;
             op_x[32*6 +: 32] <= hold_x[6] ? xh_6 : xn_6;
             op_y[32*6 +: 32] <= yn_6;
-            op_w[32*6 +: 32] <= wn_6;
+            if (load_w[6]) op_w[64*6 +: 64] <= wn_6;
         end
     // tile 7
     reg [15:0] xlo_7;
     always @* begin
-        case (sel_xlo[3*7 +: 3])
-            3'd0: xlo_7 = bk(bank_rd, 14);
-            3'd1: xlo_7 = bk(bank_rd, 22);
-            3'd2: xlo_7 = bk(bank_rd, 26);
-            3'd3: xlo_7 = bk(bank_rd, 28);
-            3'd4: xlo_7 = bk(bank_rd, 30);
-            3'd5: xlo_7 = bk(bank_rd, 46);
+        case (sel_xlo[4*7 +: 4])
+            4'd0: xlo_7 = bk(bank_rd, 6);
+            4'd1: xlo_7 = bk(bank_rd, 10);
+            4'd2: xlo_7 = bk(bank_rd, 12);
+            4'd3: xlo_7 = bk(bank_rd, 14);
+            4'd4: xlo_7 = bk(bank_rd, 22);
+            4'd5: xlo_7 = bk(bank_rd, 26);
+            4'd6: xlo_7 = bk(bank_rd, 28);
+            4'd7: xlo_7 = bk(bank_rd, 30);
+            4'd8: xlo_7 = bk(bank_rd, 46);
+            4'd9: xlo_7 = bk(bank_rd, 54);
+            4'd10: xlo_7 = bk(bank_rd, 58);
+            4'd11: xlo_7 = bk(bank_rd, 60);
+            4'd12: xlo_7 = bk(bank_rd, 62);
             default: xlo_7 = 16'd0;
         endcase
     end
     reg [15:0] xhi_7;
     always @* begin
-        case (sel_xhi[3*7 +: 3])
-            3'd0: xhi_7 = bk(bank_rd, 15);
-            3'd1: xhi_7 = bk(bank_rd, 23);
-            3'd2: xhi_7 = bk(bank_rd, 27);
-            3'd3: xhi_7 = bk(bank_rd, 29);
-            3'd4: xhi_7 = bk(bank_rd, 31);
-            3'd5: xhi_7 = bk(bank_rd, 47);
+        case (sel_xhi[4*7 +: 4])
+            4'd0: xhi_7 = bk(bank_rd, 7);
+            4'd1: xhi_7 = bk(bank_rd, 11);
+            4'd2: xhi_7 = bk(bank_rd, 13);
+            4'd3: xhi_7 = bk(bank_rd, 15);
+            4'd4: xhi_7 = bk(bank_rd, 23);
+            4'd5: xhi_7 = bk(bank_rd, 27);
+            4'd6: xhi_7 = bk(bank_rd, 29);
+            4'd7: xhi_7 = bk(bank_rd, 31);
+            4'd8: xhi_7 = bk(bank_rd, 47);
+            4'd9: xhi_7 = bk(bank_rd, 55);
+            4'd10: xhi_7 = bk(bank_rd, 59);
+            4'd11: xhi_7 = bk(bank_rd, 61);
+            4'd12: xhi_7 = bk(bank_rd, 63);
             default: xhi_7 = 16'd0;
         endcase
     end
     reg [15:0] ylo_7;
     always @* begin
-        case (sel_ylo[3*7 +: 3])
-            3'd0: ylo_7 = bk(bank_rd, 14);
-            3'd1: ylo_7 = bk(bank_rd, 30);
-            3'd2: ylo_7 = bk(bank_rd, 46);
+        case (sel_ylo[4*7 +: 4])
+            4'd0: ylo_7 = bk(bank_rd, 14);
+            4'd1: ylo_7 = bk(bank_rd, 30);
+            4'd2: ylo_7 = bk(bank_rd, 46);
+            4'd3: ylo_7 = bk(bank_rd, 62);
             default: ylo_7 = 16'd0;
         endcase
     end
     reg [15:0] yhi_7;
     always @* begin
-        case (sel_yhi[3*7 +: 3])
-            3'd0: yhi_7 = bk(bank_rd, 15);
-            3'd1: yhi_7 = bk(bank_rd, 31);
-            3'd2: yhi_7 = bk(bank_rd, 47);
+        case (sel_yhi[4*7 +: 4])
+            4'd0: yhi_7 = bk(bank_rd, 15);
+            4'd1: yhi_7 = bk(bank_rd, 31);
+            4'd2: yhi_7 = bk(bank_rd, 47);
+            4'd3: yhi_7 = bk(bank_rd, 63);
             default: yhi_7 = 16'd0;
         endcase
     end
     reg [31:0] xh_7;
     wire [31:0] xn_7 = {xhi_7, xlo_7};
     wire [31:0] yn_7 = {yhi_7, ylo_7};
-    reg  [31:0] wn_7;
+    reg  [63:0] wn_7;
     always @* begin
-        case (sel_root[4*7 +: 4])
-            4'd0: wn_7 = pack_rd[32 +: 32];
-            4'd1: wn_7 = pack_rd[64 +: 32];
-            4'd2: wn_7 = pack_rd[128 +: 32];
-            4'd3: wn_7 = pack_rd[160 +: 32];
-            4'd4: wn_7 = pack_rd[224 +: 32];
-            4'd5: wn_7 = pack_rd[256 +: 32];
-            4'd6: wn_7 = pack_rd[320 +: 32];
-            4'd7: wn_7 = pack_rd[352 +: 32];
-            default: wn_7 = root1;
+        case (sel_root[4*7 +: 4] >> 1)
+            3'd0: wn_7 = pack_rd[0 +: 64];
+            3'd1: wn_7 = pack_rd[64 +: 64];
+            3'd2: wn_7 = pack_rd[128 +: 64];
+            3'd3: wn_7 = pack_rd[192 +: 64];
+            default: wn_7 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -556,66 +670,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_7 <= xn_7;
             op_x[32*7 +: 32] <= hold_x[7] ? xh_7 : xn_7;
             op_y[32*7 +: 32] <= yn_7;
-            op_w[32*7 +: 32] <= wn_7;
+            if (load_w[7]) op_w[64*7 +: 64] <= wn_7;
         end
     // tile 8
     reg [15:0] xlo_8;
     always @* begin
-        case (sel_xlo[3*8 +: 3])
-            3'd0: xlo_8 = bk(bank_rd, 16);
-            3'd1: xlo_8 = bk(bank_rd, 32);
-            3'd2: xlo_8 = bk(bank_rd, 48);
+        case (sel_xlo[4*8 +: 4])
+            4'd0: xlo_8 = bk(bank_rd, 0);
+            4'd1: xlo_8 = bk(bank_rd, 16);
+            4'd2: xlo_8 = bk(bank_rd, 32);
+            4'd3: xlo_8 = bk(bank_rd, 48);
             default: xlo_8 = 16'd0;
         endcase
     end
     reg [15:0] xhi_8;
     always @* begin
-        case (sel_xhi[3*8 +: 3])
-            3'd0: xhi_8 = bk(bank_rd, 17);
-            3'd1: xhi_8 = bk(bank_rd, 33);
-            3'd2: xhi_8 = bk(bank_rd, 49);
+        case (sel_xhi[4*8 +: 4])
+            4'd0: xhi_8 = bk(bank_rd, 1);
+            4'd1: xhi_8 = bk(bank_rd, 17);
+            4'd2: xhi_8 = bk(bank_rd, 33);
+            4'd3: xhi_8 = bk(bank_rd, 49);
             default: xhi_8 = 16'd0;
         endcase
     end
     reg [15:0] ylo_8;
     always @* begin
-        case (sel_ylo[3*8 +: 3])
-            3'd0: ylo_8 = bk(bank_rd, 16);
-            3'd1: ylo_8 = bk(bank_rd, 32);
-            3'd2: ylo_8 = bk(bank_rd, 34);
-            3'd3: ylo_8 = bk(bank_rd, 36);
-            3'd4: ylo_8 = bk(bank_rd, 40);
-            3'd5: ylo_8 = bk(bank_rd, 48);
+        case (sel_ylo[4*8 +: 4])
+            4'd0: ylo_8 = bk(bank_rd, 0);
+            4'd1: ylo_8 = bk(bank_rd, 2);
+            4'd2: ylo_8 = bk(bank_rd, 4);
+            4'd3: ylo_8 = bk(bank_rd, 8);
+            4'd4: ylo_8 = bk(bank_rd, 16);
+            4'd5: ylo_8 = bk(bank_rd, 32);
+            4'd6: ylo_8 = bk(bank_rd, 34);
+            4'd7: ylo_8 = bk(bank_rd, 36);
+            4'd8: ylo_8 = bk(bank_rd, 40);
+            4'd9: ylo_8 = bk(bank_rd, 48);
+            4'd10: ylo_8 = bk(bank_rd, 50);
+            4'd11: ylo_8 = bk(bank_rd, 52);
+            4'd12: ylo_8 = bk(bank_rd, 56);
             default: ylo_8 = 16'd0;
         endcase
     end
     reg [15:0] yhi_8;
     always @* begin
-        case (sel_yhi[3*8 +: 3])
-            3'd0: yhi_8 = bk(bank_rd, 17);
-            3'd1: yhi_8 = bk(bank_rd, 33);
-            3'd2: yhi_8 = bk(bank_rd, 35);
-            3'd3: yhi_8 = bk(bank_rd, 37);
-            3'd4: yhi_8 = bk(bank_rd, 41);
-            3'd5: yhi_8 = bk(bank_rd, 49);
+        case (sel_yhi[4*8 +: 4])
+            4'd0: yhi_8 = bk(bank_rd, 1);
+            4'd1: yhi_8 = bk(bank_rd, 3);
+            4'd2: yhi_8 = bk(bank_rd, 5);
+            4'd3: yhi_8 = bk(bank_rd, 9);
+            4'd4: yhi_8 = bk(bank_rd, 17);
+            4'd5: yhi_8 = bk(bank_rd, 33);
+            4'd6: yhi_8 = bk(bank_rd, 35);
+            4'd7: yhi_8 = bk(bank_rd, 37);
+            4'd8: yhi_8 = bk(bank_rd, 41);
+            4'd9: yhi_8 = bk(bank_rd, 49);
+            4'd10: yhi_8 = bk(bank_rd, 51);
+            4'd11: yhi_8 = bk(bank_rd, 53);
+            4'd12: yhi_8 = bk(bank_rd, 57);
             default: yhi_8 = 16'd0;
         endcase
     end
     reg [31:0] xh_8;
     wire [31:0] xn_8 = {xhi_8, xlo_8};
     wire [31:0] yn_8 = {yhi_8, ylo_8};
-    reg  [31:0] wn_8;
+    reg  [63:0] wn_8;
     always @* begin
-        case (sel_root[4*8 +: 4])
-            4'd0: wn_8 = pack_rd[32 +: 32];
-            4'd1: wn_8 = pack_rd[64 +: 32];
-            4'd2: wn_8 = pack_rd[128 +: 32];
-            4'd3: wn_8 = pack_rd[160 +: 32];
-            4'd4: wn_8 = pack_rd[224 +: 32];
-            4'd5: wn_8 = pack_rd[256 +: 32];
-            4'd6: wn_8 = pack_rd[320 +: 32];
-            4'd7: wn_8 = pack_rd[352 +: 32];
-            default: wn_8 = root1;
+        case (sel_root[4*8 +: 4] >> 1)
+            3'd0: wn_8 = pack_rd[256 +: 64];
+            3'd1: wn_8 = pack_rd[320 +: 64];
+            3'd2: wn_8 = pack_rd[384 +: 64];
+            3'd3: wn_8 = pack_rd[448 +: 64];
+            default: wn_8 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -623,66 +749,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_8 <= xn_8;
             op_x[32*8 +: 32] <= hold_x[8] ? xh_8 : xn_8;
             op_y[32*8 +: 32] <= yn_8;
-            op_w[32*8 +: 32] <= wn_8;
+            if (load_w[8]) op_w[64*8 +: 64] <= wn_8;
         end
     // tile 9
     reg [15:0] xlo_9;
     always @* begin
-        case (sel_xlo[3*9 +: 3])
-            3'd0: xlo_9 = bk(bank_rd, 18);
-            3'd1: xlo_9 = bk(bank_rd, 34);
-            3'd2: xlo_9 = bk(bank_rd, 36);
-            3'd3: xlo_9 = bk(bank_rd, 50);
+        case (sel_xlo[4*9 +: 4])
+            4'd0: xlo_9 = bk(bank_rd, 2);
+            4'd1: xlo_9 = bk(bank_rd, 4);
+            4'd2: xlo_9 = bk(bank_rd, 18);
+            4'd3: xlo_9 = bk(bank_rd, 34);
+            4'd4: xlo_9 = bk(bank_rd, 36);
+            4'd5: xlo_9 = bk(bank_rd, 50);
+            4'd6: xlo_9 = bk(bank_rd, 52);
             default: xlo_9 = 16'd0;
         endcase
     end
     reg [15:0] xhi_9;
     always @* begin
-        case (sel_xhi[3*9 +: 3])
-            3'd0: xhi_9 = bk(bank_rd, 19);
-            3'd1: xhi_9 = bk(bank_rd, 35);
-            3'd2: xhi_9 = bk(bank_rd, 37);
-            3'd3: xhi_9 = bk(bank_rd, 51);
+        case (sel_xhi[4*9 +: 4])
+            4'd0: xhi_9 = bk(bank_rd, 3);
+            4'd1: xhi_9 = bk(bank_rd, 5);
+            4'd2: xhi_9 = bk(bank_rd, 19);
+            4'd3: xhi_9 = bk(bank_rd, 35);
+            4'd4: xhi_9 = bk(bank_rd, 37);
+            4'd5: xhi_9 = bk(bank_rd, 51);
+            4'd6: xhi_9 = bk(bank_rd, 53);
             default: xhi_9 = 16'd0;
         endcase
     end
     reg [15:0] ylo_9;
     always @* begin
-        case (sel_ylo[3*9 +: 3])
-            3'd0: ylo_9 = bk(bank_rd, 18);
-            3'd1: ylo_9 = bk(bank_rd, 34);
-            3'd2: ylo_9 = bk(bank_rd, 38);
-            3'd3: ylo_9 = bk(bank_rd, 42);
-            3'd4: ylo_9 = bk(bank_rd, 50);
+        case (sel_ylo[4*9 +: 4])
+            4'd0: ylo_9 = bk(bank_rd, 2);
+            4'd1: ylo_9 = bk(bank_rd, 6);
+            4'd2: ylo_9 = bk(bank_rd, 10);
+            4'd3: ylo_9 = bk(bank_rd, 18);
+            4'd4: ylo_9 = bk(bank_rd, 34);
+            4'd5: ylo_9 = bk(bank_rd, 38);
+            4'd6: ylo_9 = bk(bank_rd, 42);
+            4'd7: ylo_9 = bk(bank_rd, 50);
+            4'd8: ylo_9 = bk(bank_rd, 54);
+            4'd9: ylo_9 = bk(bank_rd, 58);
             default: ylo_9 = 16'd0;
         endcase
     end
     reg [15:0] yhi_9;
     always @* begin
-        case (sel_yhi[3*9 +: 3])
-            3'd0: yhi_9 = bk(bank_rd, 19);
-            3'd1: yhi_9 = bk(bank_rd, 35);
-            3'd2: yhi_9 = bk(bank_rd, 39);
-            3'd3: yhi_9 = bk(bank_rd, 43);
-            3'd4: yhi_9 = bk(bank_rd, 51);
+        case (sel_yhi[4*9 +: 4])
+            4'd0: yhi_9 = bk(bank_rd, 3);
+            4'd1: yhi_9 = bk(bank_rd, 7);
+            4'd2: yhi_9 = bk(bank_rd, 11);
+            4'd3: yhi_9 = bk(bank_rd, 19);
+            4'd4: yhi_9 = bk(bank_rd, 35);
+            4'd5: yhi_9 = bk(bank_rd, 39);
+            4'd6: yhi_9 = bk(bank_rd, 43);
+            4'd7: yhi_9 = bk(bank_rd, 51);
+            4'd8: yhi_9 = bk(bank_rd, 55);
+            4'd9: yhi_9 = bk(bank_rd, 59);
             default: yhi_9 = 16'd0;
         endcase
     end
     reg [31:0] xh_9;
     wire [31:0] xn_9 = {xhi_9, xlo_9};
     wire [31:0] yn_9 = {yhi_9, ylo_9};
-    reg  [31:0] wn_9;
+    reg  [63:0] wn_9;
     always @* begin
-        case (sel_root[4*9 +: 4])
-            4'd0: wn_9 = pack_rd[32 +: 32];
-            4'd1: wn_9 = pack_rd[64 +: 32];
-            4'd2: wn_9 = pack_rd[128 +: 32];
-            4'd3: wn_9 = pack_rd[160 +: 32];
-            4'd4: wn_9 = pack_rd[224 +: 32];
-            4'd5: wn_9 = pack_rd[256 +: 32];
-            4'd6: wn_9 = pack_rd[320 +: 32];
-            4'd7: wn_9 = pack_rd[352 +: 32];
-            default: wn_9 = root1;
+        case (sel_root[4*9 +: 4] >> 1)
+            3'd0: wn_9 = pack_rd[256 +: 64];
+            3'd1: wn_9 = pack_rd[320 +: 64];
+            3'd2: wn_9 = pack_rd[384 +: 64];
+            3'd3: wn_9 = pack_rd[448 +: 64];
+            default: wn_9 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -690,66 +828,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_9 <= xn_9;
             op_x[32*9 +: 32] <= hold_x[9] ? xh_9 : xn_9;
             op_y[32*9 +: 32] <= yn_9;
-            op_w[32*9 +: 32] <= wn_9;
+            if (load_w[9]) op_w[64*9 +: 64] <= wn_9;
         end
     // tile 10
     reg [15:0] xlo_10;
     always @* begin
-        case (sel_xlo[3*10 +: 3])
-            3'd0: xlo_10 = bk(bank_rd, 20);
-            3'd1: xlo_10 = bk(bank_rd, 36);
-            3'd2: xlo_10 = bk(bank_rd, 40);
-            3'd3: xlo_10 = bk(bank_rd, 52);
+        case (sel_xlo[4*10 +: 4])
+            4'd0: xlo_10 = bk(bank_rd, 4);
+            4'd1: xlo_10 = bk(bank_rd, 8);
+            4'd2: xlo_10 = bk(bank_rd, 20);
+            4'd3: xlo_10 = bk(bank_rd, 36);
+            4'd4: xlo_10 = bk(bank_rd, 40);
+            4'd5: xlo_10 = bk(bank_rd, 52);
+            4'd6: xlo_10 = bk(bank_rd, 56);
             default: xlo_10 = 16'd0;
         endcase
     end
     reg [15:0] xhi_10;
     always @* begin
-        case (sel_xhi[3*10 +: 3])
-            3'd0: xhi_10 = bk(bank_rd, 21);
-            3'd1: xhi_10 = bk(bank_rd, 37);
-            3'd2: xhi_10 = bk(bank_rd, 41);
-            3'd3: xhi_10 = bk(bank_rd, 53);
+        case (sel_xhi[4*10 +: 4])
+            4'd0: xhi_10 = bk(bank_rd, 5);
+            4'd1: xhi_10 = bk(bank_rd, 9);
+            4'd2: xhi_10 = bk(bank_rd, 21);
+            4'd3: xhi_10 = bk(bank_rd, 37);
+            4'd4: xhi_10 = bk(bank_rd, 41);
+            4'd5: xhi_10 = bk(bank_rd, 53);
+            4'd6: xhi_10 = bk(bank_rd, 57);
             default: xhi_10 = 16'd0;
         endcase
     end
     reg [15:0] ylo_10;
     always @* begin
-        case (sel_ylo[3*10 +: 3])
-            3'd0: ylo_10 = bk(bank_rd, 20);
-            3'd1: ylo_10 = bk(bank_rd, 36);
-            3'd2: ylo_10 = bk(bank_rd, 42);
-            3'd3: ylo_10 = bk(bank_rd, 44);
-            3'd4: ylo_10 = bk(bank_rd, 52);
+        case (sel_ylo[4*10 +: 4])
+            4'd0: ylo_10 = bk(bank_rd, 4);
+            4'd1: ylo_10 = bk(bank_rd, 10);
+            4'd2: ylo_10 = bk(bank_rd, 12);
+            4'd3: ylo_10 = bk(bank_rd, 20);
+            4'd4: ylo_10 = bk(bank_rd, 36);
+            4'd5: ylo_10 = bk(bank_rd, 42);
+            4'd6: ylo_10 = bk(bank_rd, 44);
+            4'd7: ylo_10 = bk(bank_rd, 52);
+            4'd8: ylo_10 = bk(bank_rd, 58);
+            4'd9: ylo_10 = bk(bank_rd, 60);
             default: ylo_10 = 16'd0;
         endcase
     end
     reg [15:0] yhi_10;
     always @* begin
-        case (sel_yhi[3*10 +: 3])
-            3'd0: yhi_10 = bk(bank_rd, 21);
-            3'd1: yhi_10 = bk(bank_rd, 37);
-            3'd2: yhi_10 = bk(bank_rd, 43);
-            3'd3: yhi_10 = bk(bank_rd, 45);
-            3'd4: yhi_10 = bk(bank_rd, 53);
+        case (sel_yhi[4*10 +: 4])
+            4'd0: yhi_10 = bk(bank_rd, 5);
+            4'd1: yhi_10 = bk(bank_rd, 11);
+            4'd2: yhi_10 = bk(bank_rd, 13);
+            4'd3: yhi_10 = bk(bank_rd, 21);
+            4'd4: yhi_10 = bk(bank_rd, 37);
+            4'd5: yhi_10 = bk(bank_rd, 43);
+            4'd6: yhi_10 = bk(bank_rd, 45);
+            4'd7: yhi_10 = bk(bank_rd, 53);
+            4'd8: yhi_10 = bk(bank_rd, 59);
+            4'd9: yhi_10 = bk(bank_rd, 61);
             default: yhi_10 = 16'd0;
         endcase
     end
     reg [31:0] xh_10;
     wire [31:0] xn_10 = {xhi_10, xlo_10};
     wire [31:0] yn_10 = {yhi_10, ylo_10};
-    reg  [31:0] wn_10;
+    reg  [63:0] wn_10;
     always @* begin
-        case (sel_root[4*10 +: 4])
-            4'd0: wn_10 = pack_rd[32 +: 32];
-            4'd1: wn_10 = pack_rd[64 +: 32];
-            4'd2: wn_10 = pack_rd[128 +: 32];
-            4'd3: wn_10 = pack_rd[160 +: 32];
-            4'd4: wn_10 = pack_rd[224 +: 32];
-            4'd5: wn_10 = pack_rd[256 +: 32];
-            4'd6: wn_10 = pack_rd[320 +: 32];
-            4'd7: wn_10 = pack_rd[352 +: 32];
-            default: wn_10 = root1;
+        case (sel_root[4*10 +: 4] >> 1)
+            3'd0: wn_10 = pack_rd[256 +: 64];
+            3'd1: wn_10 = pack_rd[320 +: 64];
+            3'd2: wn_10 = pack_rd[384 +: 64];
+            3'd3: wn_10 = pack_rd[448 +: 64];
+            default: wn_10 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -757,66 +907,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_10 <= xn_10;
             op_x[32*10 +: 32] <= hold_x[10] ? xh_10 : xn_10;
             op_y[32*10 +: 32] <= yn_10;
-            op_w[32*10 +: 32] <= wn_10;
+            if (load_w[10]) op_w[64*10 +: 64] <= wn_10;
         end
     // tile 11
     reg [15:0] xlo_11;
     always @* begin
-        case (sel_xlo[3*11 +: 3])
-            3'd0: xlo_11 = bk(bank_rd, 22);
-            3'd1: xlo_11 = bk(bank_rd, 38);
-            3'd2: xlo_11 = bk(bank_rd, 42);
-            3'd3: xlo_11 = bk(bank_rd, 44);
-            3'd4: xlo_11 = bk(bank_rd, 54);
+        case (sel_xlo[4*11 +: 4])
+            4'd0: xlo_11 = bk(bank_rd, 6);
+            4'd1: xlo_11 = bk(bank_rd, 10);
+            4'd2: xlo_11 = bk(bank_rd, 12);
+            4'd3: xlo_11 = bk(bank_rd, 22);
+            4'd4: xlo_11 = bk(bank_rd, 38);
+            4'd5: xlo_11 = bk(bank_rd, 42);
+            4'd6: xlo_11 = bk(bank_rd, 44);
+            4'd7: xlo_11 = bk(bank_rd, 54);
+            4'd8: xlo_11 = bk(bank_rd, 58);
+            4'd9: xlo_11 = bk(bank_rd, 60);
             default: xlo_11 = 16'd0;
         endcase
     end
     reg [15:0] xhi_11;
     always @* begin
-        case (sel_xhi[3*11 +: 3])
-            3'd0: xhi_11 = bk(bank_rd, 23);
-            3'd1: xhi_11 = bk(bank_rd, 39);
-            3'd2: xhi_11 = bk(bank_rd, 43);
-            3'd3: xhi_11 = bk(bank_rd, 45);
-            3'd4: xhi_11 = bk(bank_rd, 55);
+        case (sel_xhi[4*11 +: 4])
+            4'd0: xhi_11 = bk(bank_rd, 7);
+            4'd1: xhi_11 = bk(bank_rd, 11);
+            4'd2: xhi_11 = bk(bank_rd, 13);
+            4'd3: xhi_11 = bk(bank_rd, 23);
+            4'd4: xhi_11 = bk(bank_rd, 39);
+            4'd5: xhi_11 = bk(bank_rd, 43);
+            4'd6: xhi_11 = bk(bank_rd, 45);
+            4'd7: xhi_11 = bk(bank_rd, 55);
+            4'd8: xhi_11 = bk(bank_rd, 59);
+            4'd9: xhi_11 = bk(bank_rd, 61);
             default: xhi_11 = 16'd0;
         endcase
     end
     reg [15:0] ylo_11;
     always @* begin
-        case (sel_ylo[3*11 +: 3])
-            3'd0: ylo_11 = bk(bank_rd, 22);
-            3'd1: ylo_11 = bk(bank_rd, 38);
-            3'd2: ylo_11 = bk(bank_rd, 46);
-            3'd3: ylo_11 = bk(bank_rd, 54);
+        case (sel_ylo[4*11 +: 4])
+            4'd0: ylo_11 = bk(bank_rd, 6);
+            4'd1: ylo_11 = bk(bank_rd, 14);
+            4'd2: ylo_11 = bk(bank_rd, 22);
+            4'd3: ylo_11 = bk(bank_rd, 38);
+            4'd4: ylo_11 = bk(bank_rd, 46);
+            4'd5: ylo_11 = bk(bank_rd, 54);
+            4'd6: ylo_11 = bk(bank_rd, 62);
             default: ylo_11 = 16'd0;
         endcase
     end
     reg [15:0] yhi_11;
     always @* begin
-        case (sel_yhi[3*11 +: 3])
-            3'd0: yhi_11 = bk(bank_rd, 23);
-            3'd1: yhi_11 = bk(bank_rd, 39);
-            3'd2: yhi_11 = bk(bank_rd, 47);
-            3'd3: yhi_11 = bk(bank_rd, 55);
+        case (sel_yhi[4*11 +: 4])
+            4'd0: yhi_11 = bk(bank_rd, 7);
+            4'd1: yhi_11 = bk(bank_rd, 15);
+            4'd2: yhi_11 = bk(bank_rd, 23);
+            4'd3: yhi_11 = bk(bank_rd, 39);
+            4'd4: yhi_11 = bk(bank_rd, 47);
+            4'd5: yhi_11 = bk(bank_rd, 55);
+            4'd6: yhi_11 = bk(bank_rd, 63);
             default: yhi_11 = 16'd0;
         endcase
     end
     reg [31:0] xh_11;
     wire [31:0] xn_11 = {xhi_11, xlo_11};
     wire [31:0] yn_11 = {yhi_11, ylo_11};
-    reg  [31:0] wn_11;
+    reg  [63:0] wn_11;
     always @* begin
-        case (sel_root[4*11 +: 4])
-            4'd0: wn_11 = pack_rd[32 +: 32];
-            4'd1: wn_11 = pack_rd[64 +: 32];
-            4'd2: wn_11 = pack_rd[128 +: 32];
-            4'd3: wn_11 = pack_rd[160 +: 32];
-            4'd4: wn_11 = pack_rd[224 +: 32];
-            4'd5: wn_11 = pack_rd[256 +: 32];
-            4'd6: wn_11 = pack_rd[320 +: 32];
-            4'd7: wn_11 = pack_rd[352 +: 32];
-            default: wn_11 = root1;
+        case (sel_root[4*11 +: 4] >> 1)
+            3'd0: wn_11 = pack_rd[256 +: 64];
+            3'd1: wn_11 = pack_rd[320 +: 64];
+            3'd2: wn_11 = pack_rd[384 +: 64];
+            3'd3: wn_11 = pack_rd[448 +: 64];
+            default: wn_11 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -824,66 +986,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_11 <= xn_11;
             op_x[32*11 +: 32] <= hold_x[11] ? xh_11 : xn_11;
             op_y[32*11 +: 32] <= yn_11;
-            op_w[32*11 +: 32] <= wn_11;
+            if (load_w[11]) op_w[64*11 +: 64] <= wn_11;
         end
     // tile 12
     reg [15:0] xlo_12;
     always @* begin
-        case (sel_xlo[3*12 +: 3])
-            3'd0: xlo_12 = bk(bank_rd, 24);
-            3'd1: xlo_12 = bk(bank_rd, 40);
-            3'd2: xlo_12 = bk(bank_rd, 48);
-            3'd3: xlo_12 = bk(bank_rd, 56);
+        case (sel_xlo[4*12 +: 4])
+            4'd0: xlo_12 = bk(bank_rd, 8);
+            4'd1: xlo_12 = bk(bank_rd, 16);
+            4'd2: xlo_12 = bk(bank_rd, 24);
+            4'd3: xlo_12 = bk(bank_rd, 32);
+            4'd4: xlo_12 = bk(bank_rd, 40);
+            4'd5: xlo_12 = bk(bank_rd, 48);
+            4'd6: xlo_12 = bk(bank_rd, 56);
             default: xlo_12 = 16'd0;
         endcase
     end
     reg [15:0] xhi_12;
     always @* begin
-        case (sel_xhi[3*12 +: 3])
-            3'd0: xhi_12 = bk(bank_rd, 25);
-            3'd1: xhi_12 = bk(bank_rd, 41);
-            3'd2: xhi_12 = bk(bank_rd, 49);
-            3'd3: xhi_12 = bk(bank_rd, 57);
+        case (sel_xhi[4*12 +: 4])
+            4'd0: xhi_12 = bk(bank_rd, 9);
+            4'd1: xhi_12 = bk(bank_rd, 17);
+            4'd2: xhi_12 = bk(bank_rd, 25);
+            4'd3: xhi_12 = bk(bank_rd, 33);
+            4'd4: xhi_12 = bk(bank_rd, 41);
+            4'd5: xhi_12 = bk(bank_rd, 49);
+            4'd6: xhi_12 = bk(bank_rd, 57);
             default: xhi_12 = 16'd0;
         endcase
     end
     reg [15:0] ylo_12;
     always @* begin
-        case (sel_ylo[3*12 +: 3])
-            3'd0: ylo_12 = bk(bank_rd, 24);
-            3'd1: ylo_12 = bk(bank_rd, 40);
-            3'd2: ylo_12 = bk(bank_rd, 50);
-            3'd3: ylo_12 = bk(bank_rd, 52);
-            3'd4: ylo_12 = bk(bank_rd, 56);
+        case (sel_ylo[4*12 +: 4])
+            4'd0: ylo_12 = bk(bank_rd, 8);
+            4'd1: ylo_12 = bk(bank_rd, 18);
+            4'd2: ylo_12 = bk(bank_rd, 20);
+            4'd3: ylo_12 = bk(bank_rd, 24);
+            4'd4: ylo_12 = bk(bank_rd, 34);
+            4'd5: ylo_12 = bk(bank_rd, 36);
+            4'd6: ylo_12 = bk(bank_rd, 40);
+            4'd7: ylo_12 = bk(bank_rd, 50);
+            4'd8: ylo_12 = bk(bank_rd, 52);
+            4'd9: ylo_12 = bk(bank_rd, 56);
             default: ylo_12 = 16'd0;
         endcase
     end
     reg [15:0] yhi_12;
     always @* begin
-        case (sel_yhi[3*12 +: 3])
-            3'd0: yhi_12 = bk(bank_rd, 25);
-            3'd1: yhi_12 = bk(bank_rd, 41);
-            3'd2: yhi_12 = bk(bank_rd, 51);
-            3'd3: yhi_12 = bk(bank_rd, 53);
-            3'd4: yhi_12 = bk(bank_rd, 57);
+        case (sel_yhi[4*12 +: 4])
+            4'd0: yhi_12 = bk(bank_rd, 9);
+            4'd1: yhi_12 = bk(bank_rd, 19);
+            4'd2: yhi_12 = bk(bank_rd, 21);
+            4'd3: yhi_12 = bk(bank_rd, 25);
+            4'd4: yhi_12 = bk(bank_rd, 35);
+            4'd5: yhi_12 = bk(bank_rd, 37);
+            4'd6: yhi_12 = bk(bank_rd, 41);
+            4'd7: yhi_12 = bk(bank_rd, 51);
+            4'd8: yhi_12 = bk(bank_rd, 53);
+            4'd9: yhi_12 = bk(bank_rd, 57);
             default: yhi_12 = 16'd0;
         endcase
     end
     reg [31:0] xh_12;
     wire [31:0] xn_12 = {xhi_12, xlo_12};
     wire [31:0] yn_12 = {yhi_12, ylo_12};
-    reg  [31:0] wn_12;
+    reg  [63:0] wn_12;
     always @* begin
-        case (sel_root[4*12 +: 4])
-            4'd0: wn_12 = pack_rd[32 +: 32];
-            4'd1: wn_12 = pack_rd[64 +: 32];
-            4'd2: wn_12 = pack_rd[128 +: 32];
-            4'd3: wn_12 = pack_rd[160 +: 32];
-            4'd4: wn_12 = pack_rd[224 +: 32];
-            4'd5: wn_12 = pack_rd[256 +: 32];
-            4'd6: wn_12 = pack_rd[320 +: 32];
-            4'd7: wn_12 = pack_rd[352 +: 32];
-            default: wn_12 = root1;
+        case (sel_root[4*12 +: 4] >> 1)
+            3'd0: wn_12 = pack_rd[256 +: 64];
+            3'd1: wn_12 = pack_rd[320 +: 64];
+            3'd2: wn_12 = pack_rd[384 +: 64];
+            3'd3: wn_12 = pack_rd[448 +: 64];
+            default: wn_12 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -891,66 +1065,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_12 <= xn_12;
             op_x[32*12 +: 32] <= hold_x[12] ? xh_12 : xn_12;
             op_y[32*12 +: 32] <= yn_12;
-            op_w[32*12 +: 32] <= wn_12;
+            if (load_w[12]) op_w[64*12 +: 64] <= wn_12;
         end
     // tile 13
     reg [15:0] xlo_13;
     always @* begin
-        case (sel_xlo[3*13 +: 3])
-            3'd0: xlo_13 = bk(bank_rd, 26);
-            3'd1: xlo_13 = bk(bank_rd, 42);
-            3'd2: xlo_13 = bk(bank_rd, 50);
-            3'd3: xlo_13 = bk(bank_rd, 52);
-            3'd4: xlo_13 = bk(bank_rd, 58);
+        case (sel_xlo[4*13 +: 4])
+            4'd0: xlo_13 = bk(bank_rd, 10);
+            4'd1: xlo_13 = bk(bank_rd, 18);
+            4'd2: xlo_13 = bk(bank_rd, 20);
+            4'd3: xlo_13 = bk(bank_rd, 26);
+            4'd4: xlo_13 = bk(bank_rd, 34);
+            4'd5: xlo_13 = bk(bank_rd, 36);
+            4'd6: xlo_13 = bk(bank_rd, 42);
+            4'd7: xlo_13 = bk(bank_rd, 50);
+            4'd8: xlo_13 = bk(bank_rd, 52);
+            4'd9: xlo_13 = bk(bank_rd, 58);
             default: xlo_13 = 16'd0;
         endcase
     end
     reg [15:0] xhi_13;
     always @* begin
-        case (sel_xhi[3*13 +: 3])
-            3'd0: xhi_13 = bk(bank_rd, 27);
-            3'd1: xhi_13 = bk(bank_rd, 43);
-            3'd2: xhi_13 = bk(bank_rd, 51);
-            3'd3: xhi_13 = bk(bank_rd, 53);
-            3'd4: xhi_13 = bk(bank_rd, 59);
+        case (sel_xhi[4*13 +: 4])
+            4'd0: xhi_13 = bk(bank_rd, 11);
+            4'd1: xhi_13 = bk(bank_rd, 19);
+            4'd2: xhi_13 = bk(bank_rd, 21);
+            4'd3: xhi_13 = bk(bank_rd, 27);
+            4'd4: xhi_13 = bk(bank_rd, 35);
+            4'd5: xhi_13 = bk(bank_rd, 37);
+            4'd6: xhi_13 = bk(bank_rd, 43);
+            4'd7: xhi_13 = bk(bank_rd, 51);
+            4'd8: xhi_13 = bk(bank_rd, 53);
+            4'd9: xhi_13 = bk(bank_rd, 59);
             default: xhi_13 = 16'd0;
         endcase
     end
     reg [15:0] ylo_13;
     always @* begin
-        case (sel_ylo[3*13 +: 3])
-            3'd0: ylo_13 = bk(bank_rd, 26);
-            3'd1: ylo_13 = bk(bank_rd, 42);
-            3'd2: ylo_13 = bk(bank_rd, 54);
-            3'd3: ylo_13 = bk(bank_rd, 58);
+        case (sel_ylo[4*13 +: 4])
+            4'd0: ylo_13 = bk(bank_rd, 10);
+            4'd1: ylo_13 = bk(bank_rd, 22);
+            4'd2: ylo_13 = bk(bank_rd, 26);
+            4'd3: ylo_13 = bk(bank_rd, 38);
+            4'd4: ylo_13 = bk(bank_rd, 42);
+            4'd5: ylo_13 = bk(bank_rd, 54);
+            4'd6: ylo_13 = bk(bank_rd, 58);
             default: ylo_13 = 16'd0;
         endcase
     end
     reg [15:0] yhi_13;
     always @* begin
-        case (sel_yhi[3*13 +: 3])
-            3'd0: yhi_13 = bk(bank_rd, 27);
-            3'd1: yhi_13 = bk(bank_rd, 43);
-            3'd2: yhi_13 = bk(bank_rd, 55);
-            3'd3: yhi_13 = bk(bank_rd, 59);
+        case (sel_yhi[4*13 +: 4])
+            4'd0: yhi_13 = bk(bank_rd, 11);
+            4'd1: yhi_13 = bk(bank_rd, 23);
+            4'd2: yhi_13 = bk(bank_rd, 27);
+            4'd3: yhi_13 = bk(bank_rd, 39);
+            4'd4: yhi_13 = bk(bank_rd, 43);
+            4'd5: yhi_13 = bk(bank_rd, 55);
+            4'd6: yhi_13 = bk(bank_rd, 59);
             default: yhi_13 = 16'd0;
         endcase
     end
     reg [31:0] xh_13;
     wire [31:0] xn_13 = {xhi_13, xlo_13};
     wire [31:0] yn_13 = {yhi_13, ylo_13};
-    reg  [31:0] wn_13;
+    reg  [63:0] wn_13;
     always @* begin
-        case (sel_root[4*13 +: 4])
-            4'd0: wn_13 = pack_rd[32 +: 32];
-            4'd1: wn_13 = pack_rd[64 +: 32];
-            4'd2: wn_13 = pack_rd[128 +: 32];
-            4'd3: wn_13 = pack_rd[160 +: 32];
-            4'd4: wn_13 = pack_rd[224 +: 32];
-            4'd5: wn_13 = pack_rd[256 +: 32];
-            4'd6: wn_13 = pack_rd[320 +: 32];
-            4'd7: wn_13 = pack_rd[352 +: 32];
-            default: wn_13 = root1;
+        case (sel_root[4*13 +: 4] >> 1)
+            3'd0: wn_13 = pack_rd[256 +: 64];
+            3'd1: wn_13 = pack_rd[320 +: 64];
+            3'd2: wn_13 = pack_rd[384 +: 64];
+            3'd3: wn_13 = pack_rd[448 +: 64];
+            default: wn_13 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -958,66 +1144,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_13 <= xn_13;
             op_x[32*13 +: 32] <= hold_x[13] ? xh_13 : xn_13;
             op_y[32*13 +: 32] <= yn_13;
-            op_w[32*13 +: 32] <= wn_13;
+            if (load_w[13]) op_w[64*13 +: 64] <= wn_13;
         end
     // tile 14
     reg [15:0] xlo_14;
     always @* begin
-        case (sel_xlo[3*14 +: 3])
-            3'd0: xlo_14 = bk(bank_rd, 28);
-            3'd1: xlo_14 = bk(bank_rd, 44);
-            3'd2: xlo_14 = bk(bank_rd, 52);
-            3'd3: xlo_14 = bk(bank_rd, 56);
-            3'd4: xlo_14 = bk(bank_rd, 60);
+        case (sel_xlo[4*14 +: 4])
+            4'd0: xlo_14 = bk(bank_rd, 12);
+            4'd1: xlo_14 = bk(bank_rd, 20);
+            4'd2: xlo_14 = bk(bank_rd, 24);
+            4'd3: xlo_14 = bk(bank_rd, 28);
+            4'd4: xlo_14 = bk(bank_rd, 36);
+            4'd5: xlo_14 = bk(bank_rd, 40);
+            4'd6: xlo_14 = bk(bank_rd, 44);
+            4'd7: xlo_14 = bk(bank_rd, 52);
+            4'd8: xlo_14 = bk(bank_rd, 56);
+            4'd9: xlo_14 = bk(bank_rd, 60);
             default: xlo_14 = 16'd0;
         endcase
     end
     reg [15:0] xhi_14;
     always @* begin
-        case (sel_xhi[3*14 +: 3])
-            3'd0: xhi_14 = bk(bank_rd, 29);
-            3'd1: xhi_14 = bk(bank_rd, 45);
-            3'd2: xhi_14 = bk(bank_rd, 53);
-            3'd3: xhi_14 = bk(bank_rd, 57);
-            3'd4: xhi_14 = bk(bank_rd, 61);
+        case (sel_xhi[4*14 +: 4])
+            4'd0: xhi_14 = bk(bank_rd, 13);
+            4'd1: xhi_14 = bk(bank_rd, 21);
+            4'd2: xhi_14 = bk(bank_rd, 25);
+            4'd3: xhi_14 = bk(bank_rd, 29);
+            4'd4: xhi_14 = bk(bank_rd, 37);
+            4'd5: xhi_14 = bk(bank_rd, 41);
+            4'd6: xhi_14 = bk(bank_rd, 45);
+            4'd7: xhi_14 = bk(bank_rd, 53);
+            4'd8: xhi_14 = bk(bank_rd, 57);
+            4'd9: xhi_14 = bk(bank_rd, 61);
             default: xhi_14 = 16'd0;
         endcase
     end
     reg [15:0] ylo_14;
     always @* begin
-        case (sel_ylo[3*14 +: 3])
-            3'd0: ylo_14 = bk(bank_rd, 28);
-            3'd1: ylo_14 = bk(bank_rd, 44);
-            3'd2: ylo_14 = bk(bank_rd, 58);
-            3'd3: ylo_14 = bk(bank_rd, 60);
+        case (sel_ylo[4*14 +: 4])
+            4'd0: ylo_14 = bk(bank_rd, 12);
+            4'd1: ylo_14 = bk(bank_rd, 26);
+            4'd2: ylo_14 = bk(bank_rd, 28);
+            4'd3: ylo_14 = bk(bank_rd, 42);
+            4'd4: ylo_14 = bk(bank_rd, 44);
+            4'd5: ylo_14 = bk(bank_rd, 58);
+            4'd6: ylo_14 = bk(bank_rd, 60);
             default: ylo_14 = 16'd0;
         endcase
     end
     reg [15:0] yhi_14;
     always @* begin
-        case (sel_yhi[3*14 +: 3])
-            3'd0: yhi_14 = bk(bank_rd, 29);
-            3'd1: yhi_14 = bk(bank_rd, 45);
-            3'd2: yhi_14 = bk(bank_rd, 59);
-            3'd3: yhi_14 = bk(bank_rd, 61);
+        case (sel_yhi[4*14 +: 4])
+            4'd0: yhi_14 = bk(bank_rd, 13);
+            4'd1: yhi_14 = bk(bank_rd, 27);
+            4'd2: yhi_14 = bk(bank_rd, 29);
+            4'd3: yhi_14 = bk(bank_rd, 43);
+            4'd4: yhi_14 = bk(bank_rd, 45);
+            4'd5: yhi_14 = bk(bank_rd, 59);
+            4'd6: yhi_14 = bk(bank_rd, 61);
             default: yhi_14 = 16'd0;
         endcase
     end
     reg [31:0] xh_14;
     wire [31:0] xn_14 = {xhi_14, xlo_14};
     wire [31:0] yn_14 = {yhi_14, ylo_14};
-    reg  [31:0] wn_14;
+    reg  [63:0] wn_14;
     always @* begin
-        case (sel_root[4*14 +: 4])
-            4'd0: wn_14 = pack_rd[32 +: 32];
-            4'd1: wn_14 = pack_rd[64 +: 32];
-            4'd2: wn_14 = pack_rd[128 +: 32];
-            4'd3: wn_14 = pack_rd[160 +: 32];
-            4'd4: wn_14 = pack_rd[224 +: 32];
-            4'd5: wn_14 = pack_rd[256 +: 32];
-            4'd6: wn_14 = pack_rd[320 +: 32];
-            4'd7: wn_14 = pack_rd[352 +: 32];
-            default: wn_14 = root1;
+        case (sel_root[4*14 +: 4] >> 1)
+            3'd0: wn_14 = pack_rd[256 +: 64];
+            3'd1: wn_14 = pack_rd[320 +: 64];
+            3'd2: wn_14 = pack_rd[384 +: 64];
+            3'd3: wn_14 = pack_rd[448 +: 64];
+            default: wn_14 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -1025,66 +1223,78 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_14 <= xn_14;
             op_x[32*14 +: 32] <= hold_x[14] ? xh_14 : xn_14;
             op_y[32*14 +: 32] <= yn_14;
-            op_w[32*14 +: 32] <= wn_14;
+            if (load_w[14]) op_w[64*14 +: 64] <= wn_14;
         end
     // tile 15
     reg [15:0] xlo_15;
     always @* begin
-        case (sel_xlo[3*15 +: 3])
-            3'd0: xlo_15 = bk(bank_rd, 30);
-            3'd1: xlo_15 = bk(bank_rd, 46);
-            3'd2: xlo_15 = bk(bank_rd, 54);
-            3'd3: xlo_15 = bk(bank_rd, 58);
-            3'd4: xlo_15 = bk(bank_rd, 60);
-            3'd5: xlo_15 = bk(bank_rd, 62);
+        case (sel_xlo[4*15 +: 4])
+            4'd0: xlo_15 = bk(bank_rd, 14);
+            4'd1: xlo_15 = bk(bank_rd, 22);
+            4'd2: xlo_15 = bk(bank_rd, 26);
+            4'd3: xlo_15 = bk(bank_rd, 28);
+            4'd4: xlo_15 = bk(bank_rd, 30);
+            4'd5: xlo_15 = bk(bank_rd, 38);
+            4'd6: xlo_15 = bk(bank_rd, 42);
+            4'd7: xlo_15 = bk(bank_rd, 44);
+            4'd8: xlo_15 = bk(bank_rd, 46);
+            4'd9: xlo_15 = bk(bank_rd, 54);
+            4'd10: xlo_15 = bk(bank_rd, 58);
+            4'd11: xlo_15 = bk(bank_rd, 60);
+            4'd12: xlo_15 = bk(bank_rd, 62);
             default: xlo_15 = 16'd0;
         endcase
     end
     reg [15:0] xhi_15;
     always @* begin
-        case (sel_xhi[3*15 +: 3])
-            3'd0: xhi_15 = bk(bank_rd, 31);
-            3'd1: xhi_15 = bk(bank_rd, 47);
-            3'd2: xhi_15 = bk(bank_rd, 55);
-            3'd3: xhi_15 = bk(bank_rd, 59);
-            3'd4: xhi_15 = bk(bank_rd, 61);
-            3'd5: xhi_15 = bk(bank_rd, 63);
+        case (sel_xhi[4*15 +: 4])
+            4'd0: xhi_15 = bk(bank_rd, 15);
+            4'd1: xhi_15 = bk(bank_rd, 23);
+            4'd2: xhi_15 = bk(bank_rd, 27);
+            4'd3: xhi_15 = bk(bank_rd, 29);
+            4'd4: xhi_15 = bk(bank_rd, 31);
+            4'd5: xhi_15 = bk(bank_rd, 39);
+            4'd6: xhi_15 = bk(bank_rd, 43);
+            4'd7: xhi_15 = bk(bank_rd, 45);
+            4'd8: xhi_15 = bk(bank_rd, 47);
+            4'd9: xhi_15 = bk(bank_rd, 55);
+            4'd10: xhi_15 = bk(bank_rd, 59);
+            4'd11: xhi_15 = bk(bank_rd, 61);
+            4'd12: xhi_15 = bk(bank_rd, 63);
             default: xhi_15 = 16'd0;
         endcase
     end
     reg [15:0] ylo_15;
     always @* begin
-        case (sel_ylo[3*15 +: 3])
-            3'd0: ylo_15 = bk(bank_rd, 30);
-            3'd1: ylo_15 = bk(bank_rd, 46);
-            3'd2: ylo_15 = bk(bank_rd, 62);
+        case (sel_ylo[4*15 +: 4])
+            4'd0: ylo_15 = bk(bank_rd, 14);
+            4'd1: ylo_15 = bk(bank_rd, 30);
+            4'd2: ylo_15 = bk(bank_rd, 46);
+            4'd3: ylo_15 = bk(bank_rd, 62);
             default: ylo_15 = 16'd0;
         endcase
     end
     reg [15:0] yhi_15;
     always @* begin
-        case (sel_yhi[3*15 +: 3])
-            3'd0: yhi_15 = bk(bank_rd, 31);
-            3'd1: yhi_15 = bk(bank_rd, 47);
-            3'd2: yhi_15 = bk(bank_rd, 63);
+        case (sel_yhi[4*15 +: 4])
+            4'd0: yhi_15 = bk(bank_rd, 15);
+            4'd1: yhi_15 = bk(bank_rd, 31);
+            4'd2: yhi_15 = bk(bank_rd, 47);
+            4'd3: yhi_15 = bk(bank_rd, 63);
             default: yhi_15 = 16'd0;
         endcase
     end
     reg [31:0] xh_15;
     wire [31:0] xn_15 = {xhi_15, xlo_15};
     wire [31:0] yn_15 = {yhi_15, ylo_15};
-    reg  [31:0] wn_15;
+    reg  [63:0] wn_15;
     always @* begin
-        case (sel_root[4*15 +: 4])
-            4'd0: wn_15 = pack_rd[32 +: 32];
-            4'd1: wn_15 = pack_rd[64 +: 32];
-            4'd2: wn_15 = pack_rd[128 +: 32];
-            4'd3: wn_15 = pack_rd[160 +: 32];
-            4'd4: wn_15 = pack_rd[224 +: 32];
-            4'd5: wn_15 = pack_rd[256 +: 32];
-            4'd6: wn_15 = pack_rd[320 +: 32];
-            4'd7: wn_15 = pack_rd[352 +: 32];
-            default: wn_15 = root1;
+        case (sel_root[4*15 +: 4] >> 1)
+            3'd0: wn_15 = pack_rd[256 +: 64];
+            3'd1: wn_15 = pack_rd[320 +: 64];
+            3'd2: wn_15 = pack_rd[384 +: 64];
+            3'd3: wn_15 = pack_rd[448 +: 64];
+            default: wn_15 = {32'd0, root1};
         endcase
     end
     always @(posedge clk)
@@ -1092,14 +1302,17 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
             xh_15 <= xn_15;
             op_x[32*15 +: 32] <= hold_x[15] ? xh_15 : xn_15;
             op_y[32*15 +: 32] <= yn_15;
-            op_w[32*15 +: 32] <= wn_15;
+            if (load_w[15]) op_w[64*15 +: 64] <= wn_15;
         end
     // bank 0
     reg [15:0] wd_0;
     always @* begin
-        case (wsel[3*0 +: 3])
-            3'd0: wd_0 = tile_z[0 +: 16];
-            3'd1: wd_0 = tile_z[32 +: 16];
+        case (wsel[4*0 +: 4])
+            4'd0: wd_0 = tile_z[0 +: 16];
+            4'd1: wd_0 = tile_z[32 +: 16];
+            4'd2: wd_0 = tile_z[256 +: 16];
+            4'd3: wd_0 = tile_z[512 +: 16];
+            4'd4: wd_0 = tile_z[544 +: 16];
             default: wd_0 = 16'd0;
         endcase
     end
@@ -1108,9 +1321,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 1
     reg [15:0] wd_1;
     always @* begin
-        case (wsel[3*1 +: 3])
-            3'd0: wd_1 = tile_z[16 +: 16];
-            3'd1: wd_1 = tile_z[48 +: 16];
+        case (wsel[4*1 +: 4])
+            4'd0: wd_1 = tile_z[16 +: 16];
+            4'd1: wd_1 = tile_z[48 +: 16];
+            4'd2: wd_1 = tile_z[272 +: 16];
+            4'd3: wd_1 = tile_z[528 +: 16];
+            4'd4: wd_1 = tile_z[560 +: 16];
             default: wd_1 = 16'd0;
         endcase
     end
@@ -1119,10 +1335,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 2
     reg [15:0] wd_2;
     always @* begin
-        case (wsel[3*2 +: 3])
-            3'd0: wd_2 = tile_z[32 +: 16];
-            3'd1: wd_2 = tile_z[64 +: 16];
-            3'd2: wd_2 = tile_z[96 +: 16];
+        case (wsel[4*2 +: 4])
+            4'd0: wd_2 = tile_z[32 +: 16];
+            4'd1: wd_2 = tile_z[64 +: 16];
+            4'd2: wd_2 = tile_z[96 +: 16];
+            4'd3: wd_2 = tile_z[288 +: 16];
+            4'd4: wd_2 = tile_z[320 +: 16];
+            4'd5: wd_2 = tile_z[544 +: 16];
+            4'd6: wd_2 = tile_z[576 +: 16];
+            4'd7: wd_2 = tile_z[608 +: 16];
             default: wd_2 = 16'd0;
         endcase
     end
@@ -1131,10 +1352,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 3
     reg [15:0] wd_3;
     always @* begin
-        case (wsel[3*3 +: 3])
-            3'd0: wd_3 = tile_z[48 +: 16];
-            3'd1: wd_3 = tile_z[80 +: 16];
-            3'd2: wd_3 = tile_z[112 +: 16];
+        case (wsel[4*3 +: 4])
+            4'd0: wd_3 = tile_z[48 +: 16];
+            4'd1: wd_3 = tile_z[80 +: 16];
+            4'd2: wd_3 = tile_z[112 +: 16];
+            4'd3: wd_3 = tile_z[304 +: 16];
+            4'd4: wd_3 = tile_z[336 +: 16];
+            4'd5: wd_3 = tile_z[560 +: 16];
+            4'd6: wd_3 = tile_z[592 +: 16];
+            4'd7: wd_3 = tile_z[624 +: 16];
             default: wd_3 = 16'd0;
         endcase
     end
@@ -1143,11 +1369,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 4
     reg [15:0] wd_4;
     always @* begin
-        case (wsel[3*4 +: 3])
-            3'd0: wd_4 = tile_z[32 +: 16];
-            3'd1: wd_4 = tile_z[64 +: 16];
-            3'd2: wd_4 = tile_z[128 +: 16];
-            3'd3: wd_4 = tile_z[160 +: 16];
+        case (wsel[4*4 +: 4])
+            4'd0: wd_4 = tile_z[0 +: 16];
+            4'd1: wd_4 = tile_z[32 +: 16];
+            4'd2: wd_4 = tile_z[640 +: 16];
+            4'd3: wd_4 = tile_z[672 +: 16];
+            4'd4: wd_4 = tile_z[64 +: 16];
+            4'd5: wd_4 = tile_z[128 +: 16];
+            4'd6: wd_4 = tile_z[160 +: 16];
+            4'd7: wd_4 = tile_z[288 +: 16];
+            4'd8: wd_4 = tile_z[320 +: 16];
+            4'd9: wd_4 = tile_z[384 +: 16];
+            4'd10: wd_4 = tile_z[544 +: 16];
+            4'd11: wd_4 = tile_z[576 +: 16];
             default: wd_4 = 16'd0;
         endcase
     end
@@ -1156,11 +1390,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 5
     reg [15:0] wd_5;
     always @* begin
-        case (wsel[3*5 +: 3])
-            3'd0: wd_5 = tile_z[48 +: 16];
-            3'd1: wd_5 = tile_z[80 +: 16];
-            3'd2: wd_5 = tile_z[144 +: 16];
-            3'd3: wd_5 = tile_z[176 +: 16];
+        case (wsel[4*5 +: 4])
+            4'd0: wd_5 = tile_z[16 +: 16];
+            4'd1: wd_5 = tile_z[48 +: 16];
+            4'd2: wd_5 = tile_z[656 +: 16];
+            4'd3: wd_5 = tile_z[688 +: 16];
+            4'd4: wd_5 = tile_z[80 +: 16];
+            4'd5: wd_5 = tile_z[144 +: 16];
+            4'd6: wd_5 = tile_z[176 +: 16];
+            4'd7: wd_5 = tile_z[304 +: 16];
+            4'd8: wd_5 = tile_z[336 +: 16];
+            4'd9: wd_5 = tile_z[400 +: 16];
+            4'd10: wd_5 = tile_z[560 +: 16];
+            4'd11: wd_5 = tile_z[592 +: 16];
             default: wd_5 = 16'd0;
         endcase
     end
@@ -1169,10 +1411,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 6
     reg [15:0] wd_6;
     always @* begin
-        case (wsel[3*6 +: 3])
-            3'd0: wd_6 = tile_z[96 +: 16];
-            3'd1: wd_6 = tile_z[192 +: 16];
-            3'd2: wd_6 = tile_z[224 +: 16];
+        case (wsel[4*6 +: 4])
+            4'd0: wd_6 = tile_z[32 +: 16];
+            4'd1: wd_6 = tile_z[704 +: 16];
+            4'd2: wd_6 = tile_z[736 +: 16];
+            4'd3: wd_6 = tile_z[96 +: 16];
+            4'd4: wd_6 = tile_z[192 +: 16];
+            4'd5: wd_6 = tile_z[224 +: 16];
+            4'd6: wd_6 = tile_z[352 +: 16];
+            4'd7: wd_6 = tile_z[448 +: 16];
+            4'd8: wd_6 = tile_z[608 +: 16];
             default: wd_6 = 16'd0;
         endcase
     end
@@ -1181,10 +1429,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 7
     reg [15:0] wd_7;
     always @* begin
-        case (wsel[3*7 +: 3])
-            3'd0: wd_7 = tile_z[112 +: 16];
-            3'd1: wd_7 = tile_z[208 +: 16];
-            3'd2: wd_7 = tile_z[240 +: 16];
+        case (wsel[4*7 +: 4])
+            4'd0: wd_7 = tile_z[48 +: 16];
+            4'd1: wd_7 = tile_z[720 +: 16];
+            4'd2: wd_7 = tile_z[752 +: 16];
+            4'd3: wd_7 = tile_z[112 +: 16];
+            4'd4: wd_7 = tile_z[208 +: 16];
+            4'd5: wd_7 = tile_z[240 +: 16];
+            4'd6: wd_7 = tile_z[368 +: 16];
+            4'd7: wd_7 = tile_z[464 +: 16];
+            4'd8: wd_7 = tile_z[624 +: 16];
             default: wd_7 = 16'd0;
         endcase
     end
@@ -1193,11 +1447,17 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 8
     reg [15:0] wd_8;
     always @* begin
-        case (wsel[3*8 +: 3])
-            3'd0: wd_8 = tile_z[32 +: 16];
-            3'd1: wd_8 = tile_z[128 +: 16];
-            3'd2: wd_8 = tile_z[256 +: 16];
-            3'd3: wd_8 = tile_z[288 +: 16];
+        case (wsel[4*8 +: 4])
+            4'd0: wd_8 = tile_z[0 +: 16];
+            4'd1: wd_8 = tile_z[32 +: 16];
+            4'd2: wd_8 = tile_z[640 +: 16];
+            4'd3: wd_8 = tile_z[768 +: 16];
+            4'd4: wd_8 = tile_z[800 +: 16];
+            4'd5: wd_8 = tile_z[128 +: 16];
+            4'd6: wd_8 = tile_z[256 +: 16];
+            4'd7: wd_8 = tile_z[288 +: 16];
+            4'd8: wd_8 = tile_z[384 +: 16];
+            4'd9: wd_8 = tile_z[544 +: 16];
             default: wd_8 = 16'd0;
         endcase
     end
@@ -1206,11 +1466,17 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 9
     reg [15:0] wd_9;
     always @* begin
-        case (wsel[3*9 +: 3])
-            3'd0: wd_9 = tile_z[48 +: 16];
-            3'd1: wd_9 = tile_z[144 +: 16];
-            3'd2: wd_9 = tile_z[272 +: 16];
-            3'd3: wd_9 = tile_z[304 +: 16];
+        case (wsel[4*9 +: 4])
+            4'd0: wd_9 = tile_z[16 +: 16];
+            4'd1: wd_9 = tile_z[48 +: 16];
+            4'd2: wd_9 = tile_z[656 +: 16];
+            4'd3: wd_9 = tile_z[784 +: 16];
+            4'd4: wd_9 = tile_z[816 +: 16];
+            4'd5: wd_9 = tile_z[144 +: 16];
+            4'd6: wd_9 = tile_z[272 +: 16];
+            4'd7: wd_9 = tile_z[304 +: 16];
+            4'd8: wd_9 = tile_z[400 +: 16];
+            4'd9: wd_9 = tile_z[560 +: 16];
             default: wd_9 = 16'd0;
         endcase
     end
@@ -1219,12 +1485,21 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 10
     reg [15:0] wd_10;
     always @* begin
-        case (wsel[3*10 +: 3])
-            3'd0: wd_10 = tile_z[96 +: 16];
-            3'd1: wd_10 = tile_z[160 +: 16];
-            3'd2: wd_10 = tile_z[192 +: 16];
-            3'd3: wd_10 = tile_z[320 +: 16];
-            3'd4: wd_10 = tile_z[352 +: 16];
+        case (wsel[4*10 +: 4])
+            4'd0: wd_10 = tile_z[32 +: 16];
+            4'd1: wd_10 = tile_z[672 +: 16];
+            4'd2: wd_10 = tile_z[704 +: 16];
+            4'd3: wd_10 = tile_z[832 +: 16];
+            4'd4: wd_10 = tile_z[864 +: 16];
+            4'd5: wd_10 = tile_z[64 +: 16];
+            4'd6: wd_10 = tile_z[96 +: 16];
+            4'd7: wd_10 = tile_z[160 +: 16];
+            4'd8: wd_10 = tile_z[192 +: 16];
+            4'd9: wd_10 = tile_z[320 +: 16];
+            4'd10: wd_10 = tile_z[352 +: 16];
+            4'd11: wd_10 = tile_z[416 +: 16];
+            4'd12: wd_10 = tile_z[448 +: 16];
+            4'd13: wd_10 = tile_z[608 +: 16];
             default: wd_10 = 16'd0;
         endcase
     end
@@ -1233,12 +1508,21 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 11
     reg [15:0] wd_11;
     always @* begin
-        case (wsel[3*11 +: 3])
-            3'd0: wd_11 = tile_z[112 +: 16];
-            3'd1: wd_11 = tile_z[176 +: 16];
-            3'd2: wd_11 = tile_z[208 +: 16];
-            3'd3: wd_11 = tile_z[336 +: 16];
-            3'd4: wd_11 = tile_z[368 +: 16];
+        case (wsel[4*11 +: 4])
+            4'd0: wd_11 = tile_z[48 +: 16];
+            4'd1: wd_11 = tile_z[688 +: 16];
+            4'd2: wd_11 = tile_z[720 +: 16];
+            4'd3: wd_11 = tile_z[848 +: 16];
+            4'd4: wd_11 = tile_z[880 +: 16];
+            4'd5: wd_11 = tile_z[80 +: 16];
+            4'd6: wd_11 = tile_z[112 +: 16];
+            4'd7: wd_11 = tile_z[176 +: 16];
+            4'd8: wd_11 = tile_z[208 +: 16];
+            4'd9: wd_11 = tile_z[336 +: 16];
+            4'd10: wd_11 = tile_z[368 +: 16];
+            4'd11: wd_11 = tile_z[432 +: 16];
+            4'd12: wd_11 = tile_z[464 +: 16];
+            4'd13: wd_11 = tile_z[624 +: 16];
             default: wd_11 = 16'd0;
         endcase
     end
@@ -1247,11 +1531,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 12
     reg [15:0] wd_12;
     always @* begin
-        case (wsel[3*12 +: 3])
-            3'd0: wd_12 = tile_z[160 +: 16];
-            3'd1: wd_12 = tile_z[192 +: 16];
-            3'd2: wd_12 = tile_z[384 +: 16];
-            3'd3: wd_12 = tile_z[416 +: 16];
+        case (wsel[4*12 +: 4])
+            4'd0: wd_12 = tile_z[32 +: 16];
+            4'd1: wd_12 = tile_z[672 +: 16];
+            4'd2: wd_12 = tile_z[704 +: 16];
+            4'd3: wd_12 = tile_z[896 +: 16];
+            4'd4: wd_12 = tile_z[928 +: 16];
+            4'd5: wd_12 = tile_z[64 +: 16];
+            4'd6: wd_12 = tile_z[160 +: 16];
+            4'd7: wd_12 = tile_z[192 +: 16];
+            4'd8: wd_12 = tile_z[384 +: 16];
+            4'd9: wd_12 = tile_z[416 +: 16];
+            4'd10: wd_12 = tile_z[448 +: 16];
             default: wd_12 = 16'd0;
         endcase
     end
@@ -1260,11 +1551,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 13
     reg [15:0] wd_13;
     always @* begin
-        case (wsel[3*13 +: 3])
-            3'd0: wd_13 = tile_z[176 +: 16];
-            3'd1: wd_13 = tile_z[208 +: 16];
-            3'd2: wd_13 = tile_z[400 +: 16];
-            3'd3: wd_13 = tile_z[432 +: 16];
+        case (wsel[4*13 +: 4])
+            4'd0: wd_13 = tile_z[48 +: 16];
+            4'd1: wd_13 = tile_z[688 +: 16];
+            4'd2: wd_13 = tile_z[720 +: 16];
+            4'd3: wd_13 = tile_z[912 +: 16];
+            4'd4: wd_13 = tile_z[944 +: 16];
+            4'd5: wd_13 = tile_z[80 +: 16];
+            4'd6: wd_13 = tile_z[176 +: 16];
+            4'd7: wd_13 = tile_z[208 +: 16];
+            4'd8: wd_13 = tile_z[400 +: 16];
+            4'd9: wd_13 = tile_z[432 +: 16];
+            4'd10: wd_13 = tile_z[464 +: 16];
             default: wd_13 = 16'd0;
         endcase
     end
@@ -1273,10 +1571,14 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 14
     reg [15:0] wd_14;
     always @* begin
-        case (wsel[3*14 +: 3])
-            3'd0: wd_14 = tile_z[224 +: 16];
-            3'd1: wd_14 = tile_z[448 +: 16];
-            3'd2: wd_14 = tile_z[480 +: 16];
+        case (wsel[4*14 +: 4])
+            4'd0: wd_14 = tile_z[736 +: 16];
+            4'd1: wd_14 = tile_z[960 +: 16];
+            4'd2: wd_14 = tile_z[992 +: 16];
+            4'd3: wd_14 = tile_z[96 +: 16];
+            4'd4: wd_14 = tile_z[224 +: 16];
+            4'd5: wd_14 = tile_z[448 +: 16];
+            4'd6: wd_14 = tile_z[480 +: 16];
             default: wd_14 = 16'd0;
         endcase
     end
@@ -1285,10 +1587,14 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 15
     reg [15:0] wd_15;
     always @* begin
-        case (wsel[3*15 +: 3])
-            3'd0: wd_15 = tile_z[240 +: 16];
-            3'd1: wd_15 = tile_z[464 +: 16];
-            3'd2: wd_15 = tile_z[496 +: 16];
+        case (wsel[4*15 +: 4])
+            4'd0: wd_15 = tile_z[752 +: 16];
+            4'd1: wd_15 = tile_z[976 +: 16];
+            4'd2: wd_15 = tile_z[1008 +: 16];
+            4'd3: wd_15 = tile_z[112 +: 16];
+            4'd4: wd_15 = tile_z[240 +: 16];
+            4'd5: wd_15 = tile_z[464 +: 16];
+            4'd6: wd_15 = tile_z[496 +: 16];
             default: wd_15 = 16'd0;
         endcase
     end
@@ -1297,12 +1603,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 16
     reg [15:0] wd_16;
     always @* begin
-        case (wsel[3*16 +: 3])
-            3'd0: wd_16 = tile_z[0 +: 16];
-            3'd1: wd_16 = tile_z[32 +: 16];
-            3'd2: wd_16 = tile_z[256 +: 16];
-            3'd3: wd_16 = tile_z[512 +: 16];
-            3'd4: wd_16 = tile_z[544 +: 16];
+        case (wsel[4*16 +: 4])
+            4'd0: wd_16 = tile_z[0 +: 16];
+            4'd1: wd_16 = tile_z[32 +: 16];
+            4'd2: wd_16 = tile_z[768 +: 16];
+            4'd3: wd_16 = tile_z[256 +: 16];
+            4'd4: wd_16 = tile_z[512 +: 16];
+            4'd5: wd_16 = tile_z[544 +: 16];
             default: wd_16 = 16'd0;
         endcase
     end
@@ -1311,12 +1618,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 17
     reg [15:0] wd_17;
     always @* begin
-        case (wsel[3*17 +: 3])
-            3'd0: wd_17 = tile_z[16 +: 16];
-            3'd1: wd_17 = tile_z[48 +: 16];
-            3'd2: wd_17 = tile_z[272 +: 16];
-            3'd3: wd_17 = tile_z[528 +: 16];
-            3'd4: wd_17 = tile_z[560 +: 16];
+        case (wsel[4*17 +: 4])
+            4'd0: wd_17 = tile_z[16 +: 16];
+            4'd1: wd_17 = tile_z[48 +: 16];
+            4'd2: wd_17 = tile_z[784 +: 16];
+            4'd3: wd_17 = tile_z[272 +: 16];
+            4'd4: wd_17 = tile_z[528 +: 16];
+            4'd5: wd_17 = tile_z[560 +: 16];
             default: wd_17 = 16'd0;
         endcase
     end
@@ -1325,13 +1633,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 18
     reg [15:0] wd_18;
     always @* begin
-        case (wsel[3*18 +: 3])
-            3'd0: wd_18 = tile_z[64 +: 16];
-            3'd1: wd_18 = tile_z[96 +: 16];
-            3'd2: wd_18 = tile_z[288 +: 16];
-            3'd3: wd_18 = tile_z[320 +: 16];
-            3'd4: wd_18 = tile_z[576 +: 16];
-            3'd5: wd_18 = tile_z[608 +: 16];
+        case (wsel[4*18 +: 4])
+            4'd0: wd_18 = tile_z[32 +: 16];
+            4'd1: wd_18 = tile_z[800 +: 16];
+            4'd2: wd_18 = tile_z[832 +: 16];
+            4'd3: wd_18 = tile_z[64 +: 16];
+            4'd4: wd_18 = tile_z[96 +: 16];
+            4'd5: wd_18 = tile_z[288 +: 16];
+            4'd6: wd_18 = tile_z[320 +: 16];
+            4'd7: wd_18 = tile_z[576 +: 16];
+            4'd8: wd_18 = tile_z[608 +: 16];
             default: wd_18 = 16'd0;
         endcase
     end
@@ -1340,13 +1651,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 19
     reg [15:0] wd_19;
     always @* begin
-        case (wsel[3*19 +: 3])
-            3'd0: wd_19 = tile_z[80 +: 16];
-            3'd1: wd_19 = tile_z[112 +: 16];
-            3'd2: wd_19 = tile_z[304 +: 16];
-            3'd3: wd_19 = tile_z[336 +: 16];
-            3'd4: wd_19 = tile_z[592 +: 16];
-            3'd5: wd_19 = tile_z[624 +: 16];
+        case (wsel[4*19 +: 4])
+            4'd0: wd_19 = tile_z[48 +: 16];
+            4'd1: wd_19 = tile_z[816 +: 16];
+            4'd2: wd_19 = tile_z[848 +: 16];
+            4'd3: wd_19 = tile_z[80 +: 16];
+            4'd4: wd_19 = tile_z[112 +: 16];
+            4'd5: wd_19 = tile_z[304 +: 16];
+            4'd6: wd_19 = tile_z[336 +: 16];
+            4'd7: wd_19 = tile_z[592 +: 16];
+            4'd8: wd_19 = tile_z[624 +: 16];
             default: wd_19 = 16'd0;
         endcase
     end
@@ -1355,14 +1669,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 20
     reg [15:0] wd_20;
     always @* begin
-        case (wsel[3*20 +: 3])
-            3'd0: wd_20 = tile_z[640 +: 16];
-            3'd1: wd_20 = tile_z[672 +: 16];
-            3'd2: wd_20 = tile_z[128 +: 16];
-            3'd3: wd_20 = tile_z[160 +: 16];
-            3'd4: wd_20 = tile_z[288 +: 16];
-            3'd5: wd_20 = tile_z[320 +: 16];
-            3'd6: wd_20 = tile_z[384 +: 16];
+        case (wsel[4*20 +: 4])
+            4'd0: wd_20 = tile_z[32 +: 16];
+            4'd1: wd_20 = tile_z[640 +: 16];
+            4'd2: wd_20 = tile_z[672 +: 16];
+            4'd3: wd_20 = tile_z[800 +: 16];
+            4'd4: wd_20 = tile_z[832 +: 16];
+            4'd5: wd_20 = tile_z[896 +: 16];
+            4'd6: wd_20 = tile_z[64 +: 16];
+            4'd7: wd_20 = tile_z[128 +: 16];
+            4'd8: wd_20 = tile_z[160 +: 16];
+            4'd9: wd_20 = tile_z[288 +: 16];
+            4'd10: wd_20 = tile_z[320 +: 16];
+            4'd11: wd_20 = tile_z[384 +: 16];
             default: wd_20 = 16'd0;
         endcase
     end
@@ -1371,14 +1690,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 21
     reg [15:0] wd_21;
     always @* begin
-        case (wsel[3*21 +: 3])
-            3'd0: wd_21 = tile_z[656 +: 16];
-            3'd1: wd_21 = tile_z[688 +: 16];
-            3'd2: wd_21 = tile_z[144 +: 16];
-            3'd3: wd_21 = tile_z[176 +: 16];
-            3'd4: wd_21 = tile_z[304 +: 16];
-            3'd5: wd_21 = tile_z[336 +: 16];
-            3'd6: wd_21 = tile_z[400 +: 16];
+        case (wsel[4*21 +: 4])
+            4'd0: wd_21 = tile_z[48 +: 16];
+            4'd1: wd_21 = tile_z[656 +: 16];
+            4'd2: wd_21 = tile_z[688 +: 16];
+            4'd3: wd_21 = tile_z[816 +: 16];
+            4'd4: wd_21 = tile_z[848 +: 16];
+            4'd5: wd_21 = tile_z[912 +: 16];
+            4'd6: wd_21 = tile_z[80 +: 16];
+            4'd7: wd_21 = tile_z[144 +: 16];
+            4'd8: wd_21 = tile_z[176 +: 16];
+            4'd9: wd_21 = tile_z[304 +: 16];
+            4'd10: wd_21 = tile_z[336 +: 16];
+            4'd11: wd_21 = tile_z[400 +: 16];
             default: wd_21 = 16'd0;
         endcase
     end
@@ -1387,13 +1711,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 22
     reg [15:0] wd_22;
     always @* begin
-        case (wsel[3*22 +: 3])
-            3'd0: wd_22 = tile_z[704 +: 16];
-            3'd1: wd_22 = tile_z[736 +: 16];
-            3'd2: wd_22 = tile_z[192 +: 16];
-            3'd3: wd_22 = tile_z[224 +: 16];
-            3'd4: wd_22 = tile_z[352 +: 16];
-            3'd5: wd_22 = tile_z[448 +: 16];
+        case (wsel[4*22 +: 4])
+            4'd0: wd_22 = tile_z[704 +: 16];
+            4'd1: wd_22 = tile_z[736 +: 16];
+            4'd2: wd_22 = tile_z[864 +: 16];
+            4'd3: wd_22 = tile_z[960 +: 16];
+            4'd4: wd_22 = tile_z[96 +: 16];
+            4'd5: wd_22 = tile_z[192 +: 16];
+            4'd6: wd_22 = tile_z[224 +: 16];
+            4'd7: wd_22 = tile_z[352 +: 16];
+            4'd8: wd_22 = tile_z[448 +: 16];
             default: wd_22 = 16'd0;
         endcase
     end
@@ -1402,13 +1729,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 23
     reg [15:0] wd_23;
     always @* begin
-        case (wsel[3*23 +: 3])
-            3'd0: wd_23 = tile_z[720 +: 16];
-            3'd1: wd_23 = tile_z[752 +: 16];
-            3'd2: wd_23 = tile_z[208 +: 16];
-            3'd3: wd_23 = tile_z[240 +: 16];
-            3'd4: wd_23 = tile_z[368 +: 16];
-            3'd5: wd_23 = tile_z[464 +: 16];
+        case (wsel[4*23 +: 4])
+            4'd0: wd_23 = tile_z[720 +: 16];
+            4'd1: wd_23 = tile_z[752 +: 16];
+            4'd2: wd_23 = tile_z[880 +: 16];
+            4'd3: wd_23 = tile_z[976 +: 16];
+            4'd4: wd_23 = tile_z[112 +: 16];
+            4'd5: wd_23 = tile_z[208 +: 16];
+            4'd6: wd_23 = tile_z[240 +: 16];
+            4'd7: wd_23 = tile_z[368 +: 16];
+            4'd8: wd_23 = tile_z[464 +: 16];
             default: wd_23 = 16'd0;
         endcase
     end
@@ -1417,12 +1747,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 24
     reg [15:0] wd_24;
     always @* begin
-        case (wsel[3*24 +: 3])
-            3'd0: wd_24 = tile_z[768 +: 16];
-            3'd1: wd_24 = tile_z[800 +: 16];
-            3'd2: wd_24 = tile_z[256 +: 16];
-            3'd3: wd_24 = tile_z[288 +: 16];
-            3'd4: wd_24 = tile_z[384 +: 16];
+        case (wsel[4*24 +: 4])
+            4'd0: wd_24 = tile_z[32 +: 16];
+            4'd1: wd_24 = tile_z[768 +: 16];
+            4'd2: wd_24 = tile_z[800 +: 16];
+            4'd3: wd_24 = tile_z[896 +: 16];
+            4'd4: wd_24 = tile_z[128 +: 16];
+            4'd5: wd_24 = tile_z[256 +: 16];
+            4'd6: wd_24 = tile_z[288 +: 16];
+            4'd7: wd_24 = tile_z[384 +: 16];
             default: wd_24 = 16'd0;
         endcase
     end
@@ -1431,12 +1764,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 25
     reg [15:0] wd_25;
     always @* begin
-        case (wsel[3*25 +: 3])
-            3'd0: wd_25 = tile_z[784 +: 16];
-            3'd1: wd_25 = tile_z[816 +: 16];
-            3'd2: wd_25 = tile_z[272 +: 16];
-            3'd3: wd_25 = tile_z[304 +: 16];
-            3'd4: wd_25 = tile_z[400 +: 16];
+        case (wsel[4*25 +: 4])
+            4'd0: wd_25 = tile_z[48 +: 16];
+            4'd1: wd_25 = tile_z[784 +: 16];
+            4'd2: wd_25 = tile_z[816 +: 16];
+            4'd3: wd_25 = tile_z[912 +: 16];
+            4'd4: wd_25 = tile_z[144 +: 16];
+            4'd5: wd_25 = tile_z[272 +: 16];
+            4'd6: wd_25 = tile_z[304 +: 16];
+            4'd7: wd_25 = tile_z[400 +: 16];
             default: wd_25 = 16'd0;
         endcase
     end
@@ -1445,13 +1781,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 26
     reg [15:0] wd_26;
     always @* begin
-        case (wsel[3*26 +: 3])
-            3'd0: wd_26 = tile_z[832 +: 16];
-            3'd1: wd_26 = tile_z[864 +: 16];
-            3'd2: wd_26 = tile_z[320 +: 16];
-            3'd3: wd_26 = tile_z[352 +: 16];
-            3'd4: wd_26 = tile_z[416 +: 16];
-            3'd5: wd_26 = tile_z[448 +: 16];
+        case (wsel[4*26 +: 4])
+            4'd0: wd_26 = tile_z[832 +: 16];
+            4'd1: wd_26 = tile_z[864 +: 16];
+            4'd2: wd_26 = tile_z[928 +: 16];
+            4'd3: wd_26 = tile_z[960 +: 16];
+            4'd4: wd_26 = tile_z[96 +: 16];
+            4'd5: wd_26 = tile_z[160 +: 16];
+            4'd6: wd_26 = tile_z[192 +: 16];
+            4'd7: wd_26 = tile_z[320 +: 16];
+            4'd8: wd_26 = tile_z[352 +: 16];
+            4'd9: wd_26 = tile_z[416 +: 16];
+            4'd10: wd_26 = tile_z[448 +: 16];
             default: wd_26 = 16'd0;
         endcase
     end
@@ -1460,13 +1801,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 27
     reg [15:0] wd_27;
     always @* begin
-        case (wsel[3*27 +: 3])
-            3'd0: wd_27 = tile_z[848 +: 16];
-            3'd1: wd_27 = tile_z[880 +: 16];
-            3'd2: wd_27 = tile_z[336 +: 16];
-            3'd3: wd_27 = tile_z[368 +: 16];
-            3'd4: wd_27 = tile_z[432 +: 16];
-            3'd5: wd_27 = tile_z[464 +: 16];
+        case (wsel[4*27 +: 4])
+            4'd0: wd_27 = tile_z[848 +: 16];
+            4'd1: wd_27 = tile_z[880 +: 16];
+            4'd2: wd_27 = tile_z[944 +: 16];
+            4'd3: wd_27 = tile_z[976 +: 16];
+            4'd4: wd_27 = tile_z[112 +: 16];
+            4'd5: wd_27 = tile_z[176 +: 16];
+            4'd6: wd_27 = tile_z[208 +: 16];
+            4'd7: wd_27 = tile_z[336 +: 16];
+            4'd8: wd_27 = tile_z[368 +: 16];
+            4'd9: wd_27 = tile_z[432 +: 16];
+            4'd10: wd_27 = tile_z[464 +: 16];
             default: wd_27 = 16'd0;
         endcase
     end
@@ -1475,12 +1821,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 28
     reg [15:0] wd_28;
     always @* begin
-        case (wsel[3*28 +: 3])
-            3'd0: wd_28 = tile_z[896 +: 16];
-            3'd1: wd_28 = tile_z[928 +: 16];
-            3'd2: wd_28 = tile_z[384 +: 16];
-            3'd3: wd_28 = tile_z[416 +: 16];
-            3'd4: wd_28 = tile_z[448 +: 16];
+        case (wsel[4*28 +: 4])
+            4'd0: wd_28 = tile_z[896 +: 16];
+            4'd1: wd_28 = tile_z[928 +: 16];
+            4'd2: wd_28 = tile_z[960 +: 16];
+            4'd3: wd_28 = tile_z[160 +: 16];
+            4'd4: wd_28 = tile_z[192 +: 16];
+            4'd5: wd_28 = tile_z[384 +: 16];
+            4'd6: wd_28 = tile_z[416 +: 16];
+            4'd7: wd_28 = tile_z[448 +: 16];
             default: wd_28 = 16'd0;
         endcase
     end
@@ -1489,12 +1838,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 29
     reg [15:0] wd_29;
     always @* begin
-        case (wsel[3*29 +: 3])
-            3'd0: wd_29 = tile_z[912 +: 16];
-            3'd1: wd_29 = tile_z[944 +: 16];
-            3'd2: wd_29 = tile_z[400 +: 16];
-            3'd3: wd_29 = tile_z[432 +: 16];
-            3'd4: wd_29 = tile_z[464 +: 16];
+        case (wsel[4*29 +: 4])
+            4'd0: wd_29 = tile_z[912 +: 16];
+            4'd1: wd_29 = tile_z[944 +: 16];
+            4'd2: wd_29 = tile_z[976 +: 16];
+            4'd3: wd_29 = tile_z[176 +: 16];
+            4'd4: wd_29 = tile_z[208 +: 16];
+            4'd5: wd_29 = tile_z[400 +: 16];
+            4'd6: wd_29 = tile_z[432 +: 16];
+            4'd7: wd_29 = tile_z[464 +: 16];
             default: wd_29 = 16'd0;
         endcase
     end
@@ -1503,11 +1855,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 30
     reg [15:0] wd_30;
     always @* begin
-        case (wsel[3*30 +: 3])
-            3'd0: wd_30 = tile_z[960 +: 16];
-            3'd1: wd_30 = tile_z[992 +: 16];
-            3'd2: wd_30 = tile_z[448 +: 16];
-            3'd3: wd_30 = tile_z[480 +: 16];
+        case (wsel[4*30 +: 4])
+            4'd0: wd_30 = tile_z[960 +: 16];
+            4'd1: wd_30 = tile_z[992 +: 16];
+            4'd2: wd_30 = tile_z[224 +: 16];
+            4'd3: wd_30 = tile_z[448 +: 16];
+            4'd4: wd_30 = tile_z[480 +: 16];
             default: wd_30 = 16'd0;
         endcase
     end
@@ -1516,11 +1869,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 31
     reg [15:0] wd_31;
     always @* begin
-        case (wsel[3*31 +: 3])
-            3'd0: wd_31 = tile_z[976 +: 16];
-            3'd1: wd_31 = tile_z[1008 +: 16];
-            3'd2: wd_31 = tile_z[464 +: 16];
-            3'd3: wd_31 = tile_z[496 +: 16];
+        case (wsel[4*31 +: 4])
+            4'd0: wd_31 = tile_z[976 +: 16];
+            4'd1: wd_31 = tile_z[1008 +: 16];
+            4'd2: wd_31 = tile_z[240 +: 16];
+            4'd3: wd_31 = tile_z[464 +: 16];
+            4'd4: wd_31 = tile_z[496 +: 16];
             default: wd_31 = 16'd0;
         endcase
     end
@@ -1529,11 +1883,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 32
     reg [15:0] wd_32;
     always @* begin
-        case (wsel[3*32 +: 3])
-            3'd0: wd_32 = tile_z[0 +: 16];
-            3'd1: wd_32 = tile_z[32 +: 16];
-            3'd2: wd_32 = tile_z[512 +: 16];
-            3'd3: wd_32 = tile_z[544 +: 16];
+        case (wsel[4*32 +: 4])
+            4'd0: wd_32 = tile_z[0 +: 16];
+            4'd1: wd_32 = tile_z[32 +: 16];
+            4'd2: wd_32 = tile_z[768 +: 16];
+            4'd3: wd_32 = tile_z[512 +: 16];
+            4'd4: wd_32 = tile_z[544 +: 16];
             default: wd_32 = 16'd0;
         endcase
     end
@@ -1542,11 +1897,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 33
     reg [15:0] wd_33;
     always @* begin
-        case (wsel[3*33 +: 3])
-            3'd0: wd_33 = tile_z[16 +: 16];
-            3'd1: wd_33 = tile_z[48 +: 16];
-            3'd2: wd_33 = tile_z[528 +: 16];
-            3'd3: wd_33 = tile_z[560 +: 16];
+        case (wsel[4*33 +: 4])
+            4'd0: wd_33 = tile_z[16 +: 16];
+            4'd1: wd_33 = tile_z[48 +: 16];
+            4'd2: wd_33 = tile_z[784 +: 16];
+            4'd3: wd_33 = tile_z[528 +: 16];
+            4'd4: wd_33 = tile_z[560 +: 16];
             default: wd_33 = 16'd0;
         endcase
     end
@@ -1555,12 +1911,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 34
     reg [15:0] wd_34;
     always @* begin
-        case (wsel[3*34 +: 3])
-            3'd0: wd_34 = tile_z[64 +: 16];
-            3'd1: wd_34 = tile_z[96 +: 16];
-            3'd2: wd_34 = tile_z[544 +: 16];
-            3'd3: wd_34 = tile_z[576 +: 16];
-            3'd4: wd_34 = tile_z[608 +: 16];
+        case (wsel[4*34 +: 4])
+            4'd0: wd_34 = tile_z[32 +: 16];
+            4'd1: wd_34 = tile_z[800 +: 16];
+            4'd2: wd_34 = tile_z[832 +: 16];
+            4'd3: wd_34 = tile_z[64 +: 16];
+            4'd4: wd_34 = tile_z[96 +: 16];
+            4'd5: wd_34 = tile_z[544 +: 16];
+            4'd6: wd_34 = tile_z[576 +: 16];
+            4'd7: wd_34 = tile_z[608 +: 16];
             default: wd_34 = 16'd0;
         endcase
     end
@@ -1569,12 +1928,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 35
     reg [15:0] wd_35;
     always @* begin
-        case (wsel[3*35 +: 3])
-            3'd0: wd_35 = tile_z[80 +: 16];
-            3'd1: wd_35 = tile_z[112 +: 16];
-            3'd2: wd_35 = tile_z[560 +: 16];
-            3'd3: wd_35 = tile_z[592 +: 16];
-            3'd4: wd_35 = tile_z[624 +: 16];
+        case (wsel[4*35 +: 4])
+            4'd0: wd_35 = tile_z[48 +: 16];
+            4'd1: wd_35 = tile_z[816 +: 16];
+            4'd2: wd_35 = tile_z[848 +: 16];
+            4'd3: wd_35 = tile_z[80 +: 16];
+            4'd4: wd_35 = tile_z[112 +: 16];
+            4'd5: wd_35 = tile_z[560 +: 16];
+            4'd6: wd_35 = tile_z[592 +: 16];
+            4'd7: wd_35 = tile_z[624 +: 16];
             default: wd_35 = 16'd0;
         endcase
     end
@@ -1583,13 +1945,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 36
     reg [15:0] wd_36;
     always @* begin
-        case (wsel[3*36 +: 3])
-            3'd0: wd_36 = tile_z[640 +: 16];
-            3'd1: wd_36 = tile_z[672 +: 16];
-            3'd2: wd_36 = tile_z[128 +: 16];
-            3'd3: wd_36 = tile_z[160 +: 16];
-            3'd4: wd_36 = tile_z[544 +: 16];
-            3'd5: wd_36 = tile_z[576 +: 16];
+        case (wsel[4*36 +: 4])
+            4'd0: wd_36 = tile_z[32 +: 16];
+            4'd1: wd_36 = tile_z[640 +: 16];
+            4'd2: wd_36 = tile_z[672 +: 16];
+            4'd3: wd_36 = tile_z[800 +: 16];
+            4'd4: wd_36 = tile_z[832 +: 16];
+            4'd5: wd_36 = tile_z[896 +: 16];
+            4'd6: wd_36 = tile_z[64 +: 16];
+            4'd7: wd_36 = tile_z[128 +: 16];
+            4'd8: wd_36 = tile_z[160 +: 16];
+            4'd9: wd_36 = tile_z[544 +: 16];
+            4'd10: wd_36 = tile_z[576 +: 16];
             default: wd_36 = 16'd0;
         endcase
     end
@@ -1598,13 +1965,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 37
     reg [15:0] wd_37;
     always @* begin
-        case (wsel[3*37 +: 3])
-            3'd0: wd_37 = tile_z[656 +: 16];
-            3'd1: wd_37 = tile_z[688 +: 16];
-            3'd2: wd_37 = tile_z[144 +: 16];
-            3'd3: wd_37 = tile_z[176 +: 16];
-            3'd4: wd_37 = tile_z[560 +: 16];
-            3'd5: wd_37 = tile_z[592 +: 16];
+        case (wsel[4*37 +: 4])
+            4'd0: wd_37 = tile_z[48 +: 16];
+            4'd1: wd_37 = tile_z[656 +: 16];
+            4'd2: wd_37 = tile_z[688 +: 16];
+            4'd3: wd_37 = tile_z[816 +: 16];
+            4'd4: wd_37 = tile_z[848 +: 16];
+            4'd5: wd_37 = tile_z[912 +: 16];
+            4'd6: wd_37 = tile_z[80 +: 16];
+            4'd7: wd_37 = tile_z[144 +: 16];
+            4'd8: wd_37 = tile_z[176 +: 16];
+            4'd9: wd_37 = tile_z[560 +: 16];
+            4'd10: wd_37 = tile_z[592 +: 16];
             default: wd_37 = 16'd0;
         endcase
     end
@@ -1613,12 +1985,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 38
     reg [15:0] wd_38;
     always @* begin
-        case (wsel[3*38 +: 3])
-            3'd0: wd_38 = tile_z[704 +: 16];
-            3'd1: wd_38 = tile_z[736 +: 16];
-            3'd2: wd_38 = tile_z[192 +: 16];
-            3'd3: wd_38 = tile_z[224 +: 16];
-            3'd4: wd_38 = tile_z[608 +: 16];
+        case (wsel[4*38 +: 4])
+            4'd0: wd_38 = tile_z[704 +: 16];
+            4'd1: wd_38 = tile_z[736 +: 16];
+            4'd2: wd_38 = tile_z[864 +: 16];
+            4'd3: wd_38 = tile_z[960 +: 16];
+            4'd4: wd_38 = tile_z[96 +: 16];
+            4'd5: wd_38 = tile_z[192 +: 16];
+            4'd6: wd_38 = tile_z[224 +: 16];
+            4'd7: wd_38 = tile_z[608 +: 16];
             default: wd_38 = 16'd0;
         endcase
     end
@@ -1627,12 +2002,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 39
     reg [15:0] wd_39;
     always @* begin
-        case (wsel[3*39 +: 3])
-            3'd0: wd_39 = tile_z[720 +: 16];
-            3'd1: wd_39 = tile_z[752 +: 16];
-            3'd2: wd_39 = tile_z[208 +: 16];
-            3'd3: wd_39 = tile_z[240 +: 16];
-            3'd4: wd_39 = tile_z[624 +: 16];
+        case (wsel[4*39 +: 4])
+            4'd0: wd_39 = tile_z[720 +: 16];
+            4'd1: wd_39 = tile_z[752 +: 16];
+            4'd2: wd_39 = tile_z[880 +: 16];
+            4'd3: wd_39 = tile_z[976 +: 16];
+            4'd4: wd_39 = tile_z[112 +: 16];
+            4'd5: wd_39 = tile_z[208 +: 16];
+            4'd6: wd_39 = tile_z[240 +: 16];
+            4'd7: wd_39 = tile_z[624 +: 16];
             default: wd_39 = 16'd0;
         endcase
     end
@@ -1641,13 +2019,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 40
     reg [15:0] wd_40;
     always @* begin
-        case (wsel[3*40 +: 3])
-            3'd0: wd_40 = tile_z[640 +: 16];
-            3'd1: wd_40 = tile_z[768 +: 16];
-            3'd2: wd_40 = tile_z[800 +: 16];
-            3'd3: wd_40 = tile_z[256 +: 16];
-            3'd4: wd_40 = tile_z[288 +: 16];
-            3'd5: wd_40 = tile_z[544 +: 16];
+        case (wsel[4*40 +: 4])
+            4'd0: wd_40 = tile_z[32 +: 16];
+            4'd1: wd_40 = tile_z[640 +: 16];
+            4'd2: wd_40 = tile_z[768 +: 16];
+            4'd3: wd_40 = tile_z[800 +: 16];
+            4'd4: wd_40 = tile_z[896 +: 16];
+            4'd5: wd_40 = tile_z[128 +: 16];
+            4'd6: wd_40 = tile_z[256 +: 16];
+            4'd7: wd_40 = tile_z[288 +: 16];
+            4'd8: wd_40 = tile_z[544 +: 16];
             default: wd_40 = 16'd0;
         endcase
     end
@@ -1656,13 +2037,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 41
     reg [15:0] wd_41;
     always @* begin
-        case (wsel[3*41 +: 3])
-            3'd0: wd_41 = tile_z[656 +: 16];
-            3'd1: wd_41 = tile_z[784 +: 16];
-            3'd2: wd_41 = tile_z[816 +: 16];
-            3'd3: wd_41 = tile_z[272 +: 16];
-            3'd4: wd_41 = tile_z[304 +: 16];
-            3'd5: wd_41 = tile_z[560 +: 16];
+        case (wsel[4*41 +: 4])
+            4'd0: wd_41 = tile_z[48 +: 16];
+            4'd1: wd_41 = tile_z[656 +: 16];
+            4'd2: wd_41 = tile_z[784 +: 16];
+            4'd3: wd_41 = tile_z[816 +: 16];
+            4'd4: wd_41 = tile_z[912 +: 16];
+            4'd5: wd_41 = tile_z[144 +: 16];
+            4'd6: wd_41 = tile_z[272 +: 16];
+            4'd7: wd_41 = tile_z[304 +: 16];
+            4'd8: wd_41 = tile_z[560 +: 16];
             default: wd_41 = 16'd0;
         endcase
     end
@@ -1671,14 +2055,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 42
     reg [15:0] wd_42;
     always @* begin
-        case (wsel[3*42 +: 3])
-            3'd0: wd_42 = tile_z[672 +: 16];
-            3'd1: wd_42 = tile_z[704 +: 16];
-            3'd2: wd_42 = tile_z[832 +: 16];
-            3'd3: wd_42 = tile_z[864 +: 16];
-            3'd4: wd_42 = tile_z[320 +: 16];
-            3'd5: wd_42 = tile_z[352 +: 16];
-            3'd6: wd_42 = tile_z[608 +: 16];
+        case (wsel[4*42 +: 4])
+            4'd0: wd_42 = tile_z[672 +: 16];
+            4'd1: wd_42 = tile_z[704 +: 16];
+            4'd2: wd_42 = tile_z[832 +: 16];
+            4'd3: wd_42 = tile_z[864 +: 16];
+            4'd4: wd_42 = tile_z[928 +: 16];
+            4'd5: wd_42 = tile_z[960 +: 16];
+            4'd6: wd_42 = tile_z[96 +: 16];
+            4'd7: wd_42 = tile_z[160 +: 16];
+            4'd8: wd_42 = tile_z[192 +: 16];
+            4'd9: wd_42 = tile_z[320 +: 16];
+            4'd10: wd_42 = tile_z[352 +: 16];
+            4'd11: wd_42 = tile_z[608 +: 16];
             default: wd_42 = 16'd0;
         endcase
     end
@@ -1687,14 +2076,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 43
     reg [15:0] wd_43;
     always @* begin
-        case (wsel[3*43 +: 3])
-            3'd0: wd_43 = tile_z[688 +: 16];
-            3'd1: wd_43 = tile_z[720 +: 16];
-            3'd2: wd_43 = tile_z[848 +: 16];
-            3'd3: wd_43 = tile_z[880 +: 16];
-            3'd4: wd_43 = tile_z[336 +: 16];
-            3'd5: wd_43 = tile_z[368 +: 16];
-            3'd6: wd_43 = tile_z[624 +: 16];
+        case (wsel[4*43 +: 4])
+            4'd0: wd_43 = tile_z[688 +: 16];
+            4'd1: wd_43 = tile_z[720 +: 16];
+            4'd2: wd_43 = tile_z[848 +: 16];
+            4'd3: wd_43 = tile_z[880 +: 16];
+            4'd4: wd_43 = tile_z[944 +: 16];
+            4'd5: wd_43 = tile_z[976 +: 16];
+            4'd6: wd_43 = tile_z[112 +: 16];
+            4'd7: wd_43 = tile_z[176 +: 16];
+            4'd8: wd_43 = tile_z[208 +: 16];
+            4'd9: wd_43 = tile_z[336 +: 16];
+            4'd10: wd_43 = tile_z[368 +: 16];
+            4'd11: wd_43 = tile_z[624 +: 16];
             default: wd_43 = 16'd0;
         endcase
     end
@@ -1703,13 +2097,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 44
     reg [15:0] wd_44;
     always @* begin
-        case (wsel[3*44 +: 3])
-            3'd0: wd_44 = tile_z[672 +: 16];
-            3'd1: wd_44 = tile_z[704 +: 16];
-            3'd2: wd_44 = tile_z[896 +: 16];
-            3'd3: wd_44 = tile_z[928 +: 16];
-            3'd4: wd_44 = tile_z[384 +: 16];
-            3'd5: wd_44 = tile_z[416 +: 16];
+        case (wsel[4*44 +: 4])
+            4'd0: wd_44 = tile_z[672 +: 16];
+            4'd1: wd_44 = tile_z[704 +: 16];
+            4'd2: wd_44 = tile_z[896 +: 16];
+            4'd3: wd_44 = tile_z[928 +: 16];
+            4'd4: wd_44 = tile_z[960 +: 16];
+            4'd5: wd_44 = tile_z[160 +: 16];
+            4'd6: wd_44 = tile_z[192 +: 16];
+            4'd7: wd_44 = tile_z[384 +: 16];
+            4'd8: wd_44 = tile_z[416 +: 16];
             default: wd_44 = 16'd0;
         endcase
     end
@@ -1718,13 +2115,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 45
     reg [15:0] wd_45;
     always @* begin
-        case (wsel[3*45 +: 3])
-            3'd0: wd_45 = tile_z[688 +: 16];
-            3'd1: wd_45 = tile_z[720 +: 16];
-            3'd2: wd_45 = tile_z[912 +: 16];
-            3'd3: wd_45 = tile_z[944 +: 16];
-            3'd4: wd_45 = tile_z[400 +: 16];
-            3'd5: wd_45 = tile_z[432 +: 16];
+        case (wsel[4*45 +: 4])
+            4'd0: wd_45 = tile_z[688 +: 16];
+            4'd1: wd_45 = tile_z[720 +: 16];
+            4'd2: wd_45 = tile_z[912 +: 16];
+            4'd3: wd_45 = tile_z[944 +: 16];
+            4'd4: wd_45 = tile_z[976 +: 16];
+            4'd5: wd_45 = tile_z[176 +: 16];
+            4'd6: wd_45 = tile_z[208 +: 16];
+            4'd7: wd_45 = tile_z[400 +: 16];
+            4'd8: wd_45 = tile_z[432 +: 16];
             default: wd_45 = 16'd0;
         endcase
     end
@@ -1733,12 +2133,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 46
     reg [15:0] wd_46;
     always @* begin
-        case (wsel[3*46 +: 3])
-            3'd0: wd_46 = tile_z[736 +: 16];
-            3'd1: wd_46 = tile_z[960 +: 16];
-            3'd2: wd_46 = tile_z[992 +: 16];
-            3'd3: wd_46 = tile_z[448 +: 16];
-            3'd4: wd_46 = tile_z[480 +: 16];
+        case (wsel[4*46 +: 4])
+            4'd0: wd_46 = tile_z[736 +: 16];
+            4'd1: wd_46 = tile_z[960 +: 16];
+            4'd2: wd_46 = tile_z[992 +: 16];
+            4'd3: wd_46 = tile_z[224 +: 16];
+            4'd4: wd_46 = tile_z[448 +: 16];
+            4'd5: wd_46 = tile_z[480 +: 16];
             default: wd_46 = 16'd0;
         endcase
     end
@@ -1747,12 +2148,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 47
     reg [15:0] wd_47;
     always @* begin
-        case (wsel[3*47 +: 3])
-            3'd0: wd_47 = tile_z[752 +: 16];
-            3'd1: wd_47 = tile_z[976 +: 16];
-            3'd2: wd_47 = tile_z[1008 +: 16];
-            3'd3: wd_47 = tile_z[464 +: 16];
-            3'd4: wd_47 = tile_z[496 +: 16];
+        case (wsel[4*47 +: 4])
+            4'd0: wd_47 = tile_z[752 +: 16];
+            4'd1: wd_47 = tile_z[976 +: 16];
+            4'd2: wd_47 = tile_z[1008 +: 16];
+            4'd3: wd_47 = tile_z[240 +: 16];
+            4'd4: wd_47 = tile_z[464 +: 16];
+            4'd5: wd_47 = tile_z[496 +: 16];
             default: wd_47 = 16'd0;
         endcase
     end
@@ -1761,10 +2163,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 48
     reg [15:0] wd_48;
     always @* begin
-        case (wsel[3*48 +: 3])
-            3'd0: wd_48 = tile_z[768 +: 16];
-            3'd1: wd_48 = tile_z[512 +: 16];
-            3'd2: wd_48 = tile_z[544 +: 16];
+        case (wsel[4*48 +: 4])
+            4'd0: wd_48 = tile_z[0 +: 16];
+            4'd1: wd_48 = tile_z[32 +: 16];
+            4'd2: wd_48 = tile_z[768 +: 16];
+            4'd3: wd_48 = tile_z[256 +: 16];
+            4'd4: wd_48 = tile_z[512 +: 16];
+            4'd5: wd_48 = tile_z[544 +: 16];
             default: wd_48 = 16'd0;
         endcase
     end
@@ -1773,10 +2178,13 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 49
     reg [15:0] wd_49;
     always @* begin
-        case (wsel[3*49 +: 3])
-            3'd0: wd_49 = tile_z[784 +: 16];
-            3'd1: wd_49 = tile_z[528 +: 16];
-            3'd2: wd_49 = tile_z[560 +: 16];
+        case (wsel[4*49 +: 4])
+            4'd0: wd_49 = tile_z[16 +: 16];
+            4'd1: wd_49 = tile_z[48 +: 16];
+            4'd2: wd_49 = tile_z[784 +: 16];
+            4'd3: wd_49 = tile_z[272 +: 16];
+            4'd4: wd_49 = tile_z[528 +: 16];
+            4'd5: wd_49 = tile_z[560 +: 16];
             default: wd_49 = 16'd0;
         endcase
     end
@@ -1785,11 +2193,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 50
     reg [15:0] wd_50;
     always @* begin
-        case (wsel[3*50 +: 3])
-            3'd0: wd_50 = tile_z[800 +: 16];
-            3'd1: wd_50 = tile_z[832 +: 16];
-            3'd2: wd_50 = tile_z[576 +: 16];
-            3'd3: wd_50 = tile_z[608 +: 16];
+        case (wsel[4*50 +: 4])
+            4'd0: wd_50 = tile_z[800 +: 16];
+            4'd1: wd_50 = tile_z[832 +: 16];
+            4'd2: wd_50 = tile_z[64 +: 16];
+            4'd3: wd_50 = tile_z[96 +: 16];
+            4'd4: wd_50 = tile_z[288 +: 16];
+            4'd5: wd_50 = tile_z[320 +: 16];
+            4'd6: wd_50 = tile_z[544 +: 16];
+            4'd7: wd_50 = tile_z[576 +: 16];
+            4'd8: wd_50 = tile_z[608 +: 16];
             default: wd_50 = 16'd0;
         endcase
     end
@@ -1798,11 +2211,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 51
     reg [15:0] wd_51;
     always @* begin
-        case (wsel[3*51 +: 3])
-            3'd0: wd_51 = tile_z[816 +: 16];
-            3'd1: wd_51 = tile_z[848 +: 16];
-            3'd2: wd_51 = tile_z[592 +: 16];
-            3'd3: wd_51 = tile_z[624 +: 16];
+        case (wsel[4*51 +: 4])
+            4'd0: wd_51 = tile_z[816 +: 16];
+            4'd1: wd_51 = tile_z[848 +: 16];
+            4'd2: wd_51 = tile_z[80 +: 16];
+            4'd3: wd_51 = tile_z[112 +: 16];
+            4'd4: wd_51 = tile_z[304 +: 16];
+            4'd5: wd_51 = tile_z[336 +: 16];
+            4'd6: wd_51 = tile_z[560 +: 16];
+            4'd7: wd_51 = tile_z[592 +: 16];
+            4'd8: wd_51 = tile_z[624 +: 16];
             default: wd_51 = 16'd0;
         endcase
     end
@@ -1811,12 +2229,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 52
     reg [15:0] wd_52;
     always @* begin
-        case (wsel[3*52 +: 3])
-            3'd0: wd_52 = tile_z[640 +: 16];
-            3'd1: wd_52 = tile_z[672 +: 16];
-            3'd2: wd_52 = tile_z[800 +: 16];
-            3'd3: wd_52 = tile_z[832 +: 16];
-            3'd4: wd_52 = tile_z[896 +: 16];
+        case (wsel[4*52 +: 4])
+            4'd0: wd_52 = tile_z[640 +: 16];
+            4'd1: wd_52 = tile_z[672 +: 16];
+            4'd2: wd_52 = tile_z[800 +: 16];
+            4'd3: wd_52 = tile_z[832 +: 16];
+            4'd4: wd_52 = tile_z[896 +: 16];
+            4'd5: wd_52 = tile_z[128 +: 16];
+            4'd6: wd_52 = tile_z[160 +: 16];
+            4'd7: wd_52 = tile_z[288 +: 16];
+            4'd8: wd_52 = tile_z[320 +: 16];
+            4'd9: wd_52 = tile_z[384 +: 16];
+            4'd10: wd_52 = tile_z[544 +: 16];
+            4'd11: wd_52 = tile_z[576 +: 16];
             default: wd_52 = 16'd0;
         endcase
     end
@@ -1825,12 +2250,19 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 53
     reg [15:0] wd_53;
     always @* begin
-        case (wsel[3*53 +: 3])
-            3'd0: wd_53 = tile_z[656 +: 16];
-            3'd1: wd_53 = tile_z[688 +: 16];
-            3'd2: wd_53 = tile_z[816 +: 16];
-            3'd3: wd_53 = tile_z[848 +: 16];
-            3'd4: wd_53 = tile_z[912 +: 16];
+        case (wsel[4*53 +: 4])
+            4'd0: wd_53 = tile_z[656 +: 16];
+            4'd1: wd_53 = tile_z[688 +: 16];
+            4'd2: wd_53 = tile_z[816 +: 16];
+            4'd3: wd_53 = tile_z[848 +: 16];
+            4'd4: wd_53 = tile_z[912 +: 16];
+            4'd5: wd_53 = tile_z[144 +: 16];
+            4'd6: wd_53 = tile_z[176 +: 16];
+            4'd7: wd_53 = tile_z[304 +: 16];
+            4'd8: wd_53 = tile_z[336 +: 16];
+            4'd9: wd_53 = tile_z[400 +: 16];
+            4'd10: wd_53 = tile_z[560 +: 16];
+            4'd11: wd_53 = tile_z[592 +: 16];
             default: wd_53 = 16'd0;
         endcase
     end
@@ -1839,11 +2271,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 54
     reg [15:0] wd_54;
     always @* begin
-        case (wsel[3*54 +: 3])
-            3'd0: wd_54 = tile_z[704 +: 16];
-            3'd1: wd_54 = tile_z[736 +: 16];
-            3'd2: wd_54 = tile_z[864 +: 16];
-            3'd3: wd_54 = tile_z[960 +: 16];
+        case (wsel[4*54 +: 4])
+            4'd0: wd_54 = tile_z[704 +: 16];
+            4'd1: wd_54 = tile_z[736 +: 16];
+            4'd2: wd_54 = tile_z[864 +: 16];
+            4'd3: wd_54 = tile_z[960 +: 16];
+            4'd4: wd_54 = tile_z[192 +: 16];
+            4'd5: wd_54 = tile_z[224 +: 16];
+            4'd6: wd_54 = tile_z[352 +: 16];
+            4'd7: wd_54 = tile_z[448 +: 16];
+            4'd8: wd_54 = tile_z[608 +: 16];
             default: wd_54 = 16'd0;
         endcase
     end
@@ -1852,11 +2289,16 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 55
     reg [15:0] wd_55;
     always @* begin
-        case (wsel[3*55 +: 3])
-            3'd0: wd_55 = tile_z[720 +: 16];
-            3'd1: wd_55 = tile_z[752 +: 16];
-            3'd2: wd_55 = tile_z[880 +: 16];
-            3'd3: wd_55 = tile_z[976 +: 16];
+        case (wsel[4*55 +: 4])
+            4'd0: wd_55 = tile_z[720 +: 16];
+            4'd1: wd_55 = tile_z[752 +: 16];
+            4'd2: wd_55 = tile_z[880 +: 16];
+            4'd3: wd_55 = tile_z[976 +: 16];
+            4'd4: wd_55 = tile_z[208 +: 16];
+            4'd5: wd_55 = tile_z[240 +: 16];
+            4'd6: wd_55 = tile_z[368 +: 16];
+            4'd7: wd_55 = tile_z[464 +: 16];
+            4'd8: wd_55 = tile_z[624 +: 16];
             default: wd_55 = 16'd0;
         endcase
     end
@@ -1865,10 +2307,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 56
     reg [15:0] wd_56;
     always @* begin
-        case (wsel[3*56 +: 3])
-            3'd0: wd_56 = tile_z[768 +: 16];
-            3'd1: wd_56 = tile_z[800 +: 16];
-            3'd2: wd_56 = tile_z[896 +: 16];
+        case (wsel[4*56 +: 4])
+            4'd0: wd_56 = tile_z[640 +: 16];
+            4'd1: wd_56 = tile_z[768 +: 16];
+            4'd2: wd_56 = tile_z[800 +: 16];
+            4'd3: wd_56 = tile_z[896 +: 16];
+            4'd4: wd_56 = tile_z[256 +: 16];
+            4'd5: wd_56 = tile_z[288 +: 16];
+            4'd6: wd_56 = tile_z[384 +: 16];
+            4'd7: wd_56 = tile_z[544 +: 16];
             default: wd_56 = 16'd0;
         endcase
     end
@@ -1877,10 +2324,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 57
     reg [15:0] wd_57;
     always @* begin
-        case (wsel[3*57 +: 3])
-            3'd0: wd_57 = tile_z[784 +: 16];
-            3'd1: wd_57 = tile_z[816 +: 16];
-            3'd2: wd_57 = tile_z[912 +: 16];
+        case (wsel[4*57 +: 4])
+            4'd0: wd_57 = tile_z[656 +: 16];
+            4'd1: wd_57 = tile_z[784 +: 16];
+            4'd2: wd_57 = tile_z[816 +: 16];
+            4'd3: wd_57 = tile_z[912 +: 16];
+            4'd4: wd_57 = tile_z[272 +: 16];
+            4'd5: wd_57 = tile_z[304 +: 16];
+            4'd6: wd_57 = tile_z[400 +: 16];
+            4'd7: wd_57 = tile_z[560 +: 16];
             default: wd_57 = 16'd0;
         endcase
     end
@@ -1889,11 +2341,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 58
     reg [15:0] wd_58;
     always @* begin
-        case (wsel[3*58 +: 3])
-            3'd0: wd_58 = tile_z[832 +: 16];
-            3'd1: wd_58 = tile_z[864 +: 16];
-            3'd2: wd_58 = tile_z[928 +: 16];
-            3'd3: wd_58 = tile_z[960 +: 16];
+        case (wsel[4*58 +: 4])
+            4'd0: wd_58 = tile_z[672 +: 16];
+            4'd1: wd_58 = tile_z[704 +: 16];
+            4'd2: wd_58 = tile_z[832 +: 16];
+            4'd3: wd_58 = tile_z[864 +: 16];
+            4'd4: wd_58 = tile_z[928 +: 16];
+            4'd5: wd_58 = tile_z[960 +: 16];
+            4'd6: wd_58 = tile_z[320 +: 16];
+            4'd7: wd_58 = tile_z[352 +: 16];
+            4'd8: wd_58 = tile_z[416 +: 16];
+            4'd9: wd_58 = tile_z[448 +: 16];
+            4'd10: wd_58 = tile_z[608 +: 16];
             default: wd_58 = 16'd0;
         endcase
     end
@@ -1902,11 +2361,18 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 59
     reg [15:0] wd_59;
     always @* begin
-        case (wsel[3*59 +: 3])
-            3'd0: wd_59 = tile_z[848 +: 16];
-            3'd1: wd_59 = tile_z[880 +: 16];
-            3'd2: wd_59 = tile_z[944 +: 16];
-            3'd3: wd_59 = tile_z[976 +: 16];
+        case (wsel[4*59 +: 4])
+            4'd0: wd_59 = tile_z[688 +: 16];
+            4'd1: wd_59 = tile_z[720 +: 16];
+            4'd2: wd_59 = tile_z[848 +: 16];
+            4'd3: wd_59 = tile_z[880 +: 16];
+            4'd4: wd_59 = tile_z[944 +: 16];
+            4'd5: wd_59 = tile_z[976 +: 16];
+            4'd6: wd_59 = tile_z[336 +: 16];
+            4'd7: wd_59 = tile_z[368 +: 16];
+            4'd8: wd_59 = tile_z[432 +: 16];
+            4'd9: wd_59 = tile_z[464 +: 16];
+            4'd10: wd_59 = tile_z[624 +: 16];
             default: wd_59 = 16'd0;
         endcase
     end
@@ -1915,10 +2381,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 60
     reg [15:0] wd_60;
     always @* begin
-        case (wsel[3*60 +: 3])
-            3'd0: wd_60 = tile_z[896 +: 16];
-            3'd1: wd_60 = tile_z[928 +: 16];
-            3'd2: wd_60 = tile_z[960 +: 16];
+        case (wsel[4*60 +: 4])
+            4'd0: wd_60 = tile_z[672 +: 16];
+            4'd1: wd_60 = tile_z[704 +: 16];
+            4'd2: wd_60 = tile_z[896 +: 16];
+            4'd3: wd_60 = tile_z[928 +: 16];
+            4'd4: wd_60 = tile_z[960 +: 16];
+            4'd5: wd_60 = tile_z[384 +: 16];
+            4'd6: wd_60 = tile_z[416 +: 16];
+            4'd7: wd_60 = tile_z[448 +: 16];
             default: wd_60 = 16'd0;
         endcase
     end
@@ -1927,10 +2398,15 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 61
     reg [15:0] wd_61;
     always @* begin
-        case (wsel[3*61 +: 3])
-            3'd0: wd_61 = tile_z[912 +: 16];
-            3'd1: wd_61 = tile_z[944 +: 16];
-            3'd2: wd_61 = tile_z[976 +: 16];
+        case (wsel[4*61 +: 4])
+            4'd0: wd_61 = tile_z[688 +: 16];
+            4'd1: wd_61 = tile_z[720 +: 16];
+            4'd2: wd_61 = tile_z[912 +: 16];
+            4'd3: wd_61 = tile_z[944 +: 16];
+            4'd4: wd_61 = tile_z[976 +: 16];
+            4'd5: wd_61 = tile_z[400 +: 16];
+            4'd6: wd_61 = tile_z[432 +: 16];
+            4'd7: wd_61 = tile_z[464 +: 16];
             default: wd_61 = 16'd0;
         endcase
     end
@@ -1939,9 +2415,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 62
     reg [15:0] wd_62;
     always @* begin
-        case (wsel[3*62 +: 3])
-            3'd0: wd_62 = tile_z[960 +: 16];
-            3'd1: wd_62 = tile_z[992 +: 16];
+        case (wsel[4*62 +: 4])
+            4'd0: wd_62 = tile_z[736 +: 16];
+            4'd1: wd_62 = tile_z[960 +: 16];
+            4'd2: wd_62 = tile_z[992 +: 16];
+            4'd3: wd_62 = tile_z[448 +: 16];
+            4'd4: wd_62 = tile_z[480 +: 16];
             default: wd_62 = 16'd0;
         endcase
     end
@@ -1950,9 +2429,12 @@ module ntt_bank_net_s #(parameter integer TILES = 16, BANKS = 64, PBANKS = 4) (
     // bank 63
     reg [15:0] wd_63;
     always @* begin
-        case (wsel[3*63 +: 3])
-            3'd0: wd_63 = tile_z[976 +: 16];
-            3'd1: wd_63 = tile_z[1008 +: 16];
+        case (wsel[4*63 +: 4])
+            4'd0: wd_63 = tile_z[752 +: 16];
+            4'd1: wd_63 = tile_z[976 +: 16];
+            4'd2: wd_63 = tile_z[1008 +: 16];
+            4'd3: wd_63 = tile_z[464 +: 16];
+            4'd4: wd_63 = tile_z[496 +: 16];
             default: wd_63 = 16'd0;
         endcase
     end

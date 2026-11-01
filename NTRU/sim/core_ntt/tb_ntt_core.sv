@@ -1,5 +1,6 @@
-// Testbench of the minimal NTT core (hdl/core_ntt/ntt_core.sv). Golden cases from sim/core_ntt/vectors.txt (1.0
-// kernel fixtures for profiles 0, 1; spec 2.0 kernel assets for profile 2), written by scripts/gen_ntt_core.py.
+// Testbench of the minimal core (hdl/core_ntt/ntt_core.sv). Golden cases from sim/core_ntt/vectors.txt (NTT: 1.0
+// kernel fixtures for profiles 0, 1; spec 2.0 kernel assets for profile 2) and vectors_fft.txt (FFT format 0, written as
+// profile 3: op 0 = FFT, 1 = FFT ngược; 1.0 kernel fixtures), both written by scripts/gen_ntt_core.py.
 // Per case: load the polynomial in format 4 (coefficient c in cells 2c, 2c + 1), run, read back, compare.
 // Measures (architecture section 6, hypothesis 4): (a) first RAM read of the command to last RAM write, plus 1;
 // (b) the core's cycle counter (start to done). Also checks that every request finds its tile ready.
@@ -8,7 +9,7 @@
 module tb_ntt_core;
     reg clk = 1'b0;
     always #5 clk = ~clk;
-    reg          rst, load_valid, read_valid, start, start_inverse;
+    reg          rst, load_valid, read_valid, start, start_inverse, start_fft;
     reg  [9:0]   load_line, read_line;
     reg  [127:0] load_data;
     reg  [1:0]   start_profile;
@@ -18,7 +19,7 @@ module tb_ntt_core;
     wire [31:0]  cycles;
     ntt_core dut (.clk(clk), .rst(rst), .load_valid(load_valid), .load_line(load_line), .load_data(load_data),
         .read_valid(read_valid), .read_line(read_line), .read_rsp_valid(read_rsp_valid), .read_data(read_data),
-        .start(start), .start_inverse(start_inverse), .start_profile(start_profile), .start_logn(start_logn),
+        .start(start), .start_fft(start_fft), .start_inverse(start_inverse), .start_profile(start_profile), .start_logn(start_logn),
         .busy(busy), .done(done), .error(error), .cycles(cycles));
 
     // measurement and ready check
@@ -38,7 +39,7 @@ module tb_ntt_core;
     initial begin
         if (!$value$plusargs("FILE=%s", fname)) fname = "sim/core_ntt/vectors.txt";
         if (!$value$plusargs("ONLY=%d", only)) only = -1;
-        rst = 1'b1; load_valid = 0; read_valid = 0; start = 0; start_inverse = 0; start_profile = 0; start_logn = 0;
+        rst = 1'b1; load_valid = 0; read_valid = 0; start = 0; start_inverse = 0; start_fft = 0; start_profile = 0; start_logn = 0;
         load_line = 0; read_line = 0; load_data = 0;
         repeat (4) @(negedge clk);
         rst = 1'b0;
@@ -62,7 +63,8 @@ module tb_ntt_core;
                     end
                     @(negedge clk); load_valid = 1'b0;
                     first_rd = -1; last_wr = -1; not_ready = 0;
-                    start = 1'b1; start_inverse = (op == 6); start_profile = prof; start_logn = logn;
+                    start = 1'b1; start_fft = (prof == 3); start_inverse = (prof == 3) ? (op == 1) : (op == 6);
+                    start_profile = prof; start_logn = logn;
                     @(negedge clk); start = 1'b0;
                     w = 0;
                     while (!done && w < 100000) begin @(negedge clk); w = w + 1; end
