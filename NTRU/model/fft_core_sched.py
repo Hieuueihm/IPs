@@ -14,19 +14,21 @@ reads and writes never collide. Roots: one root per word ({wi, wr} in the two pa
 every bank has two read ports, tiles 0..7 use port a and 8..15 port b; reads are staggered by tile group
 (t >> 2) mod 3. Checked conflict-free: one word per bank port per cycle.
 
-Per butterfly, e = data read cycle (e = 3k from the layer start), c = e - 3 its address stage:
+Per butterfly, e = data read cycle (e = g + 4, g = its issue; RTL since the 64 / 128 bit change, 01/11/2026):
   e - 2 + g  read the root word, g = tile group 0, 1, 2; it waits in the network's root register ({wi, wr})
   e          read A.re (port x), B.re (port y)
   e + 1      read A.im, B.im
   e + 2      tile beat 1 (mode 5, spec 10): d0 = A.re, d1 = B.re, root = wr
   e + 3      tile beat 2: d0 = A.im, d1 = B.im, root = wi
              the tile makes p0, p1, p2 on its multiplier, T, and A +- T (or A + B, (A - B) * w) on its add/sub
-  e + 11     beat 1 result (tile latency 9): write select of the real pair; RAM write e + 12
-  e + 12     beat 2 result: write select of the imaginary pair; RAM write e + 13
-Read -> write latency 14 (e .. e + 13). Inverse: the last layer's beats carry the scale flag, so the tile divides every
+  e + 18     beat 1 result (tile mode 5 at 32 bit on the shared engine, IN_REG = 1: 16 after beat 1), captured, then
+             into the tile's forwarding register with its write address; write select of the real pair e + 20, RAM
+             write e + 21
+  e + 19     beat 2 result; write select of the imaginary pair e + 21, RAM write e + 22
+Read -> write latency 23 (e .. e + 22). Inverse: the last layer's beats carry the scale flag, so the tile divides every
 output by 2^(logn - 1) (div2e). Roots quantized from the 1.0 Q64.64 table (spec 1.0 01.3); inverse wi = Q(-wi); root
-indices reach N/2 + N/4 - 1 = 767 at N = 1024. Barrier per layer: the next layer starts 3 * count + 12 cycles after this
-one (the last write is at 3 * count + 10; rounded up so every layer starts on the same issue phase, as the RTL does).
+indices reach N/2 + N/4 - 1 = 767 at N = 1024. Barrier per layer on commits (as the RTL): the next layer starts two
+cycles after the last write select of this one (registered written count), and issues at the next phase-0 cycle.
 
 Run: python model/fft_core_sched.py   (checks every format-0 golden case, writes study/results/fft_core_sched.md)
 """
@@ -49,7 +51,12 @@ plan = _load("fft_core_plan", "fft_core_plan.py")
 TILES, PB = 16, 4
 PHASE = [t // 6 for t in range(TILES)]
 W = 32
-LAT_RW = 14
+# tile mode 5 at 32 bit with IN_REG = 1 (one engine for every width since 01/11/2026; sim/tile_thu/tb_wide_timing.sv
+# +W=1 +P=3 -DTL_IN_REG=1): result of beat 0 / 1 after beat 0, one butterfly every 3 cycles
+OUT32 = (16, 17)
+ISSUE_TO_READ = 4                           # issue g, data read e = g + 4, beats e + 2, e + 3
+WRSEL = 2                                   # result captured, then write select with the address from the FIFO
+LAT_RW = 2 + OUT32[1] + WRSEL + 2           # first read .. last RAM write + 1 of one butterfly
 RGRP = [(t >> 2) % 3 for t in range(TILES)]
 
 
@@ -129,17 +136,22 @@ def run(logn, inverse, data, gm, igm):
         return mem, 0, 0, (0, 0, 0)
     tab = igm if inverse else gm
     reads, writes, rroot = {}, {}, {}
-    S = 0
+    S = 0                                   # layer start (the core's lt = 0); the first layer starts at issue phase 2
+    first_read = None
+    last_w = 0
     hs = layers(logn, inverse)
     for li, h in enumerate(hs):
         last = li == len(hs) - 1
         firsts, kernel, count = layer_config(logn, h)
         new = {}
-        last_w = S
+        last_sel = S
+        g0 = S
+        while g0 % 3 != 1:                  # issue at phase 0
+            g0 += 1
         for t, p in firsts.items():
-            e0 = S
             for k in range(count):
-                e = e0 + 3 * k
+                e = g0 + 3 * k + ISSUE_TO_READ
+                first_read = e if first_read is None else min(first_read, e)
                 ar, br, ai, bi = bfly(enum(p, kernel, k), h, hn)
                 for cyc, s in ((e, sb(ar)), (e, sb(br)), (e + 1, sb(ai)), (e + 1, sb(bi))):
                     reads.setdefault(cyc, []).append(s)
@@ -162,16 +174,19 @@ def run(logn, inverse, data, gm, igm):
                     s_ = logn - 1
                     z = [wrap(v + (1 << (s_ - 1))) >> s_ for v in z]
                 new[ar], new[br], new[ai], new[bi] = z
-                for cyc, s in ((e + 12, sb(ar)), (e + 12, sb(br)), (e + 13, sb(ai)), (e + 13, sb(bi))):
+                wre = e + 2 + OUT32[0] + WRSEL      # write selects (x and y together); RAM write one cycle later
+                wim = e + 2 + OUT32[1] + WRSEL
+                for cyc, s in ((wre + 1, sb(ar)), (wre + 1, sb(br)), (wim + 1, sb(ai)), (wim + 1, sb(bi))):
                     writes.setdefault(cyc, []).append(s)
-                last_w = max(last_w, e + 13)
+                last_sel = max(last_sel, wim)
+                last_w = max(last_w, wim + 1)
         for c, v in new.items():
             mem[c] = v
-        S = S + 3 * count + 12
+        S = last_sel + 2                    # barrier on commits: the written count is registered, then the switch
     rc = sum(1 for v in reads.values() if len(v) != len(set(v)))
     wc = sum(1 for v in writes.values() if len(v) != len(set(v)))
     pc = sum(max(len(x) for x in b.values()) - 1 for b in rroot.values())
-    return mem, last_w + 1, LAT_RW, (rc, wc, pc)
+    return mem, last_w + 1 - first_read, LAT_RW, (rc, wc, pc)
 
 
 def main():

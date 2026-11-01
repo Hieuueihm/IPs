@@ -221,6 +221,57 @@ def fft_bf_cases(rng):
     return out
 
 
+def wrapw(x, w):
+    x &= (1 << w) - 1
+    return x - (1 << w) if x >> (w - 1) else x
+
+
+def fft_bf_w(w, direction, scale, s, ar, br, ai, bi, wr, wi):
+    """Mode 5 at W = 64 / 128 bit (spec 1.0 01.1: mul(a, b) = wrap(floor((a*b + 2^(W/2-1)) / 2^(W/2))), the same
+    butterfly as fft_bf, every operation wraps to W bits; scale: div2e(v, s) = (wrap(v + 2^(s-1))) >> s."""
+    f = w // 2
+    mul = lambda a, b: wrapw((a * b + (1 << (f - 1))) >> f, w)
+    if direction:
+        o1, o2 = wrapw(ar - br, w), wrapw(ai - bi, w)
+    else:
+        o1, o2 = br, bi
+    p0, p1 = mul(o1, wr), mul(o2, wi)
+    p2 = mul(wrapw(o1 + o2, w), wrapw(wr + wi, w))
+    tr, ti = wrapw(p0 - p1, w), wrapw(wrapw(p2 - p0, w) - p1, w)
+    if direction:
+        z = [wrapw(ar + br, w), tr, wrapw(ai + bi, w), ti]
+    else:
+        z = [wrapw(ar + tr, w), wrapw(ar - tr, w), wrapw(ai + ti, w), wrapw(ai - ti, w)]
+    if scale:
+        z = [wrapw(v + (1 << (s - 1)), w) >> s for v in z]
+    return z
+
+
+def fft_bf_wide_cases(rng):
+    """fmt 1 (64 bit) and 2 (128 bit); for each, the same groups and edge pattern as fft_bf_cases."""
+    out = []
+    for fmt, w in ((1, 64), (2, 128)):
+        h = 1 << (w - 1)
+        edges = [0, 1, -1, h - 1, -h, 1 << (w // 2), -(1 << (w // 2)), (1 << 32) - 1, 1 << 32, -(1 << 32),
+                 h - (1 << (w // 2 - 1)), 1 << (w // 2 - 1)]
+        for direction in (0, 1):
+            for scale, s in ((0, 0), (1, 1), (1, 5), (1, 9)):
+                if direction == 0 and scale:
+                    continue
+                vals = []
+                for e in edges:
+                    for pos in range(6):
+                        v = [wrapw(rng.getrandbits(w), w) for _ in range(6)]
+                        v[pos] = e
+                        vals.append(v)
+                vals += [[wrapw(rng.getrandbits(w), w) for _ in range(6)] for _ in range(RANDOM_PER_GROUP)]
+                for ar, br, ai, bi, wr, wi in vals:
+                    z = fft_bf_w(w, direction, scale, s, ar, br, ai, bi, wr, wi)
+                    out.append(" ".join([f"{fmt:x}", f"{direction:x}", f"{scale:x}", f"{s:x}"] +
+                                        [f"{x & ((1 << w) - 1):0{w // 4}x}" for x in (ar, br, ai, bi, wr, wi, *z)]))
+    return out
+
+
 def main():
     for q in Q_NTT:
         assert q % 2 == 1 and 3 <= q < 1 << 31
@@ -238,6 +289,8 @@ def main():
         # own random stream, so the files above keep their hashes
         write("fft32bf.txt", "dir scale s ar br ai bi wr wi zr0 zr1 zi0 zi1", fft_bf_cases(random.Random(SEED + 5)),
               "mode 5: FFT 32-bit butterfly, two beats (real pair, imaginary pair); dir 0 forward, 1 inverse"),
+        write("fftwbf.txt", "fmt dir scale s ar br ai bi wr wi zr0 zr1 zi0 zi1", fft_bf_wide_cases(random.Random(SEED + 6)),
+              "mode 5 at 64 / 128 bit (fmt 1 / 2): 2L beats of 32-bit limbs (real limbs low first, then imaginary)"),
     ]
     manifest = {
         "spec": "FlexTransform 2.0, 10_hop_dong_tile.md",
@@ -245,7 +298,7 @@ def main():
         "seed": SEED,
         "q_ntt": list(Q_NTT),
         "montgomery_r": "2^32",
-        "modes": {"2": "một phép nhân modulo", "4": "một butterfly", "5": "một butterfly FFT 32 bit (hai nhịp)"},
+        "modes": {"2": "một phép nhân modulo", "4": "một butterfly", "5": "một butterfly FFT 32 / 64 / 128 bit (2L nhịp)"},
         "files": files,
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

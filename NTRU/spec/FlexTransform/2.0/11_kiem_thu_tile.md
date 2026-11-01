@@ -1,5 +1,11 @@
 # 11 — Kiểm thử cấp tile
 
+> **Thay đổi 01/11/2026, lần 7:** chế độ 5 ở 64 / 128 bit ([10](10_hop_dong_tile.md) mục 4.8). Vector mới `fftwbf.txt`
+> (1 920 butterfly, mỗi dòng 2L nhịp), testbench đọc bằng `+KIND=4`; regression thêm các lần chạy nhóm A, B như chế độ 5
+> 32 bit, lỗi `FAULT_SWAP_XY` và lỗi mới `FAULT_NO_CARRY` (bỏ cờ nhớ giữa các phần). Đo thời gian ra của từng nhịp:
+> [sim/tile_thu/tb_wide_timing.sv](../../../sim/tile_thu/tb_wide_timing.sv). Bản trước:
+> [trước khi thêm 64 / 128 bit](../../../docs/plan_history/before_fft_wide_2026-11-01/11_kiem_thu_tile.md).
+
 > **Thay đổi 01/11/2026, lần 6:** chế độ 5 (butterfly FFT 32 bit, [10](10_hop_dong_tile.md) mục 4.7). Vector mới
 > `fft32bf.txt` (1 470 butterfly, mỗi dòng hai nhịp), testbench đọc bằng `+KIND=3` và luôn đưa nhịp 2 ngay sau nhịp 1;
 > regression thêm chế độ 5 ở nhóm A, B (dừng, request thưa, ghi hằng số lúc bận, reset giữa chừng, lịch không phụ thuộc
@@ -37,6 +43,7 @@ tích 16×16, vì đó chính là thứ cần kiểm. Hash SHA-256 của từng 
 | `raw32.txt` | 2 320 | Chế độ 0, bốn tổ hợp dấu, giá trị biên (0, 1, −1, −2³¹, 2³¹ − 1, 2³² − 1, …) và ngẫu nhiên | Cả hai |
 | `fft32.txt` | 1 842 | Chế độ 1, nửa-lên và cắt bớt, 264 ca đúng điểm giữa (16 bit thấp của tích = 0x8000) và lân cận ±1 | Cả hai |
 | `fft32bf.txt` | 1 470 | Chế độ 5, xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2³¹ − 1, −2³¹, ±2¹⁶, …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_core_plan.py | Cả hai |
+| `fftwbf.txt` | 1 920 | Chế độ 5 ở 64 bit (`fmt` 1) và 128 bit (`fmt` 2), mỗi độ rộng: xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2^(W−1) − 1, −2^(W−1), ±2^(W/2), 2³² − 1, ±2³², …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_wide_tile.py (tính theo từng phần) | Cả hai |
 | `ntt.txt` | 8 055 | Chế độ 2 và 4, R = 2³², q tăng dần: 3, 3329, 7681, 12289, 65521, 8380417; prime đầu, giữa và cuối của NTRUGen; 2³¹ − 1 | Cả hai |
 
 Với mỗi q, vector NTT phủ đủ bốn tổ hợp: chế độ 2; chế độ 4 CT; chế độ 4 GS; chế độ 4 GS có chia đôi.
@@ -158,6 +165,12 @@ tới chân cho phép của thanh ghi đầu vào bộ nhân.
 ## 3. Bảng kết quả
 
 Điền sau mỗi lần chạy. Ghi kèm phiên bản RTL, phiên bản trình mô phỏng và hash của manifest vector.
+
+Lần chạy 10, 01/11/2026: RTL thêm chế độ 5 ở 64 / 128 bit (hash `1c7502f7fd64e8a8`). Năm cấu hình, hai biến thể: mặc định, `IN_REG`,
+`LEAF_PD = 4`, `PHASE = 2` mỗi cấu hình 82 lần chạy đạt, 22/22 lỗi bị bắt; `EN_REG` 50 lần chạy, 16/16 (không có chế độ 5).
+Tốc độ đo: 0,337 request mỗi chu kỳ ở 64 bit (mức 4/12), 0,181 ở 128 bit (mức 8/45). Độ trễ khi testbench gửi liên tục
+(butterfly phải chờ trong 4 chỗ giữ): 23..49 (64 bit), 44..173 (128 bit); khi không chờ, đúng bảng của
+[10](10_hop_dong_tile.md) mục 4.8 ở cả hai chiều, có chia hay không. Lịch không phụ thuộc dữ liệu (`+SCHED=1`).
 
 Lần chạy 9, 01/11/2026: RTL thêm chế độ 5 (hash `29326f6d2523a117`). Năm cấu hình, hai biến thể: mặc định, `IN_REG`, `LEAF_PD = 4`,
 `PHASE = 2` mỗi cấu hình 66 lần chạy đạt, 18/18 lỗi bị bắt; `EN_REG` 50 lần chạy, 16/16 (không có chế độ 5). Độ trễ chế

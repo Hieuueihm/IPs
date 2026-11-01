@@ -3,10 +3,15 @@
 | Thuộc tính | Giá trị |
 |---|---|
 | Ngày | 2026-10-30 |
-| Trạng thái | **Bản đủ để triển khai**: hợp đồng cấp tile và các phần cấp lõi đã viết; vector chuẩn đã kiểm. Chưa có RTL |
-| Kiến trúc nguồn | [docs/architecture_v1.md](../../../docs/architecture_v1.md) (11 thay đổi, 12 giả thuyết) |
+| Trạng thái | Đặc tả mục tiêu. Đã có RTL tile và core tối thiểu; chưa triển khai/kiểm hết các yêu cầu |
+| Kiến trúc nguồn | [Kiến trúc hiện tại](../../../docs/architecture_v1.md); lịch sử quyết định được dẫn riêng trong trang đó |
 | Bản trước | [Đặc tả 1.0](../1.0/README.md), giữ nguyên, không sửa |
 | Người viết RTL | Người dùng; bộ spec này không chứa RTL |
+
+Đọc [danh sách source](../../../hdl/README.md) để chọn đúng bản RTL.
+[Review ngày 01/11](../../../docs/implementation_review_2026_11_01.md) ghi phạm vi
+đã kiểm và lỗi FFT32 đang biết. Tài liệu này mô tả yêu cầu, không tự xác nhận
+mọi chức năng đã có hoặc đã PASS trong RTL.
 
 ## Vì sao có bản 2.0
 
@@ -50,12 +55,12 @@ python scripts/build_spec2_kernel_assets.py     # vector cấp kernel, cần gcc
 python scripts/check_spec2_kernel_assets.py     # mã giả của 01 = C; q8380417 = đánh giá đa thức trực tiếp
 ```
 
-## Thứ tự triển khai đề xuất
+## Cách dùng với RTL hiện tại
 
-1. RTL khối tile thử, hai biến thể rút gọn (lai / rút gọn riêng), chạy toàn bộ [kiểm thử cấp tile](11_kiem_thu_tile.md).
-   Bản nháp để đối chiếu: [hdl/tile_thu/](../../../hdl/tile_thu/), testbench và script ở `sim/tile_thu/`,
-   `fpga/zcu106/tile_thu.tcl`.
-2. Đo hai biến thể trên Vivado theo [mục 8 của hợp đồng tile](10_hop_dong_tile.md#8-đo-trên-fpga). Đây là thí nghiệm
-   quyết định giả thuyết 2; nếu kết quả âm, lane 32 bit dùng bộ Montgomery riêng mà không phải sửa phần khác.
-3. Sau đó mới đến lõi, theo thứ tự ở mục 8 của kiến trúc: bộ điều khiển pipeline, gom lô và twiddle 4 bank, đưa tile
-   vào lõi, xen kẽ hai đa thức, NTT 32 bit, FFT 64 bit NTRUGen, NTT prime 31 bit; kiểm theo [04](04_kiem_thu_loi.md).
+1. Bắt đầu ở [tile đang dùng](../../../hdl/tile/MANIFEST.md), rồi đọc
+   [core hiện tại](../../../hdl/core_ntt/MANIFEST.md). Không lấy bản nháp `hdl/tile_thu/`
+   làm source chính.
+2. Đối chiếu từng chức năng RTL với yêu cầu trong 00–04 và hợp đồng tile 10.
+   Phần chưa có trong RTL vẫn là yêu cầu mục tiêu.
+3. Ưu tiên lỗi và khoảng trống trong [review 01/11](../../../docs/implementation_review_2026_11_01.md),
+   sau đó chạy các kiểm tra tương ứng trong [04](04_kiem_thu_loi.md) và [11](11_kiem_thu_tile.md).

@@ -18,7 +18,7 @@ Pipeline (cycle numbers relative to the accept cycle A of the butterfly at its t
   A - 2  read x and y rows, read the root pack            (x at A - 3 when x and y share a superbank: distance 512)
   A - 1  network selects (x select at A - 2 and hold_x at A - 1 when they share a superbank), root select
   A      tile accepts (req_valid)
-  A + 19 tile result; write select for x (and y)
+  A + 20 tile result (core tiles use IN_REG = 1 since 01/11/2026; 19 before); write select for x (and y)
   A + 20 RAM write of x (and y); when they share a superbank, y's write select at A + 20 and its write at A + 21
 A layer starts reading at S; the next layer's first read is one cycle after the last write (barrier per layer).
 
@@ -38,7 +38,7 @@ _s = importlib.util.spec_from_file_location("structured_net", ROOT / "model" / "
 sn = importlib.util.module_from_spec(_s)
 _s.loader.exec_module(sn)
 
-TILES, PB, TILE_LAT = 16, 4, 19
+TILES, PB, TILE_LAT = 16, 4, 20
 PHASE = [t // 6 for t in range(TILES)]
 R32 = 1 << 32
 PROFILES = {0: (12289, range(3, 11)), 1: (3329, range(3, 9)), 2: (8380417, range(8, 9))}

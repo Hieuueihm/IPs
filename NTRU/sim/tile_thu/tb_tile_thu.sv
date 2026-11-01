@@ -3,6 +3,7 @@
 //
 // Vector source (one of):
 //   +FILE=<vector file> +KIND=0 raw32 | 1 fft32 | 2 ntt | 3 fft32bf (mode 5, two beats per line)
+//                       | 4 fftwbf (mode 5 at 64 / 128 bit, 2L beats of 32-bit limbs per line)
 //   +CHAIN=<asset dir>  mode-change chain over raw32, fft32, ntt (group B case
 //                       "Đổi chế độ và hằng số"): q12289 butterfly -> FFT32 -> q8380417 ->
 //                       raw product -> NTRUGen prime GS with halving -> q3329 modmul
@@ -84,6 +85,9 @@ module tb_tile_thu;
         reg [31:0] a, b, sa, sb, fl, q, qi, md, dr, hv;
         reg [31:0] d0, d1, r0, z0, z1, ar, br, ai, bi, wr, wi, zr0, zr1, zi0, zi1, sc, sh;
         reg [64:0] p65;
+        reg [127:0] war, wbr, wai, wbi, wwr, wwi, wzr0, wzr1, wzi0, wzi1;
+        reg [31:0]  fm;
+        integer     lb, nl;
         reg [8*512-1:0] line;
         begin
             fd = $fopen(path, "r");
@@ -114,6 +118,23 @@ module tb_tile_thu;
                         v_d[n] = 0; v_r[n] = 0; v_z[n] = 0; v_halve[n] = 0; v_floor[n] = 0; v_qi[n] = 0;
                         v_mode[n] = 5; v_dir[n] = dr[0]; v_q[n] = sh; v_sign[n] = {1'b0, sc[0]};
                         v_d[n] = {bi, ai}; v_r[n] = wi; v_z[n] = {1'b0, zi1, zi0};
+                    end else if (k == 4) begin
+                        // mode 5 wide: 2L entries, limb lb of the real values, then of the imaginary values
+                        rc = $fscanf(fd, "%h %h %h %h %h %h %h %h %h %h %h %h %h %h",
+                                     fm, dr, sc, sh, war, wbr, wai, wbi, wwr, wwi, wzr0, wzr1, wzi0, wzi1);
+                        nl = (fm == 1) ? 2 : 4;
+                        for (lb = 0; lb < 2 * nl; lb = lb + 1) begin
+                            if (lb > 0) n = n + 1;
+                            v_r[n] = 0; v_halve[n] = 0; v_floor[n] = 0; v_qi[n] = 0;
+                            v_mode[n] = 5; v_dir[n] = dr[0]; v_q[n] = {fm[1:0], sh[3:0]}; v_sign[n] = {1'b0, sc[0]};
+                            if (lb < nl) begin
+                                v_d[n] = {wbr[32*lb +: 32], war[32*lb +: 32]}; v_r[n] = wwr[32*lb +: 32];
+                                v_z[n] = {1'b0, wzr1[32*lb +: 32], wzr0[32*lb +: 32]};
+                            end else begin
+                                v_d[n] = {wbi[32*(lb-nl) +: 32], wai[32*(lb-nl) +: 32]}; v_r[n] = wwi[32*(lb-nl) +: 32];
+                                v_z[n] = {1'b0, wzi1[32*(lb-nl) +: 32], wzi0[32*(lb-nl) +: 32]};
+                            end
+                        end
                     end else begin
                         rc = $fscanf(fd, "%h %h %h %h %h %h %h %h %h %h",
                                      q, qi, md, dr, hv, d0, d1, r0, z0, z1);
@@ -224,7 +245,7 @@ module tb_tile_thu;
                     if (first_acc < 0) first_acc = ecyc;
                     last_acc = ecyc;
                     i = i + 1;
-                    pair_pending = (v_mode[g0] == 5) && (i % 2 == 1);
+                    pair_pending = (v_mode[g0] == 5) && (v_q[g0][5:4] == 2'd0) && (i % 2 == 1);
                 end
                 if (rsp_valid) begin
                     idx = g0 + (j % cnt);
@@ -285,7 +306,9 @@ module tb_tile_thu;
                 e = e + 1;
             end
             rate = (last_acc > first_acc) ? (1.0 * cnt * rep) / (last_acc - first_acc + 1) : 1.0;
-            want = (v_mode[g0] == 5) ? 2.0 / 3.0 : (v_mode[g0] >= 2 && TREN_MANG == 1) ? 1.0 / 3.0 : 1.0;
+            // mode 5: 2L beats per 3 * (1 / 4 / 15) cycles at 32 / 64 / 128 bit
+            want = (v_mode[g0] == 5) ? ((v_q[g0][5:4] == 2'd0) ? 2.0 / 3.0 : (v_q[g0][5:4] == 2'd1) ? 4.0 / 12.0 : 8.0 / 45.0) :
+                   (v_mode[g0] >= 2 && TREN_MANG == 1) ? 1.0 / 3.0 : 1.0;
             if (stall == 0 && burst == 0 && sparse == 0 && resetat < 0 && cnt * rep >= 1000 && rate < 0.98 * want) begin
                 $display("  ERROR rate %0.4f below 98%% of %0.4f", rate, want);
                 e = e + 1;

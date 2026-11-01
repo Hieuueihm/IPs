@@ -1,0 +1,10 @@
+{
+  "source": "study/results/structured_net.json",
+  "sha256": "40b1bf4ed430c3b82b781861499ae6ac45e6ca6f1e5d39d19f4c0cbad2d0a9d5",
+  "word32_address_pairs_checked": 4096,
+  "read_port_source_pairs_equal": 32,
+  "write_bank_source_pairs_equal": 32,
+  "rtl_changed": false,
+  "savings_measured": false,
+  "note": "Structural checks only; Vivado may already merge duplicated selectors. No new RTL/PPA result."
+}
