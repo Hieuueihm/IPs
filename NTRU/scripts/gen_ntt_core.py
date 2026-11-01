@@ -2,8 +2,9 @@
 
 Outputs:
   hdl/core_ntt/ntt_core_gen.sv
-      ntt_core_layer_rom  per layer (logn, log2 h): tiles in use, first butterfly p_t of each tile, kernel basis,
-                          same-superbank flag (affine enumeration, model/ntt_core_sched.py)
+      ntt_core_layer_rom  per layer (min-stride-2 flag, direction, logn, log2 h): tiles in use, first butterfly p_t of
+                          each tile, kernel basis in plan order, same-superbank flag, cycles to the next layer's start
+                          (affine enumeration, model/ntt_core_sched.py; overlap plan, model/ntt_core_overlap.py)
       ntt_core_sel        per tile: superbank -> index into the tile's read source lists (hdl/net/ntt_bank_net_s.sv)
       ntt_core_route      per superbank: which tile port reads / writes it this cycle, its row, and the write select
   hdl/core_ntt/root_pack_b<0..3>.mem   4 root-pack banks, 384 rows x 96 bit: profile 0 / 1 / 2, forward then inverse
@@ -37,33 +38,46 @@ def seg_base(profile, inverse):
 
 
 def layer_rom(L):
+    """Layer table from the overlap plan (study/results/ntt_core_overlap.json, model/ntt_core_overlap.py)."""
     say = L.append
-    configs = {}
-    kmax = 0
-    for logn in range(3, 11):
-        for hlog in range(logn):
-            firsts, kernel, count, same = sched.layer_config(logn, 1 << hlog)
-            configs[(logn, hlog)] = (firsts, kernel, same)
-            kmax = max(kmax, len(kernel))
-    assert kmax <= 5
-    say("// Layer table: tiles in use, first butterfly of each tile, kernel basis, same-superbank flag.")
+    plans = json.loads((ROOT / "study" / "results" / "ntt_core_overlap.json").read_text())
+    rows = {}
+    for key, layers in plans.items():
+        prof, logn, op = (int(x) for x in key.split(","))
+        ms2 = int(prof == 1 and logn == 8)
+        inverse = int(op == 6)
+        for li, lay in enumerate(layers):
+            hlog = lay["h"].bit_length() - 1
+            firsts, kernel, count, same = sched.layer_config(logn, lay["h"])
+            kern = [kernel[j] for j in lay["order"]]
+            delta = layers[li + 1]["delta"] if li + 1 < len(layers) else 0
+            row = (firsts, kern, same, delta)
+            k = (ms2, inverse, logn, hlog)
+            if k in rows:
+                assert rows[k][1] == kern and rows[k][3] == delta, ("plans differ between profiles", key, hlog)
+            rows[k] = row
+    say("// Layer table (one entry per min-stride-2 flag, direction, logn, log2 h): tiles in use, first butterfly of each")
+    say("// tile, kernel basis in the order of the overlap plan, same-superbank flag, cycles to the next layer's start.")
     say("module ntt_core_layer_rom (")
+    say("    input  wire              ms2, inverse,")
     say("    input  wire [3:0]        logn, hlog,")
     say("    output reg  [15:0]       tv,")
     say(f"    output reg  [16*{IW}-1:0]  p,")
     say(f"    output reg  [5*{IW}-1:0]   kb,")
     say("    output reg  [2:0]        kdim,")
-    say("    output reg               same")
+    say("    output reg               same,")
+    say("    output reg  [7:0]        delta")
     say(");")
     say("    always @* begin")
-    say("        tv = 16'd0; p = 0; kb = 0; kdim = 3'd0; same = 1'b0;")
-    say("        case ({logn, hlog})")
-    for (logn, hlog), (firsts, kernel, same) in sorted(configs.items()):
+    say("        tv = 16'd0; p = 0; kb = 0; kdim = 3'd0; same = 1'b0; delta = 8'd0;")
+    say("        case ({ms2, inverse, logn, hlog})")
+    for (ms2, inv, logn, hlog), (firsts, kern, same, delta) in sorted(rows.items()):
+        assert len(kern) <= 5 and delta < 256
         tv = sum(1 << t for t in firsts)
         pv = sum(firsts.get(t, 0) << (IW * t) for t in range(TILES))
-        kv = sum(v << (IW * j) for j, v in enumerate(kernel))
-        say(f"            8'h{logn:x}{hlog:x}: begin tv = 16'h{tv:04x}; p = {16 * IW}'h{pv:x}; kb = {5 * IW}'h{kv:x}; "
-            f"kdim = 3'd{len(kernel)}; same = 1'b{int(same)}; end")
+        kv = sum(v << (IW * j) for j, v in enumerate(kern))
+        say(f"            10'b{ms2}{inv}_{logn:04b}_{hlog:04b}: begin tv = 16'h{tv:04x}; p = {16 * IW}'h{pv:x}; "
+            f"kb = {5 * IW}'h{kv:x}; kdim = 3'd{len(kern)}; same = 1'b{int(same)}; delta = 8'd{delta}; end")
     say("            default: ;")
     say("        endcase")
     say("    end")

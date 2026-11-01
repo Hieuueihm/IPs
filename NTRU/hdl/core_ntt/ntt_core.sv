@@ -14,8 +14,9 @@
 //   e + 1  network selects; same superbank: RAM read y, pack read, x captured    -> s2
 //   e + 2  tile accepts (same superbank: network selects for y and root, hold x) -> s3
 //   e + 3  same superbank: tile accepts
-// Result at A + 19: write select of x and y (same superbank: y one cycle later); RAM write the next cycle. The next
-// layer's first read is one cycle after the last write of the layer.
+// Result at A + 19: write select of x and y (same superbank: y one cycle later); RAM write the next cycle. Layers
+// overlap: the next layer starts a table-given number of cycles after the current one (model/ntt_core_overlap.py), and
+// each result takes its write address from a per-tile FIFO filled at issue.
 // INTT: tiles halve the sum branch and the inverse roots carry 2^-1, so no normalisation pass (spec 2.0, 03).
 //
 // Host port: only while idle. Line l (128 bit) = cells 8l .. 8l + 7, low cell in the low bits. Cell 8l + j always sits
@@ -64,7 +65,9 @@ module ntt_core (
     wire [31:0] cq, cqinv, croot1;
     wire [8:0]  pbase;
     ntt_core_consts u_consts (.profile(profile), .inverse(inverse), .q(cq), .qinv(cqinv), .root1(croot1), .pbase(pbase));
-    // the table is read for the current layer in CFG and for the next layer during RUN, and registered at the switch
+    // The table is read for the first layer in CFG and for the next layer during RUN, registered at the switch. Layers
+    // overlap: the next one starts delta cycles after the current one (model/ntt_core_overlap.py), without waiting for
+    // the writes of the current one; results find their addresses in a per-tile FIFO.
     wire          layer_sw;
     wire [3:0]    hnext = inverse ? hlog + 4'd1 : hlog - 4'd1;
     wire [15:0]   n_tv;
@@ -72,19 +75,21 @@ module ntt_core (
     wire [5*9-1:0]  n_kb;
     wire [2:0]    n_kdim;
     wire          n_same;
-    ntt_core_layer_rom u_layer (.logn(logn), .hlog(state == RUN ? hnext : hlog), .tv(n_tv), .p(n_lp), .kb(n_kb),
-        .kdim(n_kdim), .same(n_same));
+    wire [7:0]    n_delta;
+    ntt_core_layer_rom u_layer (.ms2(hmin == 4'd1), .inverse(inverse), .logn(logn), .hlog(state == RUN ? hnext : hlog),
+        .tv(n_tv), .p(n_lp), .kb(n_kb), .kdim(n_kdim), .same(n_same), .delta(n_delta));
     reg  [15:0]   tv;
     reg  [16*9-1:0] lp;
     reg  [5*9-1:0]  kb;
     reg  [5:0]    bf_per_tile;
     reg           same;
+    reg  [7:0]    delta, lt;                    // cycles to the next layer's start, cycles since this layer's start
     always @(posedge clk)
         if (state == CFG || layer_sw) begin
-            tv <= n_tv; lp <= n_lp; kb <= n_kb; bf_per_tile <= 6'd1 << n_kdim; same <= n_same;
+            tv <= n_tv; lp <= n_lp; kb <= n_kb; bf_per_tile <= 6'd1 << n_kdim; same <= n_same; delta <= n_delta;
         end
-    reg  [9:0]  layer_total;                      // butterflies of the layer = N / 2
-    reg  [9:0]  wdone;                            // butterflies of the layer fully written (write select issued)
+    reg  [13:0] cmd_total;                      // butterflies of the command = layers x N / 2
+    reg  [13:0] wdone;                          // butterflies fully written (last write select issued)
 
     // issue phase, aligned with the tiles' counters (same reset, en always 1)
     reg [1:0] gph;
@@ -118,9 +123,10 @@ module ntt_core (
         end
     endfunction
 
-    // ---------------- per-tile issue and write address generation ----------------
+    // ---------------- per-tile issue and write address FIFO ----------------
     reg         layer_on;
     reg  [15:0] s0v, s1v, s2v, s3v;
+    reg  [15:0] s0m, s1m, s2m, s3m;             // same superbank, per butterfly
     reg  [16*5-1:0] s0sx, s0sy;                 // superbanks (for the network selects)
     reg  [16*32-1:0] s0xo, s0yo, s1yo;          // superbanks one-hot, gated by valid (for the RAM requests)
     reg  [16*7-1:0] s0rx, s0ry, s1ry;
@@ -133,9 +139,10 @@ module ntt_core (
 
     wire [15:0] rsp_valid;
     reg  [15:0] ypend;                          // same superbank: y write select pending for the next cycle
-    reg  [16*32-1:0] wxso, wyso, ysbo;          // write superbanks one-hot (next result), y pending
-    reg  [16*7-1:0] wrx, wry, yrow;
-    reg  [16*5-1:0] kr, kw;
+    reg  [15:0] hm;                             // head of the address FIFO: same-superbank flag
+    reg  [16*32-1:0] hxo, hyo, ysbo;            // head superbanks one-hot, y pending
+    reg  [16*7-1:0] hrx, hry, yrow;
+    reg  [16*5-1:0] kr;
     reg  [15:0] rdone;
     wire [15:0] fin_now;                        // butterflies whose last write select is this cycle
 
@@ -149,12 +156,14 @@ module ntt_core (
         wire [9:0] r  = (10'd1 << (logn - 4'd1 - hlog)) + (cx >> (hlog + 4'd1));
         wire [8:0] pos = r[9:1] - 9'd1;
         wire       r1 = (hlog == logn - 4'd1);
-        wire [8:0] wi = enumi(lp[9*t +: 9], kw[5*t +: 5], kb);
-        wire [9:0] wcx = ins0(wi, hlog);
-        wire [9:0] wcy = wcx | (10'd1 << hlog);
+        // write addresses in issue order: 16 entries (at most 8 butterflies of a tile are in flight)
+        reg [24:0] fifo [0:15];
+        reg [3:0]  wp, rp;
+        wire [24:0] fh = fifo[rp];
         always @(posedge clk) begin
             // address stage
             s0v[t] <= !rst && go;
+            s0m[t] <= same;
             s0sx[5*t +: 5] <= sbank(cx);  s0rx[7*t +: 7] <= {2'b0, cx[9:5]};
             s0sy[5*t +: 5] <= sbank(cy);  s0ry[7*t +: 7] <= {2'b0, cy[9:5]};
             s0xo[32*t +: 32] <= (!rst && go) ? (32'd1 << sbank(cx)) : 32'd0;
@@ -166,15 +175,19 @@ module ntt_core (
             else if (go) kr[5*t +: 5] <= kr[5*t +: 5] + 5'd1;
             if (rst || !layer_on || layer_sw) rdone[t] <= 1'b0;
             else if (go && ({1'b0, kr[5*t +: 5]} + 6'd1 == bf_per_tile)) rdone[t] <= 1'b1;
-            // write side: address of the next result, recomputed from the write counter
-            wxso[32*t +: 32] <= 32'd1 << sbank(wcx);  wrx[7*t +: 7] <= {2'b0, wcx[9:5]};
-            wyso[32*t +: 32] <= 32'd1 << sbank(wcy);  wry[7*t +: 7] <= {2'b0, wcy[9:5]};
-            if (rst || !layer_on || layer_sw) kw[5*t +: 5] <= 5'd0;
-            else if (rsp_valid[t]) kw[5*t +: 5] <= kw[5*t +: 5] + 5'd1;
-            ypend[t] <= !rst && rsp_valid[t] && same;
-            if (rsp_valid[t]) begin ysbo[32*t +: 32] <= wyso[32*t +: 32]; yrow[7*t +: 7] <= wry[7*t +: 7]; end
+            // address FIFO: push at issue, pop at the result; the head is decoded into registers one cycle later
+            if (rst) begin wp <= 4'd0; rp <= 4'd0; end
+            else begin
+                if (go) begin fifo[wp] <= {same, sbank(cx), 2'b0, cx[9:5], sbank(cy), 2'b0, cy[9:5]}; wp <= wp + 4'd1; end
+                if (rsp_valid[t]) rp <= rp + 4'd1;
+            end
+            hm[t] <= fh[24];
+            hxo[32*t +: 32] <= 32'd1 << fh[23:19];  hrx[7*t +: 7] <= fh[18:12];
+            hyo[32*t +: 32] <= 32'd1 << fh[11:7];   hry[7*t +: 7] <= fh[6:0];
+            ypend[t] <= !rst && rsp_valid[t] && hm[t];
+            if (rsp_valid[t]) begin ysbo[32*t +: 32] <= hyo[32*t +: 32]; yrow[7*t +: 7] <= hry[7*t +: 7]; end
         end
-        assign fin_now[t] = same ? ypend[t] : rsp_valid[t];
+        assign fin_now[t] = (rsp_valid[t] && !hm[t]) || ypend[t];
     end endgenerate
 
     // pipeline stages s1..s3 (all tiles at once)
@@ -182,6 +195,7 @@ module ntt_core (
         s1v <= rst ? 16'd0 : s0v;
         s2v <= rst ? 16'd0 : s1v;
         s3v <= rst ? 16'd0 : s2v;
+        s1m <= s0m;  s2m <= s1m;  s3m <= s2m;
         s1yo <= rst ? {16*32{1'b0}} : s0yo;
         s1po <= rst ? 64'd0 : s0po;
         s1ry <= s0ry;  s1pr <= s0pr;  s1rs <= s0rs;
@@ -190,28 +204,40 @@ module ntt_core (
     end
 
     // ---------------- memory requests ----------------
-    // RAM read: x from s0; y from s0 (s1 when x and y share a superbank). Pack read with y.
-    wire [16*32-1:0] ryo = same ? s1yo : s0yo;
-    wire [16*7-1:0]  ryr = same ? s1ry : s0ry;
-    wire [16*4-1:0]  ppo = same ? s1po : s0po;
-    wire [16*9-1:0]  ppr = same ? s1pr : s0pr;
-    // writes: x and (unless same superbank) y at the result; y one cycle later when same
-    reg  [16*32-1:0] wxo, wyo;
-    reg  [16*7-1:0]  wyr;
+    // Per tile: RAM read x from s0; y and the root pack from s0, or from s1 when x and y share a superbank. A tile issues
+    // at most every 3 cycles, so its s0 and s1 never both hold a request.
+    reg  [16*32-1:0] ryo, wxo, wyo;
+    reg  [16*7-1:0]  ryr, wyr;
+    reg  [16*4-1:0]  ppo;
+    reg  [16*9-1:0]  ppr;
+    reg  [16*3-1:0]  q_ylo, q_yhi;
+    reg  [16*4-1:0]  q_rs;
+    reg  [15:0]      q_hold, req_valid;
     integer tw;
     always @* begin
         for (tw = 0; tw < 16; tw = tw + 1) begin
-            wxo[32*tw +: 32] = {32{rsp_valid[tw]}} & wxso[32*tw +: 32];
-            wyo[32*tw +: 32] = same ? ({32{ypend[tw]}} & ysbo[32*tw +: 32]) : ({32{rsp_valid[tw]}} & wyso[32*tw +: 32]);
+            ryo[32*tw +: 32] = (s0yo[32*tw +: 32] & {32{!s0m[tw]}}) | (s1yo[32*tw +: 32] & {32{s1m[tw]}});
+            ryr[7*tw +: 7]   = (s1v[tw] && s1m[tw]) ? s1ry[7*tw +: 7] : s0ry[7*tw +: 7];
+            ppo[4*tw +: 4]   = (s0po[4*tw +: 4] & {4{!s0m[tw]}}) | (s1po[4*tw +: 4] & {4{s1m[tw]}});
+            ppr[9*tw +: 9]   = (s1v[tw] && s1m[tw]) ? s1pr[9*tw +: 9] : s0pr[9*tw +: 9];
+            // network selects: y and root at s1, or at s2 (with x held) when same superbank
+            q_ylo[3*tw +: 3] = (s2v[tw] && s2m[tw]) ? s2ylo[3*tw +: 3] : s1ylo[3*tw +: 3];
+            q_yhi[3*tw +: 3] = (s2v[tw] && s2m[tw]) ? s2yhi[3*tw +: 3] : s1yhi[3*tw +: 3];
+            q_rs[4*tw +: 4]  = (s2v[tw] && s2m[tw]) ? s2rs[4*tw +: 4]  : s1rs[4*tw +: 4];
+            q_hold[tw]       = s2v[tw] && s2m[tw];
+            req_valid[tw]    = (s2v[tw] && !s2m[tw]) || (s3v[tw] && s3m[tw]);
+            // writes: x and (unless same superbank) y at the result; y one cycle later when same
+            wxo[32*tw +: 32] = {32{rsp_valid[tw]}} & hxo[32*tw +: 32];
+            wyo[32*tw +: 32] = ({32{rsp_valid[tw] && !hm[tw]}} & hyo[32*tw +: 32]) | ({32{ypend[tw]}} & ysbo[32*tw +: 32]);
+            wyr[7*tw +: 7]   = ypend[tw] ? yrow[7*tw +: 7] : hry[7*tw +: 7];
         end
-        wyr = same ? yrow : wry;
     end
 
     wire [63:0]     c_re, c_wen;
     wire [64*7-1:0] c_ra, c_wa;
     wire [64*3-1:0] c_wsel;
     ntt_core_route u_route (.clk(clk), .rxo(s0xo), .ryo(ryo), .rxr(s0rx), .ryr(ryr), .re(c_re), .ra(c_ra),
-        .wxo(wxo), .wyo(wyo), .wxr(wrx), .wyr(wyr), .wsel(c_wsel), .wen(c_wen), .wa(c_wa));
+        .wxo(wxo), .wyo(wyo), .wxr(hrx), .wyr(wyr), .wsel(c_wsel), .wen(c_wen), .wa(c_wa));
 
     // root-pack ROM, 4 banks; a bank is read by every tile that needs its pack this cycle (always the same pack)
     wire [4*96-1:0] pack_rd;
@@ -267,14 +293,12 @@ module ntt_core (
     wire [16*32-1:0] op_x, op_y, op_w;
     wire [16*64-1:0] tile_z;
     ntt_bank_net_s u_net (.clk(clk), .en(1'b1), .bank_rd(m_rd), .pack_rd(pack_rd),
-        .sel_xlo(s1xlo), .sel_xhi(s1xhi),
-        .sel_ylo(same ? s2ylo : s1ylo), .sel_yhi(same ? s2yhi : s1yhi),
-        .hold_x(same ? s2v : 16'd0), .root1(croot1), .sel_root(same ? s2rs : s1rs),
+        .sel_xlo(s1xlo), .sel_xhi(s1xhi), .sel_ylo(q_ylo), .sel_yhi(q_yhi),
+        .hold_x(q_hold), .root1(croot1), .sel_root(q_rs),
         .op_x(op_x), .op_y(op_y), .op_w(op_w), .tile_z(tile_z), .wsel(c_wsel), .wen(c_wen),
         .bank_wd(net_wd), .bank_we(net_we));
 
     reg cfg_we;
-    wire [15:0] req_valid = same ? s3v : s2v;
     wire [15:0] req_ready, tile_idle;
     generate for (t = 0; t < 16; t = t + 1) begin : g_tile
         wire [64:0] rd;
@@ -297,19 +321,20 @@ module ntt_core (
         end
     endfunction
     wire [4:0] nfin = pop16(fin_now);
-    wire layer_last_write = layer_on && (wdone + {5'd0, nfin} == layer_total);
     wire last_layer = inverse ? (hlog == logn - 4'd1) : (hlog == hmin);
-    assign layer_sw = layer_last_write && !last_layer;
+    assign layer_sw = (state == RUN) && layer_on && !last_layer && (lt == delta - 8'd1);
+    wire cmd_last_write = (state == RUN) && (wdone + {9'd0, nfin} == cmd_total);
     wire bad = (start_logn < 4'd3) || (start_profile == 2'd3) ||
                (start_profile == 2'd0 && start_logn > 4'd10) || (start_profile == 2'd1 && start_logn > 4'd8) ||
                (start_profile == 2'd2 && start_logn != 4'd8);
+    wire [3:0] start_hmin = (start_profile == 2'd1 && start_logn == 4'd8) ? 4'd1 : 4'd0;
 
     always @(posedge clk) begin
         done <= 1'b0;
         cfg_we <= 1'b0;
         if (rst) begin
-            state <= IDLE; layer_on <= 1'b0; error <= 1'b0; cycles <= 32'd0; wdone <= 10'd0;
-            inverse <= 1'b0; profile <= 2'd0; logn <= 4'd3; hlog <= 4'd0; hmin <= 4'd0; layer_total <= 10'd0;
+            state <= IDLE; layer_on <= 1'b0; error <= 1'b0; cycles <= 32'd0; wdone <= 14'd0; lt <= 8'd0;
+            inverse <= 1'b0; profile <= 2'd0; logn <= 4'd3; hlog <= 4'd0; hmin <= 4'd0; cmd_total <= 14'd0;
         end else begin
             if (busy) cycles <= cycles + 32'd1;
             case (state)
@@ -319,26 +344,26 @@ module ntt_core (
                     if (bad) done <= 1'b1;
                     else begin
                         inverse <= start_inverse; profile <= start_profile; logn <= start_logn;
-                        hmin <= (start_profile == 2'd1 && start_logn == 4'd8) ? 4'd1 : 4'd0;
-                        hlog <= start_inverse ? ((start_profile == 2'd1 && start_logn == 4'd8) ? 4'd1 : 4'd0)
-                                              : start_logn - 4'd1;
-                        layer_total <= 10'd1 << (start_logn - 4'd1);
+                        hmin <= start_hmin;
+                        hlog <= start_inverse ? start_hmin : start_logn - 4'd1;
+                        cmd_total <= {10'd0, start_logn - start_hmin} << (start_logn - 4'd1);
                         state <= CFG;
                     end
                 end
-                CFG: if (&tile_idle) begin
-                    cfg_we <= 1'b1;               // constants written while every tile is idle
+                // Constants are written while every tile is idle. The first layer starts at issue phase 2 (the phase the
+                // overlap plan was searched at), so the table's layer distances hold.
+                CFG: if (&tile_idle && gph == 2'd1) begin
+                    cfg_we <= 1'b1;
                     state <= RUN;
                     layer_on <= 1'b1;
-                    wdone <= 10'd0;
+                    lt <= 8'd0;
+                    wdone <= 14'd0;
                 end
                 RUN: begin
-                    wdone <= wdone + {5'd0, nfin};
-                    if (layer_last_write) begin
-                        wdone <= 10'd0;
-                        if (last_layer) begin layer_on <= 1'b0; state <= FIN; end
-                        else hlog <= hnext;
-                    end
+                    wdone <= wdone + {9'd0, nfin};
+                    lt <= layer_sw ? 8'd0 : lt + 8'd1;
+                    if (layer_sw) hlog <= hnext;
+                    if (cmd_last_write) begin layer_on <= 1'b0; state <= FIN; end
                 end
                 FIN: begin                        // the last RAM write happens in this cycle
                     done <= 1'b1;
