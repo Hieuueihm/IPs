@@ -4,6 +4,20 @@
 
 Nguồn: [kiến trúc v1](../../../docs/architecture_v1.md). Bản 1.0 giữ nguyên.
 
+### 2026-11-01, lần 11: FFT 64/128 bit, máy chế độ 5 dùng chung, profile 3 trên lõi
+
+- Hợp đồng tile (10, lần 9 và 10): chế độ 5 ở 64 / 128 bit (`cfg_q[5:4]`), tính theo từng phần 32 bit trên chính bộ nhân,
+  bộ cộng/trừ và bộ dịch của tile; từ lần 10 FFT 32 bit là trường hợp L = 1 của cùng máy (bỏ đường 32 bit riêng), tile giữ
+  8 butterfly ở 32 bit, 4 ở 64 / 128 bit; độ trễ 32 bit 15 / 16. Kiểm thử (11, lần 7): `fftwbf.txt`, `+KIND=4`,
+  `FAULT_NO_CARRY`; 5 cấu hình, mỗi cấu hình 82 lần chạy đạt, 22/22 lỗi bị bắt (`EN_REG`: 50, 16/16).
+- Lõi: FFT định dạng 1, 2 bằng ánh xạ "phần 32 bit = phần tử định dạng 0 ảo": khối L tile chung một butterfly, không thêm
+  nguồn mạng ([model/fft_wide_sched.py](../../../model/fft_wide_sched.py)); FFT chuyển tầng theo số lượt ghi đã xong (sửa lỗi
+  FFT32 chuyển tầng sớm). N1024: 644 / 2 031 / 7 510 chu kỳ (ngưỡng giả thuyết 3: 700 / 2 300 / 8 500).
+- Lõi: profile 3, prime lẻ < 2³¹ nạp lúc chạy, 16 khe, N2..1024, bỏ 0..2 tầng cuối; host ghi khe và gói root (đơn giản hóa so
+  với phép nạp prime của 02). 100 ca vàng đạt (80 so với C NTRUGen, 20 theo định nghĩa); N1024 984 / 985 chu kỳ.
+- Vivado lõi trước profile 3: 53 722 LUT / 29 435 FF / 64 DSP / 64 BRAM tile, WNS −0,672 ns; đường găng do rào chắn mới,
+  đã sửa, chưa đo lại.
+
 ### 2026-11-01, lần 10: chế độ 5 của tile, FFT 32 bit trên lõi
 
 - Hợp đồng tile (10, lần 8): chế độ 5, một butterfly FFT 32 bit trong hai nhịp request, chạy trên đường butterfly NTT

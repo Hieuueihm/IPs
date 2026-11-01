@@ -18,7 +18,7 @@
   "modes": {
     "2": "một phép nhân modulo",
     "4": "một butterfly",
-    "5": "một butterfly FFT 32 bit (hai nhịp)"
+    "5": "một butterfly FFT 32 / 64 / 128 bit (2L nhịp)"
   },
   "files": [
     {
@@ -40,6 +40,11 @@
       "file": "fft32bf.txt",
       "cases": 1470,
       "sha256": "2d3836d97e61110e8aea0d9c39f559d990ea281c5bf7b1013e9331716d0a62a8"
+    },
+    {
+      "file": "fftwbf.txt",
+      "cases": 1920,
+      "sha256": "34fb1062294a290e6675292cfa65b6cd644cddcfd834e9fc5d7ea975dfeeeabb"
     }
   ]
 }

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Regression of the tile test block (spec 2.0, 11_kiem_thu_tile.md), acceptance RTL, one 32-bit lane.
-# Variants: 3 = architecture v1 (dedicated Montgomery, one NTT per cycle), 1 = reduction on the
-# multiplier array (one NTT every 3 cycles; rejected by hypothesis 2, kept to compare).
+# Variants: 1 = current design, reduction on the multiplier array (one NTT every 3 cycles);
+# 3 = comparison design with dedicated Montgomery reduction (one NTT per cycle).
 # Usage (from the project root): sh sim/tile_thu/run.sh [rtl files...]
 #   VARIANTS="3" limits the run to the given variants (default: both).
 #   IVFLAGS="-DTL_IN_REG=1" adds iverilog flags (RTL options); BUILD=<dir> changes the build folder.
@@ -43,7 +43,7 @@ must_fail() { # binary label args...
 echo "== Nhóm A, B: số học, dừng chung, request thưa, tốc độ"
 for v in $VARIANTS; do
     FILES="raw32:0 fft32:1 ntt:2"
-    [ $M5 = 1 ] && FILES="$FILES fft32bf:3"
+    [ $M5 = 1 ] && FILES="$FILES fft32bf:3 fftwbf:4"
     for f in $FILES; do
         f=$(echo $f | tr ':' ' ')
         set -- $f
@@ -58,6 +58,7 @@ for v in $VARIANTS; do
     VERBOSE=1 run $B/tb_$v.vvp "variant=$v" +FILE=$A/fft32.txt +KIND=1 +REP=2
     VERBOSE=1 run $B/tb_$v.vvp "variant=$v" +FILE=$A/ntt.txt +REP=6
     [ $M5 = 1 ] && VERBOSE=1 run $B/tb_$v.vvp "variant=$v" +FILE=$A/fft32bf.txt +KIND=3 +REP=2
+    [ $M5 = 1 ] && VERBOSE=1 run $B/tb_$v.vvp "variant=$v" +FILE=$A/fftwbf.txt +KIND=4 +REP=2
 done
 
 echo "== Nhóm B: đổi chế độ, ghi hằng số lúc bận, reset giữa chừng, lịch không phụ thuộc dữ liệu, trộn hai modulus"
@@ -75,6 +76,9 @@ for v in $VARIANTS; do
     [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fft32bf.txt +KIND=3 +CFGBUSY=1 +SPARSE=30 +SEED=33
     [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fft32bf.txt +KIND=3 +RESETAT=5 +STALL=10 +SEED=34
     [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fft32bf.txt +KIND=3 +SCHED=1 +STALL=10 +SPARSE=20 +SEED=35
+    [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fftwbf.txt +KIND=4 +CFGBUSY=1 +SPARSE=30 +SEED=36
+    [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fftwbf.txt +KIND=4 +RESETAT=5 +STALL=10 +SEED=37
+    [ $M5 = 1 ] && run $b "variant=$v" +FILE=$A/fftwbf.txt +KIND=4 +SCHED=1 +STALL=10 +SPARSE=20 +SEED=38
 done
 
 echo "== Nhóm C: testbench phải bắt được lỗi cài vào"
@@ -89,6 +93,9 @@ for v in $VARIANTS; do
     if [ $M5 = 1 ]; then
         iverilog -g2012 $IVFLAGS -DFAULT_SWAP_XY -P tb_tile_thu.TREN_MANG=$v -o $B/f_$v.vvp $RTL $TB
         must_fail $B/f_$v.vvp "variant=$v FAULT_SWAP_XY mode 5" +FILE=$A/fft32bf.txt +KIND=3
+        must_fail $B/f_$v.vvp "variant=$v FAULT_SWAP_XY mode 5 wide" +FILE=$A/fftwbf.txt +KIND=4
+        iverilog -g2012 $IVFLAGS -DFAULT_NO_CARRY -P tb_tile_thu.TREN_MANG=$v -o $B/f_$v.vvp $RTL $TB
+        must_fail $B/f_$v.vvp "variant=$v FAULT_NO_CARRY" +FILE=$A/fftwbf.txt +KIND=4
     fi
     iverilog -g2012 $IVFLAGS -DFAULT_IGNORE_SLOT -P tb_tile_thu.TREN_MANG=$v -o $B/f_$v.vvp $RTL $TB
     must_fail $B/f_$v.vvp "variant=$v FAULT_IGNORE_SLOT" +FILE=$A/ntt.txt +MIX=1

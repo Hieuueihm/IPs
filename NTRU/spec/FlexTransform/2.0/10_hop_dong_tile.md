@@ -1,5 +1,18 @@
 # 10 — Hợp đồng cấp tile
 
+> **Thay đổi 01/11/2026, lần 10** (người dùng duyệt): **chế độ 5 ở 32 bit chạy trên cùng máy với 64 / 128 bit** (L = 1).
+> Bỏ đường FFT 32 bit riêng (bộ đếm pha, các bộ cộng T và đường dữ liệu phụ riêng): tile tổng hợp riêng 2 278 → khoảng
+> 2 050 LUT. Đổi hợp đồng mục 4.7: không còn quy tắc pha; tile nhận khi còn chỗ giữ (8 butterfly ở 32 bit); độ trễ 32 bit
+> 15 / 16 thay vì 9; tốc độ giữ một butterfly mỗi 3 chu kỳ. Lõi chuyển tầng FFT theo số lượt ghi đã xong, nên không phụ
+> thuộc độ trễ này.
+>
+> **Thay đổi 01/11/2026, lần 9** (người dùng duyệt): **chế độ 5 ở 64 và 128 bit.** `cfg_q[5:4]` chọn độ rộng (0 / 1 / 2 =
+> 32 / 64 / 128 bit). Ở 64 / 128 bit mỗi giá trị là L = 2 / 4 phần 32 bit; một butterfly là 2L nhịp, và tile làm cả butterfly
+> theo từng phần trên chính các phép của nó: mỗi tích W bit là 4 / 15 tích con 32×32 của bộ nhân ghép, cộng dồn theo cột
+> vào một bộ cộng dồn tích; các phép cộng/trừ có cờ nhớ giữa các phần; div2e có nhớ và dịch lấy bit của phần kế tiếp. Xem
+> mục 4.8. Tile giữ phần của tối đa 4 butterfly trong các bộ nhớ nhỏ. Bản trước:
+> [trước khi thêm 64 / 128 bit](../../../docs/plan_history/before_fft_wide_2026-11-01/10_hop_dong_tile.md).
+>
 > **Thay đổi 01/11/2026, lần 8** (người dùng duyệt): **chế độ 5, butterfly FFT 32 bit.** Butterfly FFT phức chạy trên chính
 > đường butterfly NTT của tile thay vì một khối FFT riêng ngoài tile: bộ cộng/trừ modulo với q = 0 (cộng/trừ quay vòng 32
 > bit) đứng trước bộ nhân cho FFT ngược và sau bộ nhân cho FFT xuôi; bộ nhân ghép 32×32 làm 3 tích; bộ làm tròn của chế độ
@@ -132,6 +145,7 @@ theo `req_valid & req_ready`. Bản nháp vi phạm điều này mất 17% Fmax 
   của hai biến thể không bị lệch vì hằng số.
 - Trong lõi, mỗi tile có thanh ghi riêng. Các tile khác nhau được phép giữ q khác nhau cùng lúc, và mỗi tile giữ tối đa
   hai q; đó là cách lõi chạy nhiều prime trong một lệnh ([03 mục 6](03_bo_nho.md)).
+- Chế độ 5 dùng ô 0: `cfg_q[3:0]` là độ dịch s của div2e, `cfg_q[5:4]` là độ rộng (mục 4.7, 4.8).
 
 ## 4. Chế độ và phép tính
 
@@ -151,7 +165,7 @@ theo `req_valid & req_ready`. Bản nháp vi phạm điều này mất 17% Fmax 
 | 1 | Tích FFT 32 bit đã làm tròn | FFT 32 bit |
 | 2 | Một phép nhân modulo | Đưa vào miền Montgomery, nhân từng điểm, chuẩn hóa cuối NTT ngược |
 | 4 | Một butterfly NTT | Mọi tầng của NTT xuôi và ngược |
-| 5 | Một butterfly FFT 32 bit (hai nhịp request) | Mọi tầng của FFT / FFT ngược định dạng 0 |
+| 5 | Một butterfly FFT 32 / 64 / 128 bit (2 / 4 / 8 nhịp request) | Mọi tầng của FFT / FFT ngược định dạng 0, 1, 2 |
 | 3, 6, 7 | Dự trữ | Không được gửi |
 
 Chế độ của các request liên tiếp phải giống nhau. Chỉ đổi chế độ, hướng hoặc `req_sign` khi `idle = 1`; `req_slot`
@@ -220,9 +234,9 @@ Phép tính trên từng butterfly giống hệt các nhịp cũ, nên NTT đầ
 
 ### 4.7 Chế độ 5 — butterfly FFT 32 bit
 
-Một butterfly phức gồm **hai nhịp request liền nhau**: nhịp 1 là cặp thực (`d0` = A.re, `d1` = B.re, `req_root` = wr), nhịp
-2 là cặp ảo (`d0` = A.im, `d1` = B.im, `req_root` = wi). Mọi phép tính quay vòng 32 bit (spec 1.0, 01.1); tích làm tròn
-nửa-lên như chế độ 1 (`cfg_floor` = 0); nhân phức 3 tích.
+Một butterfly phức gồm **hai nhịp request**: nhịp 1 là cặp thực (`d0` = A.re, `d1` = B.re, `req_root` = wr), nhịp 2 là cặp
+ảo (`d0` = A.im, `d1` = B.im, `req_root` = wi). Mọi phép tính quay vòng 32 bit (spec 1.0, 01.1); tích làm tròn nửa-lên như
+chế độ 1 (`cfg_floor` = 0); nhân phức 3 tích. Từ lần 10 đây là trường hợp L = 1 của máy mục 4.8.
 
 ```text
 xuôi (req_dir = 0):  o = B;            T = cmul(o, w);   kết quả  (A + T, A − T)
@@ -233,15 +247,54 @@ nhịp 1 trả (z0, z1) = (phần thực của kết quả thứ nhất, phần 
 req_sign[0] = 1: mọi giá trị trả về là div2e(v, s) = (wrap32(v + 2^(s−1))) >>> s, với s = cfg_q[3:0]
 ```
 
-- **Nhịp:** tile có bộ đếm chu kỳ 3 chạy tự do từ reset, giống nhau ở mọi tile (không có độ lệch `PHASE`). Nhịp 1 chỉ được
-  nhận ở pha 0; nhịp 2 chỉ ở pha 1, ngay sau một nhịp 1; pha 2 không nhận (tích p2 dùng bộ nhân). Bộ điều khiển phải đưa
-  nhịp 2 ở chu kỳ `en` kế tiếp sau nhịp 1. Tốc độ: một butterfly mỗi 3 chu kỳ (2/3 request mỗi chu kỳ).
-- **Chỉ dùng với `EN_REG` = 0:** hai nhịp phải vào đường dữ liệu ở hai chu kỳ liền nhau; với `EN_REG` = 1 đường dữ liệu
-  chạy thêm một chu kỳ sau khi `en` xuống nên điều đó không bảo đảm.
-- **Hằng số:** `cfg_q[3:0]` là độ dịch s của div2e; `cfg_qinv`, `cfg_halve`, `req_slot` không dùng.
-- **Độ trễ** mỗi nhịp: `LEAF_PD` + 7 (9 với mặc định), cả hai biến thể rút gọn.
-- **Dùng lại của tile:** bộ cộng/trừ modulo (q ép bằng 0), bộ nhân ghép, bộ làm tròn chế độ 1, đường dữ liệu phụ, thanh ghi
-  cổng ra. **Thêm:** hai bộ cộng cho o.re + o.im và wr + wi, hai bộ cộng cho T, hai bộ div2e.
+- **Nhận request:** như mục 4.8, nhưng tile giữ tối đa **8 butterfly** ở 32 bit (bộ nhớ phần 32 ô, 2 ô mỗi butterfly; với
+  độ trễ khoảng 16, 4 chỗ chỉ cho một butterfly mỗi 4 chu kỳ). Không còn quy tắc pha của lần 8.
+- **Tốc độ:** một butterfly mỗi 3 chu kỳ (2/3 request mỗi chu kỳ), bộ nhân là giới hạn.
+- **Hằng số:** `cfg_q[3:0]` là độ dịch s của div2e, `cfg_q[5:4]` = 0; `cfg_qinv`, `cfg_halve`, `req_slot` không dùng;
+  `cfg_floor` = 1 cho tích làm tròn xuống như chế độ 1.
+- **Độ trễ** với butterfly không phải chờ (mỗi butterfly cách butterfly trước ít nhất 3 chu kỳ, hai nhịp liền nhau): kết quả
+  nhịp 1 / 2 ra sau nhịp 1 là 15 / 16 chu kỳ (`LEAF_PD` = 2, `IN_REG` = 0; `IN_REG` = 1 cộng 1). Đo bằng
+  [sim/tile_thu/tb_wide_timing.sv](../../../sim/tile_thu/tb_wide_timing.sv) `+W=1`.
+- **Chỉ dùng với `EN_REG` = 0**, như mục 4.8.
+- Tích 32 bit là cột duy nhất của bộ cộng dồn, khởi đầu bằng 2¹⁵ (0 khi `cfg_floor` = 1), lấy bit 47:16.
+
+### 4.8 Chế độ 5 ở 64 / 128 bit
+
+`cfg_q[5:4]` = 1 (64 bit, L = 2) hoặc 2 (128 bit, L = 4); 3 dự trữ. Cùng phép tính như mục 4.7 nhưng mọi giá trị W = 32L bit
+(Q32.32 / Q64.64), `mul(a, b) = wrap_W(floor((a·b + 2^(W/2−1)) / 2^(W/2)))` (spec 1.0, 01.1), div2e quay vòng W bit.
+
+```text
+nhịp k (k = 0 .. L−1):      d0 = phần k của A.re,  d1 = phần k của B.re,  req_root = phần k của wr
+nhịp L + k:                 d0 = phần k của A.im,  d1 = phần k của B.im,  req_root = phần k của wi
+phần k = bit [32k + 31 : 32k], phần 0 thấp nhất
+kết quả nhịp j: (z0, z1) = phần j của (thực của kết quả thứ nhất, thực của kết quả thứ hai), rồi phần ảo, cùng thứ tự
+```
+
+- **Cách tính (để biết vì sao không cần khối riêng):** mỗi tích W bit là các tích con 32×32 của bộ nhân ghép, phần trên
+  cùng có dấu, cộng dồn theo cột (cột c = các tích có i + j = c) vào một bộ cộng dồn tích khoảng 68 bit; số làm tròn đặt
+  sẵn lúc bắt đầu tích; cột cuối cùng của mỗi cột xuất 32 bit. Cột từ 3L/2 trở lên không ảnh hưởng kết quả: 4 tích con ở
+  64 bit, 15 ở 128 bit. A ± B (ngược), A ± T (xuôi) dùng bộ cộng/trừ modulo với q = 0 và cờ nhớ / mượn giữa các phần; o.re +
+  o.im, wr + wi dùng hai bộ cộng của mục 4.7, T dùng ba bộ cộng của mục 4.7, div2e dùng hai bộ cộng làm tròn và hai bộ dịch
+  của mục 4.7; tất cả có cờ nhớ giữa các phần. Phần kết quả k ra khi phần k + 1 đã có (bộ dịch lấy s bit của phần kế), phần
+  cuối ra chu kỳ sau.
+- **Nhận request:** tile giữ phần của tối đa **4 butterfly** ở 64 / 128 bit (8 ở 32 bit, mục 4.7) (đã nhận, chưa trả hết).
+  Nhịp đầu của một butterfly chỉ được nhận khi còn chỗ; các nhịp sau của butterfly đó luôn được nhận. Các nhịp không cần
+  liền nhau.
+- **Tốc độ:** một butterfly mỗi 3 · 4 = 12 chu kỳ (64 bit) / 3 · 15 = 45 chu kỳ (128 bit): bộ nhân là giới hạn. Request:
+  4 / 12 và 8 / 45 mỗi chu kỳ.
+- **Độ trễ:** với một butterfly gặp bộ nhân rảnh (bộ điều khiển phát mỗi butterfly cách butterfly trước của cùng tile ít
+  nhất 12 / 45 chu kỳ, các nhịp liền nhau), kết quả nhịp j ra sau nhịp đầu của butterfly đúng số chu kỳ sau, ở cả hai chiều,
+  có chia hay không (`LEAF_PD` = 2, `IN_REG` = 0; `IN_REG` = 1 cộng 1, mỗi bậc `LEAF_PD` thêm cộng 1):
+
+| Độ rộng | Nhịp 0 .. L − 1 (phần thực) | Nhịp L .. 2L − 1 (phần ảo) |
+|---|---|---|
+| 64 bit | 23, 24 | 27, 28 |
+| 128 bit | 44, 47, 49, 50 | 59, 62, 64, 65 |
+
+  Lõi dựa vào các con số này để xếp lịch ghi. Nếu butterfly phải chờ trong 4 chỗ giữ (gửi nhanh hơn tốc độ trên), độ trễ
+  dài hơn, nhưng vẫn **không phụ thuộc giá trị dữ liệu** (kiểm bằng `+SCHED=1`, [11](11_kiem_thu_tile.md)).
+- **Chỉ dùng với `EN_REG` = 0:** với `EN_REG` = 1 đường dữ liệu chạy thêm một chu kỳ sau khi `en` xuống; chưa kiểm cho
+  chế độ 5.
 
 ## 5. Hai biến thể rút gọn
 
@@ -300,7 +353,8 @@ Chỉ để so sánh, không thuộc nghiệm thu (đều có lane 16 bit, nên 
   thấy khi đó Vivado tự đưa `en` lên bộ đệm toàn cục và vẫn đạt 3,0 ns, không cần thanh ghi `en` trong tile (ghi chú bản
   nháp mục 14).
 - **Độ trễ cố định:** số chu kỳ có `en = 1`, tính từ lúc nhận request đến lúc phát kết quả, chỉ phụ thuộc chế độ và
-  biến thể; không phụ thuộc giá trị dữ liệu hay q. Nếu trạng thái bên trong chạy thêm một chu kỳ sau khi `en` xuống (mục
+  biến thể; không phụ thuộc giá trị dữ liệu hay q. (Chế độ 5 ở 64 / 128 bit: phụ thuộc thêm vị trí nhịp trong butterfly và
+  việc butterfly có phải chờ hay không, mục 4.8; vẫn không phụ thuộc dữ liệu.) Nếu trạng thái bên trong chạy thêm một chu kỳ sau khi `en` xuống (mục
   trên), mỗi đợt dừng xảy ra khi phép đang chạy cộng thêm tối đa một chu kỳ. Manifest triển khai phải công bố độ trễ cho
   từng chế độ khi khối chạy liên tục (không dừng, request liên tiếp).
 - **Lịch phát:** người triển khai tự chọn. Lịch đã được mô hình kiểm là: ưu tiên lượt của phép cũ hơn, phép mới chỉ
@@ -313,6 +367,8 @@ Chỉ để so sánh, không thuộc nghiệm thu (đều có lane 16 bit, nên 
 | 0, 1 | 1 | 1 |
 | 2, 4 (mọi q) | 1/3 | 1 |
 | 5 (FFT 32 bit) | 2/3 (một butterfly mỗi 3 chu kỳ) | 2/3 |
+| 5 (FFT 64 bit) | 4/12 (một butterfly mỗi 12 chu kỳ) | 4/12 |
+| 5 (FFT 128 bit) | 8/45 (một butterfly mỗi 45 chu kỳ) | 8/45 |
 
 Con số của biến thể trên mảng suy từ số lượt bộ nhân: một phép nhân modulo chiếm cả tile 3 chu kỳ, và mỗi request ở chế
 độ 2 hay 4 có đúng một phép nhân modulo.
