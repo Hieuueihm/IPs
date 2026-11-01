@@ -475,6 +475,9 @@ Sửa sau khi khóa:
   (profile 0, 1, 2, xuôi và ngược). Chu kỳ (a): q12289 N1024 1 182 / 1 182 (xuôi / ngược), N256 368 / 368, NTT 32 bit N256
   368 / 368, đúng như mô hình lịch đã ghi trước; so với mô hình khóa 1,008 × và 1,022 ×, **đạt** (≤ 1,25 ×). Xen kẽ hai đa
   thức: chưa chạy. Vivado: 17 493 LUT / 13 191 FF / 64 DSP / 38 BRAM tile, WNS +0,200 ns ở 3,0 ns.
+- **Sau khi chồng tầng** ([model/ntt_core_overlap.py](../model/ntt_core_overlap.py)): N1024 983 / 984, N256 249 / 245 chu kỳ
+  (0,84 × và 0,69 × mô hình khóa, vì mô hình khóa giả định rào chắn mỗi tầng); 48/48 khớp; 17 748 LUT / 13 408 FF / 64 DSP /
+  38 BRAM tile, WNS +0,098 ns.
 
 **Cách đo tài nguyên** (giả thuyết 1, 2, 5): trên FPGA, bằng Vivado.
 - Linh kiện **xczu7ev-ffvc1156-2-e** (board ZCU106, đã dùng trong `fpga/zcu106/`); cùng phiên bản Vivado và cùng
