@@ -14,37 +14,39 @@
     2147473409,
     2147483647
   ],
-  "montgomery_r": "2^32",
+  "q_ntt16": [
+    3329,
+    7681,
+    10753,
+    12289,
+    18433
+  ],
+  "montgomery_r": "2^32 (NTT hai hệ số mỗi từ: 2^16)",
   "modes": {
-    "2": "một phép nhân modulo",
-    "4": "một butterfly",
-    "5": "một butterfly FFT 32 / 64 / 128 bit (2L nhịp)"
+    "0": "NTT: một butterfly",
+    "1": "FFT: một butterfly 32 / 64 / 128 bit (2L nhịp)",
+    "2": "NTT hai hệ số mỗi từ: hai butterfly 16 bit trên hai từ"
   },
   "files": [
     {
-      "file": "raw32.txt",
-      "cases": 2320,
-      "sha256": "b951715a7738ebca18107d45a3850aeb2faf3d9610dd78bec2934dea63f06631"
-    },
-    {
-      "file": "fft32.txt",
-      "cases": 1842,
-      "sha256": "233ac53dcf0c31814a9d63dc0dbdb3b25c6e0103605ca75e1b9502df3b7abf3f"
-    },
-    {
       "file": "ntt.txt",
-      "cases": 8055,
-      "sha256": "050643681239d31baa3400a4863e5467f50a2dd20a62745879fd3c9a602d1598"
+      "cases": 6228,
+      "sha256": "a8613ead8e4b7968e10cf5e48386f15d672ab92d518e7d85bf968a3036680992"
     },
     {
       "file": "fft32bf.txt",
       "cases": 1470,
-      "sha256": "2d3836d97e61110e8aea0d9c39f559d990ea281c5bf7b1013e9331716d0a62a8"
+      "sha256": "8ca71bf3306b6ec69812fc4b0955fd13f1806f09c05ffcab786bec73eb47a81b"
     },
     {
       "file": "fftwbf.txt",
       "cases": 1920,
-      "sha256": "34fb1062294a290e6675292cfa65b6cd644cddcfd834e9fc5d7ea975dfeeeabb"
+      "sha256": "72f7598f3693e3e9b05da198c32650dd5bc21a0c0a885305e53515a232c0c484"
+    },
+    {
+      "file": "ntt16.txt",
+      "cases": 7254,
+      "sha256": "093fb746df1a309d94709ffa478f3def4cb0680f34c73559a96367e0ae6945ba"
     }
   ]
 }

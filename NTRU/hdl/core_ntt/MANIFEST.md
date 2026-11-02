@@ -25,6 +25,12 @@ kiểm core. Bảng tầng NTT khóa theo (số tầng bỏ, chiều, logn, tầ
 cố định và profile 3 dùng chung một bảng ([model/ntt_core_overlap.py](../../model/ntt_core_overlap.py),
 [model/ntt_prime_core.py](../../model/ntt_prime_core.py); bộ sinh kiểm hai nguồn cho cùng kế hoạch).
 
+## Tile dùng trong lõi
+
+Từ 02/11/2026 tile có ba chế độ, `req_mode` 2 bit: lõi gửi 0 (NTT) và 1 (FFT); chế độ 2 (NTT hai hệ số 16 bit mỗi từ)
+có ở tile nhưng lõi chưa dùng. Kết quả tile 64 bit. Độ trễ NTT và FFT của tile không đổi, nên bảng tầng và lịch FFT
+giữ nguyên. Tile tổng hợp riêng 1 759 LUT (trước 2 045), xem [hdl/tile/MANIFEST.md](../tile/MANIFEST.md).
+
 ## Kiểm tra gần nhất
 
 01/11/2026, nguồn sau khi thêm profile 3 (`sh sim/core_ntt/run.sh`, trả mã lỗi khi thiếu ca hoặc có ca sai):
@@ -59,6 +65,7 @@ Script sinh lại bảng, chạy ba file vector và trả mã 1 nếu số dòng
 
 ## Số đo Vivado
 
+Từ 02/11/2026 mục tiêu là 5,0 ns (200 MHz); lần đo dưới đây còn ở 3,0 ns, trước khi rút gọn tile. **Chưa đo lõi ở 5,0 ns.**
 Vivado 2018.1, `xczu7ev-ffvc1156-2-e`, 3,0 ns, sau route, mặc định opt/place/route. Bản chụp nguồn ở
 `study/build/step1_snapshot/` (hash trong `hashes.txt`).
 

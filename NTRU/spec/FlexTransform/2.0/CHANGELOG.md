@@ -4,6 +4,17 @@
 
 Nguồn: [kiến trúc v1](../../../docs/architecture_v1.md). Bản 1.0 giữ nguyên.
 
+### 2026-11-02, lần 12: tile ba chế độ, NTT hai hệ số mỗi từ, đo ở 5,0 ns
+
+- Mục tiêu clock nới xuống khoảng 200 MHz (5,0 ns); số đo từ ngày này ở 5,0 ns, trước đó ở 3,0 ns.
+- Hợp đồng tile (10, lần 11): bỏ chế độ tích thô, tích FFT 32 bit và nhân modulo đơn (lõi không dùng); `req_mode` 2 bit:
+  0 NTT, 1 FFT, 2 NTT hai hệ số 16 bit mỗi từ (mới, hai làn trên máy NTT, 2 butterfly hệ số mỗi 3 chu kỳ, độ trễ như NTT,
+  chỉ biến thể trên mảng), 3 dự trữ; `req_sign` 1 bit; `rsp_data` 64 bit. Dữ liệu đi kèm của NTT chung bộ nhớ LUT với FFT;
+  hai bộ trừ T của FFT chung một chuỗi. Tile 2 045 → 1 759 LUT (tổng hợp), độ trễ NTT và FFT không đổi.
+- Kiểm thử (11, lần 8): bỏ `raw32.txt`, `fft32.txt`; `ntt.txt` chỉ còn NTT, bỏ cột chế độ; vector mới `ntt16.txt`; chuỗi
+  đổi chế độ qua NTT, FFT 32 / 128 bit và NTT hai hệ số.
+- Lõi: `req_mode` 2 bit (NTT 0, FFT 1), dữ liệu kết quả 64 bit; chưa dùng chế độ NTT hai hệ số.
+
 ### 2026-11-01, lần 11: FFT 64/128 bit, máy chế độ 5 dùng chung, profile 3 trên lõi
 
 - Hợp đồng tile (10, lần 9 và 10): chế độ 5 ở 64 / 128 bit (`cfg_q[5:4]`), tính theo từng phần 32 bit trên chính bộ nhân,

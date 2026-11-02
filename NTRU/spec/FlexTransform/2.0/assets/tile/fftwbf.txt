@@ -1,4 +1,4 @@
-# mode 5 at 64 / 128 bit (fmt 1 / 2): 2L beats of 32-bit limbs (real limbs low first, then imaginary)
+# FFT mode at 64 / 128 bit (fmt 1 / 2): 2L beats of 32-bit limbs (real limbs low first, then imaginary)
 # fmt dir scale s ar br ai bi wr wi zr0 zr1 zi0 zi1
 1 0 0 0 0000000000000000 03ec8b7c88c9282e 5bbb64ea187db5ff a0465a6132e2da19 730352678af20223 2727c3e809271cd8 8826186aeade5ff5 77d9e7951521a00b 1fed7c4d7116a689 97894d86bfe4c575
 1 0 0 0 e76c1107f0449f8b 0000000000000000 68876104bffc697a ceac048f3607e033 f38760d968589707 c052fd9279448faa 77d080520b83421d 5707a1bdd505fcf9 27b8da530133f348 a955e7b67ec4dfac
