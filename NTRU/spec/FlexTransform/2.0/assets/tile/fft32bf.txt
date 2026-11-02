@@ -1,4 +1,4 @@
-# mode 5: FFT 32-bit butterfly, two beats (real pair, imaginary pair); dir 0 forward, 1 inverse
+# FFT mode (req_mode 1) at 32 bit, two beats (real pair, imaginary pair); dir 0 forward, 1 inverse
 # dir scale s ar br ai bi wr wi zr0 zr1 zi0 zi1
 0 0 0 00000000 33d259b1 e5015148 fdfbc240 049b0ff2 c9024c50 c85b816d 37a47e93 e12b1726 e8d78b6a
 0 0 0 944e634a 00000000 d23819d4 b8dff968 7fc5451f c751cee2 2d7330f6 fb29959e 20196034 8456d374

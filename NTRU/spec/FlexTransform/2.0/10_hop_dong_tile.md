@@ -1,5 +1,21 @@
 # 10 — Hợp đồng cấp tile
 
+> **Thay đổi 02/11/2026, lần 11** (người dùng duyệt): **tile còn ba chế độ, `req_mode` 2 bit.**
+> - **Bỏ chế độ 0, 1, 2 cũ** (tích thô 32×32, tích FFT 32 bit, một phép nhân modulo): lõi không bao giờ gửi chúng. Một
+>   phép nhân modulo đơn làm bằng butterfly NTT CT với x = 0: z0 = Mont(y, w), bỏ qua z1. Cùng lúc bỏ các bit chỉ chế độ
+>   0 dùng: `req_sign` còn 1 bit, `rsp_data` còn 64 bit.
+> - **Mã mới:** 0 = NTT (chế độ 4 cũ), 1 = FFT (chế độ 5 cũ), 2 = **NTT hai hệ số 16 bit mỗi từ** (mới, mục 4.9), 3 dự
+>   trữ. Chế độ mới là butterfly NTT chạy trên hai làn 16 bit của chính máy NTT: lá 0 và lá 1 của bộ nhân ghép mang hai
+>   làn, lá 2 và 3 nhận 0; bộ cộng/trừ, bộ rút gọn và phép chia đôi cắt nhớ ở bit 16. Hai butterfly hệ số mỗi 3 chu kỳ
+>   (gấp đôi NTT), cùng độ trễ với NTT. Bản bốn làn (bốn butterfly mỗi 3 chu kỳ) tốn thêm 919 LUT nên không chọn.
+> - **Dùng chung trong tile:** dữ liệu đi kèm của NTT (x hoặc x + y, nhãn, ô modulus) chờ trong bộ nhớ LUT của FFT thay
+>   cho một đường trễ riêng; hai bộ trừ T của FFT (p0 − p1 và p2 − (p0 + p1)) dùng chung một chuỗi.
+> - **Đo từ 02/11/2026 ở 5,0 ns** (200 MHz, người dùng nới mục tiêu); số đo trước đó ở 3,0 ns. Tile tổng hợp riêng
+>   (Vivado 2018.1, `tile_thu_top`, IN_REG = 1): 2 045 → **1 759 LUT**, FF 1 547 → 1 521, LUTRAM 299 → 251, DSP 4, kèm
+>   chế độ mới. Độ trễ NTT và FFT không đổi, nên lõi không phải đổi lịch.
+>
+> Bản trước: [trước khi rút gọn chế độ](../../../docs/plan_history/before_tile_mode6_2026-11-01/10_hop_dong_tile.md).
+>
 > **Thay đổi 01/11/2026, lần 10** (người dùng duyệt): **chế độ 5 ở 32 bit chạy trên cùng máy với 64 / 128 bit** (L = 1).
 > Bỏ đường FFT 32 bit riêng (bộ đếm pha, các bộ cộng T và đường dữ liệu phụ riêng): tile tổng hợp riêng 2 278 → khoảng
 > 2 050 LUT. Đổi hợp đồng mục 4.7: không còn quy tắc pha; tile nhận khi còn chỗ giữ (8 butterfly ở 32 bit); độ trễ 32 bit
@@ -88,14 +104,13 @@ trên một lane, giả thuyết 2 đạt, và từ lần 7 thiết kế v1 là 
 | Bộ cộng "phần cao + hạng bù + 1 bit" | Phần của ngân hàng dùng chung | Phần ứng với một butterfly |
 | Cộng/trừ modulo, trừ q có điều kiện, chia đôi modulo | Phần của ngân hàng dùng chung | Phần ứng với một butterfly |
 | Ghép cặp hệ số cho CT/GS, đặt kết quả về bộ nhớ | Mạng bank → tile và đường ghi | **Không**; testbench cấp toán hạng đã xếp |
-| Ghép tích giữa các tile (FFT 64/128 bit), ghép số phức 3 tích | Có | **Không**; tile chỉ xuất tích thô 32×32 |
+| Butterfly FFT 32 / 64 / 128 bit (từng phần 32 bit, nhân phức 3 tích) | Có | Có |
 | Bộ nhớ, bảng root, bộ điều khiển lệnh | Có | **Không**; testbench cấp trực tiếp |
 
-Mọi phép tính hoàn tất trong một tile thì khối tile thử phải tính đủ đến kết quả cuối:
-- butterfly và phép nhân modulo của NTT, mọi q lẻ từ 3 đến dưới 2³¹;
-- tích FFT 32 bit đã làm tròn.
-
-Phép tính cần nhiều tile (FFT 64 và 128 bit) thì khối chỉ xuất tích thô 32×32 của phần mình.
+Khối tile thử tính đủ đến kết quả cuối của:
+- butterfly NTT, mọi q lẻ từ 3 đến dưới 2³¹;
+- butterfly NTT hai hệ số 16 bit mỗi từ, q lẻ dưới 2¹⁵;
+- butterfly FFT 32 / 64 / 128 bit.
 
 ## 2. Tín hiệu
 
@@ -109,20 +124,20 @@ khai.
 | `idle` | ra | 1 | 1 khi không còn phép nào đang chạy trong khối |
 | `cfg_we` | vào | 1 | Ghi thanh ghi hằng số (mục 3) |
 | `cfg_slot` | vào | 1 | Ô hằng số được ghi: q, q′ vào ô 0 hoặc ô 1 (mục 3) |
-| `cfg_q` | vào | 32 | Modulus q |
-| `cfg_qinv` | vào | 32 | q′ = −q⁻¹ mod 2³² |
-| `cfg_floor` | vào | 1 | Tích FFT 32 bit: 0 = làm tròn nửa-lên, 1 = cắt bớt |
+| `cfg_q` | vào | 32 | Modulus q (NTT hai hệ số: {q, q}; FFT: độ dịch và độ rộng, mục 3) |
+| `cfg_qinv` | vào | 32 | q′ = −q⁻¹ mod 2³² (NTT hai hệ số: {q′, q′} với q′ = −q⁻¹ mod 2¹⁶) |
+| `cfg_floor` | vào | 1 | FFT 32 bit: 0 = tích làm tròn nửa-lên, 1 = cắt bớt |
 | `cfg_halve` | vào | 1 | Butterfly GS: 1 = chia đôi modulo nhánh tổng |
 | `req_valid`, `req_ready` | vào / ra | 1 | Bắt tay request; nhận khi `en & req_valid & req_ready` ở cạnh clock |
-| `req_mode` | vào | 3 | Chế độ (mục 4) |
-| `req_dir` | vào | 1 | NTT: 0 = CT (xuôi), 1 = GS (ngược) |
+| `req_mode` | vào | 2 | Chế độ (mục 4): 0 NTT, 1 FFT, 2 NTT hai hệ số mỗi từ, 3 dự trữ |
+| `req_dir` | vào | 1 | NTT: 0 = CT (xuôi), 1 = GS (ngược). FFT: 0 = xuôi, 1 = ngược |
 | `req_slot` | vào | 1 | Ô hằng số (q, q′) dùng cho request NTT này; được đổi giữa các request liên tiếp |
-| `req_sign` | vào | 2 | Tích thô: bit 0 = a có dấu, bit 1 = b có dấu |
+| `req_sign` | vào | 1 | FFT: div2e. NTT hai hệ số: cách ghép cặp. NTT: không dùng |
 | `req_data` | vào | 64 | 2 ô 32 bit: d0 ở `[31:0]`, d1 ở `[63:32]` |
-| `req_root` | vào | 32 | Ô r0 |
+| `req_root` | vào | 32 | Ô r0 (NTT hai hệ số: hai root 16 bit) |
 | `req_tag` | vào | 8 | Nhãn, trả lại nguyên vẹn cùng kết quả |
 | `rsp_valid` | ra | 1 | Có kết quả; chỉ lên khi `en = 1` |
-| `rsp_data` | ra | 65 | z0 ở `[31:0]`, z1 ở `[63:32]`; bit 64 chỉ dùng ở chế độ 0 |
+| `rsp_data` | ra | 64 | z0 ở `[31:0]`, z1 ở `[63:32]` |
 | `rsp_tag` | ra | 8 | Nhãn của request tương ứng |
 
 Không có `rsp_ready`. Khi phía sau chưa nhận được kết quả, bộ điều khiển hạ `en` cho cả khối; đây là cách dừng mà mô
@@ -145,15 +160,16 @@ theo `req_valid & req_ready`. Bản nháp vi phạm điều này mất 17% Fmax 
   của hai biến thể không bị lệch vì hằng số.
 - Trong lõi, mỗi tile có thanh ghi riêng. Các tile khác nhau được phép giữ q khác nhau cùng lúc, và mỗi tile giữ tối đa
   hai q; đó là cách lõi chạy nhiều prime trong một lệnh ([03 mục 6](03_bo_nho.md)).
-- Chế độ 5 dùng ô 0: `cfg_q[3:0]` là độ dịch s của div2e, `cfg_q[5:4]` là độ rộng (mục 4.7, 4.8).
+- Chế độ FFT dùng ô 0: `cfg_q[3:0]` là độ dịch s của div2e, `cfg_q[5:4]` là độ rộng (mục 4.7, 4.8).
+- Chế độ NTT hai hệ số: mỗi ô giữ {q, q} và {q′, q′} (một bản cho mỗi làn 16 bit, mục 4.9).
 
 ## 4. Chế độ và phép tính
 
 ### 4.1 Ký hiệu
 
 - `floor` làm tròn về −∞. `wrap_W(x)`: lấy x mod 2^W rồi hiểu theo bù hai W bit.
-- R = 2³² với mọi q. (Trước lần 6, q < 2¹⁶ dùng R = 2¹⁶; phần mềm viết cho R = 2¹⁶ phải đổi hằng số, xem
-  [01](01_so_hoc_kernel.md).)
+- R = 2³² với mọi q ở chế độ NTT. (Trước lần 6, q < 2¹⁶ dùng R = 2¹⁶; phần mềm viết cho R = 2¹⁶ phải đổi hằng số, xem
+  [01](01_so_hoc_kernel.md).) Chế độ NTT hai hệ số dùng R = 2¹⁶ (mục 4.9).
 - `Mont(a, b) = a · b · R⁻¹ mod q`, kết quả trong [0, q).
 - `d0, d1` là các ô của `req_data`, `r0` là `req_root`, `z0, z1` là các ô của `rsp_data`.
 
@@ -161,36 +177,21 @@ theo `req_valid & req_ready`. Bản nháp vi phạm điều này mất 17% Fmax 
 
 | `req_mode` | Chế độ | Dùng cho |
 |---:|---|---|
-| 0 | Tích thô 32×32 | Phần của tile trong FFT 64 / 128 bit |
-| 1 | Tích FFT 32 bit đã làm tròn | FFT 32 bit |
-| 2 | Một phép nhân modulo | Đưa vào miền Montgomery, nhân từng điểm, chuẩn hóa cuối NTT ngược |
-| 4 | Một butterfly NTT | Mọi tầng của NTT xuôi và ngược |
-| 5 | Một butterfly FFT 32 / 64 / 128 bit (2 / 4 / 8 nhịp request) | Mọi tầng của FFT / FFT ngược định dạng 0, 1, 2 |
-| 3, 6, 7 | Dự trữ | Không được gửi |
+| 0 | NTT: một butterfly | Mọi tầng của NTT xuôi và ngược; một phép nhân modulo đơn là CT với x = 0 (z0 = Mont(y, w), bỏ qua z1) |
+| 1 | FFT: một butterfly 32 / 64 / 128 bit (2 / 4 / 8 nhịp request) | Mọi tầng của FFT / FFT ngược định dạng 0, 1, 2 |
+| 2 | NTT hai hệ số: hai butterfly 16 bit trên hai từ, mỗi từ hai hệ số (q < 2¹⁵) | NTT q nhỏ lưu hai hệ số mỗi từ (ML-KEM, FN-DSA, …) |
+| 3 | Dự trữ | Không được gửi; tile không bao giờ nhận (`req_ready = 0`) |
+
+Đến 01/11/2026 mã chế độ là 3 bit: 0 tích thô 32×32, 1 tích FFT 32 bit, 2 một phép nhân modulo, 4 NTT, 5 FFT; các tài
+liệu và mô hình cũ còn gọi NTT là "chế độ 4" và FFT là "chế độ 5".
 
 Chế độ của các request liên tiếp phải giống nhau. Chỉ đổi chế độ, hướng hoặc `req_sign` khi `idle = 1`; `req_slot`
-được đổi ở mọi request. Bộ điều khiển
-bảo đảm điều này; khối có thể giữ `req_ready = 0` cho đến khi rảnh nếu thấy chế độ đổi.
+được đổi ở mọi request. Bộ điều khiển bảo đảm điều này; khối có thể giữ `req_ready = 0` cho đến khi rảnh nếu thấy chế
+độ đổi.
 
-### 4.3 Chế độ 0 — tích thô 32×32
+### 4.3, 4.4 (bỏ ở lần 11)
 
-```text
-a = d0 (có dấu nếu req_sign[0]), b = d1 (có dấu nếu req_sign[1])
-z = a · b chính xác, bù hai 65 bit, đặt ở rsp_data[64:0]
-```
-
-65 bit vì tích hai số không dấu 32 bit có thể vượt 2⁶³. Không làm tròn, không cắt.
-
-### 4.4 Chế độ 1 — tích FFT 32 bit
-
-```text
-a = d0, b = d1, cả hai có dấu 32 bit (Q16.16)
-c = 2^15 nếu cfg_floor = 0 (nửa-lên, đúng quy tắc của bản chuẩn), c = 0 nếu cfg_floor = 1
-z0 = wrap_32( floor((a·b + c) / 2^16) );  rsp_data[64:32] = 0
-```
-
-Viết theo dạng phần cứng: `z0 = P[47:16] + (cfg_floor ? 0 : P[15])` lấy 32 bit thấp, với P là tích đầy đủ. Đây là
-cùng bộ cộng "phần cao + hạng bù + 1 bit" mà NTT dùng.
+Tích thô 32×32 và tích FFT 32 bit không còn là chế độ của tile. Tích FFT làm tròn vẫn có bên trong chế độ FFT (mục 4.7).
 
 ### 4.5 Phép nhân modulo và butterfly
 
@@ -216,13 +217,15 @@ s·2⁻¹ mod q = (s + (s lẻ ? q : 0)) / 2        // q lẻ
   NTRUGen). Đây không phải phép chia đôi của FFT 64 bit NTRUGen: FFT chia đôi cả hai nhánh trước phép nhân, theo
   kiểu số có dấu, và việc đó nằm ở phần chuẩn bị toán hạng cấp lõi, không thuộc khối tile.
 
-### 4.6 Chế độ 2 và 4 — NTT
+### 4.6 Chế độ 0 — NTT
 
-| Chế độ | Phép tính |
+| Chiều | Phép tính |
 |---|---|
-| 2 | `z0 = Mont(d0, r0)`; `z1 = 0`. Không dùng `d1`, `req_dir`, `cfg_halve` |
-| 4, CT | `(z0, z1) = CT(d0, d1, r0)` |
-| 4, GS | `(z0, z1) = GS(d0, d1, r0)` |
+| CT (`req_dir` = 0) | `(z0, z1) = CT(d0, d1, r0)` |
+| GS (`req_dir` = 1) | `(z0, z1) = GS(d0, d1, r0)` |
+
+Một phép nhân modulo đơn (đưa vào miền Montgomery, nhân từng điểm, chuẩn hóa cuối NTT ngược) là CT với `d0` = 0:
+z0 = Mont(d1, r0), z1 = q − z0 (bỏ qua).
 
 Mỗi request là đúng một butterfly, nên vị trí toán hạng và kết quả không đổi theo chiều hay theo tầng. Việc chọn hai
 hệ số của butterfly và root của nó, rồi ghi hai kết quả về đúng chỗ, thuộc phần cấp lõi. Không còn giá trị trung gian
@@ -232,11 +235,12 @@ Phép tính trên từng butterfly giống hệt các nhịp cũ, nên NTT đầ
 điều khiển phát đúng các cặp. [model/ntrugen_mp31.py](../../../model/ntrugen_mp31.py) đã chạy lại với lịch một tầng
 (`tile_request`, mỗi tầng phát butterfly theo thứ tự ngẫu nhiên) và khớp.
 
-### 4.7 Chế độ 5 — butterfly FFT 32 bit
+### 4.7 Chế độ 1 — butterfly FFT 32 bit
 
 Một butterfly phức gồm **hai nhịp request**: nhịp 1 là cặp thực (`d0` = A.re, `d1` = B.re, `req_root` = wr), nhịp 2 là cặp
-ảo (`d0` = A.im, `d1` = B.im, `req_root` = wi). Mọi phép tính quay vòng 32 bit (spec 1.0, 01.1); tích làm tròn nửa-lên như
-chế độ 1 (`cfg_floor` = 0); nhân phức 3 tích. Từ lần 10 đây là trường hợp L = 1 của máy mục 4.8.
+ảo (`d0` = A.im, `d1` = B.im, `req_root` = wi). Mọi phép tính quay vòng 32 bit (spec 1.0, 01.1); tích Q16.16 làm tròn
+nửa-lên, `wrap_32(floor((a·b + 2¹⁵) / 2¹⁶))` (`cfg_floor` = 0); nhân phức 3 tích. Từ lần 10 đây là trường hợp L = 1 của
+máy mục 4.8.
 
 ```text
 xuôi (req_dir = 0):  o = B;            T = cmul(o, w);   kết quả  (A + T, A − T)
@@ -244,21 +248,21 @@ ngược (req_dir = 1): o = A − B;        T = cmul(o, w);   kết quả  (A + 
 cmul(o, w):  p0 = mul(o.re, wr);  p1 = mul(o.im, wi);  p2 = mul(o.re + o.im, wr + wi)
              T.re = p0 − p1;  T.im = p2 − p0 − p1
 nhịp 1 trả (z0, z1) = (phần thực của kết quả thứ nhất, phần thực của kết quả thứ hai); nhịp 2 trả phần ảo
-req_sign[0] = 1: mọi giá trị trả về là div2e(v, s) = (wrap32(v + 2^(s−1))) >>> s, với s = cfg_q[3:0]
+req_sign = 1: mọi giá trị trả về là div2e(v, s) = (wrap32(v + 2^(s−1))) >>> s, với s = cfg_q[3:0]
 ```
 
 - **Nhận request:** như mục 4.8, nhưng tile giữ tối đa **8 butterfly** ở 32 bit (bộ nhớ phần 32 ô, 2 ô mỗi butterfly; với
   độ trễ khoảng 16, 4 chỗ chỉ cho một butterfly mỗi 4 chu kỳ). Không còn quy tắc pha của lần 8.
 - **Tốc độ:** một butterfly mỗi 3 chu kỳ (2/3 request mỗi chu kỳ), bộ nhân là giới hạn.
 - **Hằng số:** `cfg_q[3:0]` là độ dịch s của div2e, `cfg_q[5:4]` = 0; `cfg_qinv`, `cfg_halve`, `req_slot` không dùng;
-  `cfg_floor` = 1 cho tích làm tròn xuống như chế độ 1.
+  `cfg_floor` = 1 cho tích cắt bớt (không cộng 2¹⁵).
 - **Độ trễ** với butterfly không phải chờ (mỗi butterfly cách butterfly trước ít nhất 3 chu kỳ, hai nhịp liền nhau): kết quả
   nhịp 1 / 2 ra sau nhịp 1 là 15 / 16 chu kỳ (`LEAF_PD` = 2, `IN_REG` = 0; `IN_REG` = 1 cộng 1). Đo bằng
   [sim/tile_thu/tb_wide_timing.sv](../../../sim/tile_thu/tb_wide_timing.sv) `+W=1`.
 - **Chỉ dùng với `EN_REG` = 0**, như mục 4.8.
 - Tích 32 bit là cột duy nhất của bộ cộng dồn, khởi đầu bằng 2¹⁵ (0 khi `cfg_floor` = 1), lấy bit 47:16.
 
-### 4.8 Chế độ 5 ở 64 / 128 bit
+### 4.8 Chế độ 1 ở 64 / 128 bit
 
 `cfg_q[5:4]` = 1 (64 bit, L = 2) hoặc 2 (128 bit, L = 4); 3 dự trữ. Cùng phép tính như mục 4.7 nhưng mọi giá trị W = 32L bit
 (Q32.32 / Q64.64), `mul(a, b) = wrap_W(floor((a·b + 2^(W/2−1)) / 2^(W/2)))` (spec 1.0, 01.1), div2e quay vòng W bit.
@@ -294,12 +298,43 @@ kết quả nhịp j: (z0, z1) = phần j của (thực của kết quả thứ 
   Lõi dựa vào các con số này để xếp lịch ghi. Nếu butterfly phải chờ trong 4 chỗ giữ (gửi nhanh hơn tốc độ trên), độ trễ
   dài hơn, nhưng vẫn **không phụ thuộc giá trị dữ liệu** (kiểm bằng `+SCHED=1`, [11](11_kiem_thu_tile.md)).
 - **Chỉ dùng với `EN_REG` = 0:** với `EN_REG` = 1 đường dữ liệu chạy thêm một chu kỳ sau khi `en` xuống; chưa kiểm cho
-  chế độ 5.
+  chế độ FFT.
+
+### 4.9 Chế độ 2 — NTT hai hệ số 16 bit mỗi từ
+
+Dùng khi q < 2¹⁵ và bộ nhớ giữ hai hệ số mỗi từ 32 bit (hệ số thấp ở bit 15:0). `d0` = từ x, `d1` = từ y; mỗi từ là
+{cao, thấp}. `req_root` = {wB, wA}, hai root 16 bit trong [0, q), dạng Montgomery với R = 2¹⁶. Hằng số theo làn: ô
+modulus giữ `cfg_q` = {q, q} và `cfg_qinv` = {q′, q′} với q′ = −q⁻¹ mod 2¹⁶ (bằng 16 bit thấp của −q⁻¹ mod 2³²);
+`cfg_halve` như chế độ NTT; `req_slot` chọn ô như chế độ NTT.
+
+```text
+Mont16(a, b) = a · b · 2⁻¹⁶ mod q;  CT, GS như mục 4.5 với Mont16 thay Mont
+req_sign = 0 (ghép giữa hai từ):   làn A = (x.thấp, y.thấp, wA),  làn B = (x.cao, y.cao, wB)
+                                   z0 = {B.kết quả 1, A.kết quả 1},  z1 = {B.kết quả 2, A.kết quả 2}
+req_sign = 1 (ghép trong một từ):  làn A = (x.thấp, x.cao, wA),   làn B = (y.thấp, y.cao, wB)
+                                   z0 = {A.kết quả 2, A.kết quả 1},  z1 = {B.kết quả 2, B.kết quả 1}
+mỗi làn (a, b, w): CT trả (a + Mont16(b, w), a − Mont16(b, w)); GS trả (cfg_halve ? (a + b)/2 : a + b, Mont16(a − b, w))
+```
+
+- Ghép giữa hai từ dùng cho các tầng có khoảng cách h ≥ 2 (hai từ cách nhau h/2); ghép trong một từ cho tầng h = 1, khi
+  hai hệ số của butterfly nằm cùng một từ, và mỗi từ có root riêng. Một request luôn là hai butterfly hệ số.
+- **Cách tính:** chính máy NTT (mục 5.1) trên hai làn 16 bit. Lá 0 (thấp × thấp) và lá 1 (cao × cao) của bộ nhân ghép
+  mang làn A và làn B; lá 2 và 3 nhận 0, nên tích ghép đúng bằng {tích làn B, tích làn A}. Ba lượt T, m, m·q như NTT;
+  u = T_cao + (m·q)_cao + [T_thấp ≠ 0] < 2q tính riêng từng làn (nhớ cắt ở bit 16), một lần trừ q mỗi làn. Bộ cộng/trừ
+  modulo và phép chia đôi cũng cắt nhớ ở bit 16. Ghép trong một từ đổi chỗ nửa giữa của hai từ ở đầu vào và ở đầu ra.
+- **Tốc độ:** một request mỗi 3 chu kỳ như NTT, tức **2 butterfly hệ số mỗi 3 chu kỳ** (NTT: 1). Bản bốn làn (bốn lá chạy
+  riêng, 4 butterfly mỗi 3 chu kỳ) đã viết và kiểm, nhưng tốn thêm 919 LUT mỗi tile so với 54 LUT của bản này, nên không
+  chọn (lưu ở [plan_history](../../../docs/plan_history/before_tile_mode6_2026-11-01/tile_thu_ntt16_bon_lan.sv)).
+- **Độ trễ:** bằng NTT, 19 chu kỳ (`LEAF_PD` = 2, `IN_REG` = 0; `IN_REG` = 1 cộng 1), không phụ thuộc dữ liệu, q hay cách
+  ghép.
+- **Chỉ có ở biến thể trên mảng** (mục 5.1). Biến thể rút gọn riêng không nhận chế độ này (`req_ready = 0`).
+- **Dùng được với `EN_REG` = 0 và 1**, như NTT.
+- Miền giá trị: q lẻ, 3 ≤ q < 2¹⁵; mọi hệ số và root trong [0, q). Ngoài miền này tile không cam kết kết quả.
 
 ## 5. Hai biến thể rút gọn
 
-Hai biến thể **phải** có cùng giao diện, cùng thanh ghi hằng số và cùng kết quả trên miền hợp lệ, ở **mọi** chế độ
-0, 1, 2, 4. Chỉ khác cách tính phần rút gọn, độ trễ và tốc độ NTT. Chọn biến thể bằng một tham số RTL lúc tổng hợp. Mọi
+Hai biến thể **phải** có cùng giao diện, cùng thanh ghi hằng số và cùng kết quả trên miền hợp lệ, ở chế độ NTT và FFT.
+Chỉ khác cách tính phần rút gọn, độ trễ và tốc độ NTT. Chế độ NTT hai hệ số chỉ có ở biến thể trên mảng. Chọn biến thể bằng một tham số RTL lúc tổng hợp. Mọi
 phần còn lại phải là cùng một mã RTL.
 
 (Mục 5.0 cũ, lane 16 bit rút gọn trên ba bộ nhân, bỏ ở lần 6 cùng với lane 16 bit.)
@@ -353,8 +388,8 @@ Chỉ để so sánh, không thuộc nghiệm thu (đều có lane 16 bit, nên 
   thấy khi đó Vivado tự đưa `en` lên bộ đệm toàn cục và vẫn đạt 3,0 ns, không cần thanh ghi `en` trong tile (ghi chú bản
   nháp mục 14).
 - **Độ trễ cố định:** số chu kỳ có `en = 1`, tính từ lúc nhận request đến lúc phát kết quả, chỉ phụ thuộc chế độ và
-  biến thể; không phụ thuộc giá trị dữ liệu hay q. (Chế độ 5 ở 64 / 128 bit: phụ thuộc thêm vị trí nhịp trong butterfly và
-  việc butterfly có phải chờ hay không, mục 4.8; vẫn không phụ thuộc dữ liệu.) Nếu trạng thái bên trong chạy thêm một chu kỳ sau khi `en` xuống (mục
+  biến thể; không phụ thuộc giá trị dữ liệu hay q. (FFT: phụ thuộc thêm vị trí nhịp trong butterfly và việc butterfly có
+  phải chờ hay không, mục 4.7, 4.8; vẫn không phụ thuộc dữ liệu. NTT hai hệ số: bằng NTT, mục 4.9.) Nếu trạng thái bên trong chạy thêm một chu kỳ sau khi `en` xuống (mục
   trên), mỗi đợt dừng xảy ra khi phép đang chạy cộng thêm tối đa một chu kỳ. Manifest triển khai phải công bố độ trễ cho
   từng chế độ khi khối chạy liên tục (không dừng, request liên tiếp).
 - **Lịch phát:** người triển khai tự chọn. Lịch đã được mô hình kiểm là: ưu tiên lượt của phép cũ hơn, phép mới chỉ
@@ -364,14 +399,14 @@ Chỉ để so sánh, không thuộc nghiệm thu (đều có lane 16 bit, nên 
 
 | Chế độ | Trên mảng, v1 (request/chu kỳ) | Rút gọn riêng (request/chu kỳ) |
 |---|---:|---:|
-| 0, 1 | 1 | 1 |
-| 2, 4 (mọi q) | 1/3 | 1 |
-| 5 (FFT 32 bit) | 2/3 (một butterfly mỗi 3 chu kỳ) | 2/3 |
-| 5 (FFT 64 bit) | 4/12 (một butterfly mỗi 12 chu kỳ) | 4/12 |
-| 5 (FFT 128 bit) | 8/45 (một butterfly mỗi 45 chu kỳ) | 8/45 |
+| 0 NTT (mọi q) | 1/3 | 1 |
+| 1 FFT 32 bit | 2/3 (một butterfly mỗi 3 chu kỳ) | 2/3 |
+| 1 FFT 64 bit | 4/12 (một butterfly mỗi 12 chu kỳ) | 4/12 |
+| 1 FFT 128 bit | 8/45 (một butterfly mỗi 45 chu kỳ) | 8/45 |
+| 2 NTT hai hệ số mỗi từ | 1/3 (2 butterfly hệ số mỗi 3 chu kỳ) | không có |
 
-Con số của biến thể trên mảng suy từ số lượt bộ nhân: một phép nhân modulo chiếm cả tile 3 chu kỳ, và mỗi request ở chế
-độ 2 hay 4 có đúng một phép nhân modulo.
+Con số của biến thể trên mảng suy từ số lượt bộ nhân: một phép nhân modulo chiếm cả tile 3 chu kỳ, và mỗi request NTT
+(hoặc NTT hai hệ số) có đúng một lượt nhân modulo trên bộ nhân ghép.
 
 ## 7. Reset
 
@@ -385,11 +420,12 @@ Mục đích: số liệu cho giả thuyết 2 ở cấp một tile, trước kh
 1. **Vỏ đo** `tile_thu_top`: thanh ghi ở mọi đầu vào và đầu ra, để đường I/O không quyết định timing. Tham số chọn
    biến thể. Hai biến thể dùng cùng vỏ.
 2. **Vivado**, cùng phiên bản cho mọi lần đo. Linh kiện `xczu7ev-ffvc1156-2-e`. Tổng hợp `out_of_context`, rồi
-   `opt_design`, `place_design`, `route_design` với cài đặt mặc định. Ràng buộc clock 3,0 ns cho cả hai biến thể.
+   `opt_design`, `place_design`, `route_design` với cài đặt mặc định. Ràng buộc clock 5,0 ns cho cả hai biến thể (từ
+   02/11/2026; trước đó 3,0 ns, kể cả lần đo của giả thuyết 2).
    Tham khảo cách viết của [fpga/zcu106/synth.tcl](../../../fpga/zcu106/synth.tcl).
 3. **Không** gọi primitive của Xilinx; DSP và RAM do Vivado tự suy ra.
 4. **Báo cáo sau route**, riêng từng loại, không cộng gộp: LUT, FF, DSP, BRAM/URAM (mong đợi 0), WNS. Fmax =
-   1000 / (3,0 − WNS) MHz. Khi WNS ≥ 0, ghi "≥ 333 MHz": đó chỉ là cận dưới. Ghi thêm LUT và FF của riêng khối tile
+   1000 / (chu kỳ − WNS) MHz. Khi WNS ≥ 0, ghi "≥ 1000 / chu kỳ MHz": đó chỉ là cận dưới. Ghi thêm LUT và FF của riêng khối tile
    (không tính thanh ghi của vỏ đo) từ báo cáo phân cấp; con số dùng cho giả thuyết 2 vẫn là số của cả vỏ đo.
 5. **So sánh:**
 

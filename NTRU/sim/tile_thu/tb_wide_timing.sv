@@ -1,4 +1,4 @@
-// Output timing of tile mode 5 at 32 / 64 / 128 bit (+W=1 / 2 / 4): butterflies of 2L consecutive beats, one every P cycles; prints the cycle
+// Output timing of the tile FFT mode (req_mode 1) at 32 / 64 / 128 bit (+W=1 / 2 / 4): butterflies of 2L consecutive beats, one every P cycles; prints the cycle
 // of every result relative to the first beat of its butterfly (for the core schedule, model/fft_wide_sched.py).
 // +DIR=1 inverse, +SC=1 scaled. Run: iverilog -g2012 -o b.vvp hdl/mul_ss.v hdl/tile/tile_thu.sv sim/tile_thu/tb_wide_timing.sv; vvp b.vvp +W=4 +P=48
 `timescale 1ns/1ps
@@ -8,13 +8,13 @@ module tb_wide_timing;
     reg         rst = 1'b1, cfg_we = 1'b0, req_valid = 1'b0;
     reg  [31:0] cfg_q = 0;
     wire        idle, req_ready, rsp_valid;
-    wire [64:0] rsp_data;
+    wire [63:0] rsp_data;
     wire [7:0]  rsp_tag;
     reg  [7:0]  tag = 0;
     integer dir = 0, sc = 0;
     tile_thu #(.TREN_MANG(1)) dut (.clk(clk), .rst(rst), .en(1'b1), .idle(idle), .cfg_we(cfg_we), .cfg_slot(1'b0),
         .cfg_q(cfg_q), .cfg_qinv(32'd0), .cfg_floor(1'b0), .cfg_halve(1'b0), .req_valid(req_valid), .req_ready(req_ready),
-        .req_mode(3'd5), .req_dir(dir[0]), .req_slot(1'b0), .req_sign({1'b0, sc[0]}), .req_data({$random, $random}),
+        .req_mode(2'd1), .req_dir(dir[0]), .req_slot(1'b0), .req_sign(sc[0]), .req_data({$random, $random}),
         .req_root($random), .req_tag(tag), .rsp_valid(rsp_valid), .rsp_data(rsp_data), .rsp_tag(rsp_tag));
     integer L, P, cyc = 0, b, k, nb = 12, start [0:255], nrdy = 0;
     always @(posedge clk) cyc <= cyc + 1;

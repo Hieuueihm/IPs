@@ -1,10 +1,11 @@
 """Replay the spec 2.0 tile vectors through a leaf-level model of the tile (on-array reduction).
 
-Independent of the generator: products are summed from 16x16 leaf products with signed upper halves,
-FFT 32 bit rounding is P[47:16] + P[15], Montgomery is the three-pass form of 10_hop_dong_tile.md 5.1
-(u = T_high + (m*q)_high + [T_low != 0], one conditional subtract), halving is (s + (s odd ? q : 0)) >> 1.
-R = 2^32 for every q (one 32-bit lane). Also checks the manifest hashes and that every modmul case agrees
-with model/ntrugen_mp31.mont_hw.
+Independent of the generator: products are summed from 16x16 leaf products, Montgomery is the three-pass form of
+10_hop_dong_tile.md 5.1 (u = T_high + (m*q)_high + [T_low != 0], one conditional subtract), halving is
+(s + (s odd ? q : 0)) >> 1. NTT mode: R = 2^32 for every q (one 32-bit lane); packed NTT mode: each 16-bit lane on one
+leaf, R = 2^16. Also checks the manifest hashes and that every CT product agrees with model/ntrugen_mp31.mont_hw.
+(The raw and FFT 32-bit product files went with their tile modes on 02/11/2026; the FFT butterfly files are checked
+against model/fft_core_plan.py and model/fft_wide_tile.py by their own scripts.)
 
 Run: python scripts/check_spec2_tile_vectors.py
 """
@@ -48,9 +49,19 @@ def mont_leaf(a, b, q, qinv):
     return u - q if u >= q else u
 
 
-def ntt_leaf(q, qinv, mode, direction, halve, d0, d1, r0):
+def mont16_leaf(a, b, q, qinv):
+    """One 16x16 leaf, three passes: T = a b, m = T_lo q' mod 2^16, m q; u = T_hi + (m q)_hi + [T_lo != 0]."""
+    t = a * b
+    m = ((t & 0xFFFF) * (qinv & 0xFFFF)) & 0xFFFF
+    mq = m * q
+    u = (t >> 16) + (mq >> 16) + ((t & 0xFFFF) != 0)
+    assert u < 2 * q
+    return u - q if u >= q else u
+
+
+def ntt_leaf(q, qinv, direction, halve, d0, d1, r0, mont_fn=mont_leaf):
     def mont(x, w):
-        return mont_leaf(x, w, q, qinv)
+        return mont_fn(x, w, q, qinv)
 
     def add(x, y):
         s = x + y
@@ -70,8 +81,6 @@ def ntt_leaf(q, qinv, mode, direction, halve, d0, d1, r0):
             s = (s + (q if s & 1 else 0)) >> 1
         return s, mont(sub(x, y), w)
 
-    if mode == 2:
-        return [mont(d0, r0), 0]
     return list(ct(d0, d1, r0) if direction == 0 else gs(d0, d1, r0))
 
 
@@ -88,22 +97,27 @@ def main():
         assert sum(1 for _ in rows(f["file"])) == f["cases"], f["file"]
 
     n = 0
-    for sa, sb, a, b, p in rows("raw32.txt"):
-        assert leaf_product32(a, b, sa, sb) & ((1 << 65) - 1) == p
-        n += 1
-    for fl, a, b, z in rows("fft32.txt"):
-        pp = leaf_product32(a, b, 1, 1)
-        assert (((pp >> 16) + (0 if fl else (pp >> 15) & 1)) & 0xFFFFFFFF) == z
-        n += 1
     agree32 = 0
-    for q, qinv, mode, direction, halve, d0, d1, r0, *z in rows("ntt.txt"):
-        assert ntt_leaf(q, qinv, mode, direction, halve, d0, d1, r0) == z, (q, mode, direction)
-        if mode == 2:
-            assert mp31.mont_hw(d0, r0, q, qinv) == z[0]
+    for q, qinv, direction, halve, d0, d1, r0, *z in rows("ntt.txt"):
+        assert ntt_leaf(q, qinv, direction, halve, d0, d1, r0) == z, (q, direction)
+        if direction == 0:
+            assert (z[0] - d0) % q == mp31.mont_hw(d1, r0, q, qinv)
             agree32 += 1
         n += 1
-    print(f"PASS: {n} ca khớp mô hình dạng tích 16×16; hash manifest khớp; "
-          f"{agree32} ca nhân modulo 32 bit khớp thêm model/ntrugen_mp31.mont_hw.")
+    n16 = 0
+    for q, qinv, direction, halve, pair, x, y, wa, wb, zx, zy in rows("ntt16.txt"):
+        xl, xh, yl, yh = x & 0xFFFF, x >> 16, y & 0xFFFF, y >> 16
+        la, lb = ((xl, yl), (xh, yh)) if pair == 0 else ((xl, xh), (yl, yh))
+        oa = ntt_leaf(q, qinv, direction, halve, *la, wa, mont16_leaf)
+        ob = ntt_leaf(q, qinv, direction, halve, *lb, wb, mont16_leaf)
+        if pair == 0:
+            want = [oa[0] | ob[0] << 16, oa[1] | ob[1] << 16]
+        else:
+            want = [oa[0] | oa[1] << 16, ob[0] | ob[1] << 16]
+        assert want == [zx, zy], (q, direction, pair)
+        n16 += 1
+    print(f"PASS: {n} ca NTT khớp mô hình dạng tích 16×16, {n16} ca NTT hai hệ số mỗi từ khớp mô hình một lá mỗi làn; "
+          f"hash manifest khớp; {agree32} ca CT khớp thêm model/ntrugen_mp31.mont_hw.")
 
 
 if __name__ == "__main__":

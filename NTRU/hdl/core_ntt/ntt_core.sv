@@ -9,11 +9,11 @@
 // element e in cells 2e, 2e + 1; FFT formats 1 / 2 keep limb k of element e in cells 2(L e + k), 2(L e + k) + 1, L = 2 / 4),
 // 4 root-pack ROM banks (NTT packs, FFT roots), the structured bank -> tile network (hdl/net/ntt_bank_net_s.sv) and 16
 // on-array tiles (hdl/tile/tile_thu.sv, TREN_MANG = 1, PHASE = t / 6). FFT runs on the tiles' own butterfly path (tile
-// mode 5, at 64 / 128 bit limb by limb); the core only supplies operands, roots and write addresses.
+// FFT mode, req_mode 1, at 64 / 128 bit limb by limb); the core only supplies operands, roots and write addresses.
 //
 // Per layer (distance h = 2^hlog) tile t runs butterflies i = p_t xor K(k), k = 0 .. 2^kdim - 1 (layer table, loaded
 // into registers one layer ahead; the next layer starts delta cycles after this one).
-// NTT (tile mode 4): tile t accepts in cycles A with (PHASE + A) mod 3 == 0. Pipeline, e = first read cycle:
+// NTT (tile NTT mode, req_mode 0): tile t accepts in cycles A with (PHASE + A) mod 3 == 0. Pipeline, e = first read cycle:
 //   e - 1  address stage: i, c, superbanks (one-hot), rows, root pack            -> s0
 //   e      RAM read x (and y), pack ROM read; same superbank: x only            -> s1 (with network selects)
 //   e + 1  network selects; same superbank: RAM read y, pack read, x captured    -> s2
@@ -223,7 +223,7 @@ module ntt_core (
 
     wire [15:0] rsp_valid;
     wire [16*8-1:0] rsp_tag;
-    wire [16*65-1:0] rsp_dat;
+    wire [16*64-1:0] rsp_dat;
     reg  [15:0] ypend;                          // NTT same superbank: y write select pending for the next cycle
     reg  [15:0] hm;                             // head of the address FIFO: same-superbank flag
     reg  [16*32-1:0] hxo, hyo, ysbo;            // NTT: head superbanks one-hot, y pending
@@ -313,7 +313,7 @@ module ntt_core (
                     if (rsp_valid[(t & ~3) | ob] &&
                         ((rsp_tag[8*((t & ~3) | ob) +: 3] & (w4 ? 3'd3 : (fmt == 2'd1) ? 3'd1 : 3'd0)) == {1'b0, kt})) begin
                         cap = 1'b1; cj = rsp_tag[8*((t & ~3) | ob) +: 3];
-                        cz = rsp_dat[65*((t & ~3) | ob) +: 64];
+                        cz = rsp_dat[64*((t & ~3) | ob) +: 64];
                     end
         end
         // registered first (capa, cja, cza); the write addresses are made from the FIFO one cycle later
@@ -561,7 +561,7 @@ module ntt_core (
     wire [15:0] req_ready, tile_idle, req_valid;
     wire scale = fft && inverse && (hlog == logn - 4'd2);     // last layer of the inverse FFT: div2e in the tile
     generate for (t = 0; t < 16; t = t + 1) begin : g_tile
-        wire [64:0] rd;
+        wire [63:0] rd;
         wire [7:0]  rt;
         // FFT beat source: block tile j mod L (format 0: this tile); data from its port, root from its root register
         localparam [3:0] TT = t;
@@ -583,13 +583,13 @@ module ntt_core (
             .clk(clk), .rst(rst), .en(1'b1), .idle(tile_idle[t]),
             .cfg_we(cfg_we), .cfg_slot(1'b0), .cfg_q(fft ? {26'd0, fmt, logn - 4'd1} : cq), .cfg_qinv(cqinv),
             .cfg_floor(1'b0), .cfg_halve(inverse),
-            .req_valid(req_valid[t]), .req_ready(req_ready[t]), .req_mode(fft ? 3'd5 : 3'd4), .req_dir(inverse),
-            .req_slot(1'b0), .req_sign({1'b0, scale}),
+            .req_valid(req_valid[t]), .req_ready(req_ready[t]), .req_mode(fft ? 2'd1 : 2'd0), .req_dir(inverse),
+            .req_slot(1'b0), .req_sign(scale),
             .req_data(fft ? {op_y[32*st +: 32], op_x[32*st +: 32]} : {op_y[32*t +: 32], op_x[32*t +: 32]}),
             .req_root(fft ? froot : nroot),
             .req_tag({5'd0, bj}), .rsp_valid(rsp_valid[t]), .rsp_data(rd), .rsp_tag(rt));
         assign rsp_tag[8*t +: 8] = rt;
-        assign rsp_dat[65*t +: 65] = rd;
+        assign rsp_dat[64*t +: 64] = rd;
         always @* tile_z[64*t +: 64] = fft ? f_z[64*t +: 64] : rd[63:0];
     end endgenerate
 

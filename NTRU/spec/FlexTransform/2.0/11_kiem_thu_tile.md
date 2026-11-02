@@ -1,5 +1,17 @@
 # 11 — Kiểm thử cấp tile
 
+> **Thay đổi 02/11/2026, lần 8:** tile còn ba chế độ, `req_mode` 2 bit ([10](10_hop_dong_tile.md) lần 11): 0 NTT, 1 FFT,
+> 2 NTT hai hệ số 16 bit mỗi từ.
+> - Bỏ `raw32.txt`, `fft32.txt` và các dòng phép nhân modulo đơn của `ntt.txt`; `ntt.txt` bỏ cột chế độ (6 228 ca, sinh lại).
+> - Vector mới `ntt16.txt` (7 254 request) cho chế độ NTT hai hệ số. Testbench đọc `+KIND=0` NTT, `1` FFT 32 bit, `2` FFT
+>   64 / 128 bit, `3` NTT hai hệ số.
+> - Chuỗi đổi chế độ chạy NTT q12289 → FFT 32 bit → NTT q8380417 → NTT hai hệ số → NTT GS prime NTRUGen có chia đôi →
+>   FFT 128 bit.
+> - Regression chạy chế độ mới ở nhóm A, B, C như NTT, chỉ ở biến thể trên mảng; chạy cả với `-DTL_EN_REG=1`.
+> - Kiểm chéo vector thêm mô hình một lá mỗi làn cho `ntt16.txt`.
+>
+> Bản trước: [trước khi rút gọn chế độ](../../../docs/plan_history/before_tile_mode6_2026-11-01/11_kiem_thu_tile.md).
+
 > **Thay đổi 01/11/2026, lần 7:** chế độ 5 ở 64 / 128 bit ([10](10_hop_dong_tile.md) mục 4.8). Vector mới `fftwbf.txt`
 > (1 920 butterfly, mỗi dòng 2L nhịp), testbench đọc bằng `+KIND=4`; regression thêm các lần chạy nhóm A, B như chế độ 5
 > 32 bit, lỗi `FAULT_SWAP_XY` và lỗi mới `FAULT_NO_CARRY` (bỏ cờ nhớ giữa các phần). Đo thời gian ra của từng nhịp:
@@ -40,22 +52,21 @@ tích 16×16, vì đó chính là thứ cần kiểm. Hash SHA-256 của từng 
 
 | File | Số ca | Nội dung | Biến thể |
 |---|---:|---|---|
-| `raw32.txt` | 2 320 | Chế độ 0, bốn tổ hợp dấu, giá trị biên (0, 1, −1, −2³¹, 2³¹ − 1, 2³² − 1, …) và ngẫu nhiên | Cả hai |
-| `fft32.txt` | 1 842 | Chế độ 1, nửa-lên và cắt bớt, 264 ca đúng điểm giữa (16 bit thấp của tích = 0x8000) và lân cận ±1 | Cả hai |
-| `fft32bf.txt` | 1 470 | Chế độ 5, xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2³¹ − 1, −2³¹, ±2¹⁶, …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_core_plan.py | Cả hai |
-| `fftwbf.txt` | 1 920 | Chế độ 5 ở 64 bit (`fmt` 1) và 128 bit (`fmt` 2), mỗi độ rộng: xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2^(W−1) − 1, −2^(W−1), ±2^(W/2), 2³² − 1, ±2³², …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_wide_tile.py (tính theo từng phần) | Cả hai |
-| `ntt.txt` | 8 055 | Chế độ 2 và 4, R = 2³², q tăng dần: 3, 3329, 7681, 12289, 65521, 8380417; prime đầu, giữa và cuối của NTRUGen; 2³¹ − 1 | Cả hai |
+| `fft32bf.txt` | 1 470 | Chế độ FFT 32 bit, xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2³¹ − 1, −2³¹, ±2¹⁶, …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_core_plan.py | Cả hai |
+| `fftwbf.txt` | 1 920 | Chế độ FFT ở 64 bit (`fmt` 1) và 128 bit (`fmt` 2), mỗi độ rộng: xuôi; ngược không chia và chia với s = 1, 5, 9; mỗi giá trị biên (0, ±1, 2^(W−1) − 1, −2^(W−1), ±2^(W/2), 2³² − 1, ±2³², …) lần lượt ở từng toán hạng, còn lại ngẫu nhiên. Kết quả tính bằng số nguyên thuần (spec 1.0 01.1) và kiểm chéo với model/fft_wide_tile.py (tính theo từng phần) | Cả hai |
+| `ntt.txt` | 6 228 | Chế độ NTT, R = 2³², q tăng dần: 3, 3329, 7681, 12289, 65521, 8380417; prime đầu, giữa và cuối của NTRUGen; 2³¹ − 1 | Cả hai |
+| `ntt16.txt` | 7 254 | Chế độ NTT hai hệ số, R = 2¹⁶, hằng số theo làn ({q, q}, {q′, q′}), q = 3329, 7681, 10753, 12289, 18433; mỗi q: CT, GS, GS có chia đôi, mỗi loại với hai cách ghép cặp; mỗi giá trị biên (0, 1, 2, q − 1, q − 2, q/2, lũy thừa của 2) lần lượt ở từng toán hạng của hai làn; các ca b · w là bội của 2¹⁶; còn lại ngẫu nhiên | Chỉ trên mảng |
 
-Với mỗi q, vector NTT phủ đủ bốn tổ hợp: chế độ 2; chế độ 4 CT; chế độ 4 GS; chế độ 4 GS có chia đôi.
+Với mỗi q, vector NTT phủ đủ ba tổ hợp: CT; GS; GS có chia đôi.
 
 Mỗi giá trị đặc biệt (0, 1, 2, q − 1, q − 2, quanh q/2, các lũy thừa của 2) lần lượt nằm ở từng ô đang dùng (d0, d1,
 r0), ô root đi kèm một giá trị đặc biệt khác. Mỗi request có đúng một phép nhân modulo. Các trường hợp góc:
 
 | Trường hợp | q < 2¹⁶ | q > 2¹⁶ |
 |---|---:|---:|
-| Phép nhân modulo đã phủ | 3 258 | 4 797 |
-| T là bội của R nhưng khác 0 (T_thấp = 0, bit `[T_thấp ≠ 0]` phải bằng 0) | 0 (không xảy ra: T < q² < R) | 408 |
-| T = 0 | 339 | 323 |
+| Phép nhân modulo đã phủ | 2 502 | 3 726 |
+| T là bội của R nhưng khác 0 (T_thấp = 0, bit `[T_thấp ≠ 0]` phải bằng 0) | 0 (không xảy ra: T < q² < R) | 217 |
+| T = 0 | 249 | 308 |
 
 Vì vậy lỗi "luôn cộng bit `[T_thấp ≠ 0]` = 1" chỉ bị bắt nhờ q lớn hoặc ca T = 0; với q nhỏ, mọi ca T ≠ 0 đều có
 T_thấp ≠ 0.
@@ -64,24 +75,24 @@ T_thấp ≠ 0.
 chỉ có ký tự ASCII, đọc được bằng `$fscanf(fd, "%h ...")`. Cột của file NTT là:
 
 ```text
-q qinv mode dir halve d0 d1 r0 z0 z1
+q qinv dir halve x y w z0 z1
 ```
 
-qinv = −q⁻¹ mod 2³² với mọi q. Dòng được nhóm theo q rồi theo chế độ. Khi q, chế độ, hướng hoặc cờ chia đôi đổi,
+qinv = −q⁻¹ mod 2³² với mọi q. Dòng được nhóm theo q rồi theo hướng. Khi q, chế độ, hướng hoặc cờ chia đôi đổi,
 testbench phải chờ `idle = 1`, ghi thanh ghi hằng số (q, qinv, halve), rồi gửi tiếp. Nếu cột halve = 0 thì
 `cfg_halve = 0`.
 
 Bộ vector này **thay cho** 16 102 vector của cụm NTT cũ khi kiểm khối tile thử, vì cụm cũ chỉ có lane 16 bit và cách
 đóng gói khác. Nó cũng thay bộ vector nhịp hai tầng của hợp đồng tile trước (bản sao ở thư mục lịch sử).
 
-**Kiểm chéo đã chạy:** [scripts/check_spec2_tile_vectors.py](../../../scripts/check_spec2_tile_vectors.py) chạy lại
-toàn bộ 12 217 ca qua mô hình dạng phần cứng và cho khớp hết:
-- tích cộng từ các tích con 16×16, nửa cao mang dấu;
-- `P[47:16] + P[15]` cho FFT 32 bit;
+**Kiểm chéo đã chạy (02/11/2026):** [scripts/check_spec2_tile_vectors.py](../../../scripts/check_spec2_tile_vectors.py)
+chạy lại 6 228 ca NTT và 7 254 ca NTT hai hệ số qua mô hình dạng phần cứng và cho khớp hết:
+- tích cộng từ các tích con 16×16 (NTT) hoặc một lá 16×16 mỗi làn (NTT hai hệ số);
 - Montgomery ba lượt với `[T_thấp ≠ 0]`;
 - chia đôi bằng cộng có điều kiện rồi dịch.
 
-1 827 ca nhân modulo (mọi q) khớp thêm mô hình đã đối chiếu với C của NTRUGen.
+2 076 ca CT (mọi q) khớp thêm mô hình đã đối chiếu với C của NTRUGen. Vector FFT kiểm chéo với
+model/fft_core_plan.py và model/fft_wide_tile.py.
 
 ## 2. Các case kiểm thử
 
@@ -89,10 +100,9 @@ toàn bộ 12 217 ca qua mô hình dạng phần cứng và cho khớp hết:
 
 | Case | Cách làm | Đạt khi |
 |---|---|---|
-| **Tích thô 32×32** | Chạy toàn bộ `raw32.txt` | Mọi `rsp_data[64:0]` bằng cột product65 |
-| **Tích FFT 32 bit** | Chạy toàn bộ `fft32.txt`, đổi `cfg_floor` theo cột floor | Mọi `rsp_data[31:0]` đúng, phần còn lại bằng 0 |
-| **NTT, mọi q** | Chạy `ntt.txt` | z0, z1 đúng (với q nhỏ, các bit cao bằng 0 vì kết quả < q), bit 64 bằng 0 |
-| **Ô không dùng** | Trong mọi ca trên | Ô kết quả không thuộc chế độ luôn bằng 0 |
+| **NTT, mọi q** | Chạy `ntt.txt` | z0, z1 đúng (với q nhỏ, các bit cao bằng 0 vì kết quả < q) |
+| **FFT 32 / 64 / 128 bit** | Chạy `fft32bf.txt`, `fftwbf.txt` | Mọi nhịp kết quả đúng, xuôi và ngược, có chia hay không |
+| **NTT hai hệ số mỗi từ** | Chạy `ntt16.txt` | Hai từ kết quả đúng ở cả hai cách ghép cặp |
 
 ### Nhóm B — luồng dữ liệu và thời gian
 
@@ -104,7 +114,7 @@ toàn bộ 12 217 ca qua mô hình dạng phần cứng và cho khớp hết:
 | **Độ trễ cố định** | Với từng chế độ và q, gửi liên tục không dừng | Mọi request có cùng độ trễ, bằng con số đã công bố trong manifest |
 | **Lịch không phụ thuộc dữ liệu** | Chạy cùng một chuỗi request hai lần: lần một dữ liệu và root đều bằng 0, lần hai ngẫu nhiên | Chuỗi `req_ready` và `rsp_valid` theo chu kỳ giống hệt nhau |
 | **Tốc độ bền vững** | Với từng dòng của bảng tốc độ ở mục 6 của hợp đồng: ≥ 1 000 request, `req_valid = 1`, `en = 1` | Tốc độ ≥ 98% con số của biến thể đang kiểm |
-| **Đổi chế độ và hằng số** | Chuỗi: butterfly q = 12289 → tích FFT 32 bit → butterfly q = 8380417 → tích thô → butterfly GS prime NTRUGen có chia đôi → nhân modulo q = 3329. Mỗi lần đổi chờ `idle = 1` rồi ghi hằng số | Mọi kết quả đúng; không có kết quả lẫn giữa hai đoạn |
+| **Đổi chế độ và hằng số** | Chuỗi: NTT q = 12289 → FFT 32 bit → NTT q = 8380417 → NTT hai hệ số (ghép trong một từ) → NTT GS prime NTRUGen có chia đôi → FFT 128 bit. Mỗi lần đổi chờ `idle = 1` rồi ghi hằng số | Mọi kết quả đúng; không có kết quả lẫn giữa hai đoạn |
 | **Ghi hằng số chỉ khi rảnh** | Giữ `cfg_we = 1` lúc `idle = 0` (chỉ để kiểm) | Hằng số không bị đổi giữa chừng; chỉ chốt khi `idle = 1`; kết quả của các request đang chạy vẫn đúng |
 | **Hai ô modulus** | Ghi hai q khác nhau (cùng chế độ, chiều, cờ chia đôi) vào ô 0 và ô 1, rồi trộn ngẫu nhiên request của hai nhóm với `req_slot` tương ứng, có dừng và request thưa; có cặp q nhỏ với q nhỏ, q nhỏ với q lớn (65521 với 8380417) và q lớn với q lớn | Mọi kết quả đúng với q của ô mà request chọn |
 | **Reset giữa chừng** | Bật `rst` khi còn request đang chạy, ở nhiều thời điểm khác nhau | Sau reset: không còn kết quả của request cũ, `idle = 1`, hằng số bằng 0; ghi lại hằng số rồi chạy tiếp thì kết quả đúng |
@@ -120,7 +130,7 @@ Testbench chỉ đáng tin nếu nó bắt được lỗi cố ý cài vào. M�
 | Luôn cộng bit `[T_thấp ≠ 0]` = 1 | Các ca T là bội của R |
 | Bỏ bước trừ q cuối | Các ca có u ≥ q |
 | Chia đôi cả khi `cfg_halve = 0` | Các ca GS không chia đôi |
-| Đổi chỗ x và y của butterfly | Mọi ca chế độ 4 có d0 ≠ d1 |
+| Đổi chỗ x và y của butterfly | Mọi ca NTT có d0 ≠ d1 (và FFT, NTT hai hệ số) |
 | Mọi request dùng ô modulus 0 | Case hai ô modulus |
 | Đổi chỗ hai kết quả liền nhau | Case đúng thứ tự và nhãn |
 
@@ -165,6 +175,12 @@ tới chân cho phép của thanh ghi đầu vào bộ nhân.
 ## 3. Bảng kết quả
 
 Điền sau mỗi lần chạy. Ghi kèm phiên bản RTL, phiên bản trình mô phỏng và hash của manifest vector.
+
+Lần chạy 11, 02/11/2026: tile ba chế độ (`req_mode` 2 bit, NTT hai hệ số hai làn), RTL `69c03f65acec27d9`, testbench
+`c2ba81e12dc7f48b`, vector sinh lại (manifest mới). Năm cấu hình, hai biến thể: mặc định, `IN_REG`, `LEAF_PD = 4`, `PHASE = 2`
+mỗi cấu hình 62 lần chạy đạt, 28/28 lỗi bị bắt; `EN_REG` 27 lần chạy, 22/22 (không có FFT). Kiểm chéo vector:
+`check_spec2_tile_vectors.py` đạt. Lõi với tile này: 48 + 54 + 100 ca đạt, chu kỳ không đổi. Diện tích (chỉ tổng hợp, 5,0 ns):
+1 759 LUT / 1 521 FF / 251 LUTRAM / 4 DSP, WNS +2,01 ns.
 
 Lần chạy 10, 01/11/2026: RTL thêm chế độ 5 ở 64 / 128 bit (hash `1c7502f7fd64e8a8`). Năm cấu hình, hai biến thể: mặc định, `IN_REG`,
 `LEAF_PD = 4`, `PHASE = 2` mỗi cấu hình 82 lần chạy đạt, 22/22 lỗi bị bắt; `EN_REG` 50 lần chạy, 16/16 (không có chế độ 5).
@@ -255,17 +271,17 @@ vào manifest triển khai.
 | Case | Cách testbench làm |
 |---|---|
 | Nhóm A, thứ tự và nhãn, độ trễ cố định | Mặc định |
-| Tốc độ bền vững | Tự kiểm: mọi nhóm chạy không dừng, không hạ `req_valid`, không reset, có ≥ 1 000 request phải đạt 98% tốc độ ở mục 6 của hợp đồng (NTT 1/3 khi `TREN_MANG` = 1, 1 khi 3). Script chạy `+REP=2` cho tích thô và FFT, `+REP=6` cho NTT; nhóm q = 3 (126 hoặc 129 ca, dưới 1 000 sau khi lặp 6 lần) không được kiểm tốc độ |
+| Tốc độ bền vững | Tự kiểm: mọi nhóm chạy không dừng, không hạ `req_valid`, không reset, có ≥ 1 000 request phải đạt 98% tốc độ ở mục 6 của hợp đồng (NTT và NTT hai hệ số 1/3 khi `TREN_MANG` = 1, NTT 1 khi 3; FFT 2/3, 4/12, 8/45). Script chạy `+REP=2` cho FFT, `+REP=6` cho NTT, `+REP=5` cho NTT hai hệ số; nhóm q = 3 (126 hoặc 129 ca, dưới 1 000 sau khi lặp 6 lần) không được kiểm tốc độ |
 | Dừng chung | `+STALL=10`, `+STALL=30 +BURST=1`. Luôn kiểm thêm: `rsp_valid = 0` khi `en = 0`; `rsp_data`, `rsp_tag`, `idle` không đổi qua một chu kỳ `en = 0` |
 | Request thưa | `+SPARSE=50` |
-| Đổi chế độ và hằng số | `+CHAIN=<thư mục vector>`: butterfly q12289 → tích FFT 32 bit → butterfly q8380417 → tích thô → butterfly GS prime NTRUGen có chia đôi → nhân modulo q3329; mỗi lần đổi chờ rảnh rồi ghi hằng số |
+| Đổi chế độ và hằng số | `+CHAIN=<thư mục vector>`: NTT q12289 → FFT 32 bit → NTT q8380417 → NTT hai hệ số → NTT GS prime NTRUGen có chia đôi → FFT 128 bit; mỗi lần đổi chờ rảnh rồi ghi hằng số. Chỉ ở biến thể trên mảng và `EN_REG` = 0 (chuỗi có FFT và NTT hai hệ số); nơi khác `+CORRUPT`, `+SWAPEXP` chạy trên `ntt.txt` |
 | Ghi hằng số chỉ khi rảnh | `+CFGBUSY=1`: mọi chu kỳ có `idle = 0`, giữ `cfg_we = 1` với hằng số ngẫu nhiên; kết quả phải vẫn đúng |
 | Reset giữa chừng | `+RESETAT=k`: sau k request của mỗi nhóm, bật `rst` một chu kỳ; 64 chu kỳ sau đó phải `rsp_valid = 0` và `idle = 1`; ghi lại hằng số và chạy lại nhóm, kết quả phải đúng. "Hằng số bằng 0 sau reset" không kiểm được từ cổng; RTL thật kiểm bằng assertion nội bộ nếu muốn |
 | Lịch không phụ thuộc dữ liệu | `+SCHED=1`: mỗi nhóm chạy hai lần từ reset với cùng chuỗi `en`/`req_valid`, lần đầu dữ liệu và root bằng 0; chuỗi `req_ready`/`rsp_valid` theo chu kỳ phải giống hệt |
-| Hai ô modulus | `+MIX=1` trên `ntt.txt`, kèm `+STALL=20 +BURST=1 +SPARSE=30`: mỗi nhóm NTT ghép với nhóm kế tiếp (vòng tròn) cùng chế độ, chiều, cờ chia đôi nhưng khác q; vì q tăng dần nên có cả cặp q nhỏ với q lớn |
+| Hai ô modulus | `+MIX=1` trên `ntt.txt` và `ntt16.txt` (cùng cách ghép cặp), kèm `+STALL=20 +BURST=1 +SPARSE=30`: mỗi nhóm NTT ghép với nhóm kế tiếp (vòng tròn) cùng chế độ, chiều, cờ chia đôi nhưng khác q; vì q tăng dần nên có cả cặp q nhỏ với q lớn |
 | Nhóm C, sửa giá trị mong đợi | `+CORRUPT=1` (lật một bit của kết quả mong đợi đầu tiên) |
 | Nhóm C, đổi chỗ hai kết quả | `+SWAPEXP=1` (đổi kết quả và nhãn mong đợi của hai request đầu; thay cho việc sửa RTL) |
-| Nhóm C, lỗi trong RTL | RTL phải có các `define` sau, mỗi cái cài đúng một lỗi, không bao giờ bật khi build thường: `FAULT_NO_NZ` (bit `[T_thấp ≠ 0]` = 0), `FAULT_NZ_ONE` (= 1), `FAULT_NO_SUBQ` (bỏ trừ q cuối), `FAULT_HALVE_ALWAYS` (chia đôi cả khi `cfg_halve = 0`), `FAULT_SWAP_XY` (đổi chỗ x và y của butterfly), `FAULT_IGNORE_SLOT` (mọi request dùng ô 0; script chạy với `+MIX=1`). Script chạy mỗi lỗi trên `ntt.txt` (mọi q), phải ra không đạt |
+| Nhóm C, lỗi trong RTL | RTL phải có các `define` sau, mỗi cái cài đúng một lỗi, không bao giờ bật khi build thường: `FAULT_NO_NZ` (bit `[T_thấp ≠ 0]` = 0), `FAULT_NZ_ONE` (= 1), `FAULT_NO_SUBQ` (bỏ trừ q cuối), `FAULT_HALVE_ALWAYS` (chia đôi cả khi `cfg_halve = 0`), `FAULT_SWAP_XY` (đổi chỗ x và y của butterfly), `FAULT_IGNORE_SLOT` (mọi request dùng ô 0; script chạy với `+MIX=1`). Script chạy mỗi lỗi trên `ntt.txt` (mọi q) và trên `ntt16.txt` (NTT hai hệ số); `FAULT_SWAP_XY` thêm trên hai file FFT; `FAULT_NO_CARRY` (bỏ cờ nhớ giữa các phần) trên `fftwbf.txt`. Mọi lần phải ra không đạt |
 
 Mỗi dòng kết quả của script kết thúc bằng `PASS` hoặc `FAIL`; mọi dòng nhóm C phải ghi "bắt được". Kết quả trên bản
 nháp ở [study/results/tile_thu_draft.md](../../../study/results/tile_thu_draft.md); bảng ở mục 3 chỉ điền khi chạy
