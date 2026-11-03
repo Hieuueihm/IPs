@@ -1,0 +1,288 @@
+{
+  "production_rtl_changed": false,
+  "numeric_contract_changed": false,
+  "common_fix": "All experimental variants wait for FFT stage writes to commit.",
+  "tools": {
+    "fpga": "Vivado2018.1 / xczu7ev-ffvc1156-2-e",
+    "simulation": [
+      "Icarus",
+      "Verilator"
+    ]
+  },
+  "test_results": {
+    "baseline": {
+      "ntt": {
+        "cases": 48,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/baseline/ntt.log"
+      },
+      "fft": {
+        "cases": 54,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/baseline/fft.log"
+      }
+    },
+    "word32": {
+      "ntt": {
+        "cases": 48,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/word32/ntt_fast.log"
+      },
+      "fft": {
+        "cases": 54,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/word32/fft_fast.log"
+      },
+      "driver_mutation": "detected"
+    },
+    "root_sum": {
+      "ntt": {
+        "cases": 48,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/root_sum/ntt_fast.log"
+      },
+      "fft": {
+        "cases": 54,
+        "status": "PASS",
+        "log": "study/build/shared_logic_experiment/root_sum/fft_fast.log"
+      },
+      "driver_mutation": "detected"
+    }
+  },
+  "core_synthesis": {
+    "baseline": {
+      "LUT": 54677,
+      "FF": 29413,
+      "DSP": 64,
+      "BRAM36_equivalent": 64,
+      "URAM": 0,
+      "hierarchy": {
+        "ntt_core": {
+          "LUT": 54677,
+          "FF": 29413,
+          "DSP": 64
+        },
+        "(ntt_core)": {
+          "LUT": 6950,
+          "FF": 7699,
+          "DSP": 0
+        },
+        "u_mem": {
+          "LUT": 4607,
+          "FF": 0,
+          "DSP": 0
+        },
+        "u_net": {
+          "LUT": 4617,
+          "FF": 3616,
+          "DSP": 0
+        },
+        "u_route": {
+          "LUT": 280,
+          "FF": 224,
+          "DSP": 0
+        },
+        "u_sel": {
+          "LUT": 55,
+          "FF": 0,
+          "DSP": 0
+        },
+        "tiles": {
+          "LUT": 35423,
+          "FF": 17874,
+          "DSP": 64
+        },
+        "root_rom": {
+          "LUT": 2745,
+          "FF": 0,
+          "DSP": 0
+        }
+      }
+    },
+    "root_sum": {
+      "LUT": 54573,
+      "FF": 31428,
+      "DSP": 64,
+      "BRAM36_equivalent": 76,
+      "URAM": 0,
+      "hierarchy": {
+        "ntt_core": {
+          "LUT": 54573,
+          "FF": 31428,
+          "DSP": 64
+        },
+        "(ntt_core)": {
+          "LUT": 6966,
+          "FF": 8194,
+          "DSP": 0
+        },
+        "u_mem": {
+          "LUT": 4724,
+          "FF": 0,
+          "DSP": 0
+        },
+        "u_net": {
+          "LUT": 5545,
+          "FF": 4128,
+          "DSP": 0
+        },
+        "u_route": {
+          "LUT": 280,
+          "FF": 224,
+          "DSP": 0
+        },
+        "u_sel": {
+          "LUT": 55,
+          "FF": 0,
+          "DSP": 0
+        },
+        "tiles": {
+          "LUT": 34564,
+          "FF": 18882,
+          "DSP": 64
+        },
+        "root_rom": {
+          "LUT": 2439,
+          "FF": 0,
+          "DSP": 0
+        }
+      }
+    }
+  },
+  "tile_route": {
+    "baseline": {
+      "LUT": 1995,
+      "FF": 1436,
+      "DSP": 4,
+      "BRAM36_equivalent": 0,
+      "URAM": 0,
+      "WNS_ns": 0.21
+    },
+    "root_sum": {
+      "LUT": 1932,
+      "FF": 1496,
+      "DSP": 4,
+      "BRAM36_equivalent": 0,
+      "URAM": 0,
+      "WNS_ns": 0.198
+    }
+  },
+  "source_inputs_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/tile/tile_thu.sv": "dead6541e5d0eb8a2926f4c7b0a56551cc17f1e0ca0896f74851f2926d35a07d",
+    "hdl/net/ntt_bank_net_s.sv": "7e07924d191c95aad149ea8db0491033606f12764d3d0eb2d57a11e392777d99",
+    "hdl/core/flex_banked_scratch.sv": "ee6054b023c06f3499bb3cf8af7211371c58f002d26217696b7cc815457176e2",
+    "hdl/core_ntt/ntt_core_gen.sv": "299cb43dbb4ca7ffe85947fa128f90b4def5359302cd5c9fcb36122d08658508",
+    "hdl/core_ntt/ntt_core.sv": "72371881ca83a44a53833b08ea84c63e0646a32551e0625f7b3cc2c0aca9995f",
+    "sim/core_ntt/tb_ntt_core.sv": "05cb9ec3787acbfbdbd6c113f58d94697613b02d5b5a16be4e2d5cd4e5a27542",
+    "sim/tile_thu/tb_tile_thu.sv": "b2781cb965f35c496c6a372ea1126387f3dbed8d55ecfe4d94e6ab0500ce7c7d"
+  },
+  "limitations": [
+    "Full-core PPA is synthesis plus opt_design, not routed timing.",
+    "Tile WNS is OOC with registered ports, not system timing.",
+    "No full signer replay or formal all-input equivalence claim."
+  ],
+  "network_random_cycles": 5000,
+  "tile_test_results": {
+    "fft32bf_stall0": {
+      "cases": 2940,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_fft32bf_0.log"
+    },
+    "fft32bf_stall1": {
+      "cases": 2940,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_fft32bf_1.log"
+    },
+    "fftwbf_stall0": {
+      "cases": 11520,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_fftwbf_0.log"
+    },
+    "fftwbf_stall1": {
+      "cases": 11520,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_fftwbf_1.log"
+    },
+    "ntt_stall0": {
+      "cases": 8055,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_ntt_0.log"
+    },
+    "ntt_stall1": {
+      "cases": 8055,
+      "status": "PASS",
+      "log": "study/build/shared_logic_experiment/root_sum/tile_ntt_1.log"
+    }
+  },
+  "core_delta": {
+    "LUT": {
+      "absolute": -104,
+      "percent": -0.1902079484975401
+    },
+    "FF": {
+      "absolute": 2015,
+      "percent": 6.8507122700846566
+    },
+    "DSP": {
+      "absolute": 0,
+      "percent": 0.0
+    },
+    "BRAM36_equivalent": {
+      "absolute": 12,
+      "percent": 18.75
+    }
+  },
+  "artifacts_sha256": {
+    "study/build/shared_logic_experiment/baseline/core_hier.rpt": "fdbf477ec54ffea161750b9a73ef2ddbce3f7479716b537a0f79e0ca1052e60e",
+    "study/build/shared_logic_experiment/baseline/core_synth_timing.rpt": "d6df41fb283ad5d020ed813a0c04c8d88ca2e5e957d9446fc7124ed62210eea3",
+    "study/build/shared_logic_experiment/baseline/core_util.rpt": "1d4d48d606f1a982a024d0c9248461a8b328e7bfad3e3eb7e14b763f02e688da",
+    "study/build/shared_logic_experiment/baseline/flex_banked_scratch.sv": "ee6054b023c06f3499bb3cf8af7211371c58f002d26217696b7cc815457176e2",
+    "study/build/shared_logic_experiment/baseline/ntt_bank_net_s.sv": "7e07924d191c95aad149ea8db0491033606f12764d3d0eb2d57a11e392777d99",
+    "study/build/shared_logic_experiment/baseline/ntt_core.sv": "21d39974cbdb4cc74495a9cbc5e1b199ea0ec300b97940db38dc1ec46aa83da6",
+    "study/build/shared_logic_experiment/baseline/ntt_core_gen.sv": "299cb43dbb4ca7ffe85947fa128f90b4def5359302cd5c9fcb36122d08658508",
+    "study/build/shared_logic_experiment/baseline/root_pack_b0.mem": "73d3b29b8946cd78368c5c36cd0eb1f3ebfced9b9305a552cfe5808b174df6e4",
+    "study/build/shared_logic_experiment/baseline/root_pack_b1.mem": "892ffd26c9368824298d8e44614251e37a49e505343403a93369d4f0a534cccf",
+    "study/build/shared_logic_experiment/baseline/root_pack_b2.mem": "128fc29c60b31357d4f18eb4fcd0532709b61f8ded79e693c25df596978d22ac",
+    "study/build/shared_logic_experiment/baseline/root_pack_b3.mem": "271378797ffb0467eb23ea5d912d28d2541d89f8c5858547e1e6c97406c9c76f",
+    "study/build/shared_logic_experiment/baseline/tb_ntt_core.sv": "05cb9ec3787acbfbdbd6c113f58d94697613b02d5b5a16be4e2d5cd4e5a27542",
+    "study/build/shared_logic_experiment/baseline/tb_tile_thu.sv": "b2781cb965f35c496c6a372ea1126387f3dbed8d55ecfe4d94e6ab0500ce7c7d",
+    "study/build/shared_logic_experiment/baseline/tile_hier.rpt": "d5c970447e4ad15853b42a0ce9b2a7904fe32cd019bd216bdeb6d57f3143e359",
+    "study/build/shared_logic_experiment/baseline/tile_route_util.rpt": "bebc661a2e650f3b6133cfe6429016049cd17105b7264decf7bfacf3f3bf264c",
+    "study/build/shared_logic_experiment/baseline/tile_thu.sv": "dead6541e5d0eb8a2926f4c7b0a56551cc17f1e0ca0896f74851f2926d35a07d",
+    "study/build/shared_logic_experiment/baseline/tile_timing.rpt": "8a7926551b057cd902e561aa2982c3f96acb70034ab8481d93d3ae8337e1b6b0",
+    "study/build/shared_logic_experiment/baseline/tile_util.rpt": "d8a687707bb4ba8fba888d36d620e511024d6cdacca3e65a0fb5c064275a9b68",
+    "study/build/shared_logic_experiment/word32/flex_banked_scratch.sv": "ee6054b023c06f3499bb3cf8af7211371c58f002d26217696b7cc815457176e2",
+    "study/build/shared_logic_experiment/word32/ntt_bank_net_s.sv": "a7036e72164d14108b470a1108709d89d83e84c6a6d7923d17d350207a186f27",
+    "study/build/shared_logic_experiment/word32/ntt_core.sv": "6d4ac02b42638c21fd31fb039282d9b581f2dfaaf20dcf53de6aa3c72c638746",
+    "study/build/shared_logic_experiment/word32/ntt_core_gen.sv": "299cb43dbb4ca7ffe85947fa128f90b4def5359302cd5c9fcb36122d08658508",
+    "study/build/shared_logic_experiment/word32/root_pack_b0.mem": "73d3b29b8946cd78368c5c36cd0eb1f3ebfced9b9305a552cfe5808b174df6e4",
+    "study/build/shared_logic_experiment/word32/root_pack_b1.mem": "892ffd26c9368824298d8e44614251e37a49e505343403a93369d4f0a534cccf",
+    "study/build/shared_logic_experiment/word32/root_pack_b2.mem": "128fc29c60b31357d4f18eb4fcd0532709b61f8ded79e693c25df596978d22ac",
+    "study/build/shared_logic_experiment/word32/root_pack_b3.mem": "271378797ffb0467eb23ea5d912d28d2541d89f8c5858547e1e6c97406c9c76f",
+    "study/build/shared_logic_experiment/word32/tb_ntt_core.sv": "05cb9ec3787acbfbdbd6c113f58d94697613b02d5b5a16be4e2d5cd4e5a27542",
+    "study/build/shared_logic_experiment/word32/tb_tile_thu.sv": "b2781cb965f35c496c6a372ea1126387f3dbed8d55ecfe4d94e6ab0500ce7c7d",
+    "study/build/shared_logic_experiment/word32/tile_thu.sv": "dead6541e5d0eb8a2926f4c7b0a56551cc17f1e0ca0896f74851f2926d35a07d",
+    "study/build/shared_logic_experiment/root_sum/core_hier.rpt": "dc8793f497a2970b202b222de782d0182f13fcd4c991572fa4b615ab501fc3d1",
+    "study/build/shared_logic_experiment/root_sum/core_synth_timing.rpt": "b878d6afe66566583585c562592d8ee80700a33194277ef88b1365988602362a",
+    "study/build/shared_logic_experiment/root_sum/core_util.rpt": "4e7d0adfd49635670a8692be285f0c08438231b24826065d4de2ac4e4b48da1f",
+    "study/build/shared_logic_experiment/root_sum/flex_banked_scratch.sv": "ee6054b023c06f3499bb3cf8af7211371c58f002d26217696b7cc815457176e2",
+    "study/build/shared_logic_experiment/root_sum/ntt_bank_net_s.sv": "3a5fb23e232de4e529e899d3f73e12618ad3664f46aa13e871c66ad9eadff5d2",
+    "study/build/shared_logic_experiment/root_sum/ntt_core.sv": "c167494d40f5b43a33634a35ccc8c1ceae1ed7f066e448f2e951e35e4546ace9",
+    "study/build/shared_logic_experiment/root_sum/ntt_core_gen.sv": "299cb43dbb4ca7ffe85947fa128f90b4def5359302cd5c9fcb36122d08658508",
+    "study/build/shared_logic_experiment/root_sum/root_pack_b0.mem": "21df2826117945165a424d2c6f62c050d27eab9d26ba84e336466f3e287ceeab",
+    "study/build/shared_logic_experiment/root_sum/root_pack_b1.mem": "b85591d36beacea9cd7478ce0fd5faeb478df6f90049bda333993016ed73898a",
+    "study/build/shared_logic_experiment/root_sum/root_pack_b2.mem": "3fe188efd8441548f082704176816c26bac2404b153c401915271b000207b938",
+    "study/build/shared_logic_experiment/root_sum/root_pack_b3.mem": "fb97de29ab4a4530a8e181bda9267a8155af76117d7c8ce35b708ba7fb5ba849",
+    "study/build/shared_logic_experiment/root_sum/tb_ntt_core.sv": "05cb9ec3787acbfbdbd6c113f58d94697613b02d5b5a16be4e2d5cd4e5a27542",
+    "study/build/shared_logic_experiment/root_sum/tb_tile_sum.sv": "81861961a864b714ccee94fb7d654185a30856b69111b0326be86b7d52ad45ac",
+    "study/build/shared_logic_experiment/root_sum/tb_tile_thu.sv": "b2781cb965f35c496c6a372ea1126387f3dbed8d55ecfe4d94e6ab0500ce7c7d",
+    "study/build/shared_logic_experiment/root_sum/tile_hier.rpt": "aa5e591c305e583161490ee4fd5721bc984da884956e9fd1f6c63ed6b2c58bab",
+    "study/build/shared_logic_experiment/root_sum/tile_route_util.rpt": "4adaaf08a770b0c4e8ee287c9192d9843013e48d61bc45e8f61ae713a8cbf6bf",
+    "study/build/shared_logic_experiment/root_sum/tile_thu.sv": "35802251a0e6322f668f39552bb1964343179d890276c26d6058a726be319312",
+    "study/build/shared_logic_experiment/root_sum/tile_timing.rpt": "d114cd086fc2d65465ddd5cf2e9b9c431fc33cf0135d049238b91df6895f227a",
+    "study/build/shared_logic_experiment/root_sum/tile_util.rpt": "eb54be16076599f55dc7d2a520de91f9d0981b6e0770018e46f19be2f4ffdd32"
+  },
+  "experiment_script_sha256": "67591b01c6920676722ddb056acff7b8ebd8110d8753ba13affb7425e84ba65f",
+  "driver_sha256": "9f17e63513ef9cf7645ef7499e77002b71a2e27fda8f5c0cfeb88549ca0705ea"
+}

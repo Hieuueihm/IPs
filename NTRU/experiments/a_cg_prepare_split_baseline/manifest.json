@@ -1,0 +1,39 @@
+{
+  "name": "prepared host + exact split FFT post-adder",
+  "selected_by_user": true,
+  "physical_approval": "pending",
+  "source": "experiments/a_cg_host_opt/prepare_split/rtl",
+  "resource_synth": {
+    "LUT": 37917,
+    "FF": 25365,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "clock_ns": 5,
+  "numeric_cases": 1026,
+  "four_state_cases": 38,
+  "C_transform_calls": 74,
+  "verified_signatures": 4,
+  "source_sha256": {
+    "experiments/a_cg_prepare_split_baseline/rtl/a_cg_fast.sv": "333ff2019e2dc4be24f705a45b3f32c1017a0022853fa53758922d248701df87",
+    "experiments/a_cg_prepare_split_baseline/rtl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "experiments/a_cg_prepare_split_baseline/rtl/tile_a.sv": "974637006103b059bd7ead40924da31c5b29a3edf7df3f8a563ff25c0c0df183"
+  },
+  "evidence_sha256": {
+    "study/build/a_cg_host_opt/prepare_split/synth/synthesized.dcp": "f8204d472ae8c93b239128887efdb5effbcb2fa569bc12fb49c6ea7527da82ac",
+    "study/build/a_cg_host_opt/prepare_split/synth/util.rpt": "cc47ea866a79672c889663a5aa7289095c25bc79d7bf4a0d017e52b82d97a9f2",
+    "study/build/a_cg_host_opt/prepare_split/synth/timing.rpt": "371ca924e413bdbbd736275c730ec80df93cd20b3f8b097aca1a0f960f61d12e",
+    "study/build/a_cg_host_opt/prepare_split/synth/metrics.txt": "a28ecc2cd68bc340b34c723f2ead5b6a5f23d183bdb5f3b2d203e81bb2e9bfb6",
+    "study/build/a_cg_host_opt/prepare_split/sim.log": "3d30c1ccf8cd61704e4f69b06a6cd0ce5891b6a5d35f7d57f1bf746b348919e7",
+    "study/build/a_cg_host_opt/prepare_split/four_state.log": "61a5b1f1527ca9b4083cb14960104a669de252d8cad1f6a8f7cc3cbc086385b1",
+    "study/build/a_cg_host_opt/prepare_split/application/application_results.json": "23beb9ceaead50576d843a92fa4a17670b55ee51866032f28da8518718ec43e3",
+    "study/build/a_cg_host_opt/prepare_split/application/rtl_records.json": "c582da3d6f71a09a399eb1c9df537bd275783104a45d5053cb77ed83c0b82a9a"
+  },
+  "production_sha256": {
+    "hdl\\tile\\tile_thu.sv": "69c03f65acec27d9e7e885f3f643824d555f05d5edd55dab630c807a9f967e68",
+    "hdl\\mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl\\core_ntt\\ntt_core.sv": "1cc921aace652ce9c0665a43c6fb8a7499174f461e50b66947777eb67c89f4d9"
+  },
+  "production_RTL_changed": false
+}

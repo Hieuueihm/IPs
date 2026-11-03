@@ -1,0 +1,216 @@
+{
+  "simulation": {
+    "transactions": 17510,
+    "configurations": 9,
+    "epoch_transactions": 17510,
+    "epoch_configurations": 4,
+    "mismatches": 0,
+    "transform_traces": 56,
+    "excluded_non_ntt_root_unit_vectors": 640,
+    "added_factor_root_vectors": 2048,
+    "r8_composed_complex_products": 70,
+    "scope": "All four shared modes; mode1 is restricted to actual adjacent-NTT-layer twiddle relations. No INTT normalization inside core."
+  },
+  "synthesis": [
+    {
+      "top": "radix2_shared3",
+      "comb_ge": 25268.7,
+      "ff": 643,
+      "total_ge": 28271.5,
+      "depth_cells": 118,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 6.8
+    },
+    {
+      "top": "radix2_shared4",
+      "comb_ge": 25325.4,
+      "ff": 784,
+      "total_ge": 28986.7,
+      "depth_cells": 119,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 6.9
+    },
+    {
+      "top": "radix4_shared4",
+      "comb_ge": 36924.5,
+      "ff": 778,
+      "total_ge": 40557.8,
+      "depth_cells": 101,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 10.7
+    },
+    {
+      "top": "radix2_pair4",
+      "comb_ge": 19531.2,
+      "ff": 370,
+      "total_ge": 21259.1,
+      "depth_cells": 119,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 5.9
+    },
+    {
+      "top": "radix4_pair4",
+      "comb_ge": 21010.7,
+      "ff": 384,
+      "total_ge": 22803.9,
+      "depth_cells": 97,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 7.0
+    },
+    {
+      "top": "radix4_pair_q12289",
+      "comb_ge": 15126.1,
+      "ff": 380,
+      "total_ge": 16900.7,
+      "depth_cells": 87,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 5.0
+    },
+    {
+      "top": "radix4_pair_q3329",
+      "comb_ge": 13564.5,
+      "ff": 336,
+      "total_ge": 15133.6,
+      "depth_cells": 87,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.7
+    },
+    {
+      "top": "radix2_pair_q12289",
+      "comb_ge": 16070.5,
+      "ff": 366,
+      "total_ge": 17779.7,
+      "depth_cells": 109,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.4
+    },
+    {
+      "top": "radix2_pair_q3329",
+      "comb_ge": 13894.5,
+      "ff": 324,
+      "total_ge": 15407.6,
+      "depth_cells": 113,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.3
+    },
+    {
+      "top": "radix4_shared_epoch",
+      "comb_ge": 35449.5,
+      "ff": 778,
+      "total_ge": 39082.8,
+      "depth_cells": 100,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 9.6
+    },
+    {
+      "top": "radix4_pair_epoch",
+      "comb_ge": 19485.9,
+      "ff": 384,
+      "total_ge": 21279.2,
+      "depth_cells": 104,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 6.4
+    },
+    {
+      "top": "radix4_pair_epoch_q12289",
+      "comb_ge": 14638.1,
+      "ff": 380,
+      "total_ge": 16412.7,
+      "depth_cells": 90,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 4.9
+    },
+    {
+      "top": "radix4_pair_epoch_q3329",
+      "comb_ge": 12898.8,
+      "ff": 336,
+      "total_ge": 14467.9,
+      "depth_cells": 89,
+      "tool": "Yosys 0.52 (git sha1 fee39a3284c90249e1d9684cf6944ffbbcbb8f90)",
+      "unknown": {},
+      "seconds": 3.6
+    }
+  ],
+  "selected_reducer": {
+    "name": "compact",
+    "implementation": 2,
+    "rule": "minimum cluster total GE among candidates with generic gate depth no worse than original",
+    "total_ge": 28197.5,
+    "depth_cells": 118
+  },
+  "source_sha256": {
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl/proto/flex_reduce_cluster.sv": "8506bef6c54e600b473d575f28c3ecf53b55813e06be00ee7866ff20aa62b2c5",
+    "hdl/proto/flex_radix4_factor.sv": "0a19ce7e573a12a37bb172395c28249d5b167de0514c71519d4651229ab5256d",
+    "hdl/proto/radix4_compare_tops.sv": "acfa2e2d5806f5d8fc56430d1fa6b8991ed296a01319c5f3c26ad16cf14c8b55",
+    "hdl/proto/mont_reduce16_functions.vh": "6bb1ea354ce7c96537ef74b9fff164124dcd4db22390b96d3e7d14699a696be2",
+    "sim/src/tb_radix4_compare.sv": "d375e0009ad13e0705ab5f71e3e1788e12ee3842ecbb4cff84eea6d314522721",
+    "sim/src/tb_radix4_epoch.sv": "13549f7c677f0bdcd8447be786570dab8e4d9e87b31bdcc8017ec6f67f9e653b"
+  },
+  "limits": [
+    "Same function and II1; paired baseline has 3 or 4 edges, factor has 4 edges.",
+    "NTT-pair-only factor prunes the fourth multiplier; full shared factor retains four for FFT/independent NTT.",
+    "Mixed CT/GS tops include both fixed-root paths. Epoch tops share one and require drain on profile/direction change.",
+    "Generic GE/depth, not target timing, power, energy or whole-transform speedup.",
+    "No shared compressor FFT/reduction fabric is implemented by this comparison."
+  ],
+  "area_comparisons": [
+    {
+      "baseline": "radix2_shared3",
+      "candidate": "radix4_shared4",
+      "total_ge_ratio": 1.434582530109828
+    },
+    {
+      "baseline": "radix2_shared4",
+      "candidate": "radix4_shared4",
+      "total_ge_ratio": 1.399186523474559
+    },
+    {
+      "baseline": "radix2_pair4",
+      "candidate": "radix4_pair4",
+      "total_ge_ratio": 1.0726653527195413
+    },
+    {
+      "baseline": "radix2_pair_q12289",
+      "candidate": "radix4_pair_q12289",
+      "total_ge_ratio": 0.9505615955274835
+    },
+    {
+      "baseline": "radix2_pair_q3329",
+      "candidate": "radix4_pair_q3329",
+      "total_ge_ratio": 0.9822165684467405
+    },
+    {
+      "baseline": "radix2_shared4",
+      "candidate": "radix4_shared_epoch",
+      "total_ge_ratio": 1.3483011174090187
+    },
+    {
+      "baseline": "radix2_pair4",
+      "candidate": "radix4_pair_epoch",
+      "total_ge_ratio": 1.0009454774661204
+    },
+    {
+      "baseline": "radix2_pair_q12289",
+      "candidate": "radix4_pair_epoch_q12289",
+      "total_ge_ratio": 0.9231145632378499
+    },
+    {
+      "baseline": "radix2_pair_q3329",
+      "candidate": "radix4_pair_epoch_q3329",
+      "total_ge_ratio": 0.939010618136504
+    }
+  ]
+}

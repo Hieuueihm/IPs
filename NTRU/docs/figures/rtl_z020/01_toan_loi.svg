@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="750" viewBox="0 0 1360 750">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#52677c"/></marker></defs>
+<rect width="1360" height="750" fill="white"/>
+<text x="35" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#17324d">1. Toàn lõi hiện tại trên XC7Z020</text>
+<text x="35" y="72.0" text-anchor="start" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="#17324d">16 tile giống nhau về chức năng; một context biến đổi tại mỗi thời điểm.</text>
+<rect x="30" y="140" width="175" height="100" rx="6" fill="#fff2cc" stroke="#245b91" stroke-width="1.8"/>
+<text x="117.5" y="173.92000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Host</text>
+<text x="117.5" y="195.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">config / root</text>
+<text x="117.5" y="216.08" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">load / read</text>
+<rect x="250" y="140" width="175" height="100" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="337.5" y="184.46" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">P: 341 FF</text>
+<text x="337.5" y="205.54000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">nhận gói</text>
+<path d="M250 218 l12 8 l-12 8" fill="none" stroke="#245b91" stroke-width="1.5"/>
+<text x="262" y="160.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">D</text>
+<text x="412" y="160.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">Q</text>
+<rect x="475" y="140" width="175" height="100" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="562.5" y="184.46" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Q: 341 FF</text>
+<text x="562.5" y="205.54000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">chuyển gói</text>
+<path d="M475 218 l12 8 l-12 8" fill="none" stroke="#245b91" stroke-width="1.5"/>
+<text x="487" y="160.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">D</text>
+<text x="637" y="160.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">Q</text>
+<rect x="720" y="125" width="245" height="130" rx="6" fill="#fff2cc" stroke="#245b91" stroke-width="1.8"/>
+<text x="842.5" y="173.92000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Điều khiển CG</text>
+<text x="842.5" y="195.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">FSM + descriptor</text>
+<text x="842.5" y="216.08" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">bộ đếm + lịch tích</text>
+<rect x="1050" y="140" width="260" height="100" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="1180.0" y="173.92000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Root cache</text>
+<text x="1180.0" y="195.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">16 × 512 × 32</text>
+<text x="1180.0" y="216.08" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">16 RAMB18E1</text>
+<polyline points="205,190 250,190" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="425,190 475,190" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,190 720,190" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="965,190 1050,190" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1008" y="171.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">địa chỉ</text>
+<rect x="35" y="380" width="255" height="140" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="162.5" y="433.92" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Dữ liệu ping-pong</text>
+<text x="162.5" y="455.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">32 bank × 256 × 32</text>
+<text x="162.5" y="476.08000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">32 RAMB18E1</text>
+<rect x="350" y="390" width="240" height="120" rx="6" fill="#fff2cc" stroke="#245b91" stroke-width="1.8"/>
+<text x="470.0" y="433.92" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">MUX chọn bank</text>
+<text x="470.0" y="455.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">4 ứng viên / đầu vào</text>
+<text x="470.0" y="476.08000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">+ FF yêu cầu</text>
+<rect x="665" y="370" width="340" height="160" rx="6" fill="#e5f3ed" stroke="#245b91" stroke-width="1.8"/>
+<text x="835.0" y="423.38" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">16 × tile_a2</text>
+<text x="835.0" y="444.46" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">nhân + cộng/trừ dùng chung</text>
+<text x="835.0" y="465.53999999999996" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">FFT32/64/128 hoặc NTT</text>
+<text x="835.0" y="486.62" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">64 DSP48E1 toàn mảng</text>
+<rect x="1080" y="390" width="230" height="120" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="1195.0" y="433.92" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Phản hồi đọc</text>
+<text x="1195.0" y="455.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">128 data + 1 valid</text>
+<text x="1195.0" y="476.08000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">129 FF</text>
+<path d="M1080 488 l12 8 l-12 8" fill="none" stroke="#245b91" stroke-width="1.5"/>
+<text x="1092" y="410.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">D</text>
+<text x="1297" y="410.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">Q</text>
+<polyline points="290,430 350,430" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="590,430 665,430" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1180,240 1180,305 900,305 900,370" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1060" y="291.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">root / tile</text>
+<polyline points="840,255 840,370" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="775" y="331.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">bước tính</text>
+<polyline points="835,530 835,600 160,600 160,520" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="495" y="585.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">MUX ghi bank + địa chỉ CG</text>
+<polyline points="290,480 320,480 320,655 1195,655 1195,510" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="735" y="641.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">host adapter: ghép lại dòng 128 bit</text>
+<text x="1080" y="690.0" text-anchor="start" font-family="Arial, sans-serif" font-size="15" font-weight="normal" fill="#17324d">P/Q và phản hồi nằm ngoài u_exec.</text>
+<text x="35" y="730.0" text-anchor="start" font-family="Arial, sans-serif" font-size="13" font-weight="normal" fill="#17324d">Theo RTL hiện tại • ADD/MUX/cổng: logic tổ hợp • D/Q: thanh ghi • RAM/DSP: primitive phần cứng.</text>
+</svg>

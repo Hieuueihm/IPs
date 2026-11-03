@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "measured_tiles": 16,
+  "kernel_runs": 11984,
+  "words_checked": 650984,
+  "source_and_evidence_checks": 84,
+  "outputs_identical_to_pqc_validated_rtl": true,
+  "local_links": 66,
+  "static_supply_cases": 54,
+  "alternative_tile_count_rtl_sweep": false,
+  "audit_script_sha256": "a9314d0628053da0e68f6e90933406887f05622c84c6461feecf1f4527545c4d",
+  "profile_summary_sha256": "7f05e1d763ce489417123706685d9e4728c4a4eb66cfb005ee2c518e1c4ffe8a"
+}

@@ -1,0 +1,423 @@
+# FlexTransform v1 — ý tưởng, kiến trúc và giả thuyết
+
+> Ngày 30/10/2026. **Bản chốt để triển khai RTL.** Ưu tiên thiết kế: **diện tích nhỏ nhất**, chấp nhận NTT chậm hơn.
+> Thay đổi sau ngày này cần ghi lý do và cập nhật lại tài liệu.
+> Bản trước: [trước khi thêm NTT prime 31 bit](plan_history/architecture_v1_before_prime31_2026-10-30.md),
+> [trước khi dùng chung hậu xử lý](plan_history/architecture_v1_before_shared_postproc_2026-10-30.md),
+> [trước khi làm gọn](plan_history/architecture_v1_before_cleanup_2026-10-30.md).
+>
+> **Thay đổi phạm vi 30/10/2026** (người dùng duyệt): thêm **NTT modulo các prime 31 bit của NTRUGen** (thay đổi 8).
+> Lý do: biến chiều modulus thành "mọi prime 31 bit lấy từ workload thật, đổi lúc chạy, không thêm phép tính"; xem
+> [điểm mạnh của kiến trúc](diem_manh_kien_truc.md).
+
+## 1. Ý tưởng
+
+Lõi FlexTransform dùng **một mảng 64 bộ nhân 16×16** và **một khối hậu xử lý dùng chung** cho cả hai loại
+phép biến đổi mà FN-DSA (Falcon) cần:
+
+- **FFT số phức fixed-point** ở ba độ rộng: 32, 64 và 128 bit mỗi phần thực/ảo.
+- **NTT modulo** ở hai độ rộng hệ số: 16 bit (q = 12289 của FN-DSA, q = 3329 của ML-KEM) và 32 bit
+  (q = 8380417 của ML-DSA, và **mọi prime 31 bit** mà phần sinh khóa FN-DSA dùng, nạp lúc chạy).
+
+Ba điểm chính:
+
+1. **Luật độ rộng.** Một phép nhân w bit cần (w/16)² bộ nhân 16×16, nên mảng làm được 64 / (w/16)² phép nhân
+   mỗi chu kỳ. Toán hạng càng hẹp, càng nhiều phép nhân song song, ở cả FFT lẫn NTT.
+2. **Gom lô theo độ rộng.** Bộ điều khiển gom nhiều butterfly vào một lượt theo độ rộng đang chạy, để
+   "hẹp hơn" thật sự thành "nhanh hơn" trong giới hạn bộ nhớ và bảng twiddle cấp được.
+3. **Dùng chung cả phần sau phép nhân.** Làm tròn của FFT và rút gọn modulo của NTT đều có dạng
+   "phần cao của tích + một hạng bù + một bit nhớ". Vì vậy dùng chung một bộ cộng cho bước này và một
+   ngân hàng cộng/trừ chia làn cho mọi phép cộng sau đó. Các phép nhân phụ của rút gọn Montgomery
+   **chạy luôn trên mảng nhân**, nên NTT không cần bộ rút gọn riêng; đổi modulus chỉ là đổi hằng số.
+
+Ba độ rộng FFT ứng với workload thật:
+
+| Độ rộng FFT | Dùng cho | Phép tính phải khớp từng bit với |
+|---|---|---|
+| 128 bit (Q64.64) | Ký FN-DSA | Bản FN-DSA fixed-point đã chọn làm chuẩn (mục 5.1) |
+| 64 bit (Q32.32) | Sinh khóa FN-DSA | Thư viện NTRUGen đi kèm chính bản chuẩn đó |
+| 32 bit (Q16.16) | Xử lý tín hiệu | Quy tắc số học tự định nghĩa; không dùng cho ký |
+
+## 2. Vấn đề hiện tại
+
+Lõi đã chạy đúng hoàn toàn: 5 992 lời gọi kernel khớp, và bốn chữ ký (N = 512 và 1024) khớp từng byte với
+phần mềm. Nhưng hai chiều linh hoạt mới có về chức năng, chưa có về tốc độ:
+
+- **FFT 32, 64 và 128 bit đều mất 52 992 chu kỳ** (N = 1024). Bộ điều khiển xử lý tuần tự,
+  23 chu kỳ cho mỗi butterfly.
+- **NTT mất 10 chu kỳ cho mỗi lượt dữ liệu**; với N nhỏ, phần lớn mảng nhân để trống.
+- **NTT chỉ có hai modulus cùng độ rộng 16 bit**, mỗi modulus một mạng nhân hằng riêng.
+- Mỗi làn NTT có một bộ rút gọn riêng (64 làn), chỉ dùng cho NTT. Ước lượng thô từ các lần tổng hợp trước:
+  khoảng 20% logic. Trên FPGA, phần này nằm ở LUT (nhân hằng bằng cộng/dịch), còn mảng nhân nằm ở DSP;
+  con số thật sẽ đo lại bằng Vivado.
+
+## 3. Kiến trúc
+
+~~~text
+              Lệnh + nạp/đọc dữ liệu (giao diện của spec 1.0)
+                                |
+   +------------- Khối lệnh: gom lô, 2 context, xen kẽ đa thức -------------+
+                  |                                       |
+     Bộ nhớ: 3 vùng × 64 bank × 16 bit         Bảng twiddle
+     (hệ số 32 bit = 2 bank liền kề)            FFT: 4 bank, mỗi bank 1 root/chu kỳ
+                  |                             NTT: gói 3 root cho hai tầng liên tiếp
+                  |                                       |
+     Chuẩn bị toán hạng: cộng trước cho nhân phức 3 tích; trừ (và chia đôi nếu là
+     FFT 64 bit NTRUGen) cho butterfly ngược; giữ toán hạng chờ kết quả
+                  |                       ^
+                  |                       |  NTT: đưa T_thấp·q' và m·q quay lại mảng
+     Mảng 16 tile × 4 bộ nhân 16×16, nhóm theo độ rộng đang chạy
+                                |
+     Cây cộng ghép tích, lượng dịch cố định; lấy kết quả ở mức 1, 4, 16 hoặc 64 bộ nhân
+                                |
+   +------------------- HẬU XỬ LÝ DÙNG CHUNG --------------------+
+   | Trích cửa sổ bit của tích (chọn vị trí, hằng số làm tròn)    |
+   | Bộ cộng: phần cao + hạng bù + bit nhớ                         |
+   |   FFT: P_cao + bit làm tròn (hoặc 0 nếu cắt bớt)              |
+   |   NTT: T_cao + (m·q)_cao + [T_thấp ≠ 0]                       |
+   | Ngân hàng cộng/trừ chia làn (khoảng 2 830 bit cộng, mục 3.3):  |
+   |   FFT: ghép số phức 3 tích, cộng/trừ butterfly (quay vòng)    |
+   |   NTT: trừ q có điều kiện, cộng/trừ modulo                    |
+   +---------------------------------------------------------------+
+                                |
+     Bộ điều khiển: đọc, tính, ghi chạy song song; chỉ sang tầng mới
+     khi mọi kết quả của tầng cũ đã ghi xong
+~~~
+
+**Phần còn riêng cho từng miền** (nhỏ):
+- NTT: mux đưa T_thấp, q′, m, q quay lại mảng nhân; thanh ghi giữ T trong lúc chờ; cổng OR phát hiện T_thấp ≠ 0;
+  hằng số q, q′, N⁻¹ của từng modulus.
+- FFT: dây nối ghép số phức 3 tích (phần cộng nằm trong ngân hàng chung); hằng số làm tròn; bảng twiddle.
+
+### 3.1 Cách nhóm bộ nhân theo chế độ
+
+| Chế độ | Bộ nhân cho một phép nhân | Phép nhân/chu kỳ | Đơn vị công việc/chu kỳ |
+|---|---:|---:|---|
+| FFT 32 bit | 4 | 16 | 5,33 butterfly (3 tích/butterfly) |
+| FFT 64 bit (cả bản NTRUGen) | 16 | 4 | 1,33 butterfly |
+| FFT 128 bit | 64 (58 cần dùng) | 1 | 0,333 butterfly |
+| NTT 16 bit | 3 (T, m, m·q) | — | 21,3 phép nhân modulo |
+| NTT 32 bit | 11 (4 + 3 + 4), chạy 3 lượt trong một tile | — | 5,33 phép nhân modulo |
+
+FFT dùng **ba tích thực cho mỗi phép nhân phức**, đúng như phần mềm chuẩn. Ở 128 bit, 6 trong 64 tích con
+không ảnh hưởng kết quả nên được bỏ, vẫn chính xác từng bit. Lô FFT: 16 / 4 / 1 butterfly cho 32 / 64 / 128 bit.
+
+### 3.1b Định cỡ ngân hàng cộng/trừ dùng chung
+
+Tính bằng [model/postproc_adders.py](../model/postproc_adders.py): số bit cộng cần mỗi chu kỳ ở từng tầng sau
+phép nhân, tại tốc độ đỉnh của mỗi chế độ.
+
+| Bố trí | Tổng bit cộng |
+|---|---:|
+| Cần cho FFT (lớn nhất là FFT 32 bit) | 2 064 |
+| Cần cho NTT (lớn nhất là NTT 16 bit, rút gọn trên mảng) | 2 176 |
+| Hai ngân hàng riêng | 4 240 |
+| **Một ngân hàng dùng chung** | **2 832** |
+
+FFT 32 bit và NTT 16 bit cần lượng bộ cộng gần bằng nhau, nên dùng chung tiết kiệm khoảng **33%** bit cộng
+(chưa tính mux chọn làn và cắt chuỗi nhớ). Đây là lý do định lượng cho việc dùng chung phần sau phép nhân.
+
+### 3.2 Tám thay đổi so với lõi hiện tại
+
+| # | Thay đổi | Mục đích |
+|---|---|---|
+| 1 | **Bộ điều khiển pipeline**: đọc, tính, ghi chạy chồng lên nhau | Bỏ 23 chu kỳ tuần tự mỗi butterfly |
+| 2 | **Gom lô theo độ rộng**: 16 / 4 / 1 butterfly cho FFT 32 / 64 / 128 bit | Biến độ rộng hẹp thành tốc độ |
+| 3 | **Bảng twiddle FFT chia 4 bank** (root số k ở bank k mod 4) | FFT 32 bit cần nhiều root mỗi chu kỳ |
+| 4 | **Hậu xử lý dùng chung + rút gọn Montgomery trên mảng nhân**; bỏ 64 bộ rút gọn riêng | Diện tích nhỏ nhất; đổi modulus chỉ là đổi hằng số |
+| 5 | **NTT 32 bit cho q = 8380417** (ML-DSA, N = 256) | Thêm chiều độ rộng cho NTT |
+| 6 | **Chạy xen kẽ hai đa thức NTT** trên hai context sẵn có | Che thời gian chờ giữa các tầng |
+| 7 | **FFT 64 bit theo đúng NTRUGen** | Sinh khóa FN-DSA dùng được lõi, khớp từng bit |
+| 8 | **NTT modulo prime 31 bit của NTRUGen**: p và p0i nạp theo lệnh, bảng root là RAM nạp từ host, chia đôi modulo trong ngân hàng cộng, N = 2..1024 | Đổi modulus lúc chạy với prime bất kỳ của workload thật; sinh khóa dùng lõi cho cả NTT |
+
+Không đổi: cây cộng ghép tích, cách làm tròn FFT 128 bit, NTT hai tầng gộp.
+
+## 4. Dự báo tốc độ
+
+Tính bằng [model/flex_v1_projection.py](../model/flex_v1_projection.py). Đây là **dự báo**, chưa phải số đo:
+giả định mỗi lượt phát được một chu kỳ một lần, đọc và ghi song song, chờ L chu kỳ giữa hai tầng.
+Số lượt đọc bộ nhớ và số root lấy từ phân tích địa chỉ thật của lõi hiện tại.
+
+**FFT, N = 1024** (hiện tại 52 992 chu kỳ cho cả ba độ rộng; L = 8):
+
+| Áp dụng | 32 bit | 64 bit | 128 bit |
+|---|---:|---:|---:|
+| Chỉ thay đổi 1 (pipeline) | 4 680 | 5 192 | 7 496 |
+| Thay đổi 1 + 2 + 3 | 552 | 1 864 | 7 496 |
+| Giới hạn tính toán (không thể nhanh hơn) | 432 | 1 728 | 6 912 |
+
+- Chỉ pipeline thì ba độ rộng gần như chạy ngang nhau: chưa có chiều precision.
+- Thêm gom lô thì tỉ lệ thời gian 32 : 64 : 128 bit là 1 : 3,4 : 13,6, gần mức lý tưởng 1 : 4 : 16.
+- FFT ngược cho cùng số chu kỳ, cộng thêm một lượt chia cuối (khoảng 32 / 64 / 128 chu kỳ). Với N = 512:
+  264 / 832 / 3 264 chu kỳ.
+
+**NTT với rút gọn trên mảng nhân** (thay đổi 4). Có tính độ trễ thật của một nhịp hai tầng: tầng 2 phải chờ
+tầng 1, và mỗi phép nhân modulo đi qua bộ nhân ba lượt nối tiếp. Tốc độ nhịp và độ trễ nhịp lấy từ mô hình
+tile ([model/mont_on_array_tile.py](../model/mont_on_array_tile.py)); độ trễ bộ nhân DSP 4 chu kỳ:
+
+| Trường hợp | Trên mảng, một đa thức | Trên mảng, hai đa thức xen kẽ (mỗi đa thức) | Rút gọn riêng, một / hai đa thức | Đo hiện tại |
+|---|---:|---:|---:|---:|
+| q12289, N1024 | 390 | 240 | 160 / 80 | 800 |
+| q12289, N256 | 168 | 84 | 80 / 40 | 160 |
+| q8380417, N256 (32 bit) | 320 | 192 | 136 / 68 | — |
+
+- Độ trễ một nhịp: 30 chu kỳ khi rút gọn trên mảng, 16 khi rút gọn riêng (gồm 2 chu kỳ đọc/ghi RAM).
+- NTT chậm **2,1–3,0 lần** so với khi giữ bộ rút gọn riêng.
+- So với lõi hiện tại: N1024 nhanh hơn 2,1 lần (một đa thức) đến 3,3 lần (xen kẽ); **N256 một đa thức chỉ ngang
+  lõi hiện tại** (168 so với 160), xen kẽ hai đa thức thì nhanh hơn 1,9 lần. Chấp nhận, vì ưu tiên là diện tích.
+- Với độ trễ bộ nhân 3: 360 / 144 / 296 chu kỳ cho một đa thức. FFT không bị ảnh hưởng.
+
+**NTT modulo prime 31 bit của NTRUGen** (thay đổi 8; lane 32 bit, rút gọn trên mảng, độ trễ bộ nhân 4, một đa thức).
+Nạp prime theo [spec 2.0 mục 02.3](../spec/FlexTransform/2.0/02_giao_dien.md): host ghi bảng vào vùng nhớ C, rồi
+phép nạp prime xếp bảng thành gói root.
+
+| N | 64 | 128 | 256 | 512 | 1024 |
+|---|---:|---:|---:|---:|---:|
+| NTT xuôi hoặc ngược (chu kỳ) | 132 | 212 | 320 | 592 | 1 120 |
+| Host ghi vùng C, một bảng (dòng 128 bit) | 17 | 33 | 65 | 129 | 257 |
+| Phép nạp, một bảng (chu kỳ, ước lượng thấp nhất) | 8 | 16 | 32 | 64 | 128 |
+
+- N256 cho 320 chu kỳ, bằng NTT q = 8380417 cùng kích thước: cùng đường dữ liệu, chỉ khác hằng số.
+- Logn lẻ có thêm một lượt một tầng cuối; con số trên lấy độ trễ lượt đó bằng một nhịp hai tầng (cận trên).
+- Nạp cả hai bảng thì gấp đôi hai dòng dưới. Bảng nạp ở N lớn dùng được cho mọi N nhỏ hơn (đã kiểm trên cả 323 prime),
+  nên mỗi prime chỉ cần nạp một lần. NTRUSolve biến đổi nhiều đa thức với cùng prime, nên chi phí nạp được chia đều.
+  Thời gian nạp vẫn **phải tính vào** khi báo kết quả cho sinh khóa.
+
+## 5. Quy tắc số học
+
+### 5.1 Bản chuẩn
+
+Bản chuẩn là mã FN-DSA fixed-point
+[fixed-point-fndsa/fixed-point-c](https://github.com/fixed-point-fndsa/fixed-point-c), commit
+`ad1e5bf7714d53230ad457364db8a46a1b459c94`, cấu hình mặc định (fixed-point, không AVX2).
+- Phần **ký** dùng FFT 128 bit (Q64.64); lõi hiện tại đã khớp từng bit.
+- Phần **sinh khóa** gọi thư viện **NTRUGen** đi kèm, dùng FFT 64 bit (Q32.32).
+
+Các quy tắc FFT 32/64/128 bit hiện có giữ nguyên như [spec 1.0](../spec/FlexTransform/1.0/01_numeric_kernels.md).
+
+### 5.2 FFT 64 bit theo NTRUGen (thay đổi 7)
+
+Đã đọc trong mã nguồn và kiểm bằng [model/arch_checks.py](../model/arch_checks.py). Mọi phép cộng/trừ quay vòng ở 64 bit (có dấu).
+
+```text
+nhân(x, y)  = floor(x·y / 2^32)            // cắt bớt, KHÔNG làm tròn
+nửa(v)      = floor((v + 1) / 2)           // cộng 1 rồi dịch phải
+nhân phức 3 tích(s, y):
+    z0 = nhân(s_re, y_re);  z1 = nhân(s_im, y_im)
+    z2 = nhân(s_re + s_im, y_re + y_im)
+    phần thực = z0 − z1;  phần ảo = z2 − (z0 + z1)
+
+FFT xuôi:  y ← s·y;  (x, y) ← (x + y, x − y)                 // cùng lịch chỉ số với FFT 128 bit
+FFT ngược: (x, y) ← (nửa(x + y), liên_hợp(s) · nửa(x − y))   // chia đôi ở MỌI tầng, không chia cuối
+```
+
+Khác FFT 64 bit hiện có của spec ở ba điểm:
+1. Nhân cắt bớt: hằng số làm tròn ở bộ trích cửa sổ bằng 0.
+2. Chia đôi ở cả hai nhánh của butterfly ngược, mỗi tầng.
+3. Bảng twiddle riêng: 1 024 số phức, chép nguyên bit từ `GM_TAB` của NTRUGen (16 KiB).
+
+Phải build NTRUGen **không AVX2** làm chuẩn so sánh. Mô hình đã kiểm: phép nhân và chia đôi đúng công thức,
+lịch FFT/FFT ngược trùng với lịch của FFT 128 bit; chưa chạy với bảng `GM_TAB` thật và chương trình C.
+
+### 5.3 Rút gọn Montgomery chung cho mọi modulus (thay đổi 4, 5)
+
+Một công thức cho tất cả, chỉ đổi hằng số:
+
+```text
+Hệ số nằm trong [0, q); root lưu dạng w·R mod q; q' = −q^(−1) mod R
+T = a·b                                   // lượt 1 trên mảng nhân
+m = phần thấp (log2 R bit) của T_thấp·q'  // lượt 2: chỉ cần nửa thấp
+u = T_cao + (m·q)_cao + [T_thấp ≠ 0]      // lượt 3 tính m·q; cộng ở bộ cộng chung
+kết quả = u − q nếu u ≥ q, ngược lại u      // = a·b·R^(−1) mod q, trong [0, q)
+```
+
+| q | R | q' | Bộ nhân dùng/phép nhân modulo | Phép nhân modulo/chu kỳ (16 tile) |
+|---:|---|---:|---:|---:|
+| 3329 | 2^16 | 3327 | 3 | 21,3 |
+| 12289 | 2^16 | 12287 | 3 | 21,3 |
+| 8380417 | 2^32 | 4236238847 | 11 (chiếm 3 lượt × 4 bộ nhân của một tile; 1 vị trí bỏ trống) | 5,33 |
+
+Đã kiểm bằng code ([model/arch_checks.py](../model/arch_checks.py)): dựng T, m, m·q từ tích 16×16 rồi qua bộ cộng
+chung cho đúng a·b·R⁻¹ mod q và u < 2q, với các q trên và hai prime 32 bit khác. Kết quả giống hệt cách rút gọn
+hiện tại; chỉ đổi nơi tính.
+
+**NTT 32 bit (q = 8380417):**
+- NTT xuôi 8 tầng, root ζ = 1753 (bậc 512); NTT ngược nhân thêm 256⁻¹ mod q = 8 347 681 ở cuối.
+- **Cách đặt trong bộ nhớ**: hệ số thứ c chiếm hai ô 16 bit liền nhau (địa chỉ 2c và 2c + 1), giống cách FFT
+  đặt số nhiều phần. Với cách đánh bank sẵn có của lõi, hai nửa luôn nằm ở hai bank cạnh nhau cùng hàng.
+- **Không xung đột bank**: đã kiểm toàn bộ 4 lượt xuôi và ngược của N = 256, cả dữ liệu lẫn bảng root
+  ([model/res32_bank_map.py](../model/res32_bank_map.py)). v1 chỉ hỗ trợ N = 256. Kiểm thêm cùng bố cục cho mọi N:
+  N ≤ 512 không xung đột; N = 1024 có 20% chu kỳ phải đọc hai lượt.
+
+Phần cứng chạy được modulus bất kỳ < R chỉ bằng hằng số. v1 kiểm chứng ba modulus trên và các prime 31 bit của
+NTRUGen (mục 5.4).
+
+### 5.4 NTT modulo prime 31 bit của NTRUGen (thay đổi 8)
+
+Đã đọc trong mã nguồn `ng_mp31.c` của NTRUGen đi kèm bản chuẩn. Hàm `mp_mkgm7` chỉ dùng cho BAT, không thuộc FN-DSA.
+
+```text
+Prime p < 2^31, R = 2^32, p0i = −p^(−1) mod 2^32 (đúng là q' của mục 5.3), hệ số trong [0, p)
+Bảng root (host nạp; dạng Montgomery):
+    g_n  = căn nguyên thủy bậc 2n (g của bảng PRIMES bình phương 10 − logn lần)
+    gm[đảo_bit(u)]  = g_n^u · R mod p
+    igm[đảo_bit(u)] = (1/2) · g_n^(−u) · R mod p      // đã gộp sẵn hệ số 1/2
+NTT xuôi (CT, giống NTT q12289):  t = mont(y, gm[k]);  (x, y) ← (x + t, x − t)
+NTT ngược (GS):  (x, y) ← (nửa(x + y), mont(x − y, igm[k]))   // chia đôi MỌI tầng, không nhân 1/n ở cuối
+nửa(v) = (v + p nếu v lẻ) / 2                                  // cộng có điều kiện rồi dịch, trong ngân hàng cộng
+```
+
+- Cách xếp hệ số và nhịp hai tầng giống NTT 32 bit của q = 8380417 (hệ số c ở ô 2c, 2c + 1). N = 2..1024; logn lẻ có
+  một lượt một tầng cuối.
+- Bố cục không xung đột bank ở mọi N ≤ 512. Ở N = 1024 có 20% chu kỳ phải đọc hai lượt, nhưng không làm chậm, vì phần
+  tính chỉ dùng 1,33 trong 4 nhịp mỗi chu kỳ mà bộ nhớ cấp được
+  ([model/res32_bank_map.py](../model/res32_bank_map.py)).
+- Một nhịp cần 3 root (gm[k], gm[2k], gm[2k + 1]); ở 1,33 nhịp/chu kỳ là khoảng 4 root mỗi chu kỳ. Đã chốt trong
+  [spec 2.0 mục 03.4](../spec/FlexTransform/2.0/03_bo_nho.md): phép nạp prime xếp bảng thành gói 96 bit, 4 bank,
+  tới 511 gói mỗi chiều.
+- **Đã kiểm khớp từng bit với C** ([model/ntrugen_mp31.py](../model/ntrugen_mp31.py), kết quả
+  [study/results/ntrugen_mp31.md](../study/results/ntrugen_mp31.md)), trên cả 323 prime của bảng `PRIMES` và
+  logn = 1..10:
+  - 21 641 phép Montgomery dựng từ tích 16×16 cộng bộ cộng chung khớp `mp_montymul`, gồm các giá trị 0, 1, p − 1;
+  - 3 230 bảng root tính theo công thức khớp `mp_mkgmigm`;
+  - 3 230 NTT xuôi khớp `mp_NTT`, chạy theo nhịp hai tầng như phần cứng;
+  - 3 230 NTT ngược khớp `mp_iNTT`.
+
+## 6. Giả thuyết cần chứng minh
+
+Đo trên RTL v1 bằng công cụ profiling hiện có, tính chu kỳ từ lúc bắt đầu đến lúc xong lệnh.
+Ngưỡng được đặt **trước khi đo**; không sửa sau khi có kết quả.
+
+| # | Giả thuyết | Đạt khi | Bác bỏ khi |
+|---|---|---|---|
+| 1 | **Dùng chung FFT/NTT có lợi về tài nguyên** | Với từng loại LUT, DSP và BRAM/URAM: lõi chung ≤ lõi chỉ-FFT + lõi chỉ-NTT, mỗi lõi riêng có cùng tốc độ với lõi chung ở chế độ của nó; LUT nhỏ hơn rõ rệt | LUT hoặc DSP của lõi chung ≥ tổng hai lõi riêng |
+| 2 | **Rút gọn trên mảng nhân tốn ít tài nguyên hơn bộ rút gọn riêng** | LUT giảm ≥ 10% so với cùng thiết kế dùng bộ rút gọn riêng đủ cùng tập modulus (mỗi tile: 4 bộ hằng cho 3329/12289 và 1 bộ Montgomery 32 bit tổng quát; định nghĩa ở mục 5 của [hợp đồng cấp tile](../spec/FlexTransform/2.0/10_hop_dong_tile.md)); DSP không tăng; Fmax giảm ≤ 10%; NTT chậm ≤ 3,5 lần so với bản rút gọn riêng ở N1024 và N256, một hoặc hai đa thức (dự báo 2,1–3,0) | LUT giảm < 5%, hoặc chậm > 4 lần |
+| 3 | **Gom lô tạo ra chiều precision cho FFT** | N1024: FFT xuôi ≤ 700 / 2 300 / 8 500 chu kỳ cho 32 / 64 / 128 bit; FFT ngược ≤ 770 / 2 530 / 9 350. Tỉ lệ 128 bit so với 32 bit ≥ 10, so với 64 bit ≥ 3 (N512: ≥ 8). Khi chỉ có pipeline, tỉ lệ 128/32 bit ≤ 2. Ngưỡng đúng khi độ trễ đo được của đường FFT (đọc RAM tới ghi) ≤ 24 chu kỳ | Có gom lô mà tỉ lệ 128/32 bit < 4 |
+| 4 | **Pipeline đưa NTT tới gần mô hình** | Thời gian ≤ 1,25 × mô hình, với mô hình = tổng các lượt × (số nhịp / (16 × tốc độ nhịp mỗi tile) + độ trễ nhịp đo được). Với độ trễ nhịp 30 (dự báo): q12289 N1024 ≤ 488, N256 ≤ 210, hai đa thức xen kẽ ≤ 105 mỗi đa thức, NTT 32 bit N256 ≤ 400 | Vượt 2 × mô hình |
+| 5 | **Chiều độ rộng FFT không đắt so với lõi chỉ làm FFT 128 bit** | LUT ≤ 1,35 lần và DSP bằng lõi chỉ-128-bit; tốc độ trên LUT ở 32 bit ≥ 7 lần, ở 128 bit ≥ 0,75 lần | Không đạt cả hai ngưỡng 32 bit |
+| 6 | **Mọi kết quả khớp từng bit với phần mềm chuẩn** | 0 sai khác; chữ ký khớp từng byte | Một sai khác (**đã đạt** với lõi hiện tại) |
+| 7 | **NTT hai tầng gộp giảm một nửa lượng dữ liệu, tốn ít tài nguyên** | N1024 cần 5 lượt thay vì 10; thêm ≤ 3% LUT so với chỉ chạy một tầng | Thêm > 10% LUT. (Đã đo trên thiết kế cũ có bộ rút gọn riêng: 5 lượt, +1,10%; **phải đo lại** với rút gọn trên mảng) |
+| 8 | **Một lõi phục vụ cả ký (128 bit) và sinh khóa (64 bit)** | FFT 64 bit khớp NTRUGen; sinh khóa dùng lõi cho khóa khớp từng byte (≥ 2 seed mỗi N512/N1024) | Một sai khác |
+| 9 | **NTT 32 bit chạy đúng, không xung đột bank** | Khớp NTT của bản chuẩn ML-DSA (Dilithium, pq-crystals) sau khi đổi cách biểu diễn; bộ đếm xung đột = 0 | Một sai khác hoặc có xung đột |
+| 10 | **Đổi sang prime 31 bit bất kỳ của NTRUGen không tốn thêm phép tính, chỉ tốn ít tài nguyên** | Khớp từng bit `mp_NTT`/`mp_iNTT` trên cả 323 prime, logn = 1..10; LUT thêm cho chế độ này ≤ 3% lõi; BRAM thêm không quá RAM gói root hai chiều (khoảng 12 KiB, [spec 2.0 mục 03.4](../spec/FlexTransform/2.0/03_bo_nho.md)); thời gian ≤ 1,25 × mô hình (N1024 ≤ 1 400 chu kỳ, chưa gồm nạp root) | Một sai khác, hoặc LUT thêm > 10% |
+
+**Cách đo tài nguyên** (giả thuyết 1, 2, 5): trên FPGA, bằng Vivado.
+- Linh kiện **xczu7ev-ffvc1156-2-e** (board ZCU106, đã dùng trong `fpga/zcu106/`); cùng phiên bản Vivado và cùng
+  cài đặt cho mọi thiết kế; tổng hợp và place-and-route out-of-context.
+- Báo riêng từng loại: **LUT, FF, DSP, BRAM/URAM**, và **Fmax** (WNS sau route ở cùng một clock mục tiêu).
+  Không cộng các loại thành một con số "diện tích".
+- RTL vẫn viết chung, không gọi primitive của Xilinx; Vivado tự suy ra DSP và BRAM.
+- Lõi chỉ-NTT riêng chỉ cần RAM đủ cho NTT, nên phần tiết kiệm BRAM của lõi chung bằng RAM của lõi NTT,
+  không phải cả 48 KiB.
+- "Tốc độ 32 bit" của lõi chỉ-128-bit nghĩa là chạy cùng phép biến đổi ở 128 bit (kết quả không giống hệt,
+  chỉ để so thời gian).
+
+**Hình chính của bài báo:** tốc độ theo độ rộng toán hạng (FFT 32/64/128, NTT 16/32) trên cùng lõi, kèm LUT/DSP/BRAM
+so với lõi chỉ-FFT + lõi chỉ-NTT và lõi chỉ-128-bit.
+
+## 7. Thay đổi so với spec 1.0
+
+| Thay đổi | Mục spec bị thay | Nội dung mới |
+|---|---|---|
+| 5, 7 | 00.2 bảng định dạng | Trường định dạng 3 bit: thêm **4 = NTT 32 bit**, **5 = FFT 64 bit NTRUGen** (chỉ FFT/FFT ngược, logn 1..10); 6–7 dự trữ |
+| 5 | 00.3 bảng modulus | Thêm modulus số 2 = 8380417, chỉ định dạng 4, chỉ N = 256 |
+| 6 | 00.4 số đa thức mỗi lệnh | N ≥ 64: cho phép 1 hoặc 2 đa thức; đa thức thứ hai bắt đầu ở ô N (16 bit) hoặc 2N (32 bit) |
+| 3 | 00.5 và 03.5 "một root mỗi chu kỳ" | 4 bank root; thêm bảng NTRUGen |
+| 2 | 03.5 "nên gom butterfly" | Thành **bắt buộc**: 16 / 4 / 1 butterfly theo độ rộng |
+| 5 | 03.4 cách đặt hệ số; 03.6 gói root | NTT 32 bit: hệ số c ở ô 2c, 2c + 1; gói 3 root 96 bit ở 4 bank, bank = số gói mod 4 |
+| 5, 7 | 02 giao diện lệnh | `cmd_fmt_i` thành 3 bit, `cmd_reserved_i` còn 7 bit (vẫn phải bằng 0) |
+| 4 | Không đổi hợp đồng | Rút gọn trên mảng nhân là lựa chọn vi kiến trúc; kết quả số học giống hệt |
+| 8 | 00.3 bảng modulus | Thêm modulus số 3 = **prime 31 bit nạp được**: chỉ định dạng 4, N = 2..1024; NTT, NTT ngược theo NTRUGen (chia đôi mỗi tầng) và nhân từng điểm |
+| 8 | 02 giao diện; 03.6 bảng root | Lệnh nạp p, p0i và bảng gm/igm (1 024 word 32 bit mỗi bảng) từ host; bảng root NTT 32 bit thành RAM |
+| 8 | 01 số học | Thêm phép chia đôi modulo trong ngân hàng cộng |
+
+Lỗi lệnh mới (giữ thứ tự kiểm như spec):
+
+| Lỗi | Khi nào |
+|---|---|
+| Sai định dạng | Định dạng 6–7; NTT 32 bit cho lệnh FFT; FFT NTRUGen cho lệnh khác FFT/FFT ngược |
+| Sai modulus | Modulus 2 hoặc 3 với định dạng khác 4; định dạng 4 với modulus 0 hoặc 1 |
+| Sai kích thước | Modulus 2 với N khác 256; modulus 3 với N = 1; FFT NTRUGen với N = 1 |
+| Chưa nạp prime | Modulus 3 khi chưa nạp p, p0i, hoặc bảng root đã nạp cho N khác N của lệnh |
+| Sai số đa thức | N ≥ 64 với hơn 2 đa thức |
+
+## 8. Kiểm chứng và thứ tự triển khai
+
+Mọi bước phải giữ: 5 992 kernel khớp như hiện tại, chữ ký khớp từng byte và được verifier chấp nhận.
+
+| Bước | Làm | Kiểm và báo cáo |
+|---|---|---|
+| 1 | Bộ điều khiển pipeline | Chu kỳ FFT ba độ rộng và NTT khi **chỉ** có bước này; độ trễ L thật |
+| 2 | Gom lô + twiddle 4 bank | Giả thuyết 3; thử 1, 2, 4 bank twiddle |
+| 3 | Hậu xử lý dùng chung + rút gọn trên mảng nhân | Giả thuyết 2: trước hết làm **khối tile thử** theo [hợp đồng cấp tile](../spec/FlexTransform/2.0/10_hop_dong_tile.md) (hai biến thể: rút gọn riêng / trên mảng), chạy [kiểm thử cấp tile](../spec/FlexTransform/2.0/11_kiem_thu_tile.md) (22 103 vector, thay cho 16 102 vector của cụm NTT cũ), đo LUT/FF/DSP/Fmax bằng Vivado; sau đó mới đưa vào lõi |
+| 4 | Xen kẽ hai đa thức | Giả thuyết 4 |
+| 5 | NTT 32 bit | Giả thuyết 9; so với Dilithium, giá trị biên 0, 1, q − 1 |
+| 6 | FFT 64 bit NTRUGen | Giả thuyết 8 |
+| 6b | NTT prime 31 bit NTRUGen | Giả thuyết 10; vector từ `mp_NTT`/`mp_iNTT` cho cả 323 prime; sau đó sinh khóa dùng lõi cho cả FFT 64 bit lẫn NTT, khóa khớp từng byte |
+| 7 | Vivado cho lõi chung, lõi chỉ-FFT, lõi chỉ-NTT, lõi chỉ-128-bit | Giả thuyết 1, 5; LUT/FF/DSP/BRAM thêm của từng bước |
+
+Báo cáo thêm: sai số FFT 32/64 bit theo độ rộng (cho xử lý tín hiệu). Nếu chu kỳ đo lệch dự báo quá 30%,
+cập nhật mô hình theo độ trễ thật trước khi kết luận.
+
+## 9. So với các công trình gần nhất
+
+| Công trình | Đã làm | Điểm FlexTransform khác |
+|---|---|---|
+| *A Unified Hardware Accelerator for FFT and NTT* (ICASSP 2025) | Bộ nhân 32 bit ghép từ 16 bit; FFT 32 bit; NTT ML-KEM/ML-DSA với 4/2 butterfly mỗi chu kỳ | FFT ba độ rộng tới 128 bit, khớp bit phần mềm thật; gom lô theo độ rộng; hậu xử lý và rút gọn dùng chung; NTT hai tầng gộp |
+| *OpenNTT* | Chọn FFT/NTT và modulus khi tạo lõi; rút gọn theo modulus lớn nhất | Đổi lúc chạy trên cùng lõi; modulus chỉ là hằng số |
+| *BitFusion* (ISCA 2018) | Ghép/tách bộ nhân theo độ rộng cho mạng nơ-ron | Có làm tròn và rút gọn modulo đúng chuẩn |
+| *A Lightweight Fused Floating-Point & Modular Arithmetic Unit for FALCON FFT/NTT* (ICTA 2026) | Ghép bộ nhân 14 bit thành nhân dấu phẩy động 64 bit; tách thành 8 làn NTT, rút gọn bằng bảng tra | Fixed-point ba độ rộng khớp phần mềm; rút gọn chạy trên chính mảng nhân; mới đọc tóm tắt, **cần đọc toàn văn** |
+
+Phần "NTT hẹp hơn thì nhiều làn hơn" **không phải điểm mới**: bài ICASSP 2025 đã làm. Điểm mới nằm ở chiều
+FFT, cơ chế gom lô, việc dùng chung cả phần sau phép nhân, và NTT hai tầng gộp.
+
+## 10. Ngoài phạm vi v1 và rủi ro
+
+- **Chưa làm trong v1:** phép nhân cơ sở của ML-KEM; q = 8380417 với N khác 256; FFT NTRUGen cho các phép khác
+  ngoài FFT/FFT ngược; ghép CRT và các phần khác của NTRUSolve (vẫn ở host).
+- **NTT prime 31 bit:** mới kiểm số học và lịch nhịp bằng mô hình. Chỉ khẳng định ở mức kernel.
+- **Giá của rút gọn trên mảng theo workload thật** (đếm lời gọi trên bản chuẩn × dự báo chu kỳ,
+  [study/results/fn_dsa_workload.md](../study/results/fn_dsa_workload.md)):
+  - ký không tốn thêm (không có NTT);
+  - kiểm chữ ký chậm khoảng 2 lần, nhưng chỉ khoảng 1 000 chu kỳ;
+  - sinh khóa tăng 37–45% thời gian kernel, vì NTRUSolve gọi hàng nghìn NTT nhỏ (chủ yếu N = 16) với prime mới mỗi lần.
+
+  Trong phần mềm, kernel chỉ chiếm 22–26% thời gian sinh khóa.
+  - Ghép đa thức cùng prime gần như không giúp (vẫn +36–44%), vì mỗi prime chỉ có một chuỗi phụ thuộc ngắn.
+  - Ghép **khác prime**, mỗi tile một modulus (cận trên, cần tách vòng lặp theo prime ở host) giảm thời gian NTT của sinh
+    khóa khoảng 2,4 lần; khi đó bản trên mảng nhanh hơn bản rút gọn riêng không ghép 16–18%.
+  - Chưa đưa vào v1; xem [điểm mạnh của kiến trúc](diem_manh_kien_truc.md), mục 2.5.
+- **Thanh ghi giữ T và ba lượt phụ thuộc khi stall — đã kiểm bằng mô hình chu kỳ một tile**
+  ([model/mont_on_array_tile.py](../model/mont_on_array_tile.py), kết quả
+  [study/results/mont_on_array_tile.md](../study/results/mont_on_array_tile.md); 722 787 phép nhân modulo, 0 sai khác):
+  - Với độ trễ bộ nhân 4 chu kỳ, mỗi tile 16 bit có tối đa 20 phép đang chạy, giữ 752 bit, so với 576 bit khi
+    dùng bộ rút gọn riêng: **thêm khoảng 180 bit/tile, khoảng 2 800 FF cho cả lõi**, rất nhỏ so với FF của ZCU106.
+    Không cần giới hạn số phép đang chạy.
+  - Với nhịp NTT hai tầng (tầng 2 chờ tầng 1): tối đa 11 nhịp đang chạy, giữ 1 124 bit/tile so với 1 008 bit khi
+    rút gọn riêng; 23 092 nhịp khớp NTT số nguyên; stall 10% / 30% còn 90% / 70% tốc độ, kết quả đúng thứ tự.
+  - Lịch phát: **ưu tiên lượt của phép cũ hơn, phép mới chỉ lấp bộ nhân còn trống; stall dừng toàn tile.**
+    Với lịch này kết quả luôn ra đúng thứ tự (không cần bộ sắp xếp lại), và stall chỉ làm mất đúng tỉ lệ chu kỳ bị
+    dừng (stall 10% → còn 90% tốc độ), không mất thêm vì ba lượt phụ thuộc nhau. RTL phải giữ đúng hai quy tắc này.
+  - NTT 32 bit lập lịch trong một tile chỉ đạt 5,33 phép/chu kỳ (không phải 5,82), vì ở lượt tính m, bộ nhân thứ
+    tư bị bỏ trống; các con số ở mục 4 đã dùng 5,33.
+- **NTT nhỏ chậm vì độ trễ nhịp**: N256 một đa thức chỉ ngang lõi hiện tại. Đã chấp nhận (ưu tiên diện tích);
+  nếu sau này cần nhanh hơn, cách rẻ nhất là xen kẽ nhiều đa thức hơn (thêm context).
+- Rủi ro còn lại là **LUT cho mux** đưa T_thấp, q′, m, q quay lại đầu vào DSP; mô hình không đo được, phải đo bằng
+  Vivado trên tile thử.
+- Phép "phần cao + hạng bù" có thể được Vivado gộp vào bộ cộng sau nhân của DSP nếu viết RTL dạng nhân-cộng;
+  không ép bằng primitive, chỉ ghi nhận nếu xảy ra.
+- **Thứ tự kết quả NTT 32 bit so với Dilithium** chưa đối chiếu; bước kiểm phải ghi rõ phép đổi thứ tự nếu có.
+- **FFT 64 bit NTRUGen** mới kiểm bằng mô hình, chưa chạy với bảng twiddle thật và chương trình C.
+- **Diện tích các thay đổi** chưa đo; nếu không đạt ngưỡng, báo cáo như kết quả âm.
+
+## Phụ lục: kiểm tra có thể chạy lại
+
+| Script | Kiểm gì |
+|---|---|
+| [model/arch_checks.py](../model/arch_checks.py) | Số học FFT 128 bit và 64 bit NTRUGen, cây cộng, Montgomery chạy trên mảng nhân, root |
+| [model/flex_v1_projection.py](../model/flex_v1_projection.py) | Mọi dự báo chu kỳ ở mục 4 |
+| [model/res32_bank_map.py](../model/res32_bank_map.py) | NTT 32 bit và xen kẽ hai đa thức không xung đột bank |
+| [model/mont_on_array_tile.py](../model/mont_on_array_tile.py) | Một tile rút gọn trên mảng nhân: tốc độ, bit giữ, stall, thứ tự kết quả, nhịp NTT hai tầng |
+| [model/postproc_adders.py](../model/postproc_adders.py) | Định cỡ ngân hàng cộng/trừ dùng chung |
+| [model/ntrugen_mp31.py](../model/ntrugen_mp31.py) | NTT prime 31 bit khớp từng bit với C của NTRUGen (cả 323 prime, logn 1..10) |
+| [scripts/profile_fn_dsa_workload.py](../scripts/profile_fn_dsa_workload.py) | Đếm lời gọi kernel của ký / kiểm / sinh khóa trên bản chuẩn, nhân với dự báo chu kỳ của hai biến thể rút gọn (cần WSL) |

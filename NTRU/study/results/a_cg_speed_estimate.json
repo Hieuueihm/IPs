@@ -1,0 +1,5384 @@
+{
+  "date": "2026-11-02",
+  "kind": "cycle estimate with physical RAM numeric replay, not optimized RTL",
+  "assumptions": [
+    "16 engines and unchanged bit-accurate arithmetic.",
+    "Shared FFT program requires all BF starts aligned modulo II=3/12/48.",
+    "Each stage input stream is contiguous; stages overlap only input versus pending outputs.",
+    "Separate read/write stage contexts, pipelined mask/root/scale metadata are required in future RTL.",
+    "Host estimates are bank-service bounds; burst line buffering and read-response pipelining are not implemented.",
+    "Root multicast needs a runtime destination mask; host software and external memory bandwidth are excluded.",
+    "Same clock assumed; new LUT count and post-route Fmax are unknown."
+  ],
+  "checks": {
+    "measured_cycle_calibrations": 138,
+    "numeric_overlap_replay": 126,
+    "exact_root_multicast_replays": 138,
+    "identity": 12,
+    "early_read_mutation_detected": 1,
+    "R8_C_synthetic": 154,
+    "R8_C_workload": 22,
+    "NTRUGen_C_NTT": 100,
+    "NTRUGen_FFT64_native_matches": 5,
+    "NTRUGen_FFT64_native_different_contract": 35
+  },
+  "cases": [
+    {
+      "case": 0,
+      "name": "NTT_p0_N8_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 76,
+      "kernel_overlap_model": 76,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 155,
+      "cold_overlap_only": 155,
+      "cold_burst_bank_service_bound": 135,
+      "cold_burst_multicast_bound": 97,
+      "root_serial_writes": 48,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 87
+    },
+    {
+      "case": 1,
+      "name": "NTT_p0_N16_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 100,
+      "kernel_overlap_model": 100,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 220,
+      "cold_overlap_only": 220,
+      "cold_burst_bank_service_bound": 180,
+      "cold_burst_multicast_bound": 135,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 19,
+      "warm_burst_bank_service_bound": 116
+    },
+    {
+      "case": 2,
+      "name": "NTT_p0_N32_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 124,
+      "kernel_overlap_model": 124,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 309,
+      "cold_overlap_only": 309,
+      "cold_burst_bank_service_bound": 229,
+      "cold_burst_multicast_bound": 180,
+      "root_serial_writes": 80,
+      "root_multicast_writes": 31,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 3,
+      "name": "NTT_p0_N64_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 166,
+      "kernel_overlap_model": 166,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 480,
+      "cold_overlap_only": 480,
+      "cold_burst_bank_service_bound": 320,
+      "cold_burst_multicast_bound": 271,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 208
+    },
+    {
+      "case": 4,
+      "name": "NTT_p0_N128_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 235,
+      "kernel_overlap_model": 217,
+      "kernel_speedup": 1.0829493087557605,
+      "starts": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 806,
+      "cold_overlap_only": 788,
+      "cold_burst_bank_service_bound": 468,
+      "cold_burst_multicast_bound": 419,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 292
+    },
+    {
+      "case": 5,
+      "name": "NTT_p0_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 6,
+      "name": "NTT_p0_N512_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 7,
+      "name": "NTT_p0_N1024_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 8,
+      "name": "NTT_p1_N8_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 76,
+      "kernel_overlap_model": 76,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 155,
+      "cold_overlap_only": 155,
+      "cold_burst_bank_service_bound": 135,
+      "cold_burst_multicast_bound": 97,
+      "root_serial_writes": 48,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 87
+    },
+    {
+      "case": 9,
+      "name": "NTT_p1_N16_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 100,
+      "kernel_overlap_model": 100,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 220,
+      "cold_overlap_only": 220,
+      "cold_burst_bank_service_bound": 180,
+      "cold_burst_multicast_bound": 135,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 19,
+      "warm_burst_bank_service_bound": 116
+    },
+    {
+      "case": 10,
+      "name": "NTT_p1_N32_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 124,
+      "kernel_overlap_model": 124,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 309,
+      "cold_overlap_only": 309,
+      "cold_burst_bank_service_bound": 229,
+      "cold_burst_multicast_bound": 180,
+      "root_serial_writes": 80,
+      "root_multicast_writes": 31,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 11,
+      "name": "NTT_p1_N64_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 166,
+      "kernel_overlap_model": 166,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 480,
+      "cold_overlap_only": 480,
+      "cold_burst_bank_service_bound": 320,
+      "cold_burst_multicast_bound": 271,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 208
+    },
+    {
+      "case": 12,
+      "name": "NTT_p1_N128_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 235,
+      "kernel_overlap_model": 217,
+      "kernel_speedup": 1.0829493087557605,
+      "starts": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 806,
+      "cold_overlap_only": 788,
+      "cold_burst_bank_service_bound": 468,
+      "cold_burst_multicast_bound": 419,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 292
+    },
+    {
+      "case": 13,
+      "name": "NTT_p1_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 14,
+      "name": "NTT_p0_N8_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 76,
+      "kernel_overlap_model": 76,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 155,
+      "cold_overlap_only": 155,
+      "cold_burst_bank_service_bound": 135,
+      "cold_burst_multicast_bound": 97,
+      "root_serial_writes": 48,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 87
+    },
+    {
+      "case": 15,
+      "name": "NTT_p0_N16_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 100,
+      "kernel_overlap_model": 100,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 220,
+      "cold_overlap_only": 220,
+      "cold_burst_bank_service_bound": 180,
+      "cold_burst_multicast_bound": 135,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 19,
+      "warm_burst_bank_service_bound": 116
+    },
+    {
+      "case": 16,
+      "name": "NTT_p0_N32_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 124,
+      "kernel_overlap_model": 124,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 309,
+      "cold_overlap_only": 309,
+      "cold_burst_bank_service_bound": 229,
+      "cold_burst_multicast_bound": 180,
+      "root_serial_writes": 80,
+      "root_multicast_writes": 31,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 17,
+      "name": "NTT_p0_N64_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 166,
+      "kernel_overlap_model": 166,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 480,
+      "cold_overlap_only": 480,
+      "cold_burst_bank_service_bound": 320,
+      "cold_burst_multicast_bound": 271,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 208
+    },
+    {
+      "case": 18,
+      "name": "NTT_p0_N128_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 235,
+      "kernel_overlap_model": 217,
+      "kernel_speedup": 1.0829493087557605,
+      "starts": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 806,
+      "cold_overlap_only": 788,
+      "cold_burst_bank_service_bound": 468,
+      "cold_burst_multicast_bound": 419,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 292
+    },
+    {
+      "case": 19,
+      "name": "NTT_p0_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 20,
+      "name": "NTT_p0_N512_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 21,
+      "name": "NTT_p0_N1024_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 22,
+      "name": "NTT_p1_N8_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 76,
+      "kernel_overlap_model": 76,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 155,
+      "cold_overlap_only": 155,
+      "cold_burst_bank_service_bound": 135,
+      "cold_burst_multicast_bound": 97,
+      "root_serial_writes": 48,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 87
+    },
+    {
+      "case": 23,
+      "name": "NTT_p1_N16_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 100,
+      "kernel_overlap_model": 100,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 220,
+      "cold_overlap_only": 220,
+      "cold_burst_bank_service_bound": 180,
+      "cold_burst_multicast_bound": 135,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 19,
+      "warm_burst_bank_service_bound": 116
+    },
+    {
+      "case": 24,
+      "name": "NTT_p1_N32_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 124,
+      "kernel_overlap_model": 124,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 309,
+      "cold_overlap_only": 309,
+      "cold_burst_bank_service_bound": 229,
+      "cold_burst_multicast_bound": 180,
+      "root_serial_writes": 80,
+      "root_multicast_writes": 31,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 25,
+      "name": "NTT_p1_N64_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 166,
+      "kernel_overlap_model": 166,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 480,
+      "cold_overlap_only": 480,
+      "cold_burst_bank_service_bound": 320,
+      "cold_burst_multicast_bound": 271,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 208
+    },
+    {
+      "case": 26,
+      "name": "NTT_p1_N128_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 235,
+      "kernel_overlap_model": 217,
+      "kernel_speedup": 1.0829493087557605,
+      "starts": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 806,
+      "cold_overlap_only": 788,
+      "cold_burst_bank_service_bound": 468,
+      "cold_burst_multicast_bound": 419,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 292
+    },
+    {
+      "case": 27,
+      "name": "NTT_p1_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 28,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 29,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 30,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 31,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 32,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 33,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 34,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 35,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 36,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 37,
+      "name": "NTT_p2_N256_5",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 38,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 39,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 40,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 41,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 42,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 43,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 44,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 45,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 46,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 47,
+      "name": "NTT_p2_N256_6",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 48,
+      "name": "ML-KEM_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 0,
+      "q": 3329,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 49,
+      "name": "ML-KEM_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 1,
+      "q": 3329,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 50,
+      "name": "ML-DSA_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 51,
+      "name": "ML-DSA_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 8380417,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 52,
+      "name": "FN-DSA_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 53,
+      "name": "FN-DSA_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 54,
+      "name": "FN-DSA_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 12289,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 55,
+      "name": "FN-DSA_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 12289,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 56,
+      "name": "HAWK ký_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 18433,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 57,
+      "name": "HAWK ký_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 18433,
+      "kernel_measured": 625,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 1.3676148796498906,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 2734,
+      "cold_overlap_only": 2566,
+      "cold_burst_bank_service_bound": 1286,
+      "cold_burst_multicast_bound": 1237,
+      "root_serial_writes": 560,
+      "root_multicast_writes": 511,
+      "warm_burst_bank_service_bound": 726
+    },
+    {
+      "case": 58,
+      "name": "HAWK ký_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 18433,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 59,
+      "name": "HAWK ký_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 18433,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 60,
+      "name": "HAETAE_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 64513,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 61,
+      "name": "HAETAE_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 64513,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 62,
+      "name": "Kyber vòng 1_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 7681,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 63,
+      "name": "Kyber vòng 1_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 7681,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 64,
+      "name": "Saber RNS_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 10753,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 65,
+      "name": "Saber RNS_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 10753,
+      "kernel_measured": 364,
+      "kernel_overlap_model": 301,
+      "kernel_speedup": 1.2093023255813953,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216,
+        252
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 1448,
+      "cold_overlap_only": 1385,
+      "cold_burst_bank_service_bound": 745,
+      "cold_burst_multicast_bound": 696,
+      "root_serial_writes": 304,
+      "root_multicast_writes": 255,
+      "warm_burst_bank_service_bound": 441
+    },
+    {
+      "case": 66,
+      "name": "Saber qua NTT_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 0,
+      "q": 25166081,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 67,
+      "name": "Saber qua NTT_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "inverse": 1,
+      "q": 25166081,
+      "kernel_measured": 319,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 1.2037735849056603,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180,
+        216
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1274,
+      "cold_overlap_only": 1220,
+      "cold_burst_bank_service_bound": 708,
+      "cold_burst_multicast_bound": 659,
+      "root_serial_writes": 176,
+      "root_multicast_writes": 127,
+      "warm_burst_bank_service_bound": 532
+    },
+    {
+      "case": 68,
+      "name": "LightSaber qua NTT_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 2,
+      "inverse": 0,
+      "q": 20972417,
+      "kernel_measured": 274,
+      "kernel_overlap_model": 229,
+      "kernel_speedup": 1.1965065502183405,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 1164,
+      "cold_overlap_only": 1119,
+      "cold_burst_bank_service_bound": 863,
+      "cold_burst_multicast_bound": 814,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 751
+    },
+    {
+      "case": 69,
+      "name": "LightSaber qua NTT_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 2,
+      "inverse": 1,
+      "q": 20972417,
+      "kernel_measured": 274,
+      "kernel_overlap_model": 229,
+      "kernel_speedup": 1.1965065502183405,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144,
+        180
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 1164,
+      "cold_overlap_only": 1119,
+      "cold_burst_bank_service_bound": 863,
+      "cold_burst_multicast_bound": 814,
+      "root_serial_writes": 112,
+      "root_multicast_writes": 63,
+      "warm_burst_bank_service_bound": 751
+    },
+    {
+      "case": 70,
+      "name": "generic31_forward",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 2013265921,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 71,
+      "name": "generic31_inverse",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 2013265921,
+      "kernel_measured": 1174,
+      "kernel_overlap_model": 985,
+      "kernel_speedup": 1.1918781725888326,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672,
+        768,
+        864
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 14,
+      "cold_measured": 5332,
+      "cold_overlap_only": 5143,
+      "cold_burst_bank_service_bound": 2583,
+      "cold_burst_multicast_bound": 2534,
+      "root_serial_writes": 1072,
+      "root_multicast_writes": 1023,
+      "warm_burst_bank_service_bound": 1511
+    },
+    {
+      "case": 72,
+      "name": "FFT32_N1_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 6,
+      "cold_burst_multicast_bound": 6,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 6
+    },
+    {
+      "case": 73,
+      "name": "FFT32_N2_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 8,
+      "cold_burst_multicast_bound": 8,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 8
+    },
+    {
+      "case": 74,
+      "name": "FFT32_N4_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 24,
+      "kernel_overlap_model": 24,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 73,
+      "cold_overlap_only": 73,
+      "cold_burst_bank_service_bound": 65,
+      "cold_burst_multicast_bound": 37,
+      "root_serial_writes": 32,
+      "root_multicast_writes": 4,
+      "warm_burst_bank_service_bound": 33
+    },
+    {
+      "case": 75,
+      "name": "FFT32_N8_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 45,
+      "kernel_overlap_model": 45,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 139,
+      "cold_overlap_only": 139,
+      "cold_burst_bank_service_bound": 119,
+      "cold_burst_multicast_bound": 65,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 55
+    },
+    {
+      "case": 76,
+      "name": "FFT32_N16_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 66,
+      "kernel_overlap_model": 66,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 217,
+      "cold_overlap_only": 217,
+      "cold_burst_bank_service_bound": 177,
+      "cold_burst_multicast_bound": 101,
+      "root_serial_writes": 96,
+      "root_multicast_writes": 20,
+      "warm_burst_bank_service_bound": 81
+    },
+    {
+      "case": 77,
+      "name": "FFT32_N32_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 87,
+      "kernel_overlap_model": 87,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42,
+        63
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 319,
+      "cold_overlap_only": 319,
+      "cold_burst_bank_service_bound": 239,
+      "cold_burst_multicast_bound": 149,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 38,
+      "warm_burst_bank_service_bound": 111
+    },
+    {
+      "case": 78,
+      "name": "FFT32_N64_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 108,
+      "kernel_overlap_model": 108,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42,
+        63,
+        84
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 469,
+      "cold_overlap_only": 469,
+      "cold_burst_bank_service_bound": 309,
+      "cold_burst_multicast_bound": 211,
+      "root_serial_writes": 160,
+      "root_multicast_writes": 62,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 79,
+      "name": "FFT32_N128_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 147,
+      "kernel_overlap_model": 147,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96,
+        120
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 765,
+      "cold_overlap_only": 765,
+      "cold_burst_bank_service_bound": 445,
+      "cold_burst_multicast_bound": 347,
+      "root_serial_writes": 224,
+      "root_multicast_writes": 126,
+      "warm_burst_bank_service_bound": 221
+    },
+    {
+      "case": 80,
+      "name": "FFT32_N256_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 213,
+      "kernel_overlap_model": 195,
+      "kernel_speedup": 1.0923076923076922,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135,
+        162
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1344,
+      "cold_overlap_only": 1326,
+      "cold_burst_bank_service_bound": 686,
+      "cold_burst_multicast_bound": 588,
+      "root_serial_writes": 352,
+      "root_multicast_writes": 254,
+      "warm_burst_bank_service_bound": 334
+    },
+    {
+      "case": 81,
+      "name": "FFT32_N512_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 339,
+      "kernel_overlap_model": 276,
+      "kernel_speedup": 1.2282608695652173,
+      "starts": [
+        0,
+        33,
+        66,
+        99,
+        132,
+        165,
+        198,
+        231
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 2495,
+      "cold_overlap_only": 2432,
+      "cold_burst_bank_service_bound": 1152,
+      "cold_burst_multicast_bound": 1054,
+      "root_serial_writes": 608,
+      "root_multicast_writes": 510,
+      "warm_burst_bank_service_bound": 544
+    },
+    {
+      "case": 82,
+      "name": "FFT32_N1024_0",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 597,
+      "kernel_overlap_model": 453,
+      "kernel_speedup": 1.3178807947019868,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 4802,
+      "cold_overlap_only": 4658,
+      "cold_burst_bank_service_bound": 2098,
+      "cold_burst_multicast_bound": 2000,
+      "root_serial_writes": 1120,
+      "root_multicast_writes": 1022,
+      "warm_burst_bank_service_bound": 978
+    },
+    {
+      "case": 83,
+      "name": "FFT64_N1_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 8,
+      "cold_burst_multicast_bound": 8,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 8
+    },
+    {
+      "case": 84,
+      "name": "FFT64_N2_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 12,
+      "cold_burst_multicast_bound": 12,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 12
+    },
+    {
+      "case": 85,
+      "name": "FFT64_N4_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 36,
+      "kernel_overlap_model": 36,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 129,
+      "cold_overlap_only": 129,
+      "cold_burst_bank_service_bound": 113,
+      "cold_burst_multicast_bound": 55,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 6,
+      "warm_burst_bank_service_bound": 49
+    },
+    {
+      "case": 86,
+      "name": "FFT64_N8_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 69,
+      "kernel_overlap_model": 72,
+      "kernel_speedup": 0.9583333333333334,
+      "starts": [
+        0,
+        36
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 251,
+      "cold_overlap_only": 254,
+      "cold_burst_bank_service_bound": 222,
+      "cold_burst_multicast_bound": 109,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 15,
+      "warm_burst_bank_service_bound": 94
+    },
+    {
+      "case": 87,
+      "name": "FFT64_N16_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 102,
+      "kernel_overlap_model": 108,
+      "kernel_speedup": 0.9444444444444444,
+      "starts": [
+        0,
+        36,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 397,
+      "cold_overlap_only": 403,
+      "cold_burst_bank_service_bound": 339,
+      "cold_burst_multicast_bound": 175,
+      "root_serial_writes": 192,
+      "root_multicast_writes": 28,
+      "warm_burst_bank_service_bound": 147
+    },
+    {
+      "case": 88,
+      "name": "FFT64_N32_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 135,
+      "kernel_overlap_model": 144,
+      "kernel_speedup": 0.9375,
+      "starts": [
+        0,
+        36,
+        72,
+        108
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 591,
+      "cold_overlap_only": 600,
+      "cold_burst_bank_service_bound": 472,
+      "cold_burst_multicast_bound": 265,
+      "root_serial_writes": 256,
+      "root_multicast_writes": 49,
+      "warm_burst_bank_service_bound": 216
+    },
+    {
+      "case": 89,
+      "name": "FFT64_N64_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 168,
+      "kernel_overlap_model": 180,
+      "kernel_speedup": 0.9333333333333333,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 881,
+      "cold_overlap_only": 893,
+      "cold_burst_bank_service_bound": 637,
+      "cold_burst_multicast_bound": 393,
+      "root_serial_writes": 320,
+      "root_multicast_writes": 76,
+      "warm_burst_bank_service_bound": 317
+    },
+    {
+      "case": 90,
+      "name": "FFT64_N128_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 273,
+      "kernel_overlap_model": 288,
+      "kernel_speedup": 0.9479166666666666,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 1499,
+      "cold_overlap_only": 1514,
+      "cold_burst_bank_service_bound": 1002,
+      "cold_burst_multicast_bound": 700,
+      "root_serial_writes": 448,
+      "root_multicast_writes": 146,
+      "warm_burst_bank_service_bound": 554
+    },
+    {
+      "case": 91,
+      "name": "FFT64_N256_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 486,
+      "kernel_overlap_model": 432,
+      "kernel_speedup": 1.125,
+      "starts": [
+        0,
+        60,
+        120,
+        180,
+        240,
+        300,
+        360
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 2737,
+      "cold_overlap_only": 2683,
+      "cold_burst_bank_service_bound": 1659,
+      "cold_burst_multicast_bound": 1241,
+      "root_serial_writes": 704,
+      "root_multicast_writes": 286,
+      "warm_burst_bank_service_bound": 955
+    },
+    {
+      "case": 92,
+      "name": "FFT64_N512_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 939,
+      "kernel_overlap_model": 792,
+      "kernel_speedup": 1.1856060606060606,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 5239,
+      "cold_overlap_only": 5092,
+      "cold_burst_bank_service_bound": 3044,
+      "cold_burst_multicast_bound": 2394,
+      "root_serial_writes": 1216,
+      "root_multicast_writes": 566,
+      "warm_burst_bank_service_bound": 1828
+    },
+    {
+      "case": 93,
+      "name": "FFT64_N1024_0",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 1920,
+      "kernel_overlap_model": 1752,
+      "kernel_speedup": 1.095890410958904,
+      "starts": [
+        0,
+        192,
+        384,
+        576,
+        768,
+        960,
+        1152,
+        1344,
+        1536
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 10317,
+      "cold_overlap_only": 10149,
+      "cold_burst_bank_service_bound": 6053,
+      "cold_burst_multicast_bound": 4939,
+      "root_serial_writes": 2240,
+      "root_multicast_writes": 1126,
+      "warm_burst_bank_service_bound": 3813
+    },
+    {
+      "case": 94,
+      "name": "FFT128_N1_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 12,
+      "cold_burst_multicast_bound": 12,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 12
+    },
+    {
+      "case": 95,
+      "name": "FFT128_N2_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 28,
+      "cold_overlap_only": 28,
+      "cold_burst_bank_service_bound": 20,
+      "cold_burst_multicast_bound": 20,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 20
+    },
+    {
+      "case": 96,
+      "name": "FFT128_N4_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 73,
+      "kernel_overlap_model": 73,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 254,
+      "cold_overlap_only": 254,
+      "cold_burst_bank_service_bound": 238,
+      "cold_burst_multicast_bound": 122,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 12,
+      "warm_burst_bank_service_bound": 110
+    },
+    {
+      "case": 97,
+      "name": "FFT128_N8_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 143,
+      "kernel_overlap_model": 169,
+      "kernel_speedup": 0.8461538461538461,
+      "starts": [
+        0,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 501,
+      "cold_overlap_only": 527,
+      "cold_burst_bank_service_bound": 495,
+      "cold_burst_multicast_bound": 269,
+      "root_serial_writes": 256,
+      "root_multicast_writes": 30,
+      "warm_burst_bank_service_bound": 239
+    },
+    {
+      "case": 98,
+      "name": "FFT128_N16_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 213,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 0.8037735849056604,
+      "starts": [
+        0,
+        96,
+        192
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 796,
+      "cold_overlap_only": 848,
+      "cold_burst_bank_service_bound": 784,
+      "cold_burst_multicast_bound": 456,
+      "root_serial_writes": 384,
+      "root_multicast_writes": 56,
+      "warm_burst_bank_service_bound": 400
+    },
+    {
+      "case": 99,
+      "name": "FFT128_N32_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 283,
+      "kernel_overlap_model": 361,
+      "kernel_speedup": 0.7839335180055401,
+      "starts": [
+        0,
+        96,
+        192,
+        288
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 1187,
+      "cold_overlap_only": 1265,
+      "cold_burst_bank_service_bound": 1137,
+      "cold_burst_multicast_bound": 723,
+      "root_serial_writes": 512,
+      "root_multicast_writes": 98,
+      "warm_burst_bank_service_bound": 625
+    },
+    {
+      "case": 100,
+      "name": "FFT128_N64_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 353,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 0.7724288840262582,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 1770,
+      "cold_overlap_only": 1874,
+      "cold_burst_bank_service_bound": 1618,
+      "cold_burst_multicast_bound": 1130,
+      "root_serial_writes": 640,
+      "root_multicast_writes": 152,
+      "warm_burst_bank_service_bound": 978
+    },
+    {
+      "case": 101,
+      "name": "FFT128_N128_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 711,
+      "kernel_overlap_model": 841,
+      "kernel_speedup": 0.845422116527943,
+      "starts": [
+        0,
+        144,
+        288,
+        432,
+        576,
+        720
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 3153,
+      "cold_overlap_only": 3283,
+      "cold_burst_bank_service_bound": 2771,
+      "cold_burst_multicast_bound": 2167,
+      "root_serial_writes": 896,
+      "root_multicast_writes": 292,
+      "warm_burst_bank_service_bound": 1875
+    },
+    {
+      "case": 102,
+      "name": "FFT128_N256_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 1501,
+      "kernel_overlap_model": 1369,
+      "kernel_speedup": 1.0964207450693937,
+      "starts": [
+        0,
+        192,
+        384,
+        576,
+        768,
+        960,
+        1152
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 5992,
+      "cold_overlap_only": 5860,
+      "cold_burst_bank_service_bound": 4836,
+      "cold_burst_multicast_bound": 4000,
+      "root_serial_writes": 1408,
+      "root_multicast_writes": 572,
+      "warm_burst_bank_service_bound": 3428
+    },
+    {
+      "case": 103,
+      "name": "FFT128_N512_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 3251,
+      "kernel_overlap_model": 3097,
+      "kernel_speedup": 1.04972554084598,
+      "starts": [
+        0,
+        384,
+        768,
+        1152,
+        1536,
+        1920,
+        2304,
+        2688
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 11839,
+      "cold_overlap_only": 11685,
+      "cold_burst_bank_service_bound": 9637,
+      "cold_burst_multicast_bound": 8337,
+      "root_serial_writes": 2432,
+      "root_multicast_writes": 1132,
+      "warm_burst_bank_service_bound": 7205
+    },
+    {
+      "case": 104,
+      "name": "FFT128_N1024_0",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 0,
+      "q": 0,
+      "kernel_measured": 7113,
+      "kernel_overlap_model": 6937,
+      "kernel_speedup": 1.0253711979241746,
+      "starts": [
+        0,
+        768,
+        1536,
+        2304,
+        3072,
+        3840,
+        4608,
+        5376,
+        6144
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 23894,
+      "cold_overlap_only": 23718,
+      "cold_burst_bank_service_bound": 19622,
+      "cold_burst_multicast_bound": 17394,
+      "root_serial_writes": 4480,
+      "root_multicast_writes": 2252,
+      "warm_burst_bank_service_bound": 15142
+    },
+    {
+      "case": 105,
+      "name": "FFT32_N1_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 6,
+      "cold_burst_multicast_bound": 6,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 6
+    },
+    {
+      "case": 106,
+      "name": "FFT32_N2_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 8,
+      "cold_burst_multicast_bound": 8,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 8
+    },
+    {
+      "case": 107,
+      "name": "FFT32_N4_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 24,
+      "kernel_overlap_model": 24,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 73,
+      "cold_overlap_only": 73,
+      "cold_burst_bank_service_bound": 65,
+      "cold_burst_multicast_bound": 37,
+      "root_serial_writes": 32,
+      "root_multicast_writes": 4,
+      "warm_burst_bank_service_bound": 33
+    },
+    {
+      "case": 108,
+      "name": "FFT32_N8_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 45,
+      "kernel_overlap_model": 45,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 139,
+      "cold_overlap_only": 139,
+      "cold_burst_bank_service_bound": 119,
+      "cold_burst_multicast_bound": 65,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 10,
+      "warm_burst_bank_service_bound": 55
+    },
+    {
+      "case": 109,
+      "name": "FFT32_N16_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 66,
+      "kernel_overlap_model": 66,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 217,
+      "cold_overlap_only": 217,
+      "cold_burst_bank_service_bound": 177,
+      "cold_burst_multicast_bound": 101,
+      "root_serial_writes": 96,
+      "root_multicast_writes": 20,
+      "warm_burst_bank_service_bound": 81
+    },
+    {
+      "case": 110,
+      "name": "FFT32_N32_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 87,
+      "kernel_overlap_model": 87,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42,
+        63
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 319,
+      "cold_overlap_only": 319,
+      "cold_burst_bank_service_bound": 239,
+      "cold_burst_multicast_bound": 149,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 38,
+      "warm_burst_bank_service_bound": 111
+    },
+    {
+      "case": 111,
+      "name": "FFT32_N64_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 108,
+      "kernel_overlap_model": 108,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        21,
+        42,
+        63,
+        84
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 469,
+      "cold_overlap_only": 469,
+      "cold_burst_bank_service_bound": 309,
+      "cold_burst_multicast_bound": 211,
+      "root_serial_writes": 160,
+      "root_multicast_writes": 62,
+      "warm_burst_bank_service_bound": 149
+    },
+    {
+      "case": 112,
+      "name": "FFT32_N128_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 147,
+      "kernel_overlap_model": 147,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0,
+        24,
+        48,
+        72,
+        96,
+        120
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 765,
+      "cold_overlap_only": 765,
+      "cold_burst_bank_service_bound": 445,
+      "cold_burst_multicast_bound": 347,
+      "root_serial_writes": 224,
+      "root_multicast_writes": 126,
+      "warm_burst_bank_service_bound": 221
+    },
+    {
+      "case": 113,
+      "name": "FFT32_N256_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 213,
+      "kernel_overlap_model": 195,
+      "kernel_speedup": 1.0923076923076922,
+      "starts": [
+        0,
+        27,
+        54,
+        81,
+        108,
+        135,
+        162
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 1344,
+      "cold_overlap_only": 1326,
+      "cold_burst_bank_service_bound": 686,
+      "cold_burst_multicast_bound": 588,
+      "root_serial_writes": 352,
+      "root_multicast_writes": 254,
+      "warm_burst_bank_service_bound": 334
+    },
+    {
+      "case": 114,
+      "name": "FFT32_N512_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 339,
+      "kernel_overlap_model": 276,
+      "kernel_speedup": 1.2282608695652173,
+      "starts": [
+        0,
+        33,
+        66,
+        99,
+        132,
+        165,
+        198,
+        231
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 2495,
+      "cold_overlap_only": 2432,
+      "cold_burst_bank_service_bound": 1152,
+      "cold_burst_multicast_bound": 1054,
+      "root_serial_writes": 608,
+      "root_multicast_writes": 510,
+      "warm_burst_bank_service_bound": 544
+    },
+    {
+      "case": 115,
+      "name": "FFT32_N1024_1",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 597,
+      "kernel_overlap_model": 453,
+      "kernel_speedup": 1.3178807947019868,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240,
+        288,
+        336,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 4802,
+      "cold_overlap_only": 4658,
+      "cold_burst_bank_service_bound": 2098,
+      "cold_burst_multicast_bound": 2000,
+      "root_serial_writes": 1120,
+      "root_multicast_writes": 1022,
+      "warm_burst_bank_service_bound": 978
+    },
+    {
+      "case": 116,
+      "name": "FFT64_N1_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 8,
+      "cold_burst_multicast_bound": 8,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 8
+    },
+    {
+      "case": 117,
+      "name": "FFT64_N2_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 12,
+      "cold_burst_multicast_bound": 12,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 12
+    },
+    {
+      "case": 118,
+      "name": "FFT64_N4_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 36,
+      "kernel_overlap_model": 36,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 129,
+      "cold_overlap_only": 129,
+      "cold_burst_bank_service_bound": 113,
+      "cold_burst_multicast_bound": 56,
+      "root_serial_writes": 64,
+      "root_multicast_writes": 7,
+      "warm_burst_bank_service_bound": 49
+    },
+    {
+      "case": 119,
+      "name": "FFT64_N8_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 69,
+      "kernel_overlap_model": 72,
+      "kernel_speedup": 0.9583333333333334,
+      "starts": [
+        0,
+        36
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 251,
+      "cold_overlap_only": 254,
+      "cold_burst_bank_service_bound": 222,
+      "cold_burst_multicast_bound": 111,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 17,
+      "warm_burst_bank_service_bound": 94
+    },
+    {
+      "case": 120,
+      "name": "FFT64_N16_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 102,
+      "kernel_overlap_model": 108,
+      "kernel_speedup": 0.9444444444444444,
+      "starts": [
+        0,
+        36,
+        72
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 397,
+      "cold_overlap_only": 403,
+      "cold_burst_bank_service_bound": 339,
+      "cold_burst_multicast_bound": 178,
+      "root_serial_writes": 192,
+      "root_multicast_writes": 31,
+      "warm_burst_bank_service_bound": 147
+    },
+    {
+      "case": 121,
+      "name": "FFT64_N32_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 135,
+      "kernel_overlap_model": 144,
+      "kernel_speedup": 0.9375,
+      "starts": [
+        0,
+        36,
+        72,
+        108
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 591,
+      "cold_overlap_only": 600,
+      "cold_burst_bank_service_bound": 472,
+      "cold_burst_multicast_bound": 269,
+      "root_serial_writes": 256,
+      "root_multicast_writes": 53,
+      "warm_burst_bank_service_bound": 216
+    },
+    {
+      "case": 122,
+      "name": "FFT64_N64_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 168,
+      "kernel_overlap_model": 180,
+      "kernel_speedup": 0.9333333333333333,
+      "starts": [
+        0,
+        36,
+        72,
+        108,
+        144
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 881,
+      "cold_overlap_only": 893,
+      "cold_burst_bank_service_bound": 637,
+      "cold_burst_multicast_bound": 393,
+      "root_serial_writes": 320,
+      "root_multicast_writes": 76,
+      "warm_burst_bank_service_bound": 317
+    },
+    {
+      "case": 123,
+      "name": "FFT64_N128_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 273,
+      "kernel_overlap_model": 288,
+      "kernel_speedup": 0.9479166666666666,
+      "starts": [
+        0,
+        48,
+        96,
+        144,
+        192,
+        240
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 1499,
+      "cold_overlap_only": 1514,
+      "cold_burst_bank_service_bound": 1002,
+      "cold_burst_multicast_bound": 700,
+      "root_serial_writes": 448,
+      "root_multicast_writes": 146,
+      "warm_burst_bank_service_bound": 554
+    },
+    {
+      "case": 124,
+      "name": "FFT64_N256_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 486,
+      "kernel_overlap_model": 432,
+      "kernel_speedup": 1.125,
+      "starts": [
+        0,
+        60,
+        120,
+        180,
+        240,
+        300,
+        360
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 2737,
+      "cold_overlap_only": 2683,
+      "cold_burst_bank_service_bound": 1659,
+      "cold_burst_multicast_bound": 1241,
+      "root_serial_writes": 704,
+      "root_multicast_writes": 286,
+      "warm_burst_bank_service_bound": 955
+    },
+    {
+      "case": 125,
+      "name": "FFT64_N512_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 939,
+      "kernel_overlap_model": 792,
+      "kernel_speedup": 1.1856060606060606,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384,
+        480,
+        576,
+        672
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 5239,
+      "cold_overlap_only": 5092,
+      "cold_burst_bank_service_bound": 3044,
+      "cold_burst_multicast_bound": 2394,
+      "root_serial_writes": 1216,
+      "root_multicast_writes": 566,
+      "warm_burst_bank_service_bound": 1828
+    },
+    {
+      "case": 126,
+      "name": "FFT64_N1024_1",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 1920,
+      "kernel_overlap_model": 1752,
+      "kernel_speedup": 1.095890410958904,
+      "starts": [
+        0,
+        192,
+        384,
+        576,
+        768,
+        960,
+        1152,
+        1344,
+        1536
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 10317,
+      "cold_overlap_only": 10149,
+      "cold_burst_bank_service_bound": 6053,
+      "cold_burst_multicast_bound": 4939,
+      "root_serial_writes": 2240,
+      "root_multicast_writes": 1126,
+      "warm_burst_bank_service_bound": 3813
+    },
+    {
+      "case": 127,
+      "name": "FFT128_N1_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 0,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 16,
+      "cold_overlap_only": 16,
+      "cold_burst_bank_service_bound": 12,
+      "cold_burst_multicast_bound": 12,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 12
+    },
+    {
+      "case": 128,
+      "name": "FFT128_N2_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 1,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 0,
+      "kernel_overlap_model": 0,
+      "kernel_speedup": 1,
+      "starts": [],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 4,
+      "cold_measured": 28,
+      "cold_overlap_only": 28,
+      "cold_burst_bank_service_bound": 20,
+      "cold_burst_multicast_bound": 20,
+      "root_serial_writes": 0,
+      "root_multicast_writes": 0,
+      "warm_burst_bank_service_bound": 20
+    },
+    {
+      "case": 129,
+      "name": "FFT128_N4_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 2,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 73,
+      "kernel_overlap_model": 73,
+      "kernel_speedup": 1.0,
+      "starts": [
+        0
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 5,
+      "cold_measured": 254,
+      "cold_overlap_only": 254,
+      "cold_burst_bank_service_bound": 238,
+      "cold_burst_multicast_bound": 124,
+      "root_serial_writes": 128,
+      "root_multicast_writes": 14,
+      "warm_burst_bank_service_bound": 110
+    },
+    {
+      "case": 130,
+      "name": "FFT128_N8_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 3,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 143,
+      "kernel_overlap_model": 169,
+      "kernel_speedup": 0.8461538461538461,
+      "starts": [
+        0,
+        96
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 6,
+      "cold_measured": 501,
+      "cold_overlap_only": 527,
+      "cold_burst_bank_service_bound": 495,
+      "cold_burst_multicast_bound": 273,
+      "root_serial_writes": 256,
+      "root_multicast_writes": 34,
+      "warm_burst_bank_service_bound": 239
+    },
+    {
+      "case": 131,
+      "name": "FFT128_N16_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 4,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 213,
+      "kernel_overlap_model": 265,
+      "kernel_speedup": 0.8037735849056604,
+      "starts": [
+        0,
+        96,
+        192
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 7,
+      "cold_measured": 796,
+      "cold_overlap_only": 848,
+      "cold_burst_bank_service_bound": 784,
+      "cold_burst_multicast_bound": 462,
+      "root_serial_writes": 384,
+      "root_multicast_writes": 62,
+      "warm_burst_bank_service_bound": 400
+    },
+    {
+      "case": 132,
+      "name": "FFT128_N32_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 5,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 283,
+      "kernel_overlap_model": 361,
+      "kernel_speedup": 0.7839335180055401,
+      "starts": [
+        0,
+        96,
+        192,
+        288
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 8,
+      "cold_measured": 1187,
+      "cold_overlap_only": 1265,
+      "cold_burst_bank_service_bound": 1137,
+      "cold_burst_multicast_bound": 731,
+      "root_serial_writes": 512,
+      "root_multicast_writes": 106,
+      "warm_burst_bank_service_bound": 625
+    },
+    {
+      "case": 133,
+      "name": "FFT128_N64_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 6,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 353,
+      "kernel_overlap_model": 457,
+      "kernel_speedup": 0.7724288840262582,
+      "starts": [
+        0,
+        96,
+        192,
+        288,
+        384
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 9,
+      "cold_measured": 1770,
+      "cold_overlap_only": 1874,
+      "cold_burst_bank_service_bound": 1618,
+      "cold_burst_multicast_bound": 1130,
+      "root_serial_writes": 640,
+      "root_multicast_writes": 152,
+      "warm_burst_bank_service_bound": 978
+    },
+    {
+      "case": 134,
+      "name": "FFT128_N128_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 7,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 711,
+      "kernel_overlap_model": 841,
+      "kernel_speedup": 0.845422116527943,
+      "starts": [
+        0,
+        144,
+        288,
+        432,
+        576,
+        720
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 10,
+      "cold_measured": 3153,
+      "cold_overlap_only": 3283,
+      "cold_burst_bank_service_bound": 2771,
+      "cold_burst_multicast_bound": 2167,
+      "root_serial_writes": 896,
+      "root_multicast_writes": 292,
+      "warm_burst_bank_service_bound": 1875
+    },
+    {
+      "case": 135,
+      "name": "FFT128_N256_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 8,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 1501,
+      "kernel_overlap_model": 1369,
+      "kernel_speedup": 1.0964207450693937,
+      "starts": [
+        0,
+        192,
+        384,
+        576,
+        768,
+        960,
+        1152
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 11,
+      "cold_measured": 5992,
+      "cold_overlap_only": 5860,
+      "cold_burst_bank_service_bound": 4836,
+      "cold_burst_multicast_bound": 4000,
+      "root_serial_writes": 1408,
+      "root_multicast_writes": 572,
+      "warm_burst_bank_service_bound": 3428
+    },
+    {
+      "case": 136,
+      "name": "FFT128_N512_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 9,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 3251,
+      "kernel_overlap_model": 3097,
+      "kernel_speedup": 1.04972554084598,
+      "starts": [
+        0,
+        384,
+        768,
+        1152,
+        1536,
+        1920,
+        2304,
+        2688
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 12,
+      "cold_measured": 11839,
+      "cold_overlap_only": 11685,
+      "cold_burst_bank_service_bound": 9637,
+      "cold_burst_multicast_bound": 8337,
+      "root_serial_writes": 2432,
+      "root_multicast_writes": 1132,
+      "warm_burst_bank_service_bound": 7205
+    },
+    {
+      "case": 137,
+      "name": "FFT128_N1024_1",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 10,
+      "hmin": 0,
+      "inverse": 1,
+      "q": 0,
+      "kernel_measured": 7113,
+      "kernel_overlap_model": 6937,
+      "kernel_speedup": 1.0253711979241746,
+      "starts": [
+        0,
+        768,
+        1536,
+        2304,
+        3072,
+        3840,
+        4608,
+        5376,
+        6144
+      ],
+      "host_bank_service": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      },
+      "host_fixed_overhead": 13,
+      "cold_measured": 23894,
+      "cold_overlap_only": 23718,
+      "cold_burst_bank_service_bound": 19622,
+      "cold_burst_multicast_bound": 17394,
+      "root_serial_writes": 4480,
+      "root_multicast_writes": 2252,
+      "warm_burst_bank_service_bound": 15142
+    }
+  ],
+  "compatibility_gaps": [
+    "Current generic FFT64 is not native NTRUGen FFT64; 35/40 C native vectors differ.",
+    "Optimized RTL and full-application C/RTL co-simulation have not been run."
+  ],
+  "sha256": {
+    "model\\a_cg_speed_estimate.py": "b018d607c7e69c53891f97268f92a83bf86f37c6ac30003e590605c2d49c6f78",
+    "model\\cg_bank4_model.py": "a82c123dcfae7658c1fd7c801793bdbd707acff7ca842335839a7d93bf7372b5",
+    "study\\results\\a_cg_prototype.json": "2dc1cca705cfde03581e66e35b5182fe97886055afa656c614cc9d90dcf345c8",
+    "study\\build\\a_cg_prototype\\fixtures.bin": "58cee1d699077c0f404320224ae7f9bd77112dc634c4a291fb06a6e696dc2475",
+    "experiments\\a_cg\\rtl\\a_cg_core.sv": "a2e49027c8d7403a761978b89ba3cd353242dce1470525144226ee937f6db97a",
+    "experiments\\a_cg\\rtl\\tile_a.sv": "9a4c33fcb20551fc787cbc3e303af7348dd569514d76560cd804f06e94a71c6a",
+    "study\\vectors\\r8\\synthetic.jsonl.gz": "a671ad7cf9500aa4ae1dc14c9e6e2e4cc6ff2de5120d87322436fc193e5d8990",
+    "study\\vectors\\r8\\workload_512.jsonl.gz": "b4b477a730835a6a8e567844a4895d1aed9f86157ebbfd21e6f3cd5324f40017",
+    "study\\vectors\\r8\\workload_1024.jsonl.gz": "b196865684d9a64450d56bc330fda9e0c158a861efef295434e3a5187733ac06",
+    "study\\build\\ntrugen_mp31\\dump.bin": "4495fc557243580a7164ca18c85f951589cbfe27e8e8ca0c1ff4f5be24226fc0",
+    "spec\\FlexTransform\\2.0\\assets\\kernel\\fft_ntrugen.jsonl": "43b104177a1a7d49fb7e8fdbbd34ed7b86d0f23a68e2f6de9c7b52eaa7befadf"
+  }
+}

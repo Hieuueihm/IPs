@@ -1,0 +1,11 @@
+# Reproducible local tools/build output; preserve study/results and vectors.
+study/build/
+study/tools/
+**/__pycache__/
+third_party/r8/
+.Xil/
+# Simulation build output, scratch, and the downloaded reading-list PDFs (third-party papers)
+sim/*/build/
+sim/work/
+tmp/
+output/

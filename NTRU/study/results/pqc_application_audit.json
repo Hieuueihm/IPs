@@ -1,0 +1,47 @@
+{
+  "source_sha256": {
+    "scripts/report_pqc_application.py": "0f35c6826472bec205237c79504cf8bdc834a0913985449a54fc39f5f8beafe1"
+  },
+  "result_sha256": {
+    "study/results/pqc_application.json": "e53b7802136c3f92b50f33e4fb1d8526f08e8dd42d547536871a4765a2529813"
+  },
+  "rtl_batch_evidence_sha256": {
+    "study\\build\\pqc_application\\rtl\\batch_000.txt": "aa69616b0be0447ed333a5846eae42ec074b85076a5d9b663c8ba0867996dc8c",
+    "study\\build\\pqc_application\\rtl\\batch_000_actual.txt": "f92e47024b7595d4c921a27ba7c262fbc6ebc7641924eb2a2249746a99e79546",
+    "study\\build\\pqc_application\\rtl\\batch_000.log": "719bbf2b7b9e929768d351c6f2777d5c25171708ad3a159aacdf0fbb872fa7bd",
+    "study\\build\\pqc_application\\rtl\\batch_000_result.json": "6d27940e9f257ce1776d4e661f7c61804b38e894415581ef75cf018124a26db6",
+    "study\\build\\pqc_application\\rtl\\batch_001.txt": "18472b3d60811c498608369d3fea0b679f72d83c11ad1bafee9b365c577b7903",
+    "study\\build\\pqc_application\\rtl\\batch_001_actual.txt": "a701460e0b7053e8be91052c454081682b65b15cd5761a7dcfc880baedd91407",
+    "study\\build\\pqc_application\\rtl\\batch_001.log": "719bbf2b7b9e929768d351c6f2777d5c25171708ad3a159aacdf0fbb872fa7bd",
+    "study\\build\\pqc_application\\rtl\\batch_001_result.json": "96181f7ab0ec78fa196bbbfab8cd644bf0566fd41b9847e610eee3232a53f6be",
+    "study\\build\\pqc_application\\rtl\\batch_002.txt": "1ef01c0da25b1ca185e966fea5ab9492961f12ff9455d2673a18a6e1bcee9ef7",
+    "study\\build\\pqc_application\\rtl\\batch_002_actual.txt": "06598e8388008afa12cc2e67338f2eb8f1c7d064616392602b3abd1f1191ba6f",
+    "study\\build\\pqc_application\\rtl\\batch_002.log": "719bbf2b7b9e929768d351c6f2777d5c25171708ad3a159aacdf0fbb872fa7bd",
+    "study\\build\\pqc_application\\rtl\\batch_002_result.json": "418cc3f86b71b1ee14b39d160b8c1c9a15d5eabd47914342a607b4214f1e0f59",
+    "study\\build\\pqc_application\\rtl\\batch_003.txt": "44694e891a31e40777a806b05223dc590ab67917610e355174b49997e5cd5a96",
+    "study\\build\\pqc_application\\rtl\\batch_003_actual.txt": "fcc089037631737d1f94eb9ca10fb794628a2c2a3e703db80af238199dd051ca",
+    "study\\build\\pqc_application\\rtl\\batch_003.log": "719bbf2b7b9e929768d351c6f2777d5c25171708ad3a159aacdf0fbb872fa7bd",
+    "study\\build\\pqc_application\\rtl\\batch_003_result.json": "4865460958326736f856b0840724608f8105ea97c924bdc1f9889955b050e807",
+    "study\\build\\pqc_application\\rtl\\batch_004.txt": "77e28e6bf8c0db4a1f5f76cf5d91f8285a5b13fbfdfacfd7115e6c4d0e61d4fb",
+    "study\\build\\pqc_application\\rtl\\batch_004_actual.txt": "3e7c4efd0c3bd3187759875ae83ff09deb6ed52c081e73b6cbd4e41ddd1e90c0",
+    "study\\build\\pqc_application\\rtl\\batch_004.log": "719bbf2b7b9e929768d351c6f2777d5c25171708ad3a159aacdf0fbb872fa7bd",
+    "study\\build\\pqc_application\\rtl\\batch_004_result.json": "faa3f804aed1e125a6e534d1229338cc8d40e78be13cf957e2bfc71452a731aa",
+    "study\\build\\pqc_application\\rtl\\batch_005.txt": "71c5059bbe0e98431a3545d507e7fec9a51bfa41c8086fb9bfabaf17205b9912",
+    "study\\build\\pqc_application\\rtl\\batch_005_actual.txt": "7455dc908e47afd640cd0482a420012bd570df1627483d473886bddae5605bc2",
+    "study\\build\\pqc_application\\rtl\\batch_005.log": "5752e302bb8d99bc2dd70bb80824fa5e3d926c6f109e007def1f94883a4dc29d",
+    "study\\build\\pqc_application\\rtl\\batch_005_result.json": "2a36fb1601fcee3f8934a5bd69d927e54a46221a01a1eefed931c671c7bb2976"
+  },
+  "c_executable_evidence_sha256": {
+    "study/build/pqc_application/c/pqc_bridge": "71d83b24f971ca74d3666df788bfc8defddad4c3a00914031f34cf7c3e958242",
+    "study/build/pqc_application/c/independent_verify": "d37c9151098c850576fed6c2fde1584cfb630d84859ab010b5c90c28704c4b39",
+    "study/build/pqc_application/c/vrfy_instrumented.c": "04be8e88a2092b780759a3a56d896e96571cefea80015dd44053140c8671f191"
+  },
+  "transactions_audited": 315753,
+  "all_live_kernel_inputs_checked_by_C": true,
+  "all_supported_kernel_outputs_match_original_C": true,
+  "all_application_artifacts_byte_identical": true,
+  "independent_verifier_passes": 4,
+  "cache_recovery_receipt_sha256": {
+    "study\\build\\pqc_application\\rtl\\cache_recovery.json": "d9350ac4ea7b954e808b18fff9f3e6c61778e46ce3b989f359fa8b2134256886"
+  }
+}

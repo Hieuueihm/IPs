@@ -1,0 +1,982 @@
+{
+  "date": "2026-11-02",
+  "kind": "existing RTL trace plus memory remapping model, not new RTL",
+  "cases": [
+    {
+      "width": 32,
+      "inverse": false,
+      "period": 3,
+      "butterflies": 24,
+      "input_to_last_result": 17,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 2,
+            "W": 1
+          },
+          "W": {
+            "R": 2,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 82,
+        "semantic_reads": 312
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 2,
+            "W": 1
+          },
+          "W": {
+            "R": 2,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 82,
+        "semantic_reads": 312
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 48,
+        "counted_edges": 82,
+        "semantic_reads": 264
+      },
+      "log": "study/build/tile_a_liveness/w32_dir0.log"
+    },
+    {
+      "width": 32,
+      "inverse": true,
+      "period": 3,
+      "butterflies": 24,
+      "input_to_last_result": 17,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 2,
+            "W": 1
+          },
+          "W": {
+            "R": 2,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 82,
+        "semantic_reads": 312
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 2,
+            "W": 1
+          },
+          "W": {
+            "R": 2,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 82,
+        "semantic_reads": 312
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 8,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 1
+        },
+        "removed_PRE_reads": 48,
+        "counted_edges": 82,
+        "semantic_reads": 264
+      },
+      "log": "study/build/tile_a_liveness/w32_dir1.log"
+    },
+    {
+      "width": 64,
+      "inverse": false,
+      "period": 12,
+      "butterflies": 24,
+      "input_to_last_result": 29,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 297,
+        "semantic_reads": 912
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 297,
+        "semantic_reads": 912
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 96,
+        "counted_edges": 297,
+        "semantic_reads": 816
+      },
+      "log": "study/build/tile_a_liveness/w64_dir0.log"
+    },
+    {
+      "width": 64,
+      "inverse": true,
+      "period": 12,
+      "butterflies": 24,
+      "input_to_last_result": 29,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 297,
+        "semantic_reads": 912
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 297,
+        "semantic_reads": 912
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 2
+        },
+        "removed_PRE_reads": 96,
+        "counted_edges": 297,
+        "semantic_reads": 816
+      },
+      "log": "study/build/tile_a_liveness/w64_dir1.log"
+    },
+    {
+      "width": 128,
+      "inverse": false,
+      "period": 48,
+      "butterflies": 24,
+      "input_to_last_result": 66,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 32,
+          "X": 32,
+          "W": 32,
+          "SX": 16,
+          "SW": 16,
+          "PS": 4
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 1138,
+        "semantic_reads": 2832
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 2,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 4
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 1138,
+        "semantic_reads": 2832
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 2,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 4
+        },
+        "removed_PRE_reads": 192,
+        "counted_edges": 1138,
+        "semantic_reads": 2640
+      },
+      "log": "study/build/tile_a_liveness/w128_dir0.log"
+    },
+    {
+      "width": 128,
+      "inverse": true,
+      "period": 48,
+      "butterflies": 24,
+      "input_to_last_result": 66,
+      "observed_old": {
+        "status": "PASS",
+        "slots": 4,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 32,
+          "X": 32,
+          "W": 32,
+          "SX": 16,
+          "SW": 16,
+          "PS": 4
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 1138,
+        "semantic_reads": 2832
+      },
+      "dense": {
+        "status": "PASS",
+        "slots": 2,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 4
+        },
+        "removed_PRE_reads": 0,
+        "counted_edges": 1138,
+        "semantic_reads": 2832
+      },
+      "interleaved": {
+        "status": "PASS",
+        "slots": 2,
+        "ports": {
+          "O": {
+            "R": 1,
+            "W": 1
+          },
+          "X": {
+            "R": 1,
+            "W": 1
+          },
+          "W": {
+            "R": 1,
+            "W": 1
+          },
+          "SX": {
+            "R": 1,
+            "W": 1
+          },
+          "SW": {
+            "R": 1,
+            "W": 1
+          },
+          "PS": {
+            "R": 1,
+            "W": 1
+          }
+        },
+        "max_addressed_entries": {
+          "O": 16,
+          "X": 16,
+          "W": 16,
+          "SX": 8,
+          "SW": 8,
+          "PS": 4
+        },
+        "removed_PRE_reads": 192,
+        "counted_edges": 1138,
+        "semantic_reads": 2640
+      },
+      "log": "study/build/tile_a_liveness/w128_dir1.log"
+    }
+  ],
+  "source_rtl_sha256": "69c03f65acec27d9e7e885f3f643824d555f05d5edd55dab630c807a9f967e68",
+  "ntt_cases": [
+    {
+      "q": 3329,
+      "packed": false,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 3329,
+      "packed": false,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 12289,
+      "packed": false,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 12289,
+      "packed": false,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 8380417,
+      "packed": false,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 8380417,
+      "packed": false,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 2147483647,
+      "packed": false,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 2147483647,
+      "packed": false,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 3329,
+      "packed": true,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 3329,
+      "packed": true,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 12289,
+      "packed": true,
+      "inverse": false,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    },
+    {
+      "q": 12289,
+      "packed": true,
+      "inverse": true,
+      "requests": 40,
+      "status": "PASS",
+      "observed_live_side_words": 6,
+      "proposed_entries": 16,
+      "max_R": 1,
+      "max_W": 1,
+      "max_result_latency": 20
+    }
+  ],
+  "mutations_detected": [
+    "read_value_flip",
+    "BF128_one_slot"
+  ],
+  "limitations": [
+    "Core-like intervals 3/12/48, 24 BF per case, LEAF_PD=2 IN_REG=1, no arbitrary burst acceptance claim.",
+    "Dense/interleaved variants are memory event models, not rewritten RTL or a routed netlist.",
+    "Interleaving needs two GS carry/borrow contexts, new beat decode and rechecked core bank timing.",
+    "The previous real operand/root must be held or reused from an earlier existing pipeline register; register/timing cost not measured.",
+    "Single R/W counts are consumed logical accesses; LUTRAM packing and LUT savings still need synthesis.",
+    "NTT FIFO checks use fixed phase, one slot, q tests and per-word packed mode; core packed16 bank integration is not modeled."
+  ],
+  "sha256": {
+    "model/tile_a_liveness.py": "918ae6eddd2e807a2a802b5b14f0f0891b0e4e39e222128f5c3a488a1d227522",
+    "model/fft_core_plan.py": "b1204d8cebb84d20ff1c71041be9ba330aa08e0ff3b385c97840ef9e216a812c",
+    "sim/tile_thu/tb_wide_timing.sv": "cf24a33ebd439ffbd9c630901498a98dbcfeecd55aa3077ebe4947ea70a0c681",
+    "hdl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "study/build/tile_a_liveness/probe.sv": "8030fbd2e1a75763ed3034a26d476e4082fd221e17b964791b92785147d59b8f",
+    "study/build/tile_a_liveness/timing_driven.sv": "3b8b01788da1c8f28a574b302607d190b90d504434c5045c4de3d8d8c15cdc37",
+    "study/build/tile_a_liveness/ntt_probe.sv": "4aa2bf92ffe596557cb190cfb1a7056e7e20fb7ccc723218477856c9e39c716e",
+    "study/build/tile_a_liveness/ntt_driven.sv": "842f0eadb4f839defb5e941d8891ec5daf656c76cb546a6700807af15c4aba82"
+  },
+  "logs_sha256": {
+    "study/build/tile_a_liveness/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "study/build/tile_a_liveness/ntt_q12289_pack0_dir0.log": "501d7f9dde99dbff08702162d787ab8b944b69d88bf477c323f113e80f9bd05d",
+    "study/build/tile_a_liveness/ntt_q12289_pack0_dir1.log": "e4165ab21109642946e93f6b9436d8d216aaed16add861d6ab24b5d6d9f3a7cd",
+    "study/build/tile_a_liveness/ntt_q12289_pack1_dir0.log": "e988adfe4b6810eb9fee058cf9f9617127efcf4f89122af066fe835a0c1e2e20",
+    "study/build/tile_a_liveness/ntt_q12289_pack1_dir1.log": "ed93780c44877616ee9696df804e4edba8eeb3134afaf1affb5fc32b7cdf49bc",
+    "study/build/tile_a_liveness/ntt_q2147483647_pack0_dir0.log": "b376043c804e5dde68dd4c38cd6c7caa0b77d7ba5a290aa240a626b4bf96dfc3",
+    "study/build/tile_a_liveness/ntt_q2147483647_pack0_dir1.log": "db8e0c07e0de5f9ed7f6fe34128a74916906f1955101f178f7274567db8af3bc",
+    "study/build/tile_a_liveness/ntt_q3329_pack0_dir0.log": "ab08947af31f31f21632e957f77b3063f89184d6f1074c655d6c590f830d3816",
+    "study/build/tile_a_liveness/ntt_q3329_pack0_dir1.log": "7530d7778bbdeadef4acc86d7b5ac4ae2dea5965bc904318419e09917a0da9c7",
+    "study/build/tile_a_liveness/ntt_q3329_pack1_dir0.log": "e1ca3e2f08fc04c67c7c6d8c098b0a85ffbe75979a28ddbe90cd8159141c2d1d",
+    "study/build/tile_a_liveness/ntt_q3329_pack1_dir1.log": "fb9f7cda92fc0465544f4ca2ae3814fedd9f6ba98592f67e7060dc2580c56a7c",
+    "study/build/tile_a_liveness/ntt_q8380417_pack0_dir0.log": "17aa1ad90c4b7182ba2fedd574c32897d5f19be5f0f67d7c501bff500106d83d",
+    "study/build/tile_a_liveness/ntt_q8380417_pack0_dir1.log": "0d926742089d71c31de64a9c7ea2336a42b04a4cc69759bf7b5730bdea493df2",
+    "study/build/tile_a_liveness/w128_dir0.log": "cd30cfd03243a6c1c8f52e7d5920da64215165c700bf7ae1c42e357aae8d1957",
+    "study/build/tile_a_liveness/w128_dir1.log": "ca046728de2a53bea33f15d15b1c8fb5ebed8db4c4c084757ee8602dd87177ff",
+    "study/build/tile_a_liveness/w32_dir0.log": "09ee28e4e06367d8203526dde3944ba026c713ed3b9afa7c271dda2b593c33c9",
+    "study/build/tile_a_liveness/w32_dir1.log": "78207dda183850953e8bc6156271edb9a8a8b829313275899e833cab09885a11",
+    "study/build/tile_a_liveness/w64_dir0.log": "64bf297338025b929411ba77299b9718f5a300ccf7395b219631cbb7092ada40",
+    "study/build/tile_a_liveness/w64_dir1.log": "3817d6871b6a2dbbae328611a0f005cadfc3f0f3d0c59a6137bd15d2b22d1751"
+  }
+}

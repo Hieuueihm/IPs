@@ -1,0 +1,56 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "rtl_simulated": false,
+  "checks": {
+    "manifest": {
+      "files": 23,
+      "tools": 2
+    },
+    "traceability": {
+      "requirements": 92,
+      "test_suites": 21,
+      "links": 114
+    },
+    "interface_profiles": {
+      "ports": 32,
+      "legal_commands": 300
+    },
+    "rom": {
+      "fft_complex_rows": 1024,
+      "ntt_scalar_rows": 2304
+    },
+    "fixtures": {
+      "kernels": 300,
+      "primitives": 360,
+      "independent_job_oracle_comparisons": 580
+    },
+    "memory_mapping": {
+      "unique_word_addresses": 8192,
+      "host_lines": 1024
+    },
+    "source_provenance": [
+      {
+        "path": "study/vectors/r8/twiddle_q64_64.json",
+        "present": true,
+        "hash_match": true
+      },
+      {
+        "path": "study/build/pqc_application/N512/capture/trace.jsonl",
+        "present": true,
+        "hash_match": true
+      },
+      {
+        "path": "study/build/kernel_engine/cases.json",
+        "present": true,
+        "hash_match": true
+      }
+    ],
+    "baseline_expected_records": 5992
+  },
+  "limitations": [
+    "Checks documents/assets/oracle only; no new RTL has been implemented or simulated.",
+    "Protocol assertions, batching RTL, reset/flush and application integration remain implementation verification obligations.",
+    "No physical timing/area/power or side-channel certification."
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,267 @@
+{
+  "spec": "FT-SPEC-1.0",
+  "clock": "clk_i",
+  "reset": {
+    "signal": "rst_ni",
+    "synchronous": true,
+    "active_low": true,
+    "minimum_edges": 2
+  },
+  "transfer": "rising_edge && valid && ready",
+  "ports": [
+    {
+      "name": "clk_i",
+      "width": 1,
+      "direction": "input",
+      "group": "control"
+    },
+    {
+      "name": "rst_ni",
+      "width": 1,
+      "direction": "input",
+      "group": "control"
+    },
+    {
+      "name": "pause_i",
+      "width": 1,
+      "direction": "input",
+      "group": "control"
+    },
+    {
+      "name": "flush_i",
+      "width": 1,
+      "direction": "input",
+      "group": "control"
+    },
+    {
+      "name": "flush_done_o",
+      "width": 1,
+      "direction": "output",
+      "group": "control"
+    },
+    {
+      "name": "cmd_valid_i",
+      "width": 1,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_ready_o",
+      "width": 1,
+      "direction": "output",
+      "group": "command"
+    },
+    {
+      "name": "cmd_op_i",
+      "width": 4,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_fmt_i",
+      "width": 2,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_profile_i",
+      "width": 2,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_logn_i",
+      "width": 4,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_jobs_m1_i",
+      "width": 3,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_tag_i",
+      "width": 32,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cmd_reserved_i",
+      "width": 8,
+      "direction": "input",
+      "group": "command"
+    },
+    {
+      "name": "cpl_valid_o",
+      "width": 1,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_ready_i",
+      "width": 1,
+      "direction": "input",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_tag_o",
+      "width": 32,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_status_o",
+      "width": 8,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_job_mask_o",
+      "width": 8,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_cycles_o",
+      "width": 64,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "cpl_active_cycles_o",
+      "width": 64,
+      "direction": "output",
+      "group": "completion"
+    },
+    {
+      "name": "mem_req_valid_i",
+      "width": 1,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_ready_o",
+      "width": 1,
+      "direction": "output",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_write_i",
+      "width": 1,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_store_i",
+      "width": 2,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_addr_i",
+      "width": 16,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_wdata_i",
+      "width": 128,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_req_strb_i",
+      "width": 16,
+      "direction": "input",
+      "group": "memory_request"
+    },
+    {
+      "name": "mem_rsp_valid_o",
+      "width": 1,
+      "direction": "output",
+      "group": "memory_response"
+    },
+    {
+      "name": "mem_rsp_ready_i",
+      "width": 1,
+      "direction": "input",
+      "group": "memory_response"
+    },
+    {
+      "name": "mem_rsp_rdata_o",
+      "width": 128,
+      "direction": "output",
+      "group": "memory_response"
+    },
+    {
+      "name": "mem_rsp_status_o",
+      "width": 3,
+      "direction": "output",
+      "group": "memory_response"
+    }
+  ],
+  "command_status": {
+    "OK": 0,
+    "BAD_RESERVED": 1,
+    "BAD_OP": 2,
+    "BAD_FMT": 3,
+    "BAD_PROFILE": 4,
+    "BAD_LOGN": 5,
+    "BAD_JOBS": 6,
+    "ABORTED": 16,
+    "INTERNAL_FAULT": 17
+  },
+  "command_error_priority": [
+    "BAD_RESERVED",
+    "BAD_OP",
+    "BAD_FMT",
+    "BAD_PROFILE",
+    "BAD_LOGN",
+    "BAD_JOBS"
+  ],
+  "memory_status": {
+    "OK": 0,
+    "BAD_STORE": 1,
+    "BAD_ALIGN": 2,
+    "RANGE": 3,
+    "STATE": 4
+  },
+  "memory_error_priority": [
+    "BAD_STORE",
+    "BAD_ALIGN",
+    "RANGE",
+    "STATE"
+  ],
+  "stores": {
+    "A": 0,
+    "B": 1,
+    "C": 2
+  },
+  "address_unit": "byte",
+  "line_bytes": 16,
+  "address_min": 0,
+  "address_max_line": 16368,
+  "byte_order": "little",
+  "max_command_outstanding": 1,
+  "max_memory_outstanding": 1,
+  "internal_array": {
+    "data_bits": 2048,
+    "roots_bits": 1024,
+    "result_bits": 2048,
+    "is_ntt_bits": 1,
+    "fmt_bits": 2,
+    "tile_mode_bits": 2,
+    "profile_bits": 2,
+    "direction_bits": 1,
+    "epoch_bits": 4,
+    "context_bits": 1,
+    "stage_bits": 4,
+    "lane_mask_bits": 16,
+    "product_sel_bits": 2,
+    "tag_bits": 32,
+    "job_map": "context lookup: job index3 and destinations per active logical lane",
+    "encoding": "reference private interface; alternatives require manifest mapping"
+  }
+}

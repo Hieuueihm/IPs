@@ -1,0 +1,3677 @@
+{
+  "scope": "Static isolated-batch port demand; current bank map, one FFT root ROM read per cycle; no cross-batch root cache. No candidate controller RTL or speedup claim.",
+  "cases": [
+    {
+      "n": 4,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 16,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 1,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 16,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 8,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 2,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 32,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 16,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 1,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 2,
+          "root_reads_sum_no_cross_batch_cache": 1,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 32,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 16,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 4,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 64,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 32,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 16,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 8,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 2,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 4,
+          "root_reads_sum_no_cross_batch_cache": 2,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 64,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 32,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 8,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 64,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 32,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 16,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 8,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 4,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 2,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 128,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 32,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 128,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 64,
+          "batches": 4,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 32,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 4,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 4,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 8,
+          "root_reads_sum_no_cross_batch_cache": 4,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 128,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 64,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 16,
+          "data_read_rounds_min": 1,
+          "data_read_rounds_max": 1,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 128,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 64,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 32,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 8,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 4,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 2,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 256,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 256,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 128,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 64,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 32,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 7,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 8,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 16,
+          "root_reads_sum_no_cross_batch_cache": 8,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 256,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 128,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 64,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 32,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 16,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 8,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 4,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 2,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 32,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 256,
+          "batches": 128,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 128,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 64,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 32,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 16,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 8,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 4,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 2,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 512,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 128,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 128,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 32,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 512,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 256,
+          "batches": 16,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 128,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 64,
+          "batches": 16,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 7,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 8,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 32,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 16,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 16,
+          "distinct_twiddles_max": 16,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 8,
+          "distinct_twiddles_max": 8,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 32,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 16,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 16,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 64,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        },
+        {
+          "stage": 8,
+          "span": 512,
+          "batches": 16,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 32,
+          "root_reads_sum_no_cross_batch_cache": 16,
+          "capacity_only_min_rounds_max": 2
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 64,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 512,
+          "batches": 64,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 256,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 128,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 64,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 16,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 8,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 4,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 8,
+          "span": 2,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 64,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 4,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 4,
+          "distinct_twiddles_max": 4,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 2,
+          "distinct_twiddles_max": 2,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 128,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 64,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 128,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 8,
+          "span": 512,
+          "batches": 64,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 256,
+          "root_reads_sum_no_cross_batch_cache": 64,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 128,
+      "op": "FFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 512,
+          "batches": 256,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1024,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 256,
+          "batches": 256,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1024,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 128,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 64,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 16,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 8,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 4,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 8,
+          "span": 2,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "width_bits": 128,
+      "op": "IFFT",
+      "proposed_butterflies_per_batch": 1,
+      "stages": [
+        {
+          "stage": 0,
+          "span": 2,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 1,
+          "span": 4,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 2,
+          "span": 8,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 3,
+          "span": 16,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 4,
+          "span": 32,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 5,
+          "span": 64,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 6,
+          "span": 128,
+          "batches": 256,
+          "data_read_rounds_min": 2,
+          "data_read_rounds_max": 2,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 512,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 7,
+          "span": 256,
+          "batches": 256,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1024,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        },
+        {
+          "stage": 8,
+          "span": 512,
+          "batches": 256,
+          "data_read_rounds_min": 4,
+          "data_read_rounds_max": 4,
+          "distinct_twiddles_min": 1,
+          "distinct_twiddles_max": 1,
+          "data_read_rounds_sum": 1024,
+          "root_reads_sum_no_cross_batch_cache": 256,
+          "capacity_only_min_rounds_max": 1
+        }
+      ]
+    }
+  ]
+}

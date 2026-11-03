@@ -1,0 +1,16 @@
+K,mode,optional,tiles_per_output,tap_level,passes_per_output,accumulator,phases_per_issue,compute_bf,mem_bf,eff_bf,busy,checks
+16,FFT32,False,2,1,1,False,1,4.0,4.0,4.0,1.0,3480
+16,FFT64,False,8,3,1,False,1,1.0,2.0,1.0,1.0,870
+16,FFT128,False,32,5,2,True,4,0.25,1.0,0.25,1.0,870
+16,FFT64 tw32,True,4,2,1,False,1,2.0,2.0,2.0,1.0,1740
+16,FFT128 tw64,True,16,4,1,False,2,0.5,1.0,0.5,1.0,870
+32,FFT32,False,2,1,1,False,1,8.0,4.0,4.0,0.5,6960
+32,FFT64,False,8,3,1,False,1,2.0,2.0,2.0,1.0,1740
+32,FFT128,False,32,5,1,False,2,0.5,1.0,0.5,1.0,870
+32,FFT64 tw32,True,4,2,1,False,1,4.0,2.0,2.0,0.5,3480
+32,FFT128 tw64,True,16,4,1,False,1,1.0,1.0,1.0,1.0,870
+64,FFT32,False,2,1,1,False,1,16.0,4.0,4.0,0.25,13920
+64,FFT64,False,8,3,1,False,1,4.0,2.0,2.0,0.5,3480
+64,FFT128,False,32,5,1,False,1,1.0,1.0,1.0,1.0,870
+64,FFT64 tw32,True,4,2,1,False,1,8.0,2.0,2.0,0.25,6960
+64,FFT128 tw64,True,16,4,1,False,1,2.0,1.0,1.0,0.5,1740
