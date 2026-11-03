@@ -1,0 +1,324 @@
+{
+  "kind": "two command stages plus registered read response: actual OOC P&R",
+  "clock_ns": 5,
+  "part": "xczu7ev-ffvc1156-2-e",
+  "resource": {
+    "LUT": 37389,
+    "FF": 27437,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "synthesis_resource": {
+    "LUT": 37979,
+    "FF": 27437,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "internal_timing": {
+    "WNS_ns": 0.304,
+    "WHS_ns": 0.01
+  },
+  "execution_core_only_timing": {
+    "WNS_ns": 0.304,
+    "WHS_ns": 0.01
+  },
+  "full_boundary_timing": {
+    "WNS_ns": 0.304,
+    "TNS_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "WHS_ns": -1.591,
+    "THS_ns": -536.863
+  },
+  "internal_200MHz_setup_hold_pass": true,
+  "whole_boundary_200MHz_setup_hold_pass": false,
+  "internal_setup_report_met": true,
+  "internal_hold_report_met": true,
+  "internal_setup_paths": [
+    {
+      "slack_ns": 0.304,
+      "source": "u_exec/engine[8].u_tile/wbi_reg[2]/C",
+      "destination": "u_exec/engine[8].u_tile/rd_reg[8]/D",
+      "delay": "4.490ns  (logic 1.666ns (37.105%)  route 2.824ns (62.895%))",
+      "levels": "16  (CARRY8=8 LUT3=1 LUT4=2 LUT6=5)"
+    },
+    {
+      "slack_ns": 0.332,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/s1_reg[1]/D",
+      "delay": "4.481ns  (logic 1.684ns (37.581%)  route 2.797ns (62.419%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.336,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/rd_reg[27]/D",
+      "delay": "4.485ns  (logic 1.680ns (37.458%)  route 2.805ns (62.542%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.34,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/s1_reg[4]/D",
+      "delay": "4.475ns  (logic 1.696ns (37.899%)  route 2.779ns (62.101%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.343,
+      "source": "u_exec/fmt_reg[0]/C",
+      "destination": "u_exec/engine[4].u_tile/leaves/g_leaf[0].pp_reg[2]/DSP_A_B_DATA_INST/B[6]",
+      "delay": "4.190ns  (logic 0.852ns (20.334%)  route 3.338ns (79.666%))",
+      "levels": "7  (LUT4=2 LUT6=4 RAMD32=1)"
+    },
+    {
+      "slack_ns": 0.363,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/rd_reg[40]/D",
+      "delay": "4.450ns  (logic 1.738ns (39.056%)  route 2.712ns (60.944%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.365,
+      "source": "u_exec/engine[3].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[3].u_tile/rd_reg[18]/D",
+      "delay": "4.469ns  (logic 1.602ns (35.847%)  route 2.867ns (64.153%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.369,
+      "source": "u_exec/engine[15].u_tile/wib_reg[1]/C",
+      "destination": "u_exec/engine[15].u_tile/rd_reg[26]/D",
+      "delay": "4.437ns  (logic 1.143ns (25.761%)  route 3.294ns (74.239%))",
+      "levels": "13  (CARRY8=6 LUT4=1 LUT5=1 LUT6=5)"
+    },
+    {
+      "slack_ns": 0.38,
+      "source": "u_exec/engine[12].u_tile/wbi_reg[1]/C",
+      "destination": "u_exec/engine[12].u_tile/rd_reg[15]/D",
+      "delay": "4.360ns  (logic 1.444ns (33.119%)  route 2.916ns (66.881%))",
+      "levels": "15  (CARRY8=7 LUT4=2 LUT5=2 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.386,
+      "source": "u_exec/engine[0].u_tile/wbi_reg[1]/C",
+      "destination": "u_exec/engine[0].u_tile/s1_reg[13]/D",
+      "delay": "4.378ns  (logic 1.573ns (35.930%)  route 2.805ns (64.070%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    }
+  ],
+  "internal_hold_paths": [
+    {
+      "slack_ns": 0.01,
+      "source": "u_exec/engine[10].u_tile/prev_wr_reg[3]/C",
+      "destination": "u_exec/engine[10].u_tile/sw5_reg[3]/D",
+      "delay": "0.210ns  (logic 0.106ns (50.476%)  route 0.104ns (49.524%))",
+      "levels": "2  (CARRY8=1 LUT2=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "u_exec/engine[12].u_tile/shift_r_reg[0]/C",
+      "destination": "u_exec/engine[12].u_tile/rd_reg[51]/D",
+      "delay": "0.176ns  (logic 0.082ns (46.591%)  route 0.094ns (53.409%))",
+      "levels": "1  (LUT6=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "u_exec/engine[1].u_tile/nhp0_reg[32]/C",
+      "destination": "u_exec/engine[1].u_tile/nhp1_reg[32]/D",
+      "delay": "0.157ns  (logic 0.058ns (36.943%)  route 0.099ns (63.057%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "u_exec/engine[13].u_tile/wy1l_reg[16]/C",
+      "destination": "u_exec/engine[13].u_tile/wy1p_reg[16]/D",
+      "delay": "0.176ns  (logic 0.058ns (32.955%)  route 0.118ns (67.045%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "u_exec/engine[0].u_tile/nhp1_reg[34]/C",
+      "destination": "u_exec/engine[0].u_tile/s1_reg[2]/D",
+      "delay": "0.112ns  (logic 0.062ns (55.357%)  route 0.050ns (44.643%))",
+      "levels": "1  (LUT6=1)"
+    }
+  ],
+  "execution_setup_paths": [
+    {
+      "slack_ns": 0.304,
+      "source": "u_exec/engine[8].u_tile/wbi_reg[2]/C",
+      "destination": "u_exec/engine[8].u_tile/rd_reg[8]/D",
+      "delay": "4.490ns  (logic 1.666ns (37.105%)  route 2.824ns (62.895%))",
+      "levels": "16  (CARRY8=8 LUT3=1 LUT4=2 LUT6=5)"
+    },
+    {
+      "slack_ns": 0.332,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/s1_reg[1]/D",
+      "delay": "4.481ns  (logic 1.684ns (37.581%)  route 2.797ns (62.419%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.336,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/rd_reg[27]/D",
+      "delay": "4.485ns  (logic 1.680ns (37.458%)  route 2.805ns (62.542%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.34,
+      "source": "u_exec/engine[15].u_tile/wbi_reg[0]/C",
+      "destination": "u_exec/engine[15].u_tile/s1_reg[4]/D",
+      "delay": "4.475ns  (logic 1.696ns (37.899%)  route 2.779ns (62.101%))",
+      "levels": "15  (CARRY8=7 LUT4=3 LUT5=1 LUT6=4)"
+    },
+    {
+      "slack_ns": 0.343,
+      "source": "u_exec/fmt_reg[0]/C",
+      "destination": "u_exec/engine[4].u_tile/leaves/g_leaf[0].pp_reg[2]/DSP_A_B_DATA_INST/B[6]",
+      "delay": "4.190ns  (logic 0.852ns (20.334%)  route 3.338ns (79.666%))",
+      "levels": "7  (LUT4=2 LUT6=4 RAMD32=1)"
+    }
+  ],
+  "validation": {
+    "pipeline_reset_command_stages_checked": 2,
+    "response_flush_checked": true,
+    "command_capture_stages": 2,
+    "registered_read_response": true,
+    "reservation_permission_logic_levels": 1,
+    "frontend_reset_isolated": true,
+    "numeric_cases": 1026,
+    "kernel_cycles_identical": true,
+    "four_state_cases": 38,
+    "reset_abort_modes": 12,
+    "live_C_calls": 74,
+    "verified_signatures": 4,
+    "identical_C_artifacts": 14,
+    "negative_live_inputs": 2,
+    "packed16_preserved": true,
+    "arithmetic_RTL_unchanged": true,
+    "production_RTL_changed": false,
+    "configuration_extra_clocks_vs_retained": 7,
+    "load_read_extra_clocks_per_line_vs_control_gate": 2,
+    "start_extra_clocks_vs_control_gate": 2,
+    "read_response_extra_clocks": 1,
+    "root_descriptor_latency_clocks": 2,
+    "root_descriptor_throughput_words_per_clock": 1,
+    "direct_input_to_core_paths": 0,
+    "synthesis_resource": {
+      "LUT": 37979,
+      "FF": 27437,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "sha256": {
+      "experiments/a_cg_cmd_dispatch2/manifest.json": "5833fcba8088765101cf717c5ce90ee4f58268f13713b4edc557cebe2005508f",
+      "experiments/a_cg_cmd_dispatch2/main.cpp": "70877f1664f841438c011c702794cc73ca8aa51c06fed63e9ced3feb2c85c250",
+      "experiments/a_cg_cmd_dispatch2/tb_four_state.sv": "5c5fcc5f5510aa350627ebd33ded53697bf494f568623e7e91dfef68bebf982f",
+      "experiments/a_cg_cmd_dispatch2/synth.tcl": "5ede303f8f7767f9dfbcf3860c061479f3cca1021f92fe5a9cebc4ef25aa08ca",
+      "study/build/a_cg_cmd_dispatch2/sim.log": "89bd1c35f28c6e349f65aa2171d66f6267176cee3e251d47a027ead609f980d7",
+      "study/build/a_cg_cmd_dispatch2/four_state.log": "28ff8fb5ede15cdf38cf8d8b31bd023b2597049677b429a9b9c155b5845faaf2",
+      "study/build/a_cg_cmd_dispatch2/application/application_results.json": "23beb9ceaead50576d843a92fa4a17670b55ee51866032f28da8518718ec43e3",
+      "study/build/a_cg_cmd_dispatch2/application/rtl_records.json": "c582da3d6f71a09a399eb1c9df537bd275783104a45d5053cb77ed83c0b82a9a",
+      "study/build/a_cg_cmd_dispatch2/synth/synthesized.dcp": "41fda7cc8943e17de8376aaca6c923243ffde8f2b0ac7d293ccbfa6682f8c227",
+      "study/build/a_cg_cmd_dispatch2/synth/command_barrier.txt": "807882f311bd5d2894b5326f37a09a8f581d6a341d074098c0e24b7a520d103b"
+    }
+  },
+  "parent": {
+    "name": "a_cg_cmd_frontreserve",
+    "resource": {
+      "LUT": 37414,
+      "FF": 26966,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "internal_timing": {
+      "WNS_ns": 0.162,
+      "WHS_ns": 0.01
+    }
+  },
+  "route_status_counts": {
+    "logical nets": 136252,
+    "nets not needing routing": 74555,
+    "internally routed nets": 64566,
+    "nets with no loads": 9512,
+    "implicitly routed ports": 477,
+    "routable nets": 61697,
+    "nets with explicit gaps": 1,
+    "fully routed nets": 61697,
+    "nets with routing errors": 0
+  },
+  "drc_rules": [
+    {
+      "rule": "DPIP-2",
+      "severity": "Warning",
+      "description": "Input pipelining",
+      "count": 64
+    },
+    {
+      "rule": "RTSTAT-10",
+      "severity": "Warning",
+      "description": "No routable loads",
+      "count": 1
+    }
+  ],
+  "production_RTL_changed": false,
+  "retained_baseline_changed": false,
+  "command_capture_stages": 2,
+  "read_response_stages_added": 1,
+  "arithmetic_RTL_changed": false,
+  "kernel_cycles_unchanged": true,
+  "place_directive": "AltSpreadLogic_high",
+  "route_directive": "RuntimeOptimized",
+  "latency_vs_parent": {
+    "main_command_delivery_extra_clocks": 1,
+    "root_descriptor_extra_latency": 1,
+    "root_descriptor_throughput_words_per_clock": 1,
+    "main_command_min_spacing": 3,
+    "read_response_extra_clocks": 1,
+    "total_per_transform": "2*ceil(words/4)+3 clocks"
+  },
+  "limitations": [
+    "Full host and root storage included; no board or partition pin placement.",
+    "Added stages do not repair the unmodelled external port-to-first-register route.",
+    "Parent worst external hold path had 0 ns data delay and unset routing, with min input delay 0 ns.",
+    "All original clock, max/min I/O delays and uncertainty constraints are retained.",
+    "Actual host clock/data integration is required to close and validate the interface.",
+    "No post-route simulation or board run; PQC checks establish reference agreement for the tested cases."
+  ],
+  "sha256": {
+    "experiments/a_cg_cmd_dispatch2/manifest.json": "5833fcba8088765101cf717c5ce90ee4f58268f13713b4edc557cebe2005508f",
+    "experiments/a_cg_cmd_dispatch2/build.py": "5673c1779fa0837a08676033a60ba633b676f729b6413f5cb9f1ab29c2598c7a",
+    "experiments/a_cg_cmd_dispatch2/validate.py": "d83e990839bfee6ab788b26a3c01686ec5c894cc950eb717ec6779f71243779a",
+    "experiments/a_cg_cmd_dispatch2/report.py": "fe6e3c995cccd76abed8cf63b98959d539ea8c2b657ac6eea270c411a31f511c",
+    "experiments/a_cg_cmd_dispatch2/implement_cold.tcl": "df23cd077753c676825fe35dcc51fcacfbe7dd9088c5845ffde0d06eec851815",
+    "experiments/a_cg_cmd_dispatch2/tb_pipeline_reset.sv": "f9a05ec8ab5b40808302efbba0fa03d631cb6cebc23275b8e9ff2a7bcd3e7846",
+    "experiments/a_cg_cmd_dispatch2/run_pipeline_reset.ps1": "c9b59d4b49937b363b2395855862e7ae7007de4091bc310760350d6972b15b9c",
+    "study/build/a_cg_cmd_dispatch2/pipeline_reset.log": "9c16f8c10d454625c18b989f37545fc40199e2432dd087c17797310efcf9413d",
+    "study/build/a_cg_cmd_dispatch2/validation.json": "1d2e391800d4ddf90eb1dafe3079b8bce28a085fbabba3b48194566ca41d910b",
+    "study/build/a_cg_cmd_dispatch2/implementation_cold_console.log": "672dddfd0c4d910c031f0d933a8be96e05f609ae9ef21e96dee6f0895a0e7eee",
+    "study/build/a_cg_cmd_dispatch2/synth/dispatch_barrier.txt": "9f09b3881ab7d7b168d2159a0a702854d0f9074c9484e9a81dcd080843741654",
+    "study/build/a_cg_cmd_dispatch2/synth/reservation_permission.txt": "ff0f0666dbc8c5ad1ed68c2579c6f2dbf333631db533586ea8776540d1443302",
+    "study/build/a_cg_cmd_dispatch2/synth/frontend_reset_barrier.txt": "40b5f5f5181045183da043a9e7a59e2adaa5e64b4e3bce302923e381c487492b",
+    "study/build/a_cg_cmd_dispatch2/synth/command_barrier.txt": "807882f311bd5d2894b5326f37a09a8f581d6a341d074098c0e24b7a520d103b",
+    "study/build/a_cg_cmd_dispatch2/route/routed.dcp": "be03f21f0ef65a057e3cbb61851f8fb136d3f8c642b4cd2a2de70e722357263d",
+    "study/build/a_cg_cmd_dispatch2/route/util.rpt": "1ec0d03f5c2a528dbf3b6847cca23b0693f8c724d6aa4d5b8c95cd15ebc73c2a",
+    "study/build/a_cg_cmd_dispatch2/route/util_hier.rpt": "6848f4845728b0390284e49a2bf018192145d23a73a0acb9c7b0faa853049ba9",
+    "study/build/a_cg_cmd_dispatch2/route/timing.rpt": "4e472cd66471cb3af277afc1e86c9bb494435528bbb5db788ecb69e27e97f1e4",
+    "study/build/a_cg_cmd_dispatch2/route/internal_setup.rpt": "98b90480a2dd9c1eba6303311ce8c0fcbcb2e3c00d8c9aafcf0872b680293083",
+    "study/build/a_cg_cmd_dispatch2/route/internal_hold.rpt": "93570ee2093be67d8e3f49c079ecd2d1305f598279cf0e6ffb6004bfc425e5ca",
+    "study/build/a_cg_cmd_dispatch2/route/execution_setup.rpt": "36c19b1adfaca190b713d21e5abfc7494f48bac788a101051fe496dc433eef00",
+    "study/build/a_cg_cmd_dispatch2/route/execution_hold.rpt": "d9d286d171097945529d86128416ecd8e6ddb31d895c9b8525ed0980a2de74c8",
+    "study/build/a_cg_cmd_dispatch2/route/reset_feed.rpt": "2401fb1e0e6ccb391c003977c5ac56eb25ab37dcf3fe802e861dc338a4024816",
+    "study/build/a_cg_cmd_dispatch2/route/reset_tree.rpt": "061233bc8b4ef8d60fdc65927df2a4009e02a42fd4fd079ea94a7612ee655b58",
+    "study/build/a_cg_cmd_dispatch2/route/config_boundary.rpt": "a2df08f79580adb4db6bd02052bd85102c87b94d7704c493a57dce6b6b5de307",
+    "study/build/a_cg_cmd_dispatch2/route/route_status.rpt": "05b58ba90bbdbc6137d7128a4eebcaef9c80c2828265ca4905f43ab23079f2d2",
+    "study/build/a_cg_cmd_dispatch2/route/drc.rpt": "619a34f2c1ae29315e4427d8aba09cb22c98e1fa23b60a332037df811b8f3918",
+    "study/build/a_cg_cmd_dispatch2/route/metrics.txt": "721b0b81797aa9e95e19bd85bc6ddca5df257bc35967980501a30a70955e852f",
+    "study/build/a_cg_cmd_dispatch2/route/constraints.xdc": "acd13cc21594c2f341f80a3ac5b5f46a8713b63b8f667ba6fe5e9205b9bf2f7b",
+    "study/build/a_cg_cmd_dispatch2/route/run_config.txt": "b3c1aae6bef9c8c2e961c7f5b8d69d8070edf969be5a5a627b1a88ecc1a18428"
+  }
+}

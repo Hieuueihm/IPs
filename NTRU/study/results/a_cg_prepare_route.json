@@ -1,0 +1,103 @@
+{
+  "kind": "single fast timing-driven OOC place and route",
+  "selected_synthesis_LUT": 37917,
+  "part": "xczu7ev-ffvc1156-2-e",
+  "clock_ns": 5.0,
+  "place_directive": "AltSpreadLogic_high",
+  "route_directive": "RuntimeOptimized",
+  "resource": {
+    "LUT": 37356,
+    "FF": 25367,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "full_boundary_timing": {
+    "WNS_ns": -3.831,
+    "TNS_ns": -72.195,
+    "setup_failing_endpoints": 62,
+    "WHS_ns": -1.466,
+    "THS_ns": -2156.53
+  },
+  "internal_timing": {
+    "WNS_ns": -0.456,
+    "WHS_ns": 0.01
+  },
+  "critical_internal_setup": {
+    "source": "state_reg[2]/C",
+    "destination": "engine[12].u_tile/wbi_reg[0]/R",
+    "data_path": "5.257ns  (logic 0.227ns (4.318%)  route 5.030ns (95.682%))",
+    "levels": "1  (LUT6=1)"
+  },
+  "critical_internal_hold": {
+    "source": "engine[10].u_tile/sw5_reg[28]/C",
+    "destination": "engine[10].u_tile/wmsw_reg_0_7_12_17/RAMA/I",
+    "data_path": "0.212ns  (logic 0.059ns (27.830%)  route 0.153ns (72.170%))",
+    "levels": "0"
+  },
+  "critical_boundary_setup": {
+    "source": "cfg_logn[0]",
+    "destination": "planes_reg[1]/D",
+    "data_path": "8.750ns  (logic 0.890ns (10.171%)  route 7.860ns (89.829%))",
+    "levels": "8  (LUT3=3 LUT5=1 LUT6=4)"
+  },
+  "drc_rules": [
+    {
+      "rule": "DPIP-2",
+      "severity": "Warning",
+      "description": "Input pipelining",
+      "count": 64
+    },
+    {
+      "rule": "RTSTAT-10",
+      "severity": "Warning",
+      "description": "No routable loads",
+      "count": 1
+    }
+  ],
+  "route_status_counts": {
+    "logical nets": 133820,
+    "nets not needing routing": 74516,
+    "internally routed nets": 64528,
+    "nets with no loads": 9512,
+    "implicitly routed ports": 476,
+    "routable nets": 59304,
+    "nets with explicit gaps": 1,
+    "fully routed nets": 59304,
+    "nets with routing errors": 0
+  },
+  "route_issues": {},
+  "internal_200MHz_setup_hold_pass": false,
+  "source_unchanged": true,
+  "production_RTL_changed": false,
+  "packed16_retained": true,
+  "numeric_cases": 1026,
+  "four_state_cases": 38,
+  "C_transform_calls": 74,
+  "verified_signatures": 4,
+  "physical_approval": "pending_user_review",
+  "limitations": [
+    "OOC core including host and root; no board/partition pin placement or bitstream.",
+    "Boundary timing uses 1/0 ns max/min I/O delays, not a board interface model.",
+    "Register-to-register setup/hold is reported separately from boundary paths.",
+    "Route status reports one explicit gap and 476 implicitly routed ports in this OOC design.",
+    "One fast routing attempt; not an exhaustive physical optimization.",
+    "Correctness evidence belongs to the unchanged RTL; no post-route gate-level simulation."
+  ],
+  "sha256": {
+    "experiments/a_cg_prepare_route/implement.tcl": "23a7b55f7bccdb0420df5d099a005e6cbf67f087ab0461e0e38222f94053ea46",
+    "experiments/a_cg_prepare_route/selected_manifest.json": "529577d1dfbbd06ae285d3a76ec35ba354a24e0d074ebffb2aa325f0ab51d7eb",
+    "study/build/a_cg_prepare_route/implementation_console.log": "7eb432bf8c4a389fec8d727abeb7eb56bfa2d7d231eba70dfbfdbbe5c6daf9bd",
+    "study/build/a_cg_prepare_route/fast/routed.dcp": "97cc62a40a226bb77d28066ab38ea2022e944580105b959b1eb5aed44de6684c",
+    "study/build/a_cg_prepare_route/fast/run_config.txt": "084a534bd44f3a0717cbdd98ab64b8e85dc5f32896badedb7f6f6a57f272bcf1",
+    "study/build/a_cg_prepare_route/fast/constraints.xdc": "4b1e35fead4e7441bb9585fd36f9cfa35aa67035272df51f7f50a86e7ca3535d",
+    "study/build/a_cg_prepare_route/fast/util.rpt": "56dc5ef075cd4c47f8d93993afb50095442ecfbe63113454f8a9069b48011c0a",
+    "study/build/a_cg_prepare_route/fast/util_hier.rpt": "b3505a5227fa9ba708b51aa6ff72ee18fbfe329d12b20057a818371a4fbb039e",
+    "study/build/a_cg_prepare_route/fast/route_status.rpt": "6c130eea18357f3a6587149bbe430a4672073eff25c0fe78980ff7a227a687c9",
+    "study/build/a_cg_prepare_route/fast/timing.rpt": "83040bbcf3bea3833b7f447044328cd564ca7270532e63897dba449a5f4880b0",
+    "study/build/a_cg_prepare_route/fast/drc.rpt": "b8a246da229e35c856061591251ccb5db5ad2c6861c908312d949e89641f90a8",
+    "study/build/a_cg_prepare_route/fast/internal_setup.rpt": "9689860d8806dc7a6eaabd2691a236f3ffaaaf38ef71121abd82b7b843c037d2",
+    "study/build/a_cg_prepare_route/fast/internal_hold.rpt": "b6a0a5eee3a1f44848b238ddf062244eeea2e1e6c59d14c6cb9e0dfd64f09720",
+    "study/build/a_cg_prepare_route/fast/metrics.txt": "8a71de906cb28282fdf32f748be496d3556bfa20b5679ec030691cc793db0ea4"
+  }
+}

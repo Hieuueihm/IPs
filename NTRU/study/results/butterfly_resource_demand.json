@@ -1,0 +1,168 @@
+{
+  "date": "2026-11-02",
+  "kind": "analytical audit, not a cycle model of a new architecture",
+  "assumptions": [
+    "Fixed 32x32 engines accepting one integer product each cycle; FFT 3M and current product truncation.",
+    "NTT uses three Montgomery passes on these engines; bounds do not cover alternative reductions.",
+    "FFT N1024 means 1024 scalar components, 512 complex points, 9 stages, 2304 butterflies.",
+    "Cycle bounds exclude pipeline fill, dependencies, memory conflicts, roots, and stage transitions.",
+    "One output-pair lane serves two 32-bit words/cycle; this does not include all arithmetic work.",
+    "Live-context counts describe current core issue intervals, default LEAF_PD=2 and IN_REG=1.",
+    "Smaller buffers change burst acceptance; no compatibility claim for the old four-context tile contract.",
+    "No LUT saving is inferred from buffer bit count or adder operation count."
+  ],
+  "measured": {
+    "full": {
+      "report": "study/build/core_area/util.rpt",
+      "sha256": "a955f195f0d24c789f4778b8131188aa6662c99e33db59b4e189b245aa79cfe6",
+      "LUT": 51573,
+      "FF": 29891,
+      "DSP": 64,
+      "BRAM36_equivalent": 76
+    },
+    "nofft_wrapper": {
+      "report": "study/build/core_split/nofft/util.rpt",
+      "sha256": "db8f62322a58bfd9ce00b11f3660d5b6145bee7b7aceaa3f4fffd9e926ad9027",
+      "LUT": 24672,
+      "FF": 17825,
+      "DSP": 64,
+      "BRAM36_equivalent": 76
+    },
+    "fmt0_wrapper": {
+      "report": "study/build/core_split/fft32/util.rpt",
+      "sha256": "d61ed73e6b1ea283d2f1a08878218e424d8a50aa06a9767e728b3b84d7361567",
+      "LUT": 44873,
+      "FF": 28924,
+      "DSP": 64,
+      "BRAM36_equivalent": 76
+    },
+    "historical_fft32_core": null
+  },
+  "demand": [
+    {
+      "mode": "NTT32_N1024",
+      "butterfly_count": 5120,
+      "products_per_butterfly": 3,
+      "total_product_slots": 15360,
+      "output_word32_count": 10240,
+      "baseline_cycles": 984,
+      "multiplier_engines_needed_at_baseline": 16,
+      "output_pair_lanes_needed_average": 6,
+      "product_only_cycle_bounds": {
+        "8": 1920,
+        "12": 1280,
+        "16": 960
+      },
+      "four_pair_output_cycle_bound": 1280
+    },
+    {
+      "mode": "FFT32_N1024",
+      "butterfly_count": 2304,
+      "products_per_butterfly": 3,
+      "total_product_slots": 6912,
+      "output_word32_count": 9216,
+      "baseline_cycles": 644,
+      "multiplier_engines_needed_at_baseline": 11,
+      "output_pair_lanes_needed_average": 8,
+      "product_only_cycle_bounds": {
+        "8": 864,
+        "12": 576,
+        "16": 432
+      },
+      "four_pair_output_cycle_bound": 1152
+    },
+    {
+      "mode": "FFT64_N1024",
+      "butterfly_count": 2304,
+      "products_per_butterfly": 12,
+      "total_product_slots": 27648,
+      "output_word32_count": 18432,
+      "baseline_cycles": 2031,
+      "multiplier_engines_needed_at_baseline": 14,
+      "output_pair_lanes_needed_average": 5,
+      "product_only_cycle_bounds": {
+        "8": 3456,
+        "12": 2304,
+        "16": 1728
+      },
+      "four_pair_output_cycle_bound": 2304
+    },
+    {
+      "mode": "FFT128_N1024",
+      "butterfly_count": 2304,
+      "products_per_butterfly": 45,
+      "total_product_slots": 103680,
+      "output_word32_count": 36864,
+      "baseline_cycles": 7510,
+      "multiplier_engines_needed_at_baseline": 14,
+      "output_pair_lanes_needed_average": 3,
+      "product_only_cycle_bounds": {
+        "8": 12960,
+        "12": 8640,
+        "16": 6480
+      },
+      "four_pair_output_cycle_bound": 4608
+    }
+  ],
+  "liveness": [
+    {
+      "width": 32,
+      "interval": 3,
+      "last_use": 17,
+      "live_contexts": 6,
+      "power2_context_slots": 8,
+      "operand_words_per_array": 16,
+      "sum_words_per_array": 8,
+      "output_pair_lanes_peak_with_16_engines": 11,
+      "arithmetic_word_addsub_ops": 9,
+      "last_inverse_stage_extra_round_add_ops": 4
+    },
+    {
+      "width": 64,
+      "interval": 12,
+      "last_use": 29,
+      "live_contexts": 3,
+      "power2_context_slots": 4,
+      "operand_words_per_array": 16,
+      "sum_words_per_array": 8,
+      "output_pair_lanes_peak_with_16_engines": 6,
+      "arithmetic_word_addsub_ops": 18,
+      "last_inverse_stage_extra_round_add_ops": 8
+    },
+    {
+      "width": 128,
+      "interval": 48,
+      "last_use": 66,
+      "live_contexts": 2,
+      "power2_context_slots": 2,
+      "operand_words_per_array": 16,
+      "sum_words_per_array": 8,
+      "output_pair_lanes_peak_with_16_engines": 3,
+      "arithmetic_word_addsub_ops": 36,
+      "last_inverse_stage_extra_round_add_ops": 16
+    }
+  ],
+  "arithmetic_checks": {
+    "32": {
+      "scalar_products": 3049,
+      "complex_3M": 1000,
+      "status": "PASS"
+    },
+    "64": {
+      "scalar_products": 3049,
+      "complex_3M": 1000,
+      "status": "PASS"
+    },
+    "128": {
+      "scalar_products": 3049,
+      "complex_3M": 1000,
+      "status": "PASS"
+    }
+  },
+  "current_input_sha256": {
+    "model/fft_core_plan.py": "b1204d8cebb84d20ff1c71041be9ba330aa08e0ff3b385c97840ef9e216a812c",
+    "hdl/tile/tile_thu.sv": "69c03f65acec27d9e7e885f3f643824d555f05d5edd55dab630c807a9f967e68",
+    "hdl/core_ntt/ntt_core.sv": "1cc921aace652ce9c0665a43c6fb8a7499174f461e50b66947777eb67c89f4d9"
+  },
+  "script_sha256": "51e4524031741941e0110cb6c11972c40a23ddf5a9e953b6f80c1c683516d642"
+}

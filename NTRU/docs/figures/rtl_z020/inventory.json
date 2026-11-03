@@ -1,0 +1,42 @@
+[
+  {
+    "name": "01_toan_loi",
+    "width": 1360,
+    "height": 750
+  },
+  {
+    "name": "02_nhan_lenh",
+    "width": 1360,
+    "height": 660
+  },
+  {
+    "name": "03_mux_bank",
+    "width": 1360,
+    "height": 630
+  },
+  {
+    "name": "04_cong_1_bit",
+    "width": 1360,
+    "height": 665
+  },
+  {
+    "name": "05_addsub",
+    "width": 1360,
+    "height": 745
+  },
+  {
+    "name": "06_mang_nhan",
+    "width": 1360,
+    "height": 690
+  },
+  {
+    "name": "07_fft",
+    "width": 1360,
+    "height": 700
+  },
+  {
+    "name": "08_ntt",
+    "width": 1360,
+    "height": 750
+  }
+]

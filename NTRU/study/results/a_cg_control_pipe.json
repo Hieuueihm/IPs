@@ -1,0 +1,374 @@
+{
+  "kind": "local reset and staged configuration: actual OOC place and route",
+  "clock_ns": 5,
+  "part": "xczu7ev-ffvc1156-2-e",
+  "resource": {
+    "LUT": 37437,
+    "FF": 26622,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "synthesis_resource": {
+    "LUT": 38006,
+    "FF": 26622,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "internal_timing": {
+    "WNS_ns": -2.918,
+    "WHS_ns": 0.01
+  },
+  "full_boundary_timing": {
+    "WNS_ns": -2.918,
+    "TNS_ns": -420.053,
+    "setup_failing_endpoints": 751,
+    "WHS_ns": -2.167,
+    "THS_ns": -3179.921
+  },
+  "internal_200MHz_setup_hold_pass": false,
+  "whole_boundary_200MHz_setup_hold_pass": false,
+  "internal_setup_paths": [
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[1]/CE",
+      "delay": "7.623ns  (logic 0.283ns (3.712%)  route 7.340ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[3]/CE",
+      "delay": "7.623ns  (logic 0.283ns (3.712%)  route 7.340ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[4]/CE",
+      "delay": "7.623ns  (logic 0.283ns (3.712%)  route 7.340ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[5]/CE",
+      "delay": "7.624ns  (logic 0.283ns (3.712%)  route 7.341ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[6]/CE",
+      "delay": "7.624ns  (logic 0.283ns (3.712%)  route 7.341ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.918,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[8]/CE",
+      "delay": "7.624ns  (logic 0.283ns (3.712%)  route 7.341ns (96.288%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.894,
+      "source": "state_reg[1]/C",
+      "destination": "host_line_reg[2]/CE",
+      "delay": "7.622ns  (logic 0.344ns (4.513%)  route 7.278ns (95.487%))",
+      "levels": "5  (LUT2=2 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.893,
+      "source": "state_reg[1]/C",
+      "destination": "host_line_reg[7]/CE",
+      "delay": "7.622ns  (logic 0.344ns (4.513%)  route 7.278ns (95.487%))",
+      "levels": "5  (LUT2=2 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.728,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[0]/CE",
+      "delay": "7.432ns  (logic 0.283ns (3.808%)  route 7.149ns (96.192%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    },
+    {
+      "slack_ns": -2.728,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "host_line_reg[9]/CE",
+      "delay": "7.433ns  (logic 0.283ns (3.807%)  route 7.150ns (96.193%))",
+      "levels": "5  (LUT2=1 LUT5=2 LUT6=2)"
+    }
+  ],
+  "internal_hold_paths": [
+    {
+      "slack_ns": 0.01,
+      "source": "engine[5].u_tile/g1_reg[3]/C",
+      "destination": "engine[5].u_tile/wma_reg_0_15_12_17/RAMD_D1/I",
+      "delay": "0.261ns  (logic 0.058ns (22.222%)  route 0.203ns (77.778%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[13].req_y_reg[13][9]/C",
+      "destination": "engine[13].u_tile/g_in_reg.rdat_reg[41]/D",
+      "delay": "0.207ns  (logic 0.058ns (28.019%)  route 0.149ns (71.981%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[12].u_tile/sa5_reg[8]/C",
+      "destination": "engine[12].u_tile/wmsx_reg_0_7_0_5/RAME/I",
+      "delay": "0.278ns  (logic 0.058ns (20.863%)  route 0.220ns (79.137%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[6].u_tile/nhv_reg[1]/C",
+      "destination": "engine[6].u_tile/w1_reg[31]/D",
+      "delay": "0.209ns  (logic 0.082ns (39.234%)  route 0.127ns (60.766%))",
+      "levels": "1  (LUT6=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[5].u_tile/sa5_reg[1]/C",
+      "destination": "engine[5].u_tile/wmsx_reg_0_7_0_5/RAMA_D1/I",
+      "delay": "0.239ns  (logic 0.059ns (24.686%)  route 0.180ns (75.314%))",
+      "levels": "0"
+    }
+  ],
+  "reset_feed_paths": [
+    {
+      "slack_ns": 0.182,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "engine[8].reset_local_reg/D",
+      "delay": "4.560ns  (logic 0.336ns (7.368%)  route 4.224ns (92.632%))",
+      "levels": "3  (LUT4=1 LUT5=2)"
+    },
+    {
+      "slack_ns": 0.182,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "engine[0].reset_local_reg/D",
+      "delay": "4.528ns  (logic 0.336ns (7.420%)  route 4.192ns (92.579%))",
+      "levels": "3  (LUT4=1 LUT5=2)"
+    },
+    {
+      "slack_ns": 0.209,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "engine[1].reset_local_reg/D",
+      "delay": "4.543ns  (logic 0.336ns (7.396%)  route 4.207ns (92.604%))",
+      "levels": "3  (LUT4=1 LUT5=2)"
+    },
+    {
+      "slack_ns": 0.221,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "engine[15].reset_local_reg/D",
+      "delay": "4.519ns  (logic 0.336ns (7.435%)  route 4.183ns (92.565%))",
+      "levels": "3  (LUT4=1 LUT5=2)"
+    },
+    {
+      "slack_ns": 0.278,
+      "source": "cfg_pipe_reg[4]/C",
+      "destination": "engine[2].reset_local_reg/D",
+      "delay": "4.458ns  (logic 0.336ns (7.537%)  route 4.122ns (92.463%))",
+      "levels": "3  (LUT4=1 LUT5=2)"
+    }
+  ],
+  "reset_tree_paths": [
+    {
+      "slack_ns": 1.325,
+      "source": "engine[11].reset_local_reg/C",
+      "destination": "engine[11].u_tile/wpv_reg/R",
+      "delay": "3.445ns  (logic 0.079ns (2.293%)  route 3.366ns (97.707%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 1.48,
+      "source": "engine[11].reset_local_reg/C",
+      "destination": "engine[11].u_tile/q0_reg[15]/R",
+      "delay": "3.279ns  (logic 0.079ns (2.409%)  route 3.200ns (97.591%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 1.48,
+      "source": "engine[11].reset_local_reg/C",
+      "destination": "engine[11].u_tile/q0_reg[17]/R",
+      "delay": "3.279ns  (logic 0.079ns (2.409%)  route 3.200ns (97.591%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 1.48,
+      "source": "engine[11].reset_local_reg/C",
+      "destination": "engine[11].u_tile/q0_reg[21]/R",
+      "delay": "3.279ns  (logic 0.079ns (2.409%)  route 3.200ns (97.591%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 1.48,
+      "source": "engine[11].reset_local_reg/C",
+      "destination": "engine[11].u_tile/q0_reg[28]/R",
+      "delay": "3.279ns  (logic 0.079ns (2.409%)  route 3.200ns (97.591%))",
+      "levels": "0"
+    }
+  ],
+  "config_boundary_paths": [
+    {
+      "slack_ns": -1.636,
+      "source": "cfg_valid",
+      "destination": "host_line_reg[1]/CE",
+      "delay": "7.112ns  (logic 0.209ns (2.939%)  route 6.903ns (97.061%))",
+      "levels": "4  (LUT2=1 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -1.636,
+      "source": "cfg_valid",
+      "destination": "host_line_reg[3]/CE",
+      "delay": "7.112ns  (logic 0.209ns (2.939%)  route 6.903ns (97.061%))",
+      "levels": "4  (LUT2=1 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -1.636,
+      "source": "cfg_valid",
+      "destination": "host_line_reg[4]/CE",
+      "delay": "7.112ns  (logic 0.209ns (2.939%)  route 6.903ns (97.061%))",
+      "levels": "4  (LUT2=1 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -1.636,
+      "source": "cfg_valid",
+      "destination": "host_line_reg[5]/CE",
+      "delay": "7.113ns  (logic 0.209ns (2.938%)  route 6.904ns (97.062%))",
+      "levels": "4  (LUT2=1 LUT5=1 LUT6=2)"
+    },
+    {
+      "slack_ns": -1.636,
+      "source": "cfg_valid",
+      "destination": "host_line_reg[6]/CE",
+      "delay": "7.113ns  (logic 0.209ns (2.938%)  route 6.904ns (97.062%))",
+      "levels": "4  (LUT2=1 LUT5=1 LUT6=2)"
+    }
+  ],
+  "route_status_counts": {
+    "logical nets": 135478,
+    "nets not needing routing": 74532,
+    "internally routed nets": 64545,
+    "nets with no loads": 9512,
+    "implicitly routed ports": 475,
+    "routable nets": 60946,
+    "nets with explicit gaps": 1,
+    "fully routed nets": 60946,
+    "nets with routing errors": 0
+  },
+  "drc_rules": [
+    {
+      "rule": "DPIP-2",
+      "severity": "Warning",
+      "description": "Input pipelining",
+      "count": 64
+    },
+    {
+      "rule": "RTSTAT-10",
+      "severity": "Warning",
+      "description": "No routable loads",
+      "count": 1
+    }
+  ],
+  "validation": {
+    "numeric_cases": 1026,
+    "kernel_cycles_identical": true,
+    "configuration_extra_clocks": 5,
+    "four_state_cases": 38,
+    "reset_abort_modes": 12,
+    "live_C_calls": 74,
+    "verified_signatures": 4,
+    "identical_C_artifacts": 14,
+    "negative_live_inputs": 2,
+    "packed16_preserved": true,
+    "arithmetic_RTL_unchanged": true,
+    "production_RTL_changed": false,
+    "synthesis_resource": {
+      "LUT": 38006,
+      "FF": 26622,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "synthesis_internal_setup": {
+      "source": "engine[0].u_tile/g_in_reg.rdat_reg[0]/C",
+      "destination": "engine[0].u_tile/s1_reg[0]/D",
+      "data_path": "3.287ns  (logic 1.486ns (45.208%)  route 1.801ns (54.792%))",
+      "levels": "16  (CARRY8=8 LUT4=3 LUT6=5)"
+    },
+    "sha256": {
+      "experiments/a_cg_control_pipe/manifest.json": "14699e822129807464febb01eeea9af3263c39147ce86b87bc6249fc43bf76d2",
+      "experiments/a_cg_control_pipe/main.cpp": "35288e6b4947979b862903f009a317cedd1b097c1c26e4851a0e6c94ee2e2bcf",
+      "experiments/a_cg_control_pipe/tb_four_state.sv": "5c5fcc5f5510aa350627ebd33ded53697bf494f568623e7e91dfef68bebf982f",
+      "experiments/a_cg_control_pipe/synth.tcl": "af6140e362b8dbad212584bb0f3e97d332dcd32cdf26087832aa5a51bd304ffb",
+      "study/build/a_cg_control_pipe/sim.log": "4091111963a10f9503df85529e1b43bb41cde75f87badda8f81a4ea2e36f92fd",
+      "study/build/a_cg_control_pipe/four_state.log": "511b6936033eb00b25bfddf2ab8d7003abf59e51d519285f18e364deb00bf1b9",
+      "study/build/a_cg_control_pipe/application/application_results.json": "23beb9ceaead50576d843a92fa4a17670b55ee51866032f28da8518718ec43e3",
+      "study/build/a_cg_control_pipe/application/rtl_records.json": "c582da3d6f71a09a399eb1c9df537bd275783104a45d5053cb77ed83c0b82a9a",
+      "study/build/a_cg_control_pipe/synth/synthesized.dcp": "195c23642937fa30b1e92aadbf692ad3cccf51afcaf54864807de784ae67610e"
+    }
+  },
+  "parent_resource": {
+    "LUT": 37356,
+    "FF": 25367,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "parent_internal_timing": {
+    "WNS_ns": -0.456,
+    "WHS_ns": 0.01
+  },
+  "configuration_sequencer_separate_from_compute_FSM": true,
+  "combined_FSM_attempt": {
+    "resource": {
+      "LUT": 37429,
+      "FF": 26618,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "internal_timing": {
+      "WNS_ns": -0.803,
+      "WHS_ns": 0.01
+    }
+  },
+  "delta_LUT": 81,
+  "delta_internal_setup_ns": -2.462,
+  "place_directive": "AltSpreadLogic_high",
+  "route_directive": "RuntimeOptimized",
+  "production_RTL_changed": false,
+  "physical_approval": "pending_user_review",
+  "limitations": [
+    "OOC core includes host and roots, with no physical board/partition pin placement.",
+    "Global boundary timing uses unchanged max/min I/O delay 1/0 ns; inspect both setup and hold.",
+    "Positive internal timing alone is not a board or complete interface timing signoff.",
+    "RTL correctness checked with frozen vectors and live C kernel replay; no post-route gate simulation.",
+    "Configuration acceptance requires five additional setup clocks before cfg_ready returns."
+  ],
+  "sha256": {
+    "experiments/a_cg_control_pipe/manifest.json": "14699e822129807464febb01eeea9af3263c39147ce86b87bc6249fc43bf76d2",
+    "experiments/a_cg_control_pipe/implement.tcl": "6294da8e07302787bf98dea060d16f40dea3f6c81e9c5ba33596c99172a8e133",
+    "study/build/a_cg_control_pipe/validation.json": "99fa824ccfdd668fc8ca6094ca95802d044dd91c73a03d522655a3c4c375d518",
+    "study/build/a_cg_control_pipe/implementation_console.log": "9d012b6ccd73a1e9510f26f2181e25e6f1f938fab6406ba4caf3d72fbd46dec3",
+    "study/build/a_cg_control_pipe/route/routed.dcp": "86ff9ce48f1157591bc8c0eda2b504583dff8f3b84a4b06744e2776f293efc9e",
+    "study/build/a_cg_control_pipe/route/timing.rpt": "44edd2c5846b7e5c4d05882b893f147cf18e937cd9ed5b7ef3ab2a060581d1e0",
+    "study/build/a_cg_control_pipe/route/internal_setup.rpt": "dde9c3cbbe0284e029e7d159294f6503132fd06855a41f3a11789c261da4c266",
+    "study/build/a_cg_control_pipe/route/internal_hold.rpt": "fc0d9ef04c8e8c7f4b0bcca99482d09f61e475cb691682856ebf73676b9f13f8",
+    "study/build/a_cg_control_pipe/route/reset_feed.rpt": "42d40be604ab0b8af9ae418e8eb3c3c033fb564efb1689eacb241d919f3fafbf",
+    "study/build/a_cg_control_pipe/route/reset_tree.rpt": "c51e4e0ebe155cded6f4ca1bde27f1e7b84a61dfa586920b6e11af497d30b386",
+    "study/build/a_cg_control_pipe/route/config_boundary.rpt": "56811cb0458e75f565e368d47ec48b160090b7aa5ff4b02b4c72661d3f5df0c0",
+    "study/build/a_cg_control_pipe/route/util.rpt": "382dd3795ffd36edc18e60d00368c5c196ce618906aaf91f2de0556c50a9cc0b",
+    "study/build/a_cg_control_pipe/route/util_hier.rpt": "50ab56e313c12883ac2cb0727fbdf2399f6a804af10ecf3666d6bb0b0a910bb7",
+    "study/build/a_cg_control_pipe/route/metrics.txt": "0b1ed8e9ccc83c023717218d78c9986b82819369b3826aebe1297e2770ea2d4e",
+    "study/build/a_cg_control_pipe/route/route_status.rpt": "f866986451605e01f695162df57f2b37a1bf796192bda8a32e306fe90d09098e",
+    "study/build/a_cg_control_pipe/route/drc.rpt": "adfcda0d0744a42bbfc01398a3e97e161a11a458620552c7f3b138c63f46301e",
+    "study/build/a_cg_control_pipe/route/reset_distribution.txt": "ca9397525585eb449e469d283b17ef40405a7eeefb4cc7f32e2c56b8f0108561",
+    "study/build/a_cg_control_pipe/route/constraints.xdc": "9c811ff891636c6b7f003187a55f0a83576016fff65ddc0b453410c06d79da2a",
+    "study/build/a_cg_control_pipe/route/run_config.txt": "0d6aa018c5c8fd7bc9dfa1efc995166df075e49c1d8eb067cdf7be23f981a015"
+  }
+}
