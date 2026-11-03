@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="745" viewBox="0 0 1360 745">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#52677c"/></marker></defs>
+<rect width="1360" height="745" fill="white"/>
+<text x="35" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#17324d">5. tl_addsub: cộng/trừ, hiệu chỉnh modulus và chọn FFT</text>
+<text x="35" y="72.0" text-anchor="start" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="#17324d">Toàn bộ hình là logic tổ hợp hiện tại; chưa có FF cắt giữa raw và correction.</text>
+<rect x="35" y="170" width="170" height="90" rx="6" fill="#edf1f5" stroke="#245b91" stroke-width="1.8"/>
+<text x="120.0" y="198.92000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">a, b</text>
+<text x="120.0" y="220.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">ci, bi</text>
+<text x="120.0" y="241.08" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">32 bit</text>
+<rect x="265" y="130" width="235" height="105" rx="6" fill="#e5f3ed" stroke="#245b91" stroke-width="1.8"/>
+<text x="382.5" y="176.96" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Cộng raw</text>
+<text x="382.5" y="198.04000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">sum = a+b+ci</text>
+<rect x="265" y="360" width="235" height="115" rx="6" fill="#e5f3ed" stroke="#245b91" stroke-width="1.8"/>
+<text x="382.5" y="401.42" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Trừ raw theo nửa</text>
+<text x="382.5" y="422.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">dfl, dfh</text>
+<text x="382.5" y="443.58000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">borrow có điều kiện</text>
+<polyline points="205,195 235,195 235,182 265,182" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="235,195 235,417 265,417" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<circle cx="235" cy="195" r="4" fill="#52677c"/>
+<rect x="575" y="130" width="260" height="105" rx="6" fill="#e5f3ed" stroke="#245b91" stroke-width="1.8"/>
+<text x="705.0" y="166.42000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Trừ q theo nửa</text>
+<text x="705.0" y="187.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">sql, sqh</text>
+<text x="705.0" y="208.58" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">borrow từ low → high</text>
+<rect x="575" y="360" width="260" height="115" rx="6" fill="#e5f3ed" stroke="#245b91" stroke-width="1.8"/>
+<text x="705.0" y="401.42" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">Cộng lại q</text>
+<text x="705.0" y="422.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">dql, dqh</text>
+<text x="705.0" y="443.58000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">carry từ low → high</text>
+<polyline points="500,182 575,182" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="500,417 575,417" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="875" y="130" width="185" height="105" rx="6" fill="#fff2cc" stroke="#245b91" stroke-width="1.8"/>
+<text x="967.5" y="166.42000000000002" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">MUX theo dấu</text>
+<text x="967.5" y="187.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">chọn raw</text>
+<text x="967.5" y="208.58" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">hoặc corrected</text>
+<rect x="875" y="360" width="185" height="115" rx="6" fill="#fff2cc" stroke="#245b91" stroke-width="1.8"/>
+<text x="967.5" y="401.42" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">MUX theo dấu</text>
+<text x="967.5" y="422.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">chọn raw</text>
+<text x="967.5" y="443.58000000000004" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">hoặc corrected</text>
+<polyline points="835,182 875,182" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="835,417 875,417" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polygon points="1140,140 1220,158 1220,212 1140,230" fill="#fff2cc" stroke="#245b91" stroke-width="2"/>
+<text x="1175" y="190.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">plain</text>
+<text x="1150" y="162.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">0</text>
+<text x="1150" y="217.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">1</text>
+<polygon points="1140,372 1220,390 1220,444 1140,462" fill="#fff2cc" stroke="#245b91" stroke-width="2"/>
+<text x="1175" y="422.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">plain</text>
+<text x="1150" y="394.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">0</text>
+<text x="1150" y="449.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">1</text>
+<polyline points="1060,182 1100,182 1100,160 1140,160" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="500,160 525,160 525,105 1120,105 1120,210 1140,210" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1060,417 1100,417 1100,392 1140,392" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="500,390 525,390 525,325 1120,325 1120,442 1140,442" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1220,185 1315,185" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1290" y="164.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">s</text>
+<polyline points="1220,417 1315,417" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1290" y="396.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">d</text>
+<path d="M600,560 H667.5 A32.5,32.5 0 0 1 667.5,625 H600 Z" fill="#e5f3ed" stroke="#245b91" stroke-width="2"/>
+<text x="636" y="597.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="#17324d">AND</text>
+<text x="375" y="573.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">carry/borrow của nửa thấp</text>
+<polyline points="515,570 600,575" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="470" y="643.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">NOT split</text>
+<polyline points="530,635 565,635 565,607 600,607" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="700,592 1040,592" fill="none" stroke="#52677c" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="885" y="572.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="normal" fill="#17324d">carry/borrow sang nửa cao</text>
+<text x="700" y="690.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="normal" fill="#17324d">split=1: cắt liên kết giữa hai làn 16 bit. plain=1: lấy raw sum/diff cho FFT.</text>
+<text x="35" y="725.0" text-anchor="start" font-family="Arial, sans-serif" font-size="13" font-weight="normal" fill="#17324d">Theo RTL hiện tại • ADD/MUX/cổng: logic tổ hợp • D/Q: thanh ghi • RAM/DSP: primitive phần cứng.</text>
+</svg>

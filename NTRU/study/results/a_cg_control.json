@@ -1,0 +1,360 @@
+{
+  "kind": "local reset and staged configuration: actual OOC place and route",
+  "clock_ns": 5,
+  "part": "xczu7ev-ffvc1156-2-e",
+  "resource": {
+    "LUT": 37429,
+    "FF": 26618,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "synthesis_resource": {
+    "LUT": 38000,
+    "FF": 26618,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "internal_timing": {
+    "WNS_ns": -0.803,
+    "WHS_ns": 0.01
+  },
+  "full_boundary_timing": {
+    "WNS_ns": -0.803,
+    "TNS_ns": -21.399,
+    "setup_failing_endpoints": 79,
+    "WHS_ns": -1.606,
+    "THS_ns": -2388.503
+  },
+  "internal_200MHz_setup_hold_pass": false,
+  "whole_boundary_200MHz_setup_hold_pass": false,
+  "internal_setup_paths": [
+    {
+      "slack_ns": -0.803,
+      "source": "state_reg[1]/C",
+      "destination": "state_reg[0]/CE",
+      "delay": "5.497ns  (logic 0.392ns (7.131%)  route 5.105ns (92.869%))",
+      "levels": "4  (LUT2=1 LUT6=3)"
+    },
+    {
+      "slack_ns": -0.692,
+      "source": "state_reg[1]/C",
+      "destination": "state_reg[3]/CE",
+      "delay": "5.435ns  (logic 0.392ns (7.213%)  route 5.043ns (92.787%))",
+      "levels": "4  (LUT2=1 LUT6=3)"
+    },
+    {
+      "slack_ns": -0.686,
+      "source": "state_reg[1]/C",
+      "destination": "state_reg[1]/CE",
+      "delay": "5.481ns  (logic 0.392ns (7.152%)  route 5.089ns (92.848%))",
+      "levels": "4  (LUT2=1 LUT6=3)"
+    },
+    {
+      "slack_ns": -0.658,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "part_reg[2]/R",
+      "delay": "5.251ns  (logic 0.932ns (17.749%)  route 4.319ns (82.251%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    },
+    {
+      "slack_ns": -0.655,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "part_reg[1]/R",
+      "delay": "5.250ns  (logic 0.932ns (17.752%)  route 4.318ns (82.248%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    },
+    {
+      "slack_ns": -0.653,
+      "source": "state_reg[1]/C",
+      "destination": "state_reg[2]/CE",
+      "delay": "5.396ns  (logic 0.392ns (7.265%)  route 5.004ns (92.735%))",
+      "levels": "4  (LUT2=1 LUT6=3)"
+    },
+    {
+      "slack_ns": -0.599,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "part_reg[0]/R",
+      "delay": "5.194ns  (logic 0.932ns (17.944%)  route 4.262ns (82.056%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    },
+    {
+      "slack_ns": -0.563,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "beat_reg[0]/R",
+      "delay": "5.166ns  (logic 0.905ns (17.518%)  route 4.261ns (82.482%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    },
+    {
+      "slack_ns": -0.563,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "beat_reg[3]/R",
+      "delay": "5.166ns  (logic 0.905ns (17.518%)  route 4.261ns (82.482%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    },
+    {
+      "slack_ns": -0.545,
+      "source": "stage_idx_reg[3]/C",
+      "destination": "beat_reg[1]/R",
+      "delay": "5.141ns  (logic 0.905ns (17.604%)  route 4.236ns (82.396%))",
+      "levels": "10  (CARRY8=2 LUT5=1 LUT6=7)"
+    }
+  ],
+  "internal_hold_paths": [
+    {
+      "slack_ns": 0.01,
+      "source": "engine[7].u_tile/sw5_reg[28]/C",
+      "destination": "engine[7].u_tile/wmsw_reg_0_7_12_17/RAMA/I",
+      "delay": "0.212ns  (logic 0.059ns (27.830%)  route 0.153ns (72.170%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[12].u_tile/prev_wr_reg[22]/C",
+      "destination": "engine[12].u_tile/sw5_reg[23]/D",
+      "delay": "0.222ns  (logic 0.113ns (50.901%)  route 0.109ns (49.099%))",
+      "levels": "1  (CARRY8=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[0].u_tile/nhp1_reg[12]/C",
+      "destination": "engine[0].u_tile/a1_reg[12]/D",
+      "delay": "0.112ns  (logic 0.062ns (55.357%)  route 0.050ns (44.643%))",
+      "levels": "1  (LUT6=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[1].u_tile/nlo_delay_reg[69]/C",
+      "destination": "engine[1].u_tile/a1_reg[28]/D",
+      "delay": "0.112ns  (logic 0.062ns (55.357%)  route 0.050ns (44.643%))",
+      "levels": "1  (LUT6=1)"
+    },
+    {
+      "slack_ns": 0.01,
+      "source": "engine[5].u_tile/nlo_delay_reg[57]/C",
+      "destination": "engine[5].u_tile/a1_reg[16]/D",
+      "delay": "0.112ns  (logic 0.062ns (55.357%)  route 0.050ns (44.643%))",
+      "levels": "1  (LUT6=1)"
+    }
+  ],
+  "reset_feed_paths": [
+    {
+      "slack_ns": 1.001,
+      "source": "state_reg[2]/C",
+      "destination": "engine[2].reset_local_reg/D",
+      "delay": "3.877ns  (logic 0.164ns (4.230%)  route 3.713ns (95.770%))",
+      "levels": "2  (LUT4=2)"
+    },
+    {
+      "slack_ns": 1.209,
+      "source": "state_reg[2]/C",
+      "destination": "engine[5].reset_local_reg/D",
+      "delay": "3.566ns  (logic 0.164ns (4.599%)  route 3.402ns (95.401%))",
+      "levels": "2  (LUT4=2)"
+    },
+    {
+      "slack_ns": 1.296,
+      "source": "state_reg[2]/C",
+      "destination": "engine[9].reset_local_reg/D",
+      "delay": "3.490ns  (logic 0.164ns (4.699%)  route 3.326ns (95.301%))",
+      "levels": "2  (LUT4=2)"
+    },
+    {
+      "slack_ns": 1.312,
+      "source": "state_reg[2]/C",
+      "destination": "engine[8].reset_local_reg/D",
+      "delay": "3.506ns  (logic 0.164ns (4.678%)  route 3.342ns (95.322%))",
+      "levels": "2  (LUT4=2)"
+    },
+    {
+      "slack_ns": 1.337,
+      "source": "state_reg[2]/C",
+      "destination": "engine[4].reset_local_reg/D",
+      "delay": "3.499ns  (logic 0.164ns (4.687%)  route 3.335ns (95.313%))",
+      "levels": "2  (LUT4=2)"
+    }
+  ],
+  "reset_tree_paths": [
+    {
+      "slack_ns": 1.935,
+      "source": "engine[2].reset_local_reg/C",
+      "destination": "engine[2].u_tile/q0_reg[29]/R",
+      "delay": "2.731ns  (logic 0.076ns (2.783%)  route 2.655ns (97.217%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 2.015,
+      "source": "engine[10].reset_local_reg/C",
+      "destination": "engine[10].u_tile/fmt_r_reg[0]/R",
+      "delay": "2.565ns  (logic 0.079ns (3.080%)  route 2.486ns (96.920%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 2.015,
+      "source": "engine[10].reset_local_reg/C",
+      "destination": "engine[10].u_tile/qi0_reg[22]/R",
+      "delay": "2.565ns  (logic 0.079ns (3.080%)  route 2.486ns (96.920%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 2.029,
+      "source": "engine[2].reset_local_reg/C",
+      "destination": "engine[2].u_tile/shift_r_reg[0]/R",
+      "delay": "2.641ns  (logic 0.076ns (2.878%)  route 2.565ns (97.122%))",
+      "levels": "0"
+    },
+    {
+      "slack_ns": 2.029,
+      "source": "engine[2].reset_local_reg/C",
+      "destination": "engine[2].u_tile/shift_r_reg[2]/R",
+      "delay": "2.641ns  (logic 0.076ns (2.878%)  route 2.565ns (97.122%))",
+      "levels": "0"
+    }
+  ],
+  "config_boundary_paths": [
+    {
+      "slack_ns": 0.98,
+      "source": "cfg_valid",
+      "destination": "state_reg[0]/CE",
+      "delay": "3.936ns  (logic 0.177ns (4.497%)  route 3.759ns (95.503%))",
+      "levels": "3  (LUT6=3)"
+    },
+    {
+      "slack_ns": 1.002,
+      "source": "cfg_valid",
+      "destination": "state_reg[1]/CE",
+      "delay": "3.920ns  (logic 0.177ns (4.515%)  route 3.743ns (95.485%))",
+      "levels": "3  (LUT6=3)"
+    },
+    {
+      "slack_ns": 1.049,
+      "source": "cfg_valid",
+      "destination": "state_reg[3]/CE",
+      "delay": "3.874ns  (logic 0.177ns (4.569%)  route 3.697ns (95.431%))",
+      "levels": "3  (LUT6=3)"
+    },
+    {
+      "slack_ns": 1.088,
+      "source": "cfg_valid",
+      "destination": "state_reg[2]/CE",
+      "delay": "3.835ns  (logic 0.177ns (4.615%)  route 3.658ns (95.385%))",
+      "levels": "3  (LUT6=3)"
+    },
+    {
+      "slack_ns": 1.2,
+      "source": "cfg_valid",
+      "destination": "host_word_reg[0]/R",
+      "delay": "3.710ns  (logic 0.236ns (6.361%)  route 3.474ns (93.639%))",
+      "levels": "3  (LUT2=1 LUT5=1 LUT6=1)"
+    }
+  ],
+  "route_status_counts": {
+    "logical nets": 135420,
+    "nets not needing routing": 74537,
+    "internally routed nets": 64549,
+    "nets with no loads": 9512,
+    "implicitly routed ports": 476,
+    "routable nets": 60883,
+    "nets with explicit gaps": 1,
+    "fully routed nets": 60883,
+    "nets with routing errors": 0
+  },
+  "drc_rules": [
+    {
+      "rule": "DPIP-2",
+      "severity": "Warning",
+      "description": "Input pipelining",
+      "count": 64
+    },
+    {
+      "rule": "RTSTAT-10",
+      "severity": "Warning",
+      "description": "No routable loads",
+      "count": 1
+    }
+  ],
+  "validation": {
+    "numeric_cases": 1026,
+    "kernel_cycles_identical": true,
+    "configuration_extra_clocks": 5,
+    "four_state_cases": 38,
+    "reset_abort_modes": 12,
+    "live_C_calls": 74,
+    "verified_signatures": 4,
+    "identical_C_artifacts": 14,
+    "negative_live_inputs": 2,
+    "packed16_preserved": true,
+    "arithmetic_RTL_unchanged": true,
+    "production_RTL_changed": false,
+    "synthesis_resource": {
+      "LUT": 38000,
+      "FF": 26618,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "synthesis_internal_setup": {
+      "source": "engine[0].u_tile/g_in_reg.rdat_reg[0]/C",
+      "destination": "engine[0].u_tile/s1_reg[0]/D",
+      "data_path": "3.287ns  (logic 1.486ns (45.208%)  route 1.801ns (54.792%))",
+      "levels": "16  (CARRY8=8 LUT4=3 LUT6=5)"
+    },
+    "sha256": {
+      "experiments/a_cg_control/manifest.json": "aa75e154b41c7654dafbe6a61aca69b1c705da2725ed871c99a3a9dda2f83334",
+      "experiments/a_cg_control/main.cpp": "35288e6b4947979b862903f009a317cedd1b097c1c26e4851a0e6c94ee2e2bcf",
+      "experiments/a_cg_control/tb_four_state.sv": "5c5fcc5f5510aa350627ebd33ded53697bf494f568623e7e91dfef68bebf982f",
+      "experiments/a_cg_control/synth.tcl": "2ba347cebafd4f993e4d3b11b77b543fb281ec4a599b37ef958d550173a5032e",
+      "study/build/a_cg_control/sim.log": "4091111963a10f9503df85529e1b43bb41cde75f87badda8f81a4ea2e36f92fd",
+      "study/build/a_cg_control/four_state.log": "a755b206383343137ba59caa4149211b9f81679d8503bf3421543a59eabddf2b",
+      "study/build/a_cg_control/application/application_results.json": "23beb9ceaead50576d843a92fa4a17670b55ee51866032f28da8518718ec43e3",
+      "study/build/a_cg_control/application/rtl_records.json": "c582da3d6f71a09a399eb1c9df537bd275783104a45d5053cb77ed83c0b82a9a",
+      "study/build/a_cg_control/synth/synthesized.dcp": "ab8d128cc6956a641e183a54896304be20995e928aa07a9655afb08322d06e28"
+    }
+  },
+  "parent_resource": {
+    "LUT": 37356,
+    "FF": 25367,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "parent_internal_timing": {
+    "WNS_ns": -0.456,
+    "WHS_ns": 0.01
+  },
+  "delta_LUT": 73,
+  "delta_internal_setup_ns": -0.347,
+  "place_directive": "AltSpreadLogic_high",
+  "route_directive": "RuntimeOptimized",
+  "production_RTL_changed": false,
+  "physical_approval": "pending_user_review",
+  "limitations": [
+    "OOC core includes host and roots, with no physical board/partition pin placement.",
+    "Global boundary timing uses unchanged max/min I/O delay 1/0 ns; inspect both setup and hold.",
+    "Positive internal timing alone is not a board or complete interface timing signoff.",
+    "RTL correctness checked with frozen vectors and live C kernel replay; no post-route gate simulation.",
+    "Configuration acceptance requires five additional setup clocks before cfg_ready returns."
+  ],
+  "sha256": {
+    "experiments/a_cg_control/manifest.json": "aa75e154b41c7654dafbe6a61aca69b1c705da2725ed871c99a3a9dda2f83334",
+    "experiments/a_cg_control/implement.tcl": "c9c4f3fdf0797e5692d15d1f07cd61672a91a0f4580f607ef901c7dffddc650b",
+    "study/build/a_cg_control/validation.json": "cb4fab16fd0479b19a1b0b8092efa27ea07e4902e2605a226814876dfd54c011",
+    "study/build/a_cg_control/implementation_console.log": "01f9a11226951b5e380f17f80a972b32461463b1f50eb9f13d20a2309bb97b87",
+    "study/build/a_cg_control/route/routed.dcp": "5e24b1428a7faba2f457a8759c49c166fbe35c77e13bb295e113fcd16502eb3d",
+    "study/build/a_cg_control/route/timing.rpt": "0989effd2e19fe74dae23a6aeaa086ad6085b4200c9957a74bd6f81698004e7c",
+    "study/build/a_cg_control/route/internal_setup.rpt": "2f0a39358d3b393a5c8acaeb3ac4e8fe51bb49ab5a8a197617cfbc9cd69e7921",
+    "study/build/a_cg_control/route/internal_hold.rpt": "cfca69405c71b7ba6dc35150c0bebb0b2db7ec31070f8cea9dade6387d1e4884",
+    "study/build/a_cg_control/route/reset_feed.rpt": "71a28993f855cddff6d6ca57d98100194fa96d5aea087da704e851452372b3db",
+    "study/build/a_cg_control/route/reset_tree.rpt": "2d53b6c02a46b6224a1e9cc0351303a762b8b697f90673c4cc90538f3fdadc2f",
+    "study/build/a_cg_control/route/config_boundary.rpt": "256dbef7ecb9c2eebe98c25c0e65b27b79f39f9a4e0ca322c59bf9fa0b400936",
+    "study/build/a_cg_control/route/util.rpt": "977fffbb3815390fe173ab819394ae501d462abcaf5c39fa44fd6022b18c6983",
+    "study/build/a_cg_control/route/util_hier.rpt": "b1b33e138fe02382c16e41ad2f127200b28b8aa5e02b956c165192ab2eb7cfd3",
+    "study/build/a_cg_control/route/metrics.txt": "931b4ffa193c68a301281197987b263d34eef176de3b863f59d9bc19ea916616",
+    "study/build/a_cg_control/route/route_status.rpt": "b02926efec064ba5d23784e01877bf743b2ab38433b660a68df80380495ee4f1",
+    "study/build/a_cg_control/route/drc.rpt": "03b6941f2c760eabac2e6ef85e961c26a8570d03d0c6ceb00da6f4cd061621bf",
+    "study/build/a_cg_control/route/reset_distribution.txt": "ca9397525585eb449e469d283b17ef40405a7eeefb4cc7f32e2c56b8f0108561",
+    "study/build/a_cg_control/route/constraints.xdc": "bd156dd5c18e926ad72567f097219fdda0d38757e6a136a62b993055f368afa2",
+    "study/build/a_cg_control/route/run_config.txt": "0d6aa018c5c8fd7bc9dfa1efc995166df075e49c1d8eb067cdf7be23f981a015"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "kind": "diagnostic static-mode STA on full synthesis checkpoint",
+  "clock_ns": 5,
+  "case_control_count": 104,
+  "controls": {
+    "fft": 1,
+    "fmt": 2,
+    "inverse": 1,
+    "native64": 1,
+    "packed16": 1,
+    "fmt_r": 20,
+    "mf": 33,
+    "native_r": 1,
+    "dir": 6,
+    "md": 38
+  },
+  "profiles": [
+    {
+      "profile": "unconstrained_modes",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 1.523
+    },
+    {
+      "profile": "ntt32_forward",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 2.062
+    },
+    {
+      "profile": "ntt16_forward",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 2.734
+    },
+    {
+      "profile": "fft128_forward",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 2.062
+    },
+    {
+      "profile": "fft128_inverse",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 2.229
+    },
+    {
+      "profile": "native64_inverse",
+      "core_WNS_ns": 0.705,
+      "tile_register_paths_WNS_ns": 1.672
+    }
+  ],
+  "resource_unchanged": {
+    "LUT": 36231,
+    "FF": 25331,
+    "DSP": 64,
+    "RAMB36": 0,
+    "RAMB18": 48,
+    "BRAM36_equivalent": 24
+  },
+  "RTL_changed": false,
+  "resynthesis": false,
+  "place_route": false,
+  "scope": "Only mode/direction/FFT precision/native flags and their synthesized replicas fixed; q, sizes, scheduler, data and other controls remain unconstrained by case analysis.",
+  "limitations": [
+    "Synthesis net delays are estimates, not routed delays.",
+    "The historical clock was added after synthesis; I/O delays are absent.",
+    "Tile paths include registers inactive in some modes; not a measurement of isolated NTT multiplier Fmax.",
+    "Static mode analysis does not validate configuration transitions or system I/O.",
+    "Physical runs were stopped; -11.006 ns was intermediate and has no final critical-path report."
+  ],
+  "sha256": {
+    "experiments/a_cg_batch/profile_timing.tcl": "2b9bf532c6014a21021b205d569705637bac10cf868a828a95f82653fd42438b",
+    "study/build/a_cg_batch/profile_timing.log": "2775a8c65a5f839676e08b1c69ceac0a40a2fe3501b7d8beaa4f62af8c365445",
+    "study/build/a_cg_batch/profile_timing/controls.txt": "04874f12a73f5625ca2b52c61b4f5bf54447d9763b4ac3e5efbd5aacd4a86631",
+    "study/build/a_cg_batch/profile_timing/fft128_forward.rpt": "6699db0c353d199ecbc1a0865809a25c788c9bdd99e3f74cafdf49dc3c77cde8",
+    "study/build/a_cg_batch/profile_timing/fft128_forward_tile.rpt": "3f5abe664d09aa1b9344809ca05a05ffdce1bbfe74430e2d65041fda5bd61bd2",
+    "study/build/a_cg_batch/profile_timing/fft128_inverse.rpt": "e0ae7fc054fef145b73a5f8a88957989bb04d81928122499ea6f6a5c3b765182",
+    "study/build/a_cg_batch/profile_timing/fft128_inverse_tile.rpt": "b9a9260ba87a7ad87cbcb043230585dd53cfa29a2ce34566655d1ee781270691",
+    "study/build/a_cg_batch/profile_timing/metrics.txt": "4d87ea61cde544ddec7a126dfc492cea63a1b2f9c5e54d48b32995ed68d75b92",
+    "study/build/a_cg_batch/profile_timing/native64_inverse.rpt": "55d1818536ebbbbf309acc2601eaef0ecabea09c4f2b698ff60b80b0791212ab",
+    "study/build/a_cg_batch/profile_timing/native64_inverse_tile.rpt": "3938d7fbc96cc8099caf1ac5dec34d151644a941ec9a84a094aaabd3f53d4f91",
+    "study/build/a_cg_batch/profile_timing/ntt16_forward.rpt": "0e2d10c3026fb98e0e9172dab2687f8856edc2c3f11931df91f4956b6b56021c",
+    "study/build/a_cg_batch/profile_timing/ntt16_forward_tile.rpt": "d28006e61024607411990cbaff3d38bfeab20684f1309bf44a4d4d9ee616f9b0",
+    "study/build/a_cg_batch/profile_timing/ntt32_forward.rpt": "42684e2d7d54660ba86002bbfa41fa338f64961b2596b13e9abbf3aa09ef83c3",
+    "study/build/a_cg_batch/profile_timing/ntt32_forward_tile.rpt": "a07d4fa761be9569b3ade525e1599db65da8ec04429b15157b5203144aa52f0d",
+    "study/build/a_cg_batch/profile_timing/unconstrained_modes.rpt": "1924ffe3c13e0328965b224f504ee554e67c1526b44b418df3d981627c15fb74",
+    "study/build/a_cg_batch/profile_timing/unconstrained_modes_tile.rpt": "0ed9b2eb6ae2c3d027f7898876605c203c40821674d086ee5563b18400018154"
+  }
+}

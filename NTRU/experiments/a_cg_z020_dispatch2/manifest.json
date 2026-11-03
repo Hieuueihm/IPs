@@ -1,0 +1,25 @@
+{
+  "part": "xc7z020clg400-2",
+  "clock_ns": 5,
+  "kind": "synthesis only, no board configuration",
+  "source_sha256": {
+    "experiments/a_cg_z020_dispatch2/rtl/a_cg_fast.sv": "e8739693528e26e5833b4b5336cb47aeb1c89a55a92b1643dac19f3a80807d97",
+    "experiments/a_cg_z020_dispatch2/rtl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "experiments/a_cg_z020_dispatch2/rtl/tile_a.sv": "b5697439e882ba31e22623ea960fcb1f4581d6946ac125098865a9c1cda052ff"
+  },
+  "byte_identical_source": {
+    "experiments/a_cg_cmd_dispatch2/rtl/a_cg_fast.sv": "e8739693528e26e5833b4b5336cb47aeb1c89a55a92b1643dac19f3a80807d97",
+    "experiments/a_cg_cmd_dispatch2/rtl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "experiments/a_cg_cmd_dispatch2/rtl/tile_a.sv": "b5697439e882ba31e22623ea960fcb1f4581d6946ac125098865a9c1cda052ff"
+  },
+  "functional_evidence": {
+    "path": "study/build/a_cg_cmd_dispatch2/validation.json",
+    "sha256": "1d2e391800d4ddf90eb1dafe3079b8bce28a085fbabba3b48194566ca41d910b"
+  },
+  "parent_manifest": {
+    "path": "experiments/a_cg_cmd_dispatch2/manifest.json",
+    "sha256": "5833fcba8088765101cf717c5ce90ee4f58268f13713b4edc557cebe2005508f"
+  },
+  "production_RTL_changed": false,
+  "retained_baseline_changed": false
+}

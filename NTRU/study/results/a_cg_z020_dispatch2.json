@@ -1,0 +1,134 @@
+{
+  "part": "xc7z020clg400-2",
+  "clock_ns": 5,
+  "kind": "OOC synthesis only, full host/root included",
+  "resource": {
+    "LUT": 37841,
+    "FF": 27397,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "device_capacity": {
+    "LUT": 53200,
+    "FF": 106400,
+    "DSP": 220,
+    "RAMB36": 140,
+    "RAMB18_equivalent": 280
+  },
+  "device_usage_percent": {
+    "LUT": 71.1296992481203,
+    "FF": 25.74906015037594,
+    "DSP": 29.09090909090909,
+    "BRAM_equivalent": 17.142857142857142
+  },
+  "full_boundary_timing_estimate": {
+    "WNS_ns": -3.604,
+    "TNS_ns": -13728.723,
+    "setup_failing_endpoints": 6828,
+    "WHS_ns": -0.326,
+    "THS_ns": -114.071
+  },
+  "internal_timing_estimate": {
+    "WNS_ns": -3.604,
+    "WHS_ns": 0.126
+  },
+  "critical_setup_path": {
+    "source": "u_exec/engine[0].u_tile/g_in_reg.rdat_reg[0]/C",
+    "destination": "u_exec/engine[0].u_tile/rd_reg[29]/D",
+    "data_path": "8.501ns  (logic 4.749ns (55.864%)  route 3.752ns (44.136%))",
+    "levels": "19  (CARRY4=11 LUT4=3 LUT6=5)"
+  },
+  "primitives": {
+    "DSP": "DSP48E1",
+    "BRAM": "RAMB18E1"
+  },
+  "arithmetic_RTL_changed": false,
+  "production_RTL_changed": false,
+  "RTL_byte_identical_to": "a_cg_cmd_dispatch2",
+  "functional_evidence_reused_for_identical_RTL": {
+    "pipeline_reset_command_stages_checked": 2,
+    "response_flush_checked": true,
+    "command_capture_stages": 2,
+    "registered_read_response": true,
+    "reservation_permission_logic_levels": 1,
+    "frontend_reset_isolated": true,
+    "numeric_cases": 1026,
+    "kernel_cycles_identical": true,
+    "four_state_cases": 38,
+    "reset_abort_modes": 12,
+    "live_C_calls": 74,
+    "verified_signatures": 4,
+    "identical_C_artifacts": 14,
+    "negative_live_inputs": 2,
+    "packed16_preserved": true,
+    "arithmetic_RTL_unchanged": true,
+    "production_RTL_changed": false,
+    "configuration_extra_clocks_vs_retained": 7,
+    "load_read_extra_clocks_per_line_vs_control_gate": 2,
+    "start_extra_clocks_vs_control_gate": 2,
+    "read_response_extra_clocks": 1,
+    "root_descriptor_latency_clocks": 2,
+    "root_descriptor_throughput_words_per_clock": 1,
+    "direct_input_to_core_paths": 0,
+    "synthesis_resource": {
+      "LUT": 37979,
+      "FF": 27437,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "sha256": {
+      "experiments/a_cg_cmd_dispatch2/manifest.json": "5833fcba8088765101cf717c5ce90ee4f58268f13713b4edc557cebe2005508f",
+      "experiments/a_cg_cmd_dispatch2/main.cpp": "70877f1664f841438c011c702794cc73ca8aa51c06fed63e9ced3feb2c85c250",
+      "experiments/a_cg_cmd_dispatch2/tb_four_state.sv": "5c5fcc5f5510aa350627ebd33ded53697bf494f568623e7e91dfef68bebf982f",
+      "experiments/a_cg_cmd_dispatch2/synth.tcl": "5ede303f8f7767f9dfbcf3860c061479f3cca1021f92fe5a9cebc4ef25aa08ca",
+      "study/build/a_cg_cmd_dispatch2/sim.log": "89bd1c35f28c6e349f65aa2171d66f6267176cee3e251d47a027ead609f980d7",
+      "study/build/a_cg_cmd_dispatch2/four_state.log": "28ff8fb5ede15cdf38cf8d8b31bd023b2597049677b429a9b9c155b5845faaf2",
+      "study/build/a_cg_cmd_dispatch2/application/application_results.json": "23beb9ceaead50576d843a92fa4a17670b55ee51866032f28da8518718ec43e3",
+      "study/build/a_cg_cmd_dispatch2/application/rtl_records.json": "c582da3d6f71a09a399eb1c9df537bd275783104a45d5053cb77ed83c0b82a9a",
+      "study/build/a_cg_cmd_dispatch2/synth/synthesized.dcp": "41fda7cc8943e17de8376aaca6c923243ffde8f2b0ac7d293ccbfa6682f8c227",
+      "study/build/a_cg_cmd_dispatch2/synth/command_barrier.txt": "807882f311bd5d2894b5326f37a09a8f581d6a341d074098c0e24b7a520d103b"
+    }
+  },
+  "reference_other_device": {
+    "part": "xczu7ev-ffvc1156-2-e",
+    "resource": {
+      "LUT": 37979,
+      "FF": 27437,
+      "DSP": 64,
+      "RAMB18": 48,
+      "RAMB36": 0
+    },
+    "kind": "synthesis only for this comparison"
+  },
+  "capacity_source": "https://docs.amd.com/api/khub/documents/juMnxca71Tf2gfjmNyjM8A/content",
+  "LUT_goal": 30000,
+  "LUT_reduction_needed": 7841,
+  "routed": false,
+  "board_tested": false,
+  "timing_200MHz_confirmed": false,
+  "notes": [
+    "This measurement is on XC7Z020, not a scaled estimate from ZCU106.",
+    "5 ns synthesis timing is an estimate; no routed timing result exists for this part.",
+    "The external OOC hold limitations persist; pipeline stages do not define a real host/clock interface.",
+    "Host adapter and root cache included; PS/AXI subsystem, DMA and board clock/pins are not included.",
+    "No precision reduction or cycle change; earlier PQC results apply to identical RTL, not a post-map hardware test."
+  ],
+  "sha256": {
+    "experiments/a_cg_z020_dispatch2/prepare.py": "b064428e85f631c5b53e454f7b3c1e00f3a637d6015d87461eaef0ef58704f53",
+    "experiments/a_cg_z020_dispatch2/manifest.json": "68eb5a6dd1b49136ba728a2dd3e6de0fcaae1d83987029ae9474065c04b53d22",
+    "experiments/a_cg_z020_dispatch2/synth.tcl": "ddbb2c547436c94d933f7cebaa4218866f12d84d9c32cbe87e8bad9900d29808",
+    "experiments/a_cg_z020_dispatch2/report.py": "b2c383759889c20a65595cc73b9e25c9a3cb65594a9f814d4a48e2905c78ef51",
+    "study/build/a_cg_z020_dispatch2/synthesis_console.log": "736c421f8d5f4ad255b88e869848d55c2069d31c492da087935a03e737e5a25d",
+    "study/build/a_cg_z020_dispatch2/synth/synthesized.dcp": "2c5cb8741c3579a1393652910c709f2a1d285ae9b0674fae45e8c66a19e9ca43",
+    "study/build/a_cg_z020_dispatch2/synth/util.rpt": "63455c5136b024a1a9d9e54eb155a45f39927abaa3ece9e2f1b229c85285baa5",
+    "study/build/a_cg_z020_dispatch2/synth/util_hier.rpt": "d6c43b648262785c00ffd9dc934e564d4c852a1a5e52a81b94512f42e586df9c",
+    "study/build/a_cg_z020_dispatch2/synth/timing.rpt": "1a663b889d42e2039ce38003df3985a45284fc18082828e7d397d7cb832522d7",
+    "study/build/a_cg_z020_dispatch2/synth/metrics.txt": "c206b1c3f93b1432130fdd28258a8f1292b0f10887721dc6db47a4eda7f0a1b1",
+    "study/build/a_cg_z020_dispatch2/synth/internal_setup.rpt": "f865b0a650631af968d5cfaf49d9fd8e880fdc08e94053175b23ac257addbc04",
+    "study/build/a_cg_z020_dispatch2/synth/internal_hold.rpt": "513e377771827c8ef1d4d8ae23852ee558d179df7d21800e9033fdcbbf1e58b5",
+    "study/build/a_cg_z020_dispatch2/synth/command_barrier.txt": "22302b53f20c14928e7a2f0eaa34efb249ed2a9cee0c75e825880a5e751e1065",
+    "study/build/a_cg_z020_dispatch2/synth/dispatch_barrier.txt": "9f09b3881ab7d7b168d2159a0a702854d0f9074c9484e9a81dcd080843741654"
+  }
+}

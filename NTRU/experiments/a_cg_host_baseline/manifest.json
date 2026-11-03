@@ -1,0 +1,36 @@
+{
+  "name": "registered-host packed16 baseline",
+  "adopted_by_user": true,
+  "source": "experiments/a_cg_timing/host/rtl",
+  "evidence": "study/results/a_cg_timing.json",
+  "evidence_sha256": "cc72329697d57a679c10f323943a69469981e3d7e09bc3b64ee015b53784c38c",
+  "resource": {
+    "LUT": 36721,
+    "FF": 25334,
+    "DSP": 64,
+    "RAMB18": 48,
+    "RAMB36": 0
+  },
+  "internal_timing": {
+    "WNS_ns": 1.417,
+    "WHS_ns": 0.016
+  },
+  "full_timing": {
+    "WNS_ns": 1.417,
+    "TNS_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "WHS_ns": -0.11,
+    "THS_ns": -117.516
+  },
+  "clock_xdc_sha256": "84c55878b4678580baac2747ffe410ba26dc7624530f7b7be3d80a45ce46cd93",
+  "production_sha256": {
+    "hdl\\tile\\tile_thu.sv": "69c03f65acec27d9e7e885f3f643824d555f05d5edd55dab630c807a9f967e68",
+    "hdl\\mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "hdl\\core_ntt\\ntt_core.sv": "1cc921aace652ce9c0665a43c6fb8a7499174f461e50b66947777eb67c89f4d9"
+  },
+  "source_sha256": {
+    "experiments/a_cg_host_baseline/rtl/a_cg_fast.sv": "53bc5ccbd1dddf9b134727a8092c494d40d985ab2adbb952110a3f12eb955cc0",
+    "experiments/a_cg_host_baseline/rtl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "experiments/a_cg_host_baseline/rtl/tile_a.sv": "8db94aebfe897df2f4548715f745b69e91433dd661ef46187a0e771c9f66b7a0"
+  }
+}

@@ -1,0 +1,3686 @@
+{
+  "date": "2026-11-02",
+  "kind": "physical RAM cycle model, not RTL or PPA",
+  "candidate": "low5 xor top, factor hmin into row planes, tiny stage embedding",
+  "read_sources": {
+    "0x": [
+      0,
+      16
+    ],
+    "0y": [
+      0,
+      1,
+      16,
+      17
+    ],
+    "1x": [
+      1,
+      2,
+      17,
+      18
+    ],
+    "1y": [
+      1,
+      3,
+      17,
+      19
+    ],
+    "2x": [
+      2,
+      4,
+      18,
+      20
+    ],
+    "2y": [
+      2,
+      5,
+      18,
+      21
+    ],
+    "3x": [
+      3,
+      6,
+      19,
+      22
+    ],
+    "3y": [
+      3,
+      7,
+      19,
+      23
+    ],
+    "4x": [
+      4,
+      8,
+      20,
+      24
+    ],
+    "4y": [
+      4,
+      9,
+      20,
+      25
+    ],
+    "5x": [
+      5,
+      10,
+      21,
+      26
+    ],
+    "5y": [
+      5,
+      11,
+      21,
+      27
+    ],
+    "6x": [
+      6,
+      12,
+      22,
+      28
+    ],
+    "6y": [
+      6,
+      13,
+      22,
+      29
+    ],
+    "7x": [
+      7,
+      14,
+      23,
+      30
+    ],
+    "7y": [
+      7,
+      15,
+      23,
+      31
+    ],
+    "8x": [
+      0,
+      8,
+      16,
+      24
+    ],
+    "8y": [
+      1,
+      8,
+      17,
+      24
+    ],
+    "9x": [
+      2,
+      9,
+      18,
+      25
+    ],
+    "9y": [
+      3,
+      9,
+      19,
+      25
+    ],
+    "10x": [
+      4,
+      10,
+      20,
+      26
+    ],
+    "10y": [
+      5,
+      10,
+      21,
+      26
+    ],
+    "11x": [
+      6,
+      11,
+      22,
+      27
+    ],
+    "11y": [
+      7,
+      11,
+      23,
+      27
+    ],
+    "12x": [
+      8,
+      12,
+      24,
+      28
+    ],
+    "12y": [
+      9,
+      12,
+      25,
+      28
+    ],
+    "13x": [
+      10,
+      13,
+      26,
+      29
+    ],
+    "13y": [
+      11,
+      13,
+      27,
+      29
+    ],
+    "14x": [
+      12,
+      14,
+      28,
+      30
+    ],
+    "14y": [
+      13,
+      14,
+      29,
+      30
+    ],
+    "15x": [
+      14,
+      15,
+      30,
+      31
+    ],
+    "15y": [
+      15,
+      31
+    ]
+  },
+  "write_sources": {
+    "0": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        8,
+        0
+      ]
+    ],
+    "1": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        8,
+        1
+      ]
+    ],
+    "2": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "3": [
+      [
+        1,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        9,
+        1
+      ]
+    ],
+    "4": [
+      [
+        2,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        10,
+        0
+      ]
+    ],
+    "5": [
+      [
+        2,
+        1
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        10,
+        1
+      ]
+    ],
+    "6": [
+      [
+        3,
+        0
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        1
+      ],
+      [
+        11,
+        0
+      ]
+    ],
+    "7": [
+      [
+        3,
+        1
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        11,
+        1
+      ]
+    ],
+    "8": [
+      [
+        4,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        12,
+        0
+      ]
+    ],
+    "9": [
+      [
+        4,
+        1
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        12,
+        1
+      ]
+    ],
+    "10": [
+      [
+        5,
+        0
+      ],
+      [
+        10,
+        0
+      ],
+      [
+        10,
+        1
+      ],
+      [
+        13,
+        0
+      ]
+    ],
+    "11": [
+      [
+        5,
+        1
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        13,
+        1
+      ]
+    ],
+    "12": [
+      [
+        6,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        1
+      ],
+      [
+        14,
+        0
+      ]
+    ],
+    "13": [
+      [
+        6,
+        1
+      ],
+      [
+        13,
+        0
+      ],
+      [
+        13,
+        1
+      ],
+      [
+        14,
+        1
+      ]
+    ],
+    "14": [
+      [
+        7,
+        0
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        14,
+        1
+      ],
+      [
+        15,
+        0
+      ]
+    ],
+    "15": [
+      [
+        7,
+        1
+      ],
+      [
+        15,
+        0
+      ],
+      [
+        15,
+        1
+      ]
+    ],
+    "16": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        8,
+        0
+      ]
+    ],
+    "17": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        8,
+        1
+      ]
+    ],
+    "18": [
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "19": [
+      [
+        1,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        9,
+        1
+      ]
+    ],
+    "20": [
+      [
+        2,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        10,
+        0
+      ]
+    ],
+    "21": [
+      [
+        2,
+        1
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        10,
+        1
+      ]
+    ],
+    "22": [
+      [
+        3,
+        0
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        1
+      ],
+      [
+        11,
+        0
+      ]
+    ],
+    "23": [
+      [
+        3,
+        1
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        11,
+        1
+      ]
+    ],
+    "24": [
+      [
+        4,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        12,
+        0
+      ]
+    ],
+    "25": [
+      [
+        4,
+        1
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        12,
+        1
+      ]
+    ],
+    "26": [
+      [
+        5,
+        0
+      ],
+      [
+        10,
+        0
+      ],
+      [
+        10,
+        1
+      ],
+      [
+        13,
+        0
+      ]
+    ],
+    "27": [
+      [
+        5,
+        1
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        13,
+        1
+      ]
+    ],
+    "28": [
+      [
+        6,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        1
+      ],
+      [
+        14,
+        0
+      ]
+    ],
+    "29": [
+      [
+        6,
+        1
+      ],
+      [
+        13,
+        0
+      ],
+      [
+        13,
+        1
+      ],
+      [
+        14,
+        1
+      ]
+    ],
+    "30": [
+      [
+        7,
+        0
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        14,
+        1
+      ],
+      [
+        15,
+        0
+      ]
+    ],
+    "31": [
+      [
+        7,
+        1
+      ],
+      [
+        15,
+        0
+      ],
+      [
+        15,
+        1
+      ]
+    ]
+  },
+  "max_read_sources": 4,
+  "max_write_sources": 4,
+  "cases": [
+    {
+      "mode": "NTT",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 24,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 24,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 49,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 50,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 4,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 27,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 4,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 27,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 76,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 76,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 52,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 53,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 33,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 8,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 33,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 102,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 102,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 79,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 79,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 58,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 16,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 59,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 128,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 128,
+      "rows_per_buffer": 1,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 105,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 105,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 85,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 32,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 85,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 171,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 171,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 131,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 131,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 111,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 64,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 111,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 224,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 224,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 192,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 192,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 137,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 128,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 137,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 309,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 309,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 272,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 272,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 234,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 256,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 234,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 467,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 467,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 417,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 417,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 368,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 512,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 368,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 983,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 983,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 1,
+      "inverse": false,
+      "cycles": 887,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 1,
+      "inverse": true,
+      "cycles": 887,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 2,
+      "inverse": false,
+      "cycles": 791,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "NTT",
+      "N": 1024,
+      "hmin": 2,
+      "inverse": true,
+      "cycles": 791,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 0,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 0,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 2,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 0,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 0,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 2,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 0,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 22,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 22,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 34,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 34,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 34,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 34,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 71,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 4,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 71,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 71,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 4,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 71,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 43,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 43,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 65,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 66,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 65,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 66,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 135,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 8,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 136,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 135,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 8,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 136,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 64,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 64,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 96,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 98,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 96,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 98,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 199,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 16,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 201,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 199,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 16,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 201,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 85,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 85,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 8,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 127,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 130,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 127,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 130,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 263,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 32,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 266,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 263,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 32,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 266,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 106,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 106,
+      "interleaved": false,
+      "rows_per_buffer": 2,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 16,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 158,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 162,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 158,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 162,
+      "interleaved": true,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 327,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 64,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 331,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 327,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 64,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 331,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 145,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 145,
+      "interleaved": false,
+      "rows_per_buffer": 4,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 32,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 261,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 266,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 261,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 266,
+      "interleaved": true,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 679,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 128,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 684,
+      "interleaved": true,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 679,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 128,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 684,
+      "interleaved": true,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 193,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 193,
+      "interleaved": false,
+      "rows_per_buffer": 8,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 64,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 400,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 406,
+      "interleaved": true,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 400,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 406,
+      "interleaved": true,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 1367,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 256,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 1367,
+      "interleaved": true,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 1367,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 256,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 1367,
+      "interleaved": true,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 274,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 274,
+      "interleaved": false,
+      "rows_per_buffer": 16,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 128,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 790,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 790,
+      "interleaved": true,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 790,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 790,
+      "interleaved": true,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 512,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 3095,
+      "interleaved": false,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 512,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 3095,
+      "interleaved": true,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 3095,
+      "interleaved": false,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 512,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 3095,
+      "interleaved": true,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 2048,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 451,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT32",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 451,
+      "interleaved": false,
+      "rows_per_buffer": 32,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 256,
+          "max_subcycles_per_line": 1
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 1750,
+      "interleaved": false,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 1750,
+      "interleaved": true,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 1750,
+      "interleaved": false,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT64",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 1750,
+      "interleaved": true,
+      "rows_per_buffer": 64,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 1024,
+          "max_subcycles_per_line": 2
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 6935,
+      "interleaved": false,
+      "rows_per_buffer": 128,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": false,
+      "cycles": 6935,
+      "interleaved": true,
+      "rows_per_buffer": 128,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 6935,
+      "interleaved": false,
+      "rows_per_buffer": 128,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      }
+    },
+    {
+      "mode": "FFT128",
+      "N": 1024,
+      "hmin": 0,
+      "inverse": true,
+      "cycles": 6935,
+      "interleaved": true,
+      "rows_per_buffer": 128,
+      "host": {
+        "load": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        },
+        "readback": {
+          "cycles_128bit_lines_serialized": 4096,
+          "max_subcycles_per_line": 4
+        }
+      }
+    }
+  ],
+  "checks": {
+    "NTT_golden": 48,
+    "NTT_survey_configs": 11,
+    "FFT32_identity_N1": 2,
+    "FFT32_golden": 20,
+    "FFT64_identity_N1": 2,
+    "FFT64_golden": 20,
+    "FFT64_golden_interleaved": 20,
+    "FFT128_identity_N1": 2,
+    "FFT128_golden": 20,
+    "FFT128_golden_interleaved": 20,
+    "mutation_missing_bank_xor_detected": 1
+  },
+  "root_examples": {
+    "NTT_N1024": {
+      "shared_index_rows_per_lane": 67,
+      "word32_per_lane_one_direction": 67
+    },
+    "FFT32_N1024": {
+      "shared_index_rows_per_lane": 35,
+      "word32_per_lane_one_direction": 70
+    },
+    "FFT64_N1024": {
+      "shared_index_rows_per_lane": 35,
+      "word32_per_lane_one_direction": 140
+    },
+    "FFT128_N1024": {
+      "shared_index_rows_per_lane": 35,
+      "word32_per_lane_one_direction": 280
+    }
+  },
+  "limitations": [
+    "Assumes current tile scalar-NTT/FFT issue periods and output latencies. Interleaved inputs use the memory-retiming hypothesis; no new RTL or packed16.",
+    "Root values correct in replay; root ROM port implementation and BRAM cost are not modeled.",
+    "Host layout changes; line serialization counted, adapter RTL and buffering not designed.",
+    "Kernel cycles exclude load/readback/configuration/root loading.",
+    "No area/Fmax claim. Four is a found fan-in bound, not a proof of global optimality."
+  ],
+  "sha256": {
+    "model/cg_bank4_model.py": "a82c123dcfae7658c1fd7c801793bdbd707acff7ca842335839a7d93bf7372b5",
+    "model/ntt_core_sched.py": "7af735664da68cb1cd3f9986c7170d3e8e06c9eac61b6e5b9cff9743ab75689c",
+    "model/fft_core_plan.py": "b1204d8cebb84d20ff1c71041be9ba330aa08e0ff3b385c97840ef9e216a812c",
+    "model/ntt_prime_core.py": "1275d2dfa4631a6f6eb614039104de4ef03dc46612d7714be605cd48913872a6",
+    "spec/FlexTransform/1.0/assets/kernel_fixtures.jsonl": "32744926eee65c88f688c8771ec99c0ccdce702606b9602277bdcc0bc58e6032",
+    "spec/FlexTransform/1.0/assets/fft_q64_64.mem": "ad62f4a8d74b11316ffef4faddef4306fb1ada1c5539d4223393810a433d4c8b",
+    "spec/FlexTransform/2.0/assets/kernel/ntt_q8380417.jsonl": "56ab9547327c1d26d047b6ed7122c3f2b172b454a1e122b15f59604f5b0a11f6",
+    "spec/FlexTransform/1.0/assets/ntt_q12289_forward.mem": "a951bcc67265ca50fe103ab709e22b5bfdc075ead0a1b420207660f89d1a4ab6",
+    "spec/FlexTransform/1.0/assets/ntt_q12289_inverse.mem": "16b09ea947a7c3c0ca1f746d8634094664cf5c272ddc1cbe168f79891f0f2328",
+    "spec/FlexTransform/1.0/assets/ntt_q3329_forward.mem": "7585ce9e9291f315b17eed5705081a6fed21e415a65f82d3aa21d2be0de589c4",
+    "spec/FlexTransform/1.0/assets/ntt_q3329_inverse.mem": "b10c95aa835290c0bce5953eaaf3c8543ad903235132ecea8293bca18c2f31b9",
+    "spec/FlexTransform/2.0/assets/ntt_q8380417_forward.mem": "4d9b68742eb8567435e895bea371c0ddd4dbf8e4886ea14f757bd57c39d89455",
+    "spec/FlexTransform/2.0/assets/ntt_q8380417_inverse.mem": "271a88012eada20a00c3fd6468a33f3b65cc0a30a56089733e53170e28444367"
+  }
+}
