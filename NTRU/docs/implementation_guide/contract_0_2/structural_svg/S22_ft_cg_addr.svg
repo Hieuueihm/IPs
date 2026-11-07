@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="400" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="400"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-400)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 230 333 L 270 333 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="270 333, 263.6969 329.9552, 263.6969 336.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 480 333 L 520 333 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="520 333, 513.6969 329.9552, 513.6969 336.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 730 333 L 770 333 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="770 333, 763.6969 329.9552, 763.6969 336.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="301" width="210" height="64" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="62.09375" y="337.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,675) scale(1,-1)">cfg + k/plane/tag</text>
+			<text x="69.00732421875" y="313" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,626) scale(1,-1)">read_ctx / write_ctx</text>
+			<rect x="270" y="301" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="321.6640625" y="345.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,691) scale(1,-1)">SLICE / SHIFT</text>
+			<text x="318.109375" y="328.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,657) scale(1,-1)">ROTATE / XOR</text>
+			<text x="343.575927734375" y="327" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,654) scale(1,-1)">n small: rol</text>
+			<text x="319.721435546875" y="313" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,626) scale(1,-1)">n large: XOR topbit</text>
+			<rect x="520" y="301" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="551.21875" y="337.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,675) scale(1,-1)">CONCAT row fields</text>
+			<text x="571.400390625" y="313" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,626) scale(1,-1)">buffer | plane | row</text>
+			<rect x="770" y="301" width="210" height="64" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="804.75390625" y="337.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,675) scale(1,-1)">row / route selects</text>
+			<text x="834.892333984375" y="313" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,626) scale(1,-1)">combinational</text>
+			<rect x="270" y="90" width="470" height="65" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="382.546875" y="127.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,254) scale(1,-1)">root_base + bounded root-index</text>
+			<text x="408.899658203125" y="102" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,204) scale(1,-1)">mask / beat và root-span đã kiểm</text>
+			<text x="20" y="45" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,90) scale(1,-1)">Rotate là hoán vị dây + mux theo cấu hình; không gọi đó là một phép nhân/chia địa chỉ.</text>
+		</g>
+	</g>
+</svg>

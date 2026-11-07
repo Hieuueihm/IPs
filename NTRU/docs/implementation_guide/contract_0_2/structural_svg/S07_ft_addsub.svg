@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="390" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 390" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="390"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-390)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 275 295 L 365 295 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="365 295, 358.6969 291.9552, 358.6969 298.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="287.3" y="299" width="65.40000000000003" height="17" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="294.3271484375" y="302" style="font-family: Arial, sans-serif; font-size: 12px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,604) scale(1,-1)">carry_low</text>
+			<path d="M 565 295 L 665 295 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="665 295, 658.6969 291.9552, 658.6969 298.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="585.6" y="299" width="58.799999999999955" height="17" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="593.66015625" y="302" style="font-family: Arial, sans-serif; font-size: 12px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,604) scale(1,-1)">carry_hi</text>
+			<path d="M 465 250 L 465 210 L 515 210 L 515 170 " style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1.6; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<polygon points="515 170, 511.9552 176.3031, 518.0448 176.3031" style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(47%,31%,54%); fill-rule: evenodd;"/>
+			<path d="M 810 250 L 810 135 L 690 135 " style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1.6; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<polygon points="690 135, 696.3031 138.0448, 696.3031 131.9552" style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(47%,31%,54%); fill-rule: evenodd;"/>
+			<rect x="25" y="250" width="250" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="102.66015625" y="303.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,607) scale(1,-1)">FA ×16 LOW</text>
+			<text x="99.945556640625" y="262" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,524) scale(1,-1)">a_lo + ~b_lo + !bi</text>
+			<rect x="365" y="250" width="200" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="408.99609375" y="303.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,607) scale(1,-1)">FA guard bit16</text>
+			<text x="422.721435546875" y="262" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,524) scale(1,-1)">A=1; B=split16</text>
+			<rect x="665" y="250" width="290" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="761.3203125" y="303.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,607) scale(1,-1)">FA ×17 HIGH</text>
+			<text x="758.3046875" y="262" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,524) scale(1,-1)">{0,a_hi}+{0,~b_hi}</text>
+			<rect x="340" y="100" width="350" height="70" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="468.32421875" y="140.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,281) scale(1,-1)">D[16] / D[33]</text>
+			<text x="421.787841796875" y="112" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,224) scale(1,-1)">packed: !D[16] / !D[33] là borrow</text>
+			<text x="25" y="55" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,110) scale(1,-1)">split0: guard1+carry_low → carry_hi=carry_low. split1: 1+1+carry_low → carry_hi=1.</text>
+		</g>
+	</g>
+</svg>

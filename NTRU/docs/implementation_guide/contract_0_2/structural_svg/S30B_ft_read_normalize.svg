@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="420" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="420"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-420)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 230 348 L 270 348 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="270 348, 263.6969 344.9552, 263.6969 351.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 480 348 L 520 348 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="520 348, 513.6969 344.9552, 513.6969 351.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 730 348 L 770 348 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="770 348, 763.6969 344.9552, 763.6969 351.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 875 316 L 875 185 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="875 185, 871.9552 191.3031, 878.0448 191.3031" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="316" width="210" height="64" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="70.79296875" y="352.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">rounded W-bit</text>
+			<text x="77.3037109375" y="328" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,656) scale(1,-1)">sau wrap stage2</text>
+			<polygon points="270 316, 270 380, 480 365.92, 480 330.08" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="314.76953125" y="352.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">MUX2 ×W shift1</text>
+			<text x="345.7373046875" y="338" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,676) scale(1,-1)">select s[0]</text>
+			<polygon points="520 316, 520 380, 730 365.92, 730 330.08" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="564.76953125" y="352.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">MUX2 ×W shift2</text>
+			<text x="595.7373046875" y="338" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,676) scale(1,-1)">select s[1]</text>
+			<polygon points="770 316, 770 380, 980 365.92, 980 330.08" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="814.76953125" y="352.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">MUX2 ×W shift4</text>
+			<text x="845.7373046875" y="338" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,676) scale(1,-1)">select s[2]</text>
+			<polygon points="770 115, 770 185, 980 169.6, 980 130.4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="814.76953125" y="155.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,311) scale(1,-1)">MUX2 ×W shift8</text>
+			<text x="845.7373046875" y="137" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,274) scale(1,-1)">select s[3]</text>
+			<text x="20" y="200" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,400) scale(1,-1)">Một bit: y[i] = sel ? x[i+k] : x[i]; nếu i+k&gt;=W thì dùng sign bit của cùng giá trị.</text>
+			<text x="20" y="55" style="font-family: Arial, sans-serif; font-size: 17px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,110) scale(1,-1)">Bốn tầng mux là tổ hợp trong stage G+2→G+3, không có FF ở giữa.</text>
+		</g>
+	</g>
+</svg>

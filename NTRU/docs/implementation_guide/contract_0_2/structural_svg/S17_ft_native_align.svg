@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="400" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="400"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-400)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 230 338 L 270 338 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="270 338, 263.6969 334.9552, 263.6969 341.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 480 338 L 520 338 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="520 338, 513.6969 334.9552, 513.6969 341.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 730 338 L 770 338 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="770 338, 763.6969 334.9552, 763.6969 341.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="306" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="78.52734375" y="342.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,685) scale(1,-1)">A64 + 1 bias</text>
+			<text x="78.04638671875" y="318" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,636) scale(1,-1)">carry riêng re/im</text>
+			<rect x="270" y="306" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="324.7578125" y="342.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,685) scale(1,-1)">C0/C1 có sẵn</text>
+			<text x="327.897216796875" y="318" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,636) scale(1,-1)">(A+1)±B wrap64</text>
+			<rect x="520" y="306" width="210" height="64" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="520 314, 528 320, 520 326" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="531" y="311" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,622) scale(1,-1)">clk</text>
+			<text x="555.23046875" y="342.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,685) scale(1,-1)">FF low / high align</text>
+			<text x="573.314208984375" y="318" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,636) scale(1,-1)">giữ root/tag/buffer</text>
+			<rect x="770" y="306" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="807.4296875" y="342.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,685) scale(1,-1)">SIGN WIRING &gt;&gt;1</text>
+			<text x="825.142333984375" y="318" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,636) scale(1,-1)">2 branch sum/diff</text>
+			<rect x="245" y="103" width="250" height="62" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="273.77734375" y="129.0" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,258) scale(1,-1)">LOW out = {hi[0],lo[31:1]}</text>
+			<rect x="600" y="103" width="330" height="62" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="662.98828125" y="129.0" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,258) scale(1,-1)">HIGH out = {hi[31],hi[31:1]}</text>
+			<text x="20" y="45" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,90) scale(1,-1)">Hai box LOW/HIGH là dây nối, không phải hai phép shift độc lập trên dữ liệu chưa ghép.</text>
+		</g>
+	</g>
+</svg>

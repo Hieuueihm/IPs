@@ -1,0 +1,66 @@
+{
+  "contract": "0.2",
+  "guide": "1.2",
+  "sources": [
+    {
+      "path": "rebuild/flextransform/spec/01_requirements.md",
+      "sha256": "97cd7a3bca08cced22527a44830855af8e8cb9b12e72d193bdedf09e1f67af37"
+    },
+    {
+      "path": "rebuild/flextransform/spec/02_arithmetic.md",
+      "sha256": "2291235a07f891606b8776dd62db9a9df8c036ace2c007715e3dddbf5fea8597"
+    },
+    {
+      "path": "rebuild/flextransform/spec/03_memory_schedule.md",
+      "sha256": "99e3192b23174151f9db7f37960a55ae281be39a6c3bf44890920a5a931e3900"
+    },
+    {
+      "path": "rebuild/flextransform/spec/04_interfaces.md",
+      "sha256": "873e84140139a9725365dbe3a651db87d9034f865c22ee503b24f5900452ab65"
+    },
+    {
+      "path": "rebuild/flextransform/spec/05_rtl_blocks.md",
+      "sha256": "4442117eaa919e18bb28f34bc26458bfea39f356bdd8046cccef4b82095b903d"
+    },
+    {
+      "path": "rebuild/flextransform/spec/06_verification.md",
+      "sha256": "c6d9e181f4daa6e9086797434059290dcbc32683a9f0777d8625d5bd6987e311"
+    },
+    {
+      "path": "rebuild/flextransform/spec/07_block_interfaces.md",
+      "sha256": "59a8be107bee67a704c56faf536f21ba6567fb53c5563b405a64cb8ecb540f8d"
+    },
+    {
+      "path": "rebuild/flextransform/spec/08_locked_ports.md",
+      "sha256": "019d8406cfa8d1dadf2f1e384fa644d51b6e86fae46a475268f5cde5934c55ad"
+    },
+    {
+      "path": "rebuild/flextransform/spec/09_locked_cycles.md",
+      "sha256": "32c5a8b8e04ed08d3debda8e8726eb9c3f091a7ed7ce79456731881dc1945507"
+    },
+    {
+      "path": "rebuild/flextransform/spec/10_locked_fsm.md",
+      "sha256": "e3199527f9ee290d9cdcdd88a968306840ccc1640c614837b896b0f7d511fe9a"
+    },
+    {
+      "path": "rebuild/flextransform/spec/11_liveness_and_lock.md",
+      "sha256": "20835b47d4617d1b8bc94e995c93e2c2e131b149bf2bd6c885f561a9c4df9090"
+    },
+    {
+      "path": "rebuild/flextransform/microarchitecture/ports.json",
+      "sha256": "0f479d49730363e72579eb648e5446ef552f4c297a45eb93b2abaa4f2fa31903"
+    },
+    {
+      "path": "rebuild/flextransform/microarchitecture/timing.json",
+      "sha256": "1a68c247592a422da0eb8e77467a2a3084c9abb60594c81f00830a63625a6533"
+    },
+    {
+      "path": "rebuild/flextransform/microarchitecture/fsm.json",
+      "sha256": "ba60c347932a8d7df0861ce5ab3ae13ff56383329cb2175deee28de33fe3b251"
+    },
+    {
+      "path": "rebuild/flextransform/microarchitecture/LOCK_0_2.json",
+      "sha256": "aa15840cb77e6502933c469671d64860e8025507fa9b0344262a9798c9c980ba"
+    }
+  ]
+}

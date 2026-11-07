@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 195 372.5 L 240 372.5 L 240 292.5 L 285 292.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="285 292.5, 278.6969 289.4552, 278.6969 295.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 195 187.5 L 240 187.5 L 240 292.5 L 285 292.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="285 292.5, 278.6969 289.4552, 278.6969 295.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 495 292.5 L 595 292.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="595 292.5, 588.6969 289.4552, 588.6969 295.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 830 302.5 L 797.5 302.5 L 797.5 292.5 L 765 292.5 " style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1.6; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<polygon points="765 292.5, 771.3031 295.5448, 771.3031 289.4552" style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(47%,31%,54%); fill-rule: evenodd;"/>
+			<rect x="15" y="335" width="180" height="75" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="15 343, 23 349, 15 355" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="26" y="340" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,680) scale(1,-1)">clk</text>
+			<text x="63.23046875" y="378.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,757) scale(1,-1)">AW slot FF</text>
+			<text x="63.98461914062499" y="347" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,694) scale(1,-1)">addr12 + valid</text>
+			<rect x="15" y="150" width="180" height="75" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="15 158, 23 164, 15 170" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="26" y="155" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,310) scale(1,-1)">clk</text>
+			<text x="69.0078125" y="193.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,387) scale(1,-1)">W slot FF</text>
+			<text x="48.08691406249999" y="162" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,324) scale(1,-1)">data32/strb4 + valid</text>
+			<rect x="285" y="245" width="210" height="95" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="341.99609375" y="301.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,603) scale(1,-1)">AND commit</text>
+			<text x="325.345947265625" y="257" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,514) scale(1,-1)">AWfull &amp; Wfull &amp; Bfree</text>
+			<rect x="595" y="245" width="170" height="95" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="595 253, 603 259, 595 265" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="606" y="250" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,500) scale(1,-1)">clk</text>
+			<text x="643.12109375" y="301.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,603) scale(1,-1)">B hold FF</text>
+			<text x="648.569580078125" y="257" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,514) scale(1,-1)">valid / resp</text>
+			<rect x="830" y="285" width="155" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="873.71875" y="297.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,595) scale(1,-1)">BREADY</text>
+			<rect x="280" y="70" width="485" height="70" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="280 78, 288 84, 280 90" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="291" y="75" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,150) scale(1,-1)">clk</text>
+			<text x="409.16796875" y="110.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,221) scale(1,-1)">AR fire → R snapshot/hold FF</text>
+			<text x="387.037841796875" y="82" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,164) scale(1,-1)">RVALID/RDATA/RRESP ổn định khi !RREADY</text>
+			<text x="20" y="25" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,50) scale(1,-1)">AW và W độc lập, không giả định thứ tự. Bus reset clears slots; soft core RESET giữ B/R.</text>
+		</g>
+	</g>
+</svg>

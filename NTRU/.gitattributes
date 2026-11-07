@@ -1,0 +1,10 @@
+# Preserve exact bytes of the accepted source and workflow across checkouts.
+/experiments/a_cg_z020_system160/** -text
+/experiments/a_cg_z020_perf160/rtl/** -text
+/scripts/check_baseline.py -text
+/fpga/z020/*.tcl -text
+
+# Accepted packed16 four-leaf source and archived predecessor bytes.
+/experiments/a_cg_packed4/** -text
+/experiments/a_cg_packed4_system160/** -text
+/docs/plan_history/pre_packed4_baseline_160_2026_11_04/** -text

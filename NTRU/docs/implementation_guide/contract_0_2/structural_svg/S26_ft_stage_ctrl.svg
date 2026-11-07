@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="410" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 410" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="410"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-410)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 230 343 L 270 343 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="270 343, 263.6969 339.9552, 263.6969 346.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 480 343 L 520 343 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="520 343, 513.6969 339.9552, 513.6969 346.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 730 343 L 770 343 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="770 343, 763.6969 339.9552, 763.6969 346.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="311" width="210" height="64" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 27,311 L 27,375 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="42.078125" y="347.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,695) scale(1,-1)">Descriptor RAM10×46</text>
+			<text x="68.280517578125" y="323" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,646) scale(1,-1)">host write / prefetch</text>
+			<rect x="270" y="311" width="210" height="64" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="308.984375" y="347.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,695) scale(1,-1)">ADD20 due + gap</text>
+			<text x="317.569580078125" y="323" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,646) scale(1,-1)">first-read timestamp</text>
+			<rect x="520" y="311" width="210" height="64" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 527,311 L 527,375 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="552.3125" y="347.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,695) scale(1,-1)">Context FIFO16×36</text>
+			<text x="567.90283203125" y="323" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,646) scale(1,-1)">push due-1; pop tail</text>
+			<rect x="770" y="311" width="210" height="64" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="770 319, 778 325, 770 331" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="781" y="316" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,632) scale(1,-1)">clk</text>
+			<text x="809.6640625" y="347.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,695) scale(1,-1)">HEAD context FF</text>
+			<text x="821.16552734375" y="323" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,646) scale(1,-1)">writeback luôn sẵn</text>
+			<rect x="275" y="100" width="470" height="75" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="387.9375" y="143.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,287) scale(1,-1)">OR tail_seen + EQ(active_mask)</text>
+			<text x="389.499267578125" y="112" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,224) scale(1,-1)">owner = lowest set bit, không cố định tile0</text>
+			<text x="20" y="45" style="font-family: Arial, sans-serif; font-size: 17px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,90) scale(1,-1)">Epoch FF20 riêng với kernel cycle FF32. Descriptor-valid bitmap thuộc core.</text>
+		</g>
+	</g>
+</svg>

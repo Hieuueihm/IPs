@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="410" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 410" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="410"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-410)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 115 357.5 L 197.5 357.5 L 197.5 362.68 L 280 362.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="280 362.68, 273.6969 359.6352, 273.6969 365.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 135 182.5 L 225 182.5 L 225 183 L 225 343 L 225 343.32 L 280 343.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="280 343.32, 273.6969 340.2752, 273.6969 346.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 115 357.5 L 170 357.5 L 170 358 L 170 198 L 170 197.68 L 280 197.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="280 197.68, 273.6969 194.6352, 273.6969 200.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 135 182.5 L 207.5 182.5 L 207.5 178.32 L 280 178.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="280 178.32, 273.6969 175.2752, 273.6969 181.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 342 353 L 428.5 353 L 428.5 337.5 L 515 337.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="515 337.5, 508.6969 334.4552, 508.6969 340.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 700 337.5 L 790 337.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="790 337.5, 783.6969 334.4552, 783.6969 340.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 875 300 L 875 240 L 607 240 L 607.5 240 L 607.5 300 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="607.5 300, 610.5448 293.6969, 604.4552 293.6969" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="340" width="95" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="53.7265625" y="352.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">Q[i]</text>
+			<rect x="20" y="165" width="115" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="50.375" y="177.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,355) scale(1,-1)">carry[i]</text>
+			<path d="M 273 331 C 290.54 353 290.54 353 273 375 " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.8; fill: none; fill-rule: evenodd;"/>
+			<path d="M 280 331 C 314.1 331 329.6 338.92 342 353 C 329.6 367.08 314.1 375 280 375 C 297.36 353.88 297.36 352.12 280 331 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="297.635009765625" y="313" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,626) scale(1,-1)">inc[i]</text>
+			<path d="M 280 166 L 309.76 166 C 352.54 166 352.54 210 309.76 210 L 280 210 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="284.089111328125" y="148" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,296) scale(1,-1)">carry[i+1]</text>
+			<polygon points="515 300, 515 375, 700 358.5, 700 316.5" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="556.81640625" y="343.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,687) scale(1,-1)">MUX reset/en</text>
+			<text x="565.9482421875" y="322" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,644) scale(1,-1)">D hoặc Q hold</text>
+			<rect x="790" y="300" width="170" height="75" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="790 308, 798 314, 790 320" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="801" y="305" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,610) scale(1,-1)">clk</text>
+			<text x="849.23046875" y="343.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,687) scale(1,-1)">FF Q[i]</text>
+			<text x="850.06005859375" y="312" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,624) scale(1,-1)">posedge</text>
+			<text x="20" y="55" style="font-family: Arial, sans-serif; font-size: 17px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,110) scale(1,-1)">carry[0]=1 khi increment. Lặp cho width3/4/5/20/32; wrap là bỏ carry cuối.</text>
+		</g>
+	</g>
+</svg>

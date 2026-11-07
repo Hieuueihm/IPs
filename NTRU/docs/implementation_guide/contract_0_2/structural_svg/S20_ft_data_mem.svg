@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="400" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="400"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-400)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 230 328 L 270 328 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="270 328, 263.6969 324.9552, 263.6969 331.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 480 328 L 520 328 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="520 328, 513.6969 324.9552, 513.6969 331.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 730 328 L 770 328 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="770 328, 763.6969 324.9552, 763.6969 331.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="296" width="210" height="64" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="93.87109375" y="340.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,681) scale(1,-1)">ren / ra8</text>
+			<text x="60.9765625" y="323.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,647) scale(1,-1)">wen / wa8 / wd32</text>
+			<text x="98.62548828125" y="308" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,616) scale(1,-1)">mỗi bank</text>
+			<rect x="270" y="296" width="210" height="64" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 277,296 L 277,360 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="308.96875" y="332.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,665) scale(1,-1)">RAM bank256×32</text>
+			<text x="336.168212890625" y="308" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,616) scale(1,-1)">1R sync +1W</text>
+			<rect x="520" y="296" width="210" height="64" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="520 304, 528 310, 520 316" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="531" y="301" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,602) scale(1,-1)">clk</text>
+			<text x="568.09375" y="332.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,665) scale(1,-1)">FF rd32 / rvalid</text>
+			<text x="592.119140625" y="308" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,616) scale(1,-1)">sau cạnh R</text>
+			<rect x="770" y="296" width="210" height="64" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(90%,93%,97%); fill-rule: evenodd;"/>
+			<polygon points="770 304, 778 310, 770 316" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="781" y="301" style="font-family: Arial, sans-serif; font-size: 10px;fill: rgb(65%,40%,8%); stroke:none;" transform="translate(0,602) scale(1,-1)">clk</text>
+			<text x="822.5546875" y="332.6" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,665) scale(1,-1)">Core route FF</text>
+			<text x="862.89501953125" y="308" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,616) scale(1,-1)">R+1</text>
+			<rect x="260" y="90" width="440" height="65" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="366.64453125" y="127.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,254) scale(1,-1)">EQ8(ra,wa) AND ren AND wen</text>
+			<text x="352.1201171875" y="102" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,204) scale(1,-1)">assert forbidden same-bank/same-row RAW</text>
+			<text x="20" y="35" style="font-family: Arial, sans-serif; font-size: 17px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,70) scale(1,-1)">Lặp32 bank; row0/row1 theo geometry. Reset rvalid, không reset nội dung RAM.</text>
+		</g>
+	</g>
+</svg>

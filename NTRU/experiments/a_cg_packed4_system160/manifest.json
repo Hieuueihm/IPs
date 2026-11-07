@@ -1,0 +1,20 @@
+{
+  "baseline": "a_cg_z020_system160",
+  "candidate": "a_cg_packed4 shared T-high",
+  "accepted_baseline_changed": false,
+  "part": "xc7z020clg400-2",
+  "clock_mhz": 160,
+  "candidate_manifest_sha256": "ad166c29bfe23e35ce0504c7390997fdccae5e293a2da1cc481469032db114c4",
+  "validated_results_sha256": "81038717dadbf204f520cbcbd7f048db81311618d17380abe8a2ecbf5ac6d3f5",
+  "source_sha256": {
+    "a_cg_axil.v": "cd3137c3af1d48d25b8ce6f2aa6a3f1308f1ea64140da6e8f0d4bbdced807b49",
+    "a_cg_fast.sv": "df24d23c1447a1667145cb79e1bd2361075a363abf92cabd378acc6a8c4010d9",
+    "mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "tile_a.sv": "86ad15605627b0aa047ae1ee1b1b134f823e3b9eee0e638492f59e41804f77be"
+  },
+  "workflow_sha256": {
+    "create_project.tcl": "6a4e92d7f058ab2ea00ba96f3d9ad0e9a0323a64e3c3c3e5ca7cad7fbb93e282",
+    "implement.tcl": "dc26358e0cb82829a7d0f2aa4c5a626772579b2e8a9ed9dabbed8c4f0f3a5f75",
+    "signoff.tcl": "652b5fbcda8c3e91d4708a83840ff9f79e46d193067cdbab737f2215ba1cdcbb"
+  }
+}

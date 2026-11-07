@@ -1,4 +1,6 @@
-# Tile đang dùng
+# Tile của nhánh hdl/ — lịch sử
+
+> **Baseline hiện hành từ 2026-11-04:** [a_cg_packed4_system160](../../experiments/BASELINE.md), source tại `experiments/a_cg_packed4_system160/rtl/`, contract [3.1](../../spec/FlexTransform/3.1/README.md). Các file trong `hdl/` và mô tả bên dưới thuộc nhánh trước; giữ nguyên RTL làm lịch sử, không ghép chúng vào build baseline.
 
 Source: [tile_thu.sv](tile_thu.sv), dùng [mul_ss.v](../mul_ss.v).
 Hợp đồng: [spec 2.0, cấp tile](../../spec/FlexTransform/2.0/10_hop_dong_tile.md).

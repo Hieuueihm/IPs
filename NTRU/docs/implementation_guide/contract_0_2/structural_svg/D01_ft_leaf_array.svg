@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="420" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="420"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-420)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 145 367.5 L 277.5 367.5 L 277.5 349.35 L 410 349.35 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="410 349.35, 403.6969 346.3052, 403.6969 352.3948" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 145 237.5 L 187.5 237.5 L 187.5 212.68 L 230 212.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="230 212.68, 223.6969 209.6352, 223.6969 215.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 160 127.5 L 195 127.5 L 195 193.32 L 230 193.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="230 193.32, 223.6969 190.2752, 223.6969 196.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 292 203 L 351 203 L 351 264.1 L 410 264.1 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="410 264.1, 403.6969 261.0552, 403.6969 267.1448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 615 307.5 L 675 307.5 L 675 346.25 L 735 346.25 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="735 346.25, 728.6969 343.2052, 728.6969 349.2948" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="663.0" y="340" width="24.0" height="17" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="668.326171875" y="343" style="font-family: Arial, sans-serif; font-size: 12px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,686) scale(1,-1)">17</text>
+			<path d="M 565 102.5 L 680 102.5 L 680 103 L 680 253 L 680 253.25 L 735 253.25 " style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1.6; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<polygon points="735 253.25, 728.6969 250.2052, 728.6969 256.2948" style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(47%,31%,54%); fill-rule: evenodd;"/>
+			<rect x="10" y="350" width="135" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="51.7109375" y="362.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,725) scale(1,-1)">a[15:0]</text>
+			<rect x="10" y="220" width="135" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="58.82421875" y="232.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,465) scale(1,-1)">a[15]</text>
+			<rect x="10" y="110" width="150" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="40.54296875" y="122.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,245) scale(1,-1)">a_signed[k]</text>
+			<path d="M 230 181 L 259.76 181 C 302.54 181 302.54 225 259.76 225 L 230 225 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="241.845947265625" y="163" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,326) scale(1,-1)">sign17</text>
+			<rect x="410" y="230" width="205" height="155" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="469.3828125" y="325.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,651) scale(1,-1)">CONCAT17</text>
+			<text x="467.320556640625" y="242" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,484) scale(1,-1)">{sign17,a[15:0]}</text>
+			<rect x="735" y="230" width="195" height="155" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="814.265625" y="310.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,621) scale(1,-1)">ax_q</text>
+			<text x="808.5" y="293.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,587) scale(1,-1)">FF[17]</text>
+			<rect x="470" y="85" width="95" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="506.37890625" y="97.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,195) scale(1,-1)">clk</text>
+			<text x="20" y="30" style="font-family: Arial, sans-serif; font-size: 15px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,60) scale(1,-1)">D ax_q = {a_signed[k] &amp; a[16*k+15], a[16*k+:16]}; không EN, không reset payload.</text>
+			<text x="416" y="353.35" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,706) scale(1,-1)">word16</text>
+			<text x="416" y="268.1" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,536) scale(1,-1)">sign1</text>
+			<text x="582.724365234375" y="311.5" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,623) scale(1,-1)">out17</text>
+			<text x="741" y="350.25" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,700) scale(1,-1)">D</text>
+			<text x="915.832763671875" y="350.25" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,700) scale(1,-1)">Q</text>
+			<text x="741" y="257.25" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,514) scale(1,-1)">CLK</text>
+			<polygon points="735 248.25, 742 253.25, 735 258.25" style="stroke: rgb(65%,40%,8%); stroke-linecap: butt; stroke-width: 1.2; fill: none; fill-rule: evenodd;"/>
+		</g>
+	</g>
+</svg>

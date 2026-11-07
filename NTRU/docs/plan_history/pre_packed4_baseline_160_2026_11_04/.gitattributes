@@ -1,0 +1,5 @@
+# Preserve exact bytes of the accepted source and workflow across checkouts.
+/experiments/a_cg_z020_system160/** -text
+/experiments/a_cg_z020_perf160/rtl/** -text
+/scripts/check_baseline.py -text
+/fpga/z020/*.tcl -text

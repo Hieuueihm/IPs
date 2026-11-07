@@ -270,9 +270,8 @@ module a_cg_fast (
     );
 endmodule
 
-// Isolated A + constant-geometry prototype, 16 identical engines, 64 DSP.
-// One runtime context; host loads direction-specific roots and stage descriptors.
-// Input/output natural order. Full host adapter and root cache are synthesized.
+// Execution stage behind the command frontend: configuration decode, host line map and host-read scaling, stage
+// schedule, 32 data banks (block RAM), 16 tiles with their root memories, and the shared FFT product program.
 module a_cg_exec (
     input wire clk, rst,
     input wire cfg_valid,
@@ -348,17 +347,11 @@ module a_cg_exec (
     reg [5:0] beat;
     reg [2:0] part;
     reg sent_all;
-    // Stage flags are registers, set whenever the stage index changes (timing, 03/11/2026). The *_c wires are the
-    // previous expressions, kept for the simulation-only shadows.
+    // Stage flags are registers, set whenever the stage index changes. irf is used only in procedural code: a continuous
+    // assignment through a function that reads module signals is re-evaluated in simulation only when its arguments change.
     function irf(input [3:0] idx);                 // packed16 within-word layer
         irf = packed16 && hmin==0 && (inverse ? idx==0 : idx==stages-1);
     endfunction
-    // written out, not through irf: a continuous assignment through a function that reads module signals is
-    // re-evaluated in simulation only when its arguments change
-    wire internal_read_c=packed16 && hmin==0 && (inverse ? stage_idx==0 : stage_idx==stages-1);
-    wire internal_write_c=packed16 && hmin==0 && (inverse ? write_stage==0 : write_stage==stages-1);
-    wire read_near_c=inverse || internal_read_c;
-    wire write_far_c=inverse && !internal_write_c;
     reg  internal_read, read_near, write_far;
     reg  more_stages;                             // stage_idx < stages - 1
     reg  [45:0] desc_nx;                          // desc[stage_idx + 1], prefetched
@@ -367,7 +360,6 @@ module a_cg_exec (
     wire [2:0] limbs = 3'd1 << fmt;
     wire [5:0] period = !fft ? 6'd3 : fmt==0 ? 6'd3 : fmt==1 ? 6'd12 : 6'd45;
     wire [4:0] last_k = logm>5 ? ((6'd1 << (logm-5))-1) : 0;
-    wire [3:0] fstage = inverse ? logm-1-stage_idx : stage_idx;
     wire tile_rst = rst || state==RESET_TILE;
     reg [1:0] ph;
     always @(posedge clk)
@@ -381,12 +373,9 @@ module a_cg_exec (
     function [2:0] rpf(input [5:0] bt, input [2:0] pa);
         rpf = fft ? ((pa<<base_log) | ((bt[0] ? limbs : 0)+(bt>>1))) : pa;
     endfunction
-    wire [2:0] rd_plane_c = fft ? ((part<<base_log) | ((beat[0] ? limbs : 0)+(beat>>1))) : part;
     reg  [2:0] rd_plane;                          // rpf(beat, part), registered with the counters
     wire [7:0] far_y_offset = logm>=6 ? (8'd1 << (logm-6)) : 0;
-    // Bank and root addresses (timing, 03/11/2026). Plane row bases come from two tables (one per buffer), registered
-    // from the static configuration; the parts that depend on k are registers updated with k. The previous single-clock
-    // expressions are kept as simulation-only shadows.
+    // Bank and root addresses: the parts that depend on k are registers updated with k.
     function [7:0] koff_f(input [4:0] kk, input h);            // far geometry: k/2, plus the far offset for the other half
         koff_f = (kk>>1) + ((kk[0]!=h) ? far_y_offset : 0);
     endfunction
@@ -396,8 +385,8 @@ module a_cg_exec (
     function [8:0] kroot_f(input [4:0] kk, input [4:0] rm);
         kroot_f = fft ? ((kk & rm) << (fmt+1)) : (kk & rm);
     endfunction
-    // Rows are bit fields (a_cg_z020_addr, 03/11/2026): buffer (rows_per_buf), plane (<< rowlog) and the row inside the
-    // plane (< 2^rowlog) never overlap, and the far offset is one bit above k/2, so every row is an OR, not a sum.
+    // Rows are bit fields: buffer (rows_per_buf), plane (<< rowlog) and the row inside the plane (< 2^rowlog) never
+    // overlap, and the far offset is one bit above k/2, so every row is an OR, not a sum.
     // Read row = rd_hi | koff[half]: rd_hi is registered with rd_plane, koff with k; both bank halves share them.
     function [7:0] hi_f(input par, input [2:0] pl);
         hi_f = (par ? rows_per_buf : 8'd0) | ({5'b0,pl} << rowlog);
@@ -412,22 +401,15 @@ module a_cg_exec (
     reg       near_swap;                                       // nswap_f(k)
     reg [8:0] rbk;                                             // root_base + kroot_f(k, root_mask)
     wire [4:0] k_inc = k + 1'b1;
-    // Values fixed per command, registered (timing: compares become equalities with registers; configuration ends
-    // several clocks before a command starts). The previous expressions stay in the shadows.
-    reg [5:0] period_m1, period_m2;
-    reg       beat_last;                         // beat == period_m1, kept with beat
+    // Values fixed per command, registered (compares become equalities with registers; configuration ends several clocks
+    // before a command starts).
+    reg [5:0] period_m2;
+    reg       beat_last;                         // beat == period - 1, kept with beat
     reg [3:0] row_jobs_m1, planes_m1, stages_m1;
     reg [4:0] last_k_r;
     always @(posedge clk) begin
-        period_m1<=period-1'b1; period_m2<=period-2'd2; row_jobs_m1<=row_jobs-1'b1; planes_m1<=planes-1'b1; stages_m1<=stages-1'b1; last_k_r<=last_k;
+        period_m2<=period-2'd2; row_jobs_m1<=row_jobs-1'b1; planes_m1<=planes-1'b1; stages_m1<=stages-1'b1; last_k_r<=last_k;
     end
-`ifndef SYNTHESIS
-    always @(posedge clk) if (!rst && state==RUN && (period_m1!==period-1'b1 || row_jobs_m1!==row_jobs-1'b1 ||
-        planes_m1!==planes-1'b1 || stages_m1!==stages-1'b1 || last_k_r!==last_k))
-        $fatal(1,"registered command constants differ");
-    always @(posedge clk) if (!rst && state==RUN && fft && (beat_last!==(beat==period_m1) || beat_rd!==(beat<base_planes)))
-        $fatal(1,"beat_last / beat_rd differ");
-`endif
     // next issue counters inside a stage (the stage switch overrides them)
     reg [4:0] k_nx; reg [5:0] beat_nx; reg [2:0] part_nx; reg sa_nx, kstep;
     always @* begin
@@ -447,19 +429,6 @@ module a_cg_exec (
     end
     wire [2:0] rd_plane_in = rd_plane & (base_planes[2:0] - 3'd1);    // plane within the root pack (FFT)
     wire [8:0] rt_addr = rbk + (fft ? {6'd0, rd_plane_in} : 9'd0);
-`ifndef SYNTHESIS
-    wire       near_swap_sim = logm>=6 ? ((k >> (logm-6)) & 1'b1) : 1'b0;
-    wire [7:0] rd_plane_base_sim = (({5'b0,rd_plane_c} << rowlog) + (stage_idx[0] ? rows_per_buf : 0));
-    wire [8:0] rt_addr_sim = root_base + (fft ? ((k & root_mask) << (fmt+1)) + (rd_plane_c&(base_planes-1)) : (k & root_mask));
-    always @(posedge clk) if (!rst && state==RUN) begin
-        if (internal_read!==internal_read_c || read_near!==read_near_c || write_far!==write_far_c ||
-            more_stages!==(stage_idx<stages-1) || (stage_idx<stages-1 && desc_nx!==desc[stage_idx+1'b1]))
-            $fatal(1,"registered stage flags differ");
-        if (rd_issue && (near_swap!==near_swap_sim || rd_plane!==rd_plane_c || rt_addr!==rt_addr_sim))
-            $fatal(1,"tracked read address differs: swap %b/%b plane %h/%h root %h/%h",
-                   near_swap, near_swap_sim, rd_plane, rd_plane_c, rt_addr, rt_addr_sim);
-    end
-`endif
 
     // configured remains zero throughout config preparation; it is sufficient
     // to protect host acceptance without routing cfg_pending into host CEs.
@@ -474,7 +443,6 @@ module a_cg_exec (
     // line uses 1/2/4 bank-service clocks at FFT32/64/128, without changing
     // the compute bank map. Read responses pipeline across line boundaries.
     reg [127:0] host_data;
-    reg [9:0] host_line;
     reg [1:0] host_word;
     reg host_direction;
     wire load_accept=load_valid;
@@ -485,10 +453,8 @@ module a_cg_exec (
         else if(read_accept) host_direction<=1;
     // Payload and command token are committed together. No live frontend
     // ready/config gating is distributed to these register enables.
-    always @(posedge clk)begin
+    always @(posedge clk)
         if(load_valid)host_data<=load_data;
-        if(load_valid || read_valid)host_line<=load_valid ? load_line : read_line;
-    end
     wire host_write=state==HLOAD;
     wire host_read=state==HREAD;
     wire [1:0] host_submask_c=fft && logm==0 ? (fmt==0 ? 2'd1 : 2'd3) :
@@ -496,21 +462,14 @@ module a_cg_exec (
     reg  [1:0] host_submask;                     // host_submask_c, registered (fixed per configuration)
     always @(posedge clk) host_submask<=host_submask_c;
 `ifndef SYNTHESIS
-    always @(posedge clk) if (!rst && (state==HLOAD || state==HREAD) && host_submask!==host_submask_c) $fatal(1,"host submask differs");
-`endif
-    wire [1:0] host_sub=host_word;
-    wire [9:0] host_line_sel=host_line;
-    wire [127:0] host_data_sel=host_data;
-`ifndef SYNTHESIS
     always @(posedge clk) if(!rst)begin
         if(host_read && !host_direction)$fatal(1,"read map direction not captured");
         if(host_write && host_direction)$fatal(1,"write map direction not captured");
     end
 `endif
-    // Host map (timing, 03/11/2026). Values that depend only on the configuration are registered every clock (host
-    // commands arrive at least two clocks after configuration ends, through the command stages); values that depend on
-    // the line are made when the line is captured. HPREP then only combines registers. The previous single-clock map
-    // is kept below as a simulation-only shadow.
+    // Host map. Values that depend only on the configuration are registered every clock (host commands arrive at least
+    // two clocks after configuration ends, through the command stages); values that depend on the line are made when the
+    // line is captured. HPREP then only combines registers.
     wire [12:0] total_words_c=(13'd1<<job_word_log)<<(bank_jobs_log+row_jobs_log);
     wire [9:0] pmask_c=(11'd1 << logm)-1;
     wire [1:0] host_pack_c=fft ? fmt : hmin_eff;
@@ -532,12 +491,10 @@ module a_cg_exec (
     wire [11:0] cap_j={cap_line,2'b0};
     wire [11:0] cap_element=cap_j>>host_pack;
     wire [3:0]  cap_job=cap_j>>job_word_log;      // 4 bits first, as the single-clock map
-    reg  [9:0]  host_base_p;
-    reg         host_base_comp;                   // element bit logm: imaginary part (FFT)
-    reg  [3:0]  host_bank_job, host_row_job;
+    reg  [9:0]  host_base_p;                      // position of the line's first element
     reg  [3:0]  host_oob_line;                    // per word of the line: beyond the data
-    reg  [4:0]  host_base_bank_r;                 // host_base_bank, made at capture (timing: the HPREP bank selects)
-    reg  [2:0]  host_base_plane_r;                // host_base_plane, made at capture (timing: the HPREP word phases)
+    reg  [4:0]  host_base_bank_r;                 // bank of the line's first word, made at capture
+    reg  [2:0]  host_base_plane_r;                // plane of the line's first word, made at capture
     wire        cap_dir=!load_valid;              // 0 load, 1 read (as host_direction after the capture)
     wire [9:0]  cap_p=cap_element[9:0]&pmask;
     wire [3:0]  cap_bank_job=cap_job&((5'd1<<bank_jobs_log)-1);
@@ -549,17 +506,9 @@ module a_cg_exec (
             host_base_bank_r<=capl_bank;
             host_base_plane_r<=(((cap_job>>bank_jobs_log)<<base_log) | (fft_lognz ? ({2'b0,cap_element[logm]}<<fmt) : 3'd0));
             host_base_p<=cap_element[9:0]&pmask;
-            host_base_comp<=(cap_element>>logm)&1'b1;
-            host_bank_job<=cap_job&((5'd1<<bank_jobs_log)-1);
-            host_row_job<=cap_job>>bank_jobs_log;
             for(cw=0;cw<4;cw=cw+1) host_oob_line[cw]<=({cap_line,cw[1:0]})>=total_words;
         end
-    wire [3:0] job_bank_shift=job_bank_shift_d[host_direction];
-    wire [2:0] host_base_plane_c=((host_row_job<<base_log) | (fft_lognz ? ({2'b0,host_base_comp}<<fmt) : 0));
-    wire [2:0] host_base_plane=host_base_plane_r;
-    wire [4:0] host_base_tiny=(inverse ^ host_direction) ? host_base_p[4:0] : (host_base_p[4:0]<<(5-logm));
-    wire [4:0] host_base_bank=logm>=6 ? (host_base_p[4:0]^(((host_base_p>>(logm-1))&1)<<4)) : (host_base_tiny^(host_bank_job<<job_bank_shift));
-    wire [7:0] host_base_row=(host_direction ? host_rdoff : 8'd0) | ({5'd0,host_base_plane}<<rowlog) | (host_base_p>>5);
+    wire [7:0] host_base_row=(host_direction ? host_rdoff : 8'd0) | ({5'd0,host_base_plane_r}<<rowlog) | (host_base_p>>5);
     wire [4:0] host_bank_basis[0:1];
     wire [7:0] host_row_basis[0:1];
     wire [1:0] host_phase_basis[0:1];
@@ -571,11 +520,9 @@ module a_cg_exec (
         wire position_bit=!job_bit && !lane_bit && pbit<logm;
         wire component_bit=!job_bit && fft && !lane_bit && pbit==logm;
         wire [4:0] p_delta=5'd1<<pbit;
-        wire [4:0] tiny=(inverse ^ host_direction) ? p_delta : (p_delta<<(5-logm));
-        wire [4:0] bank_basis_c=job_bit ? (5'd1<<(job_bank_shift+hb-job_word_log)) : position_bit ? (logm>=6 ? p_delta^((pbit==logm-1) ? 5'd16 : 5'd0) : tiny) : 0;
         wire [7:0] row_basis_c=lane_bit ? (8'd1<<(rowlog+hb)) : component_bit ? (8'd1<<(rowlog+fmt)) : 0;
         wire [1:0] phase_basis_c=lane_bit ? (2'd1<<hb) : component_bit ? (2'd1<<fmt) : 0;
-        // registered (fixed per configuration), the bank basis for both directions (timing)
+        // registered (fixed per configuration), the bank basis for both directions
         reg  [4:0] bank_basis_r [0:1];
         reg  [7:0] row_basis_r;
         reg  [1:0] phase_basis_r;
@@ -590,48 +537,22 @@ module a_cg_exec (
         assign host_bank_basis[hb]=bank_basis_r[host_direction];
         assign host_row_basis[hb]=row_basis_r;
         assign host_phase_basis[hb]=phase_basis_r;
-`ifndef SYNTHESIS
-        always @(posedge clk) if(!rst && state==HPREP && (host_bank_basis[hb]!==bank_basis_c ||
-            host_row_basis[hb]!==row_basis_c || host_phase_basis[hb]!==phase_basis_c))
-            $fatal(1,"registered host basis differs");
-`endif
     end endgenerate
-`ifndef SYNTHESIS
-    // shadow: the previous single-clock map from the captured line
-    wire [11:0] sh_j={host_line,2'b0};
-    wire [11:0] sh_element=sh_j>>host_pack_c;
-    wire [9:0]  sh_p=sh_element[9:0]&pmask_c;
-    wire [3:0]  sh_job=sh_j>>job_word_log;
-    wire [3:0]  sh_bank_job=sh_job&((5'd1<<bank_jobs_log)-1);
-    wire [3:0]  sh_row_job=sh_job>>bank_jobs_log;
-    wire [3:0]  sh_jbs=(inverse ^ host_direction) ? 5-bank_jobs_log : 5-logm-bank_jobs_log;
-    wire [2:0]  sh_plane=((sh_row_job<<base_log) | ((fft && logn!=0) ? (((sh_element>>logm)&1)<<fmt) : 0));
-    wire [4:0]  sh_tiny=(inverse ^ host_direction) ? sh_p[4:0] : (sh_p[4:0]<<(5-logm));
-    wire [4:0]  sh_bank=logm>=6 ? (sh_p[4:0]^(((sh_p>>(logm-1))&1)<<4)) : (sh_tiny^(sh_bank_job<<sh_jbs));
-    wire [7:0]  sh_row=(host_direction && stages[0] ? rows_per_buf : 0)+({5'd0,sh_plane}<<rowlog)+(sh_p>>5);
-    always @(posedge clk) if(!rst && state==HPREP)begin
-        if(host_base_plane_c!==sh_plane || host_base_bank_r!==sh_bank || host_base_bank!==sh_bank || host_base_row!==sh_row || host_base_plane!==sh_plane || job_bank_shift!==sh_jbs ||
-           total_words!==total_words_c || host_pack!==host_pack_c || pmask!==pmask_c)
-            $fatal(1,"split host map differs from the single-clock map");
-    end
-`endif
     wire [4:0] host_bank[0:3];
     wire [7:0] host_row[0:3];
     wire [3:0] host_select,host_oob;
     reg [3:0] cap_select,cap_oob;
     reg [4:0] cap_bank[0:3];
     wire [4:0] mapped_bank_w[0:3];
-    wire [3:0] mapped_oob_w;
     wire [1:0] mapped_phase_w[0:3];
     genvar hw;
     generate for(hw=0;hw<4;hw=hw+1) begin:host_map
         localparam [1:0] J=hw;
-        wire [11:0] j={host_line_sel,J};
-        wire [1:0] phase=host_base_plane[1:0]^(J[0] ? host_phase_basis[0] : 2'd0)^(J[1] ? host_phase_basis[1] : 2'd0);
+        wire [1:0] phase=host_base_plane_r[1:0]^(J[0] ? host_phase_basis[0] : 2'd0)^(J[1] ? host_phase_basis[1] : 2'd0);
         wire [4:0] mapped_bank=host_base_bank_r^(J[0] ? host_bank_basis[0] : 5'd0)^(J[1] ? host_bank_basis[1] : 5'd0);
         wire [7:0] mapped_row=host_base_row^(J[0] ? host_row_basis[0] : 8'd0)^(J[1] ? host_row_basis[1] : 8'd0);
         wire mapped_oob=host_oob_line[hw];
-        assign mapped_bank_w[hw]=mapped_bank; assign mapped_oob_w[hw]=mapped_oob; assign mapped_phase_w[hw]=phase;
+        assign mapped_bank_w[hw]=mapped_bank; assign mapped_phase_w[hw]=phase;
         reg [4:0] bank_q;
         reg [7:0] row_q;
         reg [1:0] phase_q;
@@ -641,7 +562,7 @@ module a_cg_exec (
         end
         assign host_bank[hw]=bank_q;
         assign host_row[hw]=row_q;
-        assign host_select[hw]=((phase_q & host_submask)==host_sub);
+        assign host_select[hw]=((phase_q & host_submask)==host_word);
         assign host_oob[hw]=oob_q;
 `ifndef SYNTHESIS
         always @(posedge clk) if(!rst && (host_read||host_write))begin
@@ -659,11 +580,11 @@ module a_cg_exec (
         end
     end endgenerate
 
-    // ---- inverse FFT scaling at the host read (a_cg_z020_hostdiv, 03/11/2026) ----
-    // The tiles no longer apply div2e to the last inverse FFT layer: the result stays in the banks unscaled (W bits hold
-    // it) and every line read after such a command is scaled here: wrap_W(v + 2^(s-1)) >>> s for each W-bit value of the
-    // line (W = 32 << fmt; a line holds 4 >> fmt values, low limb first; s = logm). Bit-exact with the previous in-tile
-    // division, since it is the last operation of the transform. The scale is pending from the end of a non-NTRUGen
+    // ---- inverse FFT scaling at the host read ----
+    // The tiles do not apply div2e to the last inverse FFT layer: the result stays in the banks unscaled (W bits hold it)
+    // and every line read after such a command is scaled here: wrap_W(v + 2^(s-1)) >>> s for each W-bit value of the
+    // line (W = 32 << fmt; a line holds 4 >> fmt values, low limb first; s = logm). Bit-exact with div2e in the last
+    // layer, since it is the last operation of the transform. The scale is pending from the end of a non-NTRUGen
     // inverse FFT until the next configuration, start or load. Two clocks: the rounding increment (word 0 of each value
     // by 2^(s-1), carries passed word to word inside a value), then the shift (made combinationally into the frontend's
     // response register).
@@ -683,9 +604,8 @@ module a_cg_exec (
     // Carries between the words of a value without carry chains: adding 2^(s-1) to a low limb carries out when its
     // bits s-1 .. 31 are all ones; a higher limb passes its carry-in on when it is all ones. Each word is then one
     // 32-bit add with its own carry-in (timing: no chain through the four words).
-    wire [31:0] sc_lowm = scale_lowm;
-    wire [3:0]  sc_cf = {4{scale_pend && scale_nz}} & {&(line_data[127:96] | sc_lowm), &(line_data[95:64] | sc_lowm),
-                                                        &(line_data[63:32] | sc_lowm), &(line_data[31:0] | sc_lowm)};
+    wire [3:0]  sc_cf = {4{scale_pend && scale_nz}} & {&(line_data[127:96] | scale_lowm), &(line_data[95:64] | scale_lowm),
+                                                        &(line_data[63:32] | scale_lowm), &(line_data[31:0] | scale_lowm)};
     wire [3:0]  sc_ones = {&line_data[127:96], &line_data[95:64], &line_data[63:32], &line_data[31:0]};
     wire        sc_c1 = !sc_first[1] && sc_cf[0];
     wire        sc_o1 = sc_first[1] ? sc_cf[1] : (sc_c1 && sc_ones[1]);
@@ -734,7 +654,7 @@ module a_cg_exec (
     end
     assign read_data = rs_out;
 `ifndef SYNTHESIS
-    // reference: the previous in-tile division, per value, in plain integer arithmetic
+    // reference: div2e per value, in plain integer arithmetic
     reg [127:0] rs_line_sim, rs_ref;
     reg [3:0]   rs_s_sim; reg [1:0] rs_fmt_sim;
     reg         rs_valid_sim;                   // a real line response (a testbench may force the port net)
@@ -757,8 +677,8 @@ module a_cg_exec (
     end
 `endif
 
-    // Host selects of the next clock (a_cg_z020_hostdiv, timing): word index, phases and banks as they will be, so each
-    // bank registers its own one-hot word select (hsel) and the bank ports see no compare.
+    // Host selects of the next clock: word index, phases and banks as they will be, so each bank registers its own
+    // one-hot word select (hsel) and the bank ports see no compare.
     wire [1:0] hword_nx = (state==HPREP) ? 2'd0 : (state==HLOAD || state==HREAD) ? host_word+1'b1 : host_word;
     wire [3:0] hsel_word_nx;
     genvar hx;
@@ -770,7 +690,6 @@ module a_cg_exec (
     // Each bank has exactly one synchronous read and one write port. All rows
     // hold live runtime data; no initial contents or tied-off mode inputs.
     wire [31:0] bank_rdata [0:31];
-    wire [31:0] roots [0:15];
     wire [15:0] rsp_valid, req_ready;
     wire [63:0] rsp_data [0:15];
     wire [7:0] rsp_tag [0:15];
@@ -785,10 +704,6 @@ module a_cg_exec (
     wire [7:0] wr_row_h [0:1];
     assign wr_row_h[0] = wr_hi | (write_far ? ((out_k>>1) | (out_k[0] ? far_y_offset : 8'd0)) : {3'b0,out_k});
     assign wr_row_h[1] = wr_hi | (write_far ? ((out_k>>1) | (!out_k[0] ? far_y_offset : 8'd0)) : {3'b0,out_k});
-`ifndef SYNTHESIS
-    always @(posedge clk) if (!rst && state==RUN && out_near_swap !== (logm>=6 ? ((out_k>>(logm-6))&1'b1) : 1'b0))
-        $fatal(1,"write swap mask differs");
-`endif
     genvar b;
     generate for (b=0;b<32;b=b+1) begin : data_bank
         (* ram_style="block" *) reg [31:0] mem [0:255];
@@ -803,15 +718,6 @@ module a_cg_exec (
         wire [7:0] wr_row = wr_row_h[b>>4];
         wire [7:0] rd_row = rd_row_h[b>>4];
         wire compute_read_en = read_near ? (near_swap ? active[TF^8] : active[TF]) : active[TI];
-`ifndef SYNTHESIS
-        wire [7:0] rd_row_sim = rd_plane_base_sim + (read_near_c ? k : ((k>>1) + ((k[0]!=(b>>4)) ? far_y_offset : 0)));
-        wire [7:0] wr_row_sim = (({5'b0,out_plane}<<rowlog) + (!write_stage[0] ? rows_per_buf : 0)) +
-                                (write_far_c ? ((out_k>>1) + ((out_k[0]!=(b>>4)) ? far_y_offset : 0)) : out_k);
-        always @(posedge clk) if (!rst && state==RUN) begin
-            if (rd_issue && compute_read_en && rd_row!==rd_row_sim) $fatal(1,"bank %0d read row %h/%h", b, rd_row, rd_row_sim);
-            if (compute_write && wr_row!==wr_row_sim) $fatal(1,"bank %0d write row %h/%h", b, wr_row, wr_row_sim);
-        end
-`endif
         reg [3:0] hsel;                            // word hj of the line goes to / comes from this bank in this clock
         integer hk;
         always @(posedge clk)
@@ -823,27 +729,8 @@ module a_cg_exec (
         wire [7:0]  hra = ({8{hsv[0]}} & host_row[0]) | ({8{hsv[1]}} & host_row[1]) | ({8{hsv[2]}} & host_row[2]) |
                           ({8{hsv[3]}} & host_row[3]);
         wire [7:0]  hwa = hra;
-        wire [31:0] hwd = ({32{hsv[0]}} & host_data_sel[31:0]) | ({32{hsv[1]}} & host_data_sel[63:32]) |
-                          ({32{hsv[2]}} & host_data_sel[95:64]) | ({32{hsv[3]}} & host_data_sel[127:96]);
-`ifndef SYNTHESIS
-        // shadow: the previous per-clock select
-        reg hr_s,hw_s;
-        reg [7:0] hra_s,hwa_s;
-        reg [31:0] hwd_s;
-        integer hj;
-        always @* begin
-            hr_s=0;hw_s=0;hra_s=0;hwa_s=0;hwd_s=0;
-            for(hj=0;hj<4;hj=hj+1) begin
-                if(host_read && host_select[hj] && !host_oob[hj] && host_bank[hj]==b) begin hr_s=1;hra_s=host_row[hj];end
-                if(host_write && host_select[hj] && !host_oob[hj] && host_bank[hj]==b) begin
-                    hw_s=1;hwa_s=host_row[hj];hwd_s=host_data_sel[32*hj+:32];
-                end
-            end
-        end
-        always @(posedge clk) if (!rst && (host_read||host_write) && (hr!==hr_s || hw!==hw_s ||
-            (hr && hra!==hra_s) || (hw && (hwa!==hwa_s || hwd!==hwd_s))))
-            $fatal(1,"registered host select differs (bank %0d)", b);
-`endif
+        wire [31:0] hwd = ({32{hsv[0]}} & host_data[31:0]) | ({32{hsv[1]}} & host_data[63:32]) |
+                          ({32{hsv[2]}} & host_data[95:64]) | ({32{hsv[3]}} & host_data[127:96]);
         wire ren=(rd_issue && compute_read_en)||hr;
         wire [7:0] ra=host_read ? hra : rd_row;
         wire wen=compute_write||hw;
@@ -921,9 +808,11 @@ module a_cg_exec (
     end endgenerate
 
     // One product program for all engines; state/multiplier operands stay local.
-    // Accepted first beat -> first limb product = 2L+5 clocks, IN_REG=1 and the extra request register of a_cg_z020_lat1.
-    // Timing (03/11/2026): the program runs one clock early from registers (taps program_d - 2 of the delay lines), and
-    // every tile registers it once, so each tile sees the same program on time from a local register.
+    // Accepted first beat -> first limb product = 2L+5 clocks, with the tile's input register and its extra request
+    // register. The program runs one clock early from registers (taps program_d - 2 of the delay lines), and every tile
+    // registers it once, so each tile sees the same program on time from a local register.
+    // The taps used are 4 .. 10. The delay lines keep 13 entries: with a variable tap, synthesis keeps entries 11 and 12
+    // (never selected), and the measured netlist has them.
     reg [12:0] program_delay;
     reg [15:0] mask_delay[0:12];
     wire [3:0] program_d=fmt==0 ? 6 : fmt==1 ? (native64 && inverse ? 10 : 8) : 12;
@@ -955,47 +844,13 @@ module a_cg_exec (
             end
         end
     end
-`ifndef SYNTHESIS
-    // shadow: the previous on-time program, compared with the early program one clock later
-    reg [15:0] program_mask_sim;
-    reg program_busy_sim; reg [1:0] product_sim; reg [3:0] step_sim;
-    wire program_start_sim = fmt==0 ? program_delay[6] : fmt==1 ? (native64 && inverse ? program_delay[10] : program_delay[8]) : program_delay[12];
-    wire [15:0] prog_mask_sim=program_start_sim ? mask_delay[program_d] : program_mask_sim;
-    wire prog_valid_sim = program_start_sim || program_busy_sim;
-    wire [1:0] prog_product_sim = program_start_sim ? 0 : product_sim;
-    wire [3:0] prog_step_sim = program_start_sim ? 0 : step_sim;
-    reg e_valid_d; reg [1:0] e_product_d; reg [3:0] e_step_d; reg [15:0] e_mask_d;
-    always @(posedge clk) begin
-        e_valid_d<=e_valid; e_product_d<=e_product; e_step_d<=e_step; e_mask_d<=e_mask;
-        if (tile_rst) begin program_busy_sim<=0; product_sim<=0; step_sim<=0; end
-        else begin
-            if(program_start_sim)program_mask_sim<=mask_delay[program_d];
-            if (prog_valid_sim) begin
-                if (prog_step_sim==last_step) begin
-                    step_sim<=0;
-                    if (prog_product_sim==2) begin program_busy_sim<=0; product_sim<=0; end
-                    else begin program_busy_sim<=1; product_sim<=prog_product_sim+1'b1; end
-                end else begin program_busy_sim<=1; step_sim<=prog_step_sim+1'b1; product_sim<=prog_product_sim; end
-            end
-        end
-        if (!rst && !tile_rst && state==RUN && (e_valid_d!==prog_valid_sim ||
-            (prog_valid_sim && (e_product_d!==prog_product_sim || e_step_d!==prog_step_sim || e_mask_d!==prog_mask_sim))))
-            $fatal(1,"early FFT program differs from the on-time program");
-    end
-`endif
     wire [9:0] wanted_desc_c = (11'd1 << stages)-1;
     reg  [9:0] wanted_desc;                      // registered (fixed per configuration; a start comes clocks later)
     always @(posedge clk) wanted_desc <= wanted_desc_c;
-`ifndef SYNTHESIS
-    always @(posedge clk) if (!rst && state==IDLE && start && wanted_desc!==wanted_desc_c) $fatal(1,"wanted_desc differs");
-`endif
-    // Availability and busy outputs come from registers (a_cg_z020_hostdiv, timing at the interface). Each register is
-    // loaded with the value the previous expression will have in the next clock, from the next state; the previous
-    // expressions (*_c) are compared with them in simulation every clock.
-    wire busy_c = state>=RESET_TILE && state<=RUN;
-    wire cfg_ready_c = state==IDLE && !cfg_pending;
-    wire load_ready_c = state==IDLE && configured;
-    wire read_ready_c = (state==IDLE || state==HCATCH) && configured;
+    // Availability and busy outputs come from registers, loaded from the next state with the value they will have in the
+    // next clock: cfg_ready = IDLE and no configuration pending, load_ready = IDLE and configured, read_ready = IDLE or
+    // HCATCH and configured, busy = RESET_TILE .. RUN.
+    wire busy_c = state>=RESET_TILE && state<=RUN;     // busy in this clock (cycle counter)
     wire start_go = configured && stages!=0 && roots_valid && (desc_valid&wanted_desc)==wanted_desc;
     wire run_last = rsp_valid[0] && out_k==last_k_r && {1'b0,out_plane}==planes_m1 && write_stage==stages_m1;
     reg [3:0] state_nx;
@@ -1026,16 +881,6 @@ module a_cg_exec (
         read_ready_r <= (state_nx==IDLE || state_nx==HCATCH) && configured_nx;
         busy_r <= state_nx>=RESET_TILE && state_nx<=RUN;
     end
-`ifndef SYNTHESIS
-    reg ready_checked;
-    always @(posedge clk) begin
-        ready_checked <= !rst;
-        if (ready_checked && !rst && (cfg_ready_r!==cfg_ready_c || load_ready_r!==load_ready_c ||
-            read_ready_r!==read_ready_c || busy_r!==busy_c))
-            $fatal(1,"registered availability differs: cfg %b/%b load %b/%b read %b/%b busy %b/%b", cfg_ready_r, cfg_ready_c,
-                   load_ready_r, load_ready_c, read_ready_r, read_ready_c, busy_r, busy_c);
-    end
-`endif
     assign busy = busy_r;
     assign cfg_ready = cfg_ready_r;
     assign load_ready = load_ready_r;

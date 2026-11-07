@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 120 320 L 120 260 L 175 260 L 175 200 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="175 200, 171.9552 206.3031, 178.0448 206.3031" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 370 320 L 370 260 L 485 260 L 485 200 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="485 200, 481.9552 206.3031, 488.0448 206.3031" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 620 320 L 620 260 L 795 260 L 795 200 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="795 200, 791.9552 206.3031, 798.0448 206.3031" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="10" y="320" width="220" height="85" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="75.1015625" y="370.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,740) scale(1,-1)">word0[31:0]</text>
+			<text x="41.615966796875" y="332" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,664) scale(1,-1)">ROUND bias tại value-start</text>
+			<rect x="260" y="320" width="220" height="85" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="325.1015625" y="370.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,740) scale(1,-1)">word1[31:0]</text>
+			<text x="291.615966796875" y="332" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,664) scale(1,-1)">ROUND bias tại value-start</text>
+			<rect x="510" y="320" width="220" height="85" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="575.1015625" y="370.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,740) scale(1,-1)">word2[31:0]</text>
+			<text x="541.615966796875" y="332" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,664) scale(1,-1)">ROUND bias tại value-start</text>
+			<rect x="760" y="320" width="220" height="85" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="825.1015625" y="370.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,740) scale(1,-1)">word3[31:0]</text>
+			<text x="791.615966796875" y="332" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,664) scale(1,-1)">ROUND bias tại value-start</text>
+			<rect x="40" y="110" width="270" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="125.62890625" y="163.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,327) scale(1,-1)">carry_0_to_1</text>
+			<text x="92.27099609374999" y="122" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,244) scale(1,-1)">AND overflow &amp; same_value</text>
+			<rect x="350" y="110" width="270" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="435.62890625" y="163.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,327) scale(1,-1)">carry_1_to_2</text>
+			<text x="402.27099609375" y="122" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,244) scale(1,-1)">AND overflow &amp; same_value</text>
+			<rect x="660" y="110" width="270" height="90" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="745.62890625" y="163.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,327) scale(1,-1)">carry_2_to_3</text>
+			<text x="712.27099609375" y="122" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,244) scale(1,-1)">AND overflow &amp; same_value</text>
+			<text x="20" y="65" style="font-family: Arial, sans-serif; font-size: 15px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,130) scale(1,-1)">same_value01=(fmt!=0), 12=(fmt==2), 23=(fmt!=0). Carry được tính/chốt tại stage1.</text>
+			<text x="20" y="30" style="font-family: Arial, sans-serif; font-size: 15px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,60) scale(1,-1)">Với bias=2^j, carry thấp = AND(word_start[31:j]); carry tiếp cần word trung gian toàn1.</text>
+		</g>
+	</g>
+</svg>

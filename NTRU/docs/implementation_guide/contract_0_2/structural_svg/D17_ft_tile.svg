@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 260 355 L 325 355 L 325 324 L 390 324 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="390 324, 383.6969 320.9552, 383.6969 327.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 260 160 L 325 160 L 325 197.5 L 390 197.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="390 197.5, 383.6969 194.4552, 383.6969 200.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 620 255 L 750 255 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="750 255, 743.6969 251.9552, 743.6969 258.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="10" y="305" width="250" height="100" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="75.43359375" y="365.0" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,730) scale(1,-1)">NTT candidates</text>
+			<text x="81.50830078125" y="317" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,634) scale(1,-1)">leaf_a64, leaf_b64</text>
+			<rect x="10" y="110" width="250" height="100" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="76.32421875" y="170.0" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,340) scale(1,-1)">FFT candidates</text>
+			<text x="67.080078125" y="122" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,244) scale(1,-1)">map limbs; signed flags</text>
+			<polygon points="390 140, 390 370, 620 319.4, 620 190.6" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="454.3359375" y="284.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,569) scale(1,-1)">OWNER MUX</text>
+			<text x="460.918701171875" y="162" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,324) scale(1,-1)">cfg_mode fixed</text>
+			<rect x="750" y="140" width="230" height="230" style="stroke: rgb(65%,40%,8%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,94%,85%); fill-rule: evenodd;"/>
+			<text x="813.4453125" y="284.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,569) scale(1,-1)">LEAF ARRAY</text>
+			<text x="815.129638671875" y="152" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,304) scale(1,-1)">a64 / b64 / flags4</text>
+			<text x="20" y="40" style="font-family: Arial, sans-serif; font-size: 15px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,80) scale(1,-1)">a_signed/b_signed = NTT?4b0:FFT top-limb flags. Mask valid cũng chọn cùng context.</text>
+			<text x="396" y="328.0" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,656) scale(1,-1)">NTT64</text>
+			<text x="396" y="201.5" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,403) scale(1,-1)">FFT64</text>
+		</g>
+	</g>
+</svg>

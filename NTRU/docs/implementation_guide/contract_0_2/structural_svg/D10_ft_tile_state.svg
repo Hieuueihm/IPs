@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 200 382.5 L 265 382.5 L 265 371.5 L 330 371.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="330 371.5, 323.6969 368.4552, 323.6969 374.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 200 382.5 L 265 382.5 L 265 333.5 L 330 333.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="330 333.5, 323.6969 330.4552, 323.6969 336.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 200 262.5 L 265 262.5 L 265 267 L 330 267 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="330 267, 323.6969 263.9552, 323.6969 270.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 620 305 L 670 305 L 670 250 L 720 250 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="720 250, 713.6969 246.9552, 713.6969 253.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 200 122.5 L 850 122.5 L 850 123 L 850 165 " style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1.6; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<polygon points="850 165, 853.0448 158.6969, 846.9552 158.6969" style="stroke: rgb(47%,31%,54%); stroke-linecap: butt; stroke-width: 1; fill: rgb(47%,31%,54%); fill-rule: evenodd;"/>
+			<rect x="10" y="365" width="190" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="55.2265625" y="377.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,755) scale(1,-1)">WE / WA[3:0]</text>
+			<rect x="10" y="245" width="190" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="66.33984375" y="257.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,515) scale(1,-1)">WD[N-1:0]</text>
+			<rect x="10" y="105" width="190" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="76.5546875" y="117.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,235) scale(1,-1)">RA[3:0]</text>
+			<rect x="330" y="210" width="290" height="190" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 337,210 L 337,400 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="432.98828125" y="328.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,657) scale(1,-1)">RAM16 × N</text>
+			<text x="416.465087890625" y="222" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,444) scale(1,-1)">write decoder nội bộ</text>
+			<polygon points="720 165, 720 335, 980 297.6, 980 202.4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="785.76171875" y="270.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,541) scale(1,-1)">READ MUX16 ×N</text>
+			<text x="800.9453125" y="187" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,374) scale(1,-1)">RA tổ hợp → RD</text>
+			<text x="20" y="40" style="font-family: Arial, sans-serif; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,80) scale(1,-1)">N42 side, N32 operand/root. RAM8 và RAM4 giảm bit address, không thay read latency.</text>
+			<text x="336" y="375.5" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,751) scale(1,-1)">WE</text>
+			<text x="336" y="337.5" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,675) scale(1,-1)">WA4</text>
+			<text x="336" y="271.0" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,542) scale(1,-1)">WDN</text>
+			<text x="839.787109375" y="170" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,340) scale(1,-1)">RA4</text>
+		</g>
+	</g>
+</svg>

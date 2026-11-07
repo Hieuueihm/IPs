@@ -1,5 +1,7 @@
 # Numeric contract và kiểm chứng trực tiếp bằng R8 C
 
+> **Baseline hiện hành 2026-11-04:** [a_cg_packed4_system160](../experiments/BASELINE.md), [contract 3.1](../spec/FlexTransform/3.1/01_so_hoc.md). Phân tích C và các số đo theo ngày bên dưới được giữ làm lịch sử; không lấy nguồn RTL hoặc số PPA cũ thay cho baseline.
+
 > Cập nhật ứng dụng: [C tiêu thụ kernel RTL-backed và verifier độc lập chấp nhận chữ ký](pqc_application_cosim.md).
 
 Phân tích C/model ngày 25/10/2026: Q64.64 của FFT128. Cập nhật 26/10:

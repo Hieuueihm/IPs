@@ -1,5 +1,7 @@
 # FlexTransform — phân tích related work, vòng 1
 
+> Cập nhật 2026-11-04: [đối chiếu bốn paper với baseline 3.1 đã P&R](paper_notes/04_prior_work_vs_baseline31.md). Bản này bổ sung phân tích Montgomery dùng lại mảng nhân, packed16 hai nhóm và giới hạn của claim fusion/multiprecision. ICTA 2026 vẫn chỉ có abstract; chưa kết luận từ toàn văn.
+
 Ngày: 21/10/2026. Đã phân tích P1/P2/P3; các bài khác vẫn theo
 [reading guide](reading_guide.md). Đây là tài liệu phục vụ chọn kiến trúc,
 không phải kết luận đã đủ novelty.

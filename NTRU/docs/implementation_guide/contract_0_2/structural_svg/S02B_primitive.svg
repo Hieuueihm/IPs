@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="400" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="400"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-400)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 105 267.5 L 152.5 267.5 L 152.5 273 L 200 273 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="200 273, 193.6969 269.9552, 193.6969 276.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 105 357.5 L 385 357.5 L 385 358 L 385 353 L 385 352.68 L 460 352.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="460 352.68, 453.6969 349.6352, 453.6969 355.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 262 273 L 345 273 L 345 333 L 345 333.32 L 460 333.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="460 333.32, 453.6969 330.2752, 453.6969 336.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 105 167.5 L 282.5 167.5 L 282.5 158.32 L 460 158.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="460 158.32, 453.6969 155.2752, 453.6969 161.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 105 267.5 L 145 267.5 L 145 268 L 145 100 L 400 100 L 400 178 L 400 177.68 L 460 177.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="460 177.68, 453.6969 174.6352, 453.6969 180.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 522 343 L 660 343 L 660 268 L 660 267.68 L 730 267.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="730 267.68, 723.6969 264.6352, 723.6969 270.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 522 168 L 680 168 L 680 248 L 680 248.32 L 730 248.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="730 248.32, 723.6969 245.2752, 723.6969 251.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 792 258 L 838.5 258 L 838.5 257.5 L 885 257.5 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="885 257.5, 878.6969 254.4552, 878.6969 260.5448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="20" y="340" width="85" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="53.1640625" y="352.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,705) scale(1,-1)">d0</text>
+			<rect x="20" y="150" width="85" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="53.1640625" y="162.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,325) scale(1,-1)">d1</text>
+			<rect x="20" y="250" width="85" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="58.05078125" y="262.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,525) scale(1,-1)">s</text>
+			<circle cx="257" cy="273.0" r="5" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 200 251 L 252 273 L 200 295 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="225.944091796875" y="233" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,466) scale(1,-1)">!s</text>
+			<path d="M 460 321 L 489.76 321 C 532.54 321 532.54 365 489.76 365 L 460 365 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="461.378662109375" y="303" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,606) scale(1,-1)">d0 AND !s</text>
+			<path d="M 460 146 L 489.76 146 C 532.54 146 532.54 190 489.76 190 L 460 190 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="463.1845703125" y="128" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,256) scale(1,-1)">d1 AND s</text>
+			<path d="M 730 236 C 764.1 236 779.6 243.92 792 258 C 779.6 272.08 764.1 280 730 280 C 747.36 258.88 747.36 257.12 730 236 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="751.964111328125" y="218" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,436) scale(1,-1)">out</text>
+			<rect x="885" y="240" width="100" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="922.5625" y="252.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,505) scale(1,-1)">out</text>
+			<text x="20" y="40" style="font-family: Arial, sans-serif; font-size: 17px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,80) scale(1,-1)">Lặp cho N bit; tất cả bit dùng chung s. D0 chọn khi s=0, D1 khi s=1.</text>
+		</g>
+	</g>
+</svg>

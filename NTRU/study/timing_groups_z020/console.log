@@ -1,0 +1,147 @@
+
+****** Vivado v2018.1 (64-bit)
+  **** SW Build 2188600 on Wed Apr  4 18:40:38 MDT 2018
+  **** IP Build 2185939 on Wed Apr  4 20:55:05 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source study/timing_groups_z020/inspect.tcl
+# set workspace [file normalize [file join [file dirname [info script]] ../..]]
+# set out [file join $workspace study build a_cg_z020_100mhz path_groups]
+# file mkdir $out
+# set_param general.maxThreads 4
+# open_checkpoint [file join $workspace study build a_cg_z020_100mhz route10 routed.dcp]
+Command: open_checkpoint D:/IPs/NTRU/study/build/a_cg_z020_100mhz/route10/routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.041 . Memory (MB): peak = 240.910 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4613 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.1
+INFO: [Device 21-403] Loading part xc7z020clg400-2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1412.383 ; gain = 38.195
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1412.383 ; gain = 38.195
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1008 instances were transformed.
+  RAM16X1S => RAM32X1S (RAMS32): 512 instances
+  RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 496 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2018.1 (64-bit) build 2188600
+open_checkpoint: Time (s): cpu = 00:00:32 ; elapsed = 00:00:39 . Memory (MB): peak = 1412.383 ; gain = 1179.953
+# set_property HD.CLK_SRC BUFGCTRL_X0Y16 [get_ports clk]
+INFO: [Vivado 12-4761] HD.CLK_SRC property is set on port clk. The net connecting to the port drives either clock PIN or hierarchical black box. Use the create_clock constraint to create a clock on this port prior to setting HD.CLK_SRC. 
+# update_timing -full
+update_timing: Time (s): cpu = 00:00:24 ; elapsed = 00:00:08 . Memory (MB): peak = 1470.438 ; gain = 58.055
+# if {[get_property PERIOD [get_clocks clk]] != 10.0} {error "Unexpected clock period"}
+# set regs [all_registers]
+# set summary [open [file join $out groups.tsv] w]
+# puts $summary "group\tsources\tendpoints\tslack_ns\tlogic_levels\tstartpoint\tendpoint"
+# proc select_regs {patterns} {
+#     global regs
+#     set result {}
+#     foreach pattern $patterns {
+#         set result [concat $result [filter $regs "NAME =~ $pattern"]]
+#     }
+#     return [lsort -unique $result]
+# }
+# proc inspect_group {name sources endpoints} {
+#     global out summary
+#     if {[llength $sources] == 0 || [llength $endpoints] == 0} {
+#         puts $summary "$name\t[llength $sources]\t[llength $endpoints]\tNONE\t0\t-\t-"
+#         puts "GROUP_EMPTY $name"
+#         flush $summary
+#         return
+#     }
+#     set paths [get_timing_paths -from $sources -to $endpoints -delay_type max -max_paths 1 -nworst 1]
+#     if {[llength $paths] == 0} {
+#         puts $summary "$name\t[llength $sources]\t[llength $endpoints]\tNO_PATH\t0\t-\t-"
+#         puts "GROUP_NO_PATH $name"
+#         flush $summary
+#         return
+#     }
+#     set p [lindex $paths 0]
+#     puts $summary "$name\t[llength $sources]\t[llength $endpoints]\t[get_property SLACK $p]\t[get_property LOGIC_LEVELS $p]\t[get_property STARTPOINT_PIN $p]\t[get_property ENDPOINT_PIN $p]"
+#     flush $summary
+#     report_timing -from $sources -to $endpoints -delay_type max -max_paths 3 -nworst 1 -unique_pins -file [file join $out ${name}.rpt]
+#     puts "GROUP_DONE $name WNS=[get_property SLACK $p]"
+# }
+# set baseline [get_timing_paths -from $regs -to $regs -delay_type max -max_paths 1]
+# set hold [get_timing_paths -from $regs -to $regs -delay_type min -max_paths 1]
+# if {abs([get_property SLACK $baseline]-0.032)>0.002 || abs([get_property SLACK $hold]-0.051)>0.002} {
+#     error "Routed timing did not reproduce at the original clock source"
+# }
+# puts "ORIGINAL_TIMING_REPRODUCED setup=[get_property SLACK $baseline] hold=[get_property SLACK $hold]"
+ORIGINAL_TIMING_REPRODUCED setup=0.032 hold=0.051
+# inspect_group all_internal $regs $regs
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE all_internal WNS=0.032
+# set non_rounding [filter $regs {NAME !~ u_exec/rs_sum_reg*}]
+# inspect_group except_rounding $regs $non_rounding
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE except_rounding WNS=0.206
+# set tiles [select_regs {*u_tile/*}]
+# inspect_group tile_all $regs $tiles
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE tile_all WNS=0.329
+# inspect_group tile_to_tile $tiles $tiles
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE tile_to_tile WNS=0.464
+# inspect_group fft_accumulator $regs [select_regs {*u_tile/wacc_reg* *u_tile/wpl_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE fft_accumulator WNS=2.367
+# inspect_group fft_T $regs [select_regs {*u_tile/wps_reg* *u_tile/t5_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE fft_T WNS=2.150
+# inspect_group operand_stage $regs [select_regs {*u_tile/a1_reg* *u_tile/s1_reg* *u_tile/nhp0_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE operand_stage WNS=0.448
+# inspect_group fft_limb_sums $regs [select_regs {*u_tile/sa5_reg* *u_tile/sw5_reg* *u_tile/wmsx_reg* *u_tile/wmsw_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE fft_limb_sums WNS=2.292
+# inspect_group montgomery $regs [select_regs {*u_tile/g_arr32/u32_reg* *u_tile/g_arr32/r32r_reg*}]
+GROUP_EMPTY montgomery
+# inspect_group multiplier $regs [select_regs {*u_tile/leaves/*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE multiplier WNS=3.828
+# inspect_group tile_response $regs [select_regs {*u_tile/rd_reg* *u_tile/rt_reg* *u_tile/rv_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE tile_response WNS=0.484
+# inspect_group bank_to_tile [select_regs {u_exec/data_bank*}] [select_regs {u_exec/req_x_reg* u_exec/req_y_reg*}]
+GROUP_EMPTY bank_to_tile
+# inspect_group host_read_select [select_regs {u_exec/data_bank*}] [select_regs {u_exec/line_data_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE host_read_select WNS=2.664
+# inspect_group host_shift $regs [select_regs {rsp_data_q_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE host_shift WNS=5.394
+# inspect_group data_bank_write $regs [select_regs {u_exec/data_bank*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE data_bank_write WNS=0.922
+# inspect_group root_load $regs [select_regs {*root_mem*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE root_load WNS=0.343
+# inspect_group root_to_tile [select_regs {*root_mem*}] [select_regs {u_exec/req_root_reg*}]
+GROUP_EMPTY root_to_tile
+# inspect_group program_broadcast [select_regs {u_exec/e_step_reg* u_exec/e_product_reg*}] $tiles
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE program_broadcast WNS=0.758
+# inspect_group context_config $regs [select_regs {*u_tile/q0_reg* *u_tile/qi0_reg* *u_tile/fmt_r_reg* *u_tile/md_reg* *u_tile/dir_reg*}]
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE context_config WNS=0.329
+# inspect_group reset_from_frontend [select_regs {p_rst_reg}] $regs
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 3 -nworst 1 -delay_type max -sort_by slack.
+GROUP_DONE reset_from_frontend WNS=0.206
+# close $summary
+# puts "TIMING_GROUP_INSPECTION_DONE"
+TIMING_GROUP_INSPECTION_DONE
+# exit
+INFO: [Common 17-206] Exiting Vivado at Wed Nov  4 10:27:03 2026...
