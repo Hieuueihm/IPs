@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<path d="M 260 357.5 L 315 357.5 L 315 367.68 L 370 367.68 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="370 367.68, 363.6969 364.6352, 363.6969 370.7248" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 165 197.5 L 310 197.5 L 310 198 L 310 348 L 310 348.32 L 370 348.32 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="370 348.32, 363.6969 345.2752, 363.6969 351.3648" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<path d="M 432 358 L 516 358 L 516 371 L 600 371 " style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 2.2; fill: none; fill-rule: evenodd;"/>
+			<polygon points="600 371, 593.6969 367.9552, 593.6969 374.0448" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,49%,52%); fill-rule: evenodd;"/>
+			<rect x="10" y="310" width="250" height="95" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="74.5625" y="366.75" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,733) scale(1,-1)">AW_full / W_full</text>
+			<text x="47.935546874999986" y="322" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,644) scale(1,-1)">FF độc lập; chỉ clear bus reset</text>
+			<path d="M 370 336 L 399.76 336 C 442.54 336 442.54 380 399.76 380 L 370 380 Z " style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.9; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="369.582275390625" y="318" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,636) scale(1,-1)">wr_commit</text>
+			<rect x="600" y="235" width="170" height="170" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="643.2265625" y="340.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,681) scale(1,-1)">BVALID FF</text>
+			<text x="622.091552734375" y="247" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,494) scale(1,-1)">D=(Q&amp;!ready)|commit</text>
+			<rect x="10" y="180" width="155" height="35" rx="4" ry="4" style="stroke: rgb(66%,73%,78%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="55.05859375" y="192.5" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,385) scale(1,-1)">!BVALID</text>
+			<rect x="600" y="85" width="370" height="80" rx="4" ry="4" style="stroke: rgb(7%,17%,27%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(92%,95%,96%); fill-rule: evenodd;"/>
+			<text x="680.53125" y="132.0" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,264) scale(1,-1)">R holding FF32 +resp+valid</text>
+			<text x="672.630615234375" y="97" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,194) scale(1,-1)">Q giữ nguyên khi RVALID&amp;&amp;!RREADY</text>
+			<text x="20" y="45" style="font-family: Arial, sans-serif; font-size: 15px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,90) scale(1,-1)">Commit logic thực = AW_full &amp; W_full &amp; !BVALID. Không commit lặp khi B đang stall.</text>
+			<text x="606" y="375.0" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,750) scale(1,-1)">D</text>
+			<text x="755.832763671875" y="375.0" style="font-family: Arial, sans-serif; font-size: 10.5px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,750) scale(1,-1)">Q</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,25 @@
+# Planned only. These source files do not exist yet.
+ft_defs.svh
+ft_leaf_array.sv
+ft_addsub.sv
+ft_reduce_or_sum.sv
+ft_mont_pipe.sv
+ft_tile_state.sv
+ft_fft_accum.sv
+ft_fft_combine.sv
+ft_native_align.sv
+ft_tile.sv
+ft_cfg_decode.sv
+ft_data_mem.sv
+ft_root_mem.sv
+ft_cg_addr.sv
+ft_cg_route.sv
+ft_fft_program.sv
+ft_issue_ctrl.sv
+ft_stage_ctrl.sv
+ft_writeback.sv
+ft_host_map.sv
+ft_read_normalize.sv
+ft_core.sv
+ft_cmd_frontend.sv
+ft_axil_top.sv

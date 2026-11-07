@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1000" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1000" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="20" y="300" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 27,300 L 27,405 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="123.3671875" y="371.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,742) scale(1,-1)">side_mem</text>
+			<text x="135.5859375" y="354.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,708) scale(1,-1)">16 × 42</text>
+			<text x="105.06640625" y="312" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,624) scale(1,-1)">1W sync / 1R async</text>
+			<rect x="355" y="300" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 362,300 L 362,405 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="442.81640625" y="371.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,742) scale(1,-1)">operand_mem</text>
+			<text x="470.5859375" y="354.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,708) scale(1,-1)">16 × 32</text>
+			<text x="440.06640625" y="312" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,624) scale(1,-1)">1W sync / 1R async</text>
+			<rect x="690" y="300" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 697,300 L 697,405 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="793.82421875" y="371.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,742) scale(1,-1)">root_mem</text>
+			<text x="805.5859375" y="354.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,708) scale(1,-1)">16 × 32</text>
+			<text x="775.06640625" y="312" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,624) scale(1,-1)">1W sync / 1R async</text>
+			<rect x="20" y="95" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 27,95 L 27,200 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="86.91796875" y="166.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,332) scale(1,-1)">operand_sum_mem</text>
+			<text x="140.03515625" y="149.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,298) scale(1,-1)">8 × 32</text>
+			<text x="105.06640625" y="107" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,214) scale(1,-1)">1W sync / 1R async</text>
+			<rect x="355" y="95" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 362,95 L 362,200 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="437.92578125" y="166.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,332) scale(1,-1)">root_sum_mem</text>
+			<text x="475.03515625" y="149.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,298) scale(1,-1)">8 × 32</text>
+			<text x="440.06640625" y="107" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,214) scale(1,-1)">1W sync / 1R async</text>
+			<rect x="690" y="95" width="285" height="105" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1.8; fill: rgb(89%,95%,93%); fill-rule: evenodd;"/>
+			<path d="M 697,95 L 697,200 Z" style="stroke: rgb(8%,49%,52%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="785.3671875" y="166.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,332) scale(1,-1)">partial_mem</text>
+			<text x="810.03515625" y="149.25" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 16px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,298) scale(1,-1)">4 × 32</text>
+			<text x="775.06640625" y="107" style="font-family: Arial, sans-serif; font-size: 13px;fill: rgb(8%,49%,52%); stroke:none;" transform="translate(0,214) scale(1,-1)">1W sync / 1R async</text>
+			<text x="20" y="272" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,544) scale(1,-1)">we, wa → D[42] @posedge</text>
+			<text x="20" y="249" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,498) scale(1,-1)">ra → rd[42] tổ hợp</text>
+			<text x="355" y="272" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,544) scale(1,-1)">we, wa → D[32] @posedge</text>
+			<text x="355" y="249" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,498) scale(1,-1)">ra → rd[32] tổ hợp</text>
+			<text x="690" y="272" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,544) scale(1,-1)">we, wa → D[32] @posedge</text>
+			<text x="690" y="249" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,498) scale(1,-1)">ra → rd[32] tổ hợp</text>
+			<text x="20" y="67" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,134) scale(1,-1)">we, wa → D[32] @posedge</text>
+			<text x="20" y="44" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,88) scale(1,-1)">ra → rd[32] tổ hợp</text>
+			<text x="355" y="67" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,134) scale(1,-1)">we, wa → D[32] @posedge</text>
+			<text x="355" y="44" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,88) scale(1,-1)">ra → rd[32] tổ hợp</text>
+			<text x="690" y="67" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,134) scale(1,-1)">we, wa → D[32] @posedge</text>
+			<text x="690" y="44" style="font-family: Arial, sans-serif; font-size: 14px;fill: rgb(7%,17%,27%); stroke:none;" transform="translate(0,88) scale(1,-1)">ra → rd[32] tổ hợp</text>
+		</g>
+	</g>
+</svg>

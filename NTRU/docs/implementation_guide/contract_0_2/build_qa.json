@@ -1,0 +1,722 @@
+{
+  "chapters": [
+    {
+      "title": "Mục lục",
+      "page": 2
+    },
+    {
+      "title": "1. Phạm vi, thứ tự ưu tiên và cách đọc",
+      "page": 5
+    },
+    {
+      "title": "2. Hợp đồng số học và mốc cạnh",
+      "page": 6
+    },
+    {
+      "title": "3. Kiến trúc và ranh giới dùng chung",
+      "page": 7
+    },
+    {
+      "title": "4. Bản đồ module và lộ trình viết",
+      "page": 8
+    },
+    {
+      "title": "5. ft_leaf_array",
+      "page": 9
+    },
+    {
+      "title": "6. ft_addsub",
+      "page": 11
+    },
+    {
+      "title": "7. ft_reduce_or_sum",
+      "page": 13
+    },
+    {
+      "title": "8. ft_mont_pipe",
+      "page": 15
+    },
+    {
+      "title": "9. ft_tile_state",
+      "page": 17
+    },
+    {
+      "title": "10. ft_fft_accum",
+      "page": 19
+    },
+    {
+      "title": "11. ft_fft_combine",
+      "page": 21
+    },
+    {
+      "title": "12. ft_native_align",
+      "page": 23
+    },
+    {
+      "title": "13. ft_tile",
+      "page": 25
+    },
+    {
+      "title": "14. ft_cfg_decode",
+      "page": 27
+    },
+    {
+      "title": "15. ft_data_mem",
+      "page": 29
+    },
+    {
+      "title": "16. ft_root_mem",
+      "page": 31
+    },
+    {
+      "title": "17. ft_cg_addr",
+      "page": 32
+    },
+    {
+      "title": "18. ft_cg_route",
+      "page": 34
+    },
+    {
+      "title": "19. ft_fft_program",
+      "page": 36
+    },
+    {
+      "title": "20. ft_issue_ctrl",
+      "page": 38
+    },
+    {
+      "title": "21. ft_stage_ctrl",
+      "page": 40
+    },
+    {
+      "title": "22. ft_writeback",
+      "page": 42
+    },
+    {
+      "title": "23. ft_host_map",
+      "page": 44
+    },
+    {
+      "title": "24. ft_read_normalize",
+      "page": 46
+    },
+    {
+      "title": "25. ft_core",
+      "page": 47
+    },
+    {
+      "title": "26. ft_cmd_frontend",
+      "page": 49
+    },
+    {
+      "title": "27. ft_axil_top",
+      "page": 51
+    },
+    {
+      "title": "28. Phương trình bit để đối chiếu RTL",
+      "page": 53
+    },
+    {
+      "title": "29. C4, bundle và phép tính mẫu",
+      "page": 54
+    },
+    {
+      "title": "30. Lịch clock đầy đủ và liveness",
+      "page": 55
+    },
+    {
+      "title": "31. FSM và giao tiếp chuẩn",
+      "page": 57
+    },
+    {
+      "title": "32. Register map, payload và status",
+      "page": 62
+    },
+    {
+      "title": "33. Verification plan và tiêu chí hoàn thành",
+      "page": 66
+    },
+    {
+      "title": "34. Nguồn, tính tái lập và checklist bàn giao",
+      "page": 67
+    },
+    {
+      "title": "35. Sơ đồ structural và cổng logic chi tiết",
+      "page": 68
+    },
+    {
+      "title": "36. Nối instance và thứ tự consume dữ liệu",
+      "page": 127
+    },
+    {
+      "title": "37. Hồ sơ triển khai chi tiết từng module",
+      "page": 130
+    },
+    {
+      "title": "37.01. ft_leaf_array",
+      "page": 131
+    },
+    {
+      "title": "37.02. ft_addsub",
+      "page": 132
+    },
+    {
+      "title": "37.03. ft_reduce_or_sum",
+      "page": 133
+    },
+    {
+      "title": "37.04. ft_mont_pipe",
+      "page": 134
+    },
+    {
+      "title": "37.05. ft_tile_state",
+      "page": 136
+    },
+    {
+      "title": "37.06. ft_fft_accum",
+      "page": 137
+    },
+    {
+      "title": "37.07. ft_fft_combine",
+      "page": 138
+    },
+    {
+      "title": "37.08. ft_native_align",
+      "page": 139
+    },
+    {
+      "title": "37.09. ft_tile",
+      "page": 140
+    },
+    {
+      "title": "37.10. ft_cfg_decode",
+      "page": 141
+    },
+    {
+      "title": "37.11. ft_data_mem",
+      "page": 142
+    },
+    {
+      "title": "37.12. ft_root_mem",
+      "page": 143
+    },
+    {
+      "title": "37.13. ft_cg_addr",
+      "page": 144
+    },
+    {
+      "title": "37.14. ft_cg_route",
+      "page": 145
+    },
+    {
+      "title": "37.15. ft_fft_program",
+      "page": 146
+    },
+    {
+      "title": "37.16. ft_issue_ctrl",
+      "page": 147
+    },
+    {
+      "title": "37.17. ft_stage_ctrl",
+      "page": 148
+    },
+    {
+      "title": "37.18. ft_writeback",
+      "page": 149
+    },
+    {
+      "title": "37.19. ft_host_map",
+      "page": 150
+    },
+    {
+      "title": "37.20. ft_read_normalize",
+      "page": 151
+    },
+    {
+      "title": "37.21. ft_core",
+      "page": 152
+    },
+    {
+      "title": "37.22. ft_cmd_frontend",
+      "page": 153
+    },
+    {
+      "title": "37.23. ft_axil_top",
+      "page": 154
+    },
+    {
+      "title": "38. Bảng mux và lịch token để tự viết RTL",
+      "page": 155
+    }
+  ],
+  "port_count": 444,
+  "structural_pages": [
+    {
+      "title": "S01. Cổng logic thật: full-adder 1 bit",
+      "page": 69
+    },
+    {
+      "title": "S02. MUX2, EQ/NZ và flip-flop",
+      "page": 70
+    },
+    {
+      "title": "S02B. MUX2 được mở thành NOT, hai AND và OR",
+      "page": 71
+    },
+    {
+      "title": "S02C. Comparator EQ/NZ: XOR bit-slice và cây OR",
+      "page": 72
+    },
+    {
+      "title": "S03. Cộng/trừ N bit và đường carry",
+      "page": 73
+    },
+    {
+      "title": "S04. Một leaf16×16: AND dấu → FF → DSP → FF",
+      "page": 74
+    },
+    {
+      "title": "S05. Bốn raw product → cat/cross FF → fused65",
+      "page": 75
+    },
+    {
+      "title": "S06. ft_addsub: hai raw chain và hai correction chain",
+      "page": 76
+    },
+    {
+      "title": "S07. ft_addsub: mở bit guard để cắt borrow packed",
+      "page": 77
+    },
+    {
+      "title": "S07B. C2/C3: thấy rõ mux operand, adder và mux output",
+      "page": 78
+    },
+    {
+      "title": "S08. ft_reduce_or_sum: một adder36 cho ba chế độ",
+      "page": 79
+    },
+    {
+      "title": "S09. C4 packed: sơ đồ bit17 và polarity borrow",
+      "page": 80
+    },
+    {
+      "title": "S10. ft_mont_pipe scalar: feedback T → m → mq",
+      "page": 81
+    },
+    {
+      "title": "S11. ft_mont_pipe packed: dùng cả bốn leaf",
+      "page": 82
+    },
+    {
+      "title": "S12. Mont history chung, chọn group và chốt correction",
+      "page": 83
+    },
+    {
+      "title": "S13. ft_tile_state: RAM thực và sáu cặp cổng riêng",
+      "page": 84
+    },
+    {
+      "title": "S14. State: incrementer, comparator và reserve/release",
+      "page": 85
+    },
+    {
+      "title": "S14B. Counter/pointer: XOR, AND, mux hold và FF",
+      "page": 86
+    },
+    {
+      "title": "S15. ft_fft_accum: mux seed, adder68 và carry cột",
+      "page": 87
+    },
+    {
+      "title": "S16. ft_fft_combine: RAM, C4 và một subtract C5",
+      "page": 88
+    },
+    {
+      "title": "S17. ft_native_align: increment carry và half64 bằng dây",
+      "page": 89
+    },
+    {
+      "title": "S18. ft_tile: ranh giới physical sharing và output FF",
+      "page": 90
+    },
+    {
+      "title": "S19. ft_cfg_decode: comparator và pipeline5 stage",
+      "page": 91
+    },
+    {
+      "title": "S20. ft_data_mem: một bank1R1W, lặp32 lần",
+      "page": 92
+    },
+    {
+      "title": "S21. ft_root_mem: AND destination và cổng read đồng bộ",
+      "page": 93
+    },
+    {
+      "title": "S22. ft_cg_addr: slice, rotate, XOR và nối row",
+      "page": 94
+    },
+    {
+      "title": "S23. ft_cg_route: bốn nguồn bằng ba mux2/bus",
+      "page": 95
+    },
+    {
+      "title": "S24. ft_fft_program: incrementer, EQ và LUT index",
+      "page": 96
+    },
+    {
+      "title": "S25. ft_issue_ctrl: bộ đếm và cổng qualify issue",
+      "page": 97
+    },
+    {
+      "title": "S26. ft_stage_ctrl: RAM descriptor, timestamp và context",
+      "page": 98
+    },
+    {
+      "title": "S27. Context FIFO: head/next FF và bypass vật lý",
+      "page": 99
+    },
+    {
+      "title": "S28. ft_writeback: EQ tag, mask và AND write-enable",
+      "page": 100
+    },
+    {
+      "title": "S29. ft_host_map: so bank, mux phase và gather FF",
+      "page": 101
+    },
+    {
+      "title": "S30. ft_read_normalize: carry cut và arithmetic shifter",
+      "page": 102
+    },
+    {
+      "title": "S30B. Normalizer: arithmetic barrel shifter bằng mux2",
+      "page": 103
+    },
+    {
+      "title": "S31. ft_core: state FF, priority và cây drain",
+      "page": 104
+    },
+    {
+      "title": "S32. ft_cmd_frontend: snapshot FF và token hold",
+      "page": 105
+    },
+    {
+      "title": "S33. Frontend status: AND/OR và reset/clear priority",
+      "page": 106
+    },
+    {
+      "title": "S34. ft_axil_top: AW/W slots, join và B/R hold",
+      "page": 107
+    },
+    {
+      "title": "S35. AXI byte-enable và cổng merge32",
+      "page": 108
+    },
+    {
+      "title": "D01. Leaf: từng chân sign, D, Q và CLK",
+      "page": 109
+    },
+    {
+      "title": "D02. Leaf: sign-extend tới DSP và hai product FF",
+      "page": 110
+    },
+    {
+      "title": "D03. Fused65: mở ADD3 thành hai adder tổ hợp",
+      "page": 111
+    },
+    {
+      "title": "D04. C2: hai input mux35 và carry-in riêng",
+      "page": 112
+    },
+    {
+      "title": "D05. C3: hai input mux34 và carry-in riêng",
+      "page": 113
+    },
+    {
+      "title": "D06. C4: chân A36, B36, Cin và decode flags",
+      "page": 114
+    },
+    {
+      "title": "D07. Mont U: hai adder17 dùng chung scalar/packed",
+      "page": 115
+    },
+    {
+      "title": "D08. History10: vẽ đủ từng stage và cạnh chứa X",
+      "page": 116
+    },
+    {
+      "title": "D09. Mont token: từng valid FF và reset",
+      "page": 117
+    },
+    {
+      "title": "D10. Tile RAM: tách rõ WE, WA, WD, RA, RD",
+      "page": 118
+    },
+    {
+      "title": "D11. Credit: D counter, comparator và event qualification",
+      "page": 119
+    },
+    {
+      "title": "D12. MAC68: hai đích FF acc và limb từ cùng acc_next",
+      "page": 120
+    },
+    {
+      "title": "D13. C5: đổi operand và chọn borrow đúng phép trừ",
+      "page": 121
+    },
+    {
+      "title": "D14. Native half: ghi rõ từng lát bit low/high",
+      "page": 122
+    },
+    {
+      "title": "D15. Host rounding: carry bị cắt đúng biên giá trị",
+      "page": 123
+    },
+    {
+      "title": "D16. Token và metadata: FF song song, reset khác payload",
+      "page": 124
+    },
+    {
+      "title": "D17. Tile owner: dữ liệu, dấu và valid phải chọn cùng mode",
+      "page": 125
+    },
+    {
+      "title": "D18. AXI: phương trình giữ response và sự kiện commit",
+      "page": 126
+    }
+  ],
+  "pdf": "D:\\IPs\\NTRU\\output\\pdf\\FlexTransform_Contract_0_2_Toan_hoc_den_RTL.pdf",
+  "pages": 156,
+  "modules": 23,
+  "all_modules_in_pdf": true,
+  "all_port_names_in_pdf": true,
+  "page_chars": [
+    1069,
+    662,
+    902,
+    496,
+    2081,
+    2292,
+    1883,
+    1545,
+    1710,
+    930,
+    1648,
+    1240,
+    1307,
+    878,
+    1946,
+    1477,
+    1861,
+    1735,
+    1658,
+    971,
+    1470,
+    1169,
+    1189,
+    1213,
+    1650,
+    1272,
+    1357,
+    792,
+    988,
+    860,
+    1677,
+    1387,
+    943,
+    1063,
+    869,
+    1193,
+    896,
+    1118,
+    1074,
+    1295,
+    1229,
+    1154,
+    993,
+    1023,
+    1023,
+    1777,
+    1471,
+    1141,
+    1240,
+    1321,
+    1368,
+    1073,
+    1437,
+    1422,
+    1178,
+    1182,
+    927,
+    1707,
+    1401,
+    1010,
+    587,
+    1749,
+    2334,
+    2140,
+    2002,
+    2194,
+    2955,
+    1650,
+    813,
+    850,
+    690,
+    849,
+    982,
+    927,
+    937,
+    1026,
+    876,
+    1043,
+    869,
+    885,
+    920,
+    943,
+    1014,
+    1201,
+    1028,
+    837,
+    1027,
+    879,
+    966,
+    977,
+    940,
+    876,
+    961,
+    982,
+    927,
+    949,
+    977,
+    966,
+    925,
+    1013,
+    952,
+    952,
+    958,
+    1037,
+    971,
+    964,
+    963,
+    959,
+    793,
+    891,
+    928,
+    894,
+    891,
+    1029,
+    1031,
+    907,
+    1047,
+    899,
+    1015,
+    982,
+    876,
+    914,
+    1117,
+    1002,
+    907,
+    969,
+    2133,
+    1987,
+    858,
+    1091,
+    1489,
+    1898,
+    1304,
+    2340,
+    685,
+    2642,
+    1460,
+    1931,
+    1664,
+    1865,
+    1187,
+    1007,
+    999,
+    1205,
+    1026,
+    992,
+    1316,
+    1796,
+    1518,
+    1424,
+    1048,
+    1685,
+    2247,
+    1631,
+    1873,
+    868
+  ],
+  "pdf_sha256": "1a467caebf5deaa8d2b1c36f8699d34d08893841021fd8f21aaf8d09f4b40cfe",
+  "structural_figures": 58,
+  "structural_module_coverage": 23,
+  "port_semantic_coverage": 444,
+  "implementation_cards": 23,
+  "math_example": {
+    "q": 12289,
+    "qi": 12287,
+    "R": 65536,
+    "a": 1000,
+    "root": 12273,
+    "T": 12273000,
+    "m": 15000,
+    "P": 184335000,
+    "U": 3000,
+    "z": 3000
+  },
+  "missing_glyphs": {
+    "VN": [],
+    "VN-Bold": [],
+    "Mono": []
+  },
+  "layout_audit": {
+    "out_of_page_words": [],
+    "body_overruns": [],
+    "replacement_char_pages": []
+  },
+  "rendered_pages": 156,
+  "structural_audit": {
+    "result": "PASS",
+    "figures": 58,
+    "modules": 23,
+    "landscape_pages": 58,
+    "full_adder_gate_truth_cases": 8,
+    "mux_gate_truth_cases": 8,
+    "packed_guard_cases": 10000,
+    "scalar_U_two_adder_cases": 10000,
+    "normalizer_carry_cases": 3000,
+    "port_semantic_coverage": 444,
+    "all_svg_hashes_match": true,
+    "all_wire_endpoints_exist": true,
+    "scope": "Document schematic topology and formulas only; not RTL verification."
+  },
+  "visual_review": {
+    "result": "PASS",
+    "new_detail_sheets": 18,
+    "implementation_cards": 23,
+    "contact_pages_checked": "109-156",
+    "high_resolution_pages": [
+      109,
+      112,
+      115,
+      120,
+      121,
+      131,
+      134,
+      155
+    ]
+  },
+  "integrity_checks": {
+    "design_pack": "PASS",
+    "accepted_baseline": "PASS",
+    "source_manifest_matches": true
+  },
+  "authoring_hashes": {
+    "build_pdf.py": "cb969f14f6a9b2746e0e40e42b669f600a3b37414775a862b31eba5297b94db6",
+    "content.py": "4842c032ea871b6d99641da83b4cb2728dba8119c70371f7aae6e5971f700686",
+    "structural.py": "ca6f87372c67bbe2a81cf0ddc44f7bdeea8a80e561c23549fae0fbdbee681a2a",
+    "structural_detail.py": "adca7a0a7b88b64a1394cf6e94d9fdbe863a1ebe2d0ac9abf18ff3e230964142",
+    "detail_contract.py": "af0cfe9e04c14c3b88724e2d9a74625d3e73ce8b4054cfede28718e0dece4ffb"
+  },
+  "pdf_image_xobjects": 0
+}

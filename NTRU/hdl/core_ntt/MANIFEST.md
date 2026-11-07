@@ -1,4 +1,6 @@
-# Core FFT/NTT hiện tại
+# Core của nhánh hdl/ — lịch sử
+
+> **Baseline hiện hành từ 2026-11-04:** [a_cg_packed4_system160](../../experiments/BASELINE.md), source tại `experiments/a_cg_packed4_system160/rtl/`, contract [3.1](../../spec/FlexTransform/3.1/README.md). Các file trong `hdl/` và mô tả bên dưới thuộc nhánh trước; giữ nguyên RTL làm lịch sử, không ghép chúng vào build baseline.
 
 Lõi: [ntt_core.sv](ntt_core.sv). Tile: [tile_thu.sv](../tile/tile_thu.sv).
 Danh sách đầy đủ: [hdl/README.md](../README.md).

@@ -1,0 +1,2 @@
+# Preserve the accepted workflow attributes file byte for byte.
+/NTRU/.gitattributes -text

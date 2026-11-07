@@ -1,0 +1,828 @@
+{
+  "schema_version": 1,
+  "contract": "0.2",
+  "priority": "Global rules first, then first true state rule; actions at edge using old state. Default hold has no command side effect.",
+  "machines": {
+    "frontend": {
+      "initial": "FREE",
+      "global_rules": [
+        {
+          "when": "bus_reset",
+          "to": "FREE",
+          "actions": [
+            "clear_bus_and_core_tokens"
+          ]
+        },
+        {
+          "when": "soft_reset",
+          "to": "ABORT_SEND",
+          "actions": [
+            "discard_normal_tokens",
+            "preserve_AXI_responses"
+          ]
+        }
+      ],
+      "states": {
+        "FREE": [
+          {
+            "when": "enqueue",
+            "to": "P0",
+            "actions": [
+              "snapshot160",
+              "reserve"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "FREE",
+            "actions": []
+          }
+        ],
+        "P0": [
+          {
+            "when": "true",
+            "to": "P1",
+            "actions": [
+              "shift_token_payload"
+            ]
+          }
+        ],
+        "P1": [
+          {
+            "when": "core_ready",
+            "to": "WAIT_ACK",
+            "actions": [
+              "core_fire"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "P1",
+            "actions": []
+          }
+        ],
+        "WAIT_ACK": [
+          {
+            "when": "core_ack",
+            "to": "FREE",
+            "actions": [
+              "capture_line_and_ack_atomic",
+              "release"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "WAIT_ACK",
+            "actions": []
+          }
+        ],
+        "ABORT_SEND": [
+          {
+            "when": "true",
+            "to": "ABORT_WAIT",
+            "actions": [
+              "pulse_abort_req"
+            ]
+          }
+        ],
+        "ABORT_WAIT": [
+          {
+            "when": "abort_ack",
+            "to": "FREE",
+            "actions": [
+              "release",
+              "clear_context_status"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "ABORT_WAIT",
+            "actions": []
+          }
+        ]
+      }
+    },
+    "executor": {
+      "initial": "RECOVER0",
+      "global_rules": [
+        {
+          "when": "bus_reset",
+          "to": "RECOVER0",
+          "actions": [
+            "flush_context_valid"
+          ]
+        },
+        {
+          "when": "abort_req",
+          "to": "RECOVER0",
+          "actions": [
+            "suppress_write",
+            "flush_context_valid",
+            "mark_abort_pending"
+          ]
+        }
+      ],
+      "states": {
+        "RECOVER0": [
+          {
+            "when": "true",
+            "to": "RECOVER1",
+            "actions": [
+              "tile_reset",
+              "suppress_write"
+            ]
+          }
+        ],
+        "RECOVER1": [
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": [
+              "abort_ack_if_pending"
+            ]
+          }
+        ],
+        "IDLE": [
+          {
+            "when": "bad_command",
+            "to": "IDLE",
+            "actions": [
+              "ack_error"
+            ]
+          },
+          {
+            "when": "cmd_cfg",
+            "to": "CFG_WAIT",
+            "actions": [
+              "decode_fire",
+              "invalidate_context"
+            ]
+          },
+          {
+            "when": "cmd_start & !start_ok",
+            "to": "IDLE",
+            "actions": [
+              "ack_error",
+              "done_error",
+              "cycles_zero"
+            ]
+          },
+          {
+            "when": "cmd_start & identity",
+            "to": "IDLE",
+            "actions": [
+              "ack_ok",
+              "done_ok",
+              "cycles_zero"
+            ]
+          },
+          {
+            "when": "cmd_start",
+            "to": "TILE_RESET",
+            "actions": [
+              "ack_ok",
+              "start_cycles",
+              "launch_tile_reset"
+            ]
+          },
+          {
+            "when": "cmd_load",
+            "to": "HOST_WAIT",
+            "actions": [
+              "snapshot_host_write",
+              "host_req_fire"
+            ]
+          },
+          {
+            "when": "cmd_read",
+            "to": "HOST_WAIT",
+            "actions": [
+              "snapshot_host_read",
+              "host_req_fire"
+            ]
+          },
+          {
+            "when": "cmd_root",
+            "to": "IDLE",
+            "actions": [
+              "root_write",
+              "invalidate_root_commit",
+              "ack_ok"
+            ]
+          },
+          {
+            "when": "cmd_desc",
+            "to": "IDLE",
+            "actions": [
+              "desc_write",
+              "ack_ok"
+            ]
+          },
+          {
+            "when": "cmd_commit",
+            "to": "IDLE",
+            "actions": [
+              "root_commit",
+              "ack_ok"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": []
+          }
+        ],
+        "CFG_WAIT": [
+          {
+            "when": "decode_done",
+            "to": "IDLE",
+            "actions": [
+              "capture_params_or_error",
+              "ack_decode"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "CFG_WAIT",
+            "actions": []
+          }
+        ],
+        "HOST_WAIT": [
+          {
+            "when": "fault",
+            "to": "ERROR_ABORT",
+            "actions": [
+              "suppress_write",
+              "invalidate_context"
+            ]
+          },
+          {
+            "when": "host_done & !host_is_read",
+            "to": "IDLE",
+            "actions": [
+              "ack_ok"
+            ]
+          },
+          {
+            "when": "gather_valid",
+            "to": "NORM_WAIT",
+            "actions": []
+          },
+          {
+            "when": "true",
+            "to": "HOST_WAIT",
+            "actions": []
+          }
+        ],
+        "NORM_WAIT": [
+          {
+            "when": "fault",
+            "to": "ERROR_ABORT",
+            "actions": [
+              "suppress_write",
+              "invalidate_context"
+            ]
+          },
+          {
+            "when": "norm_valid",
+            "to": "IDLE",
+            "actions": [
+              "capture_norm_line",
+              "line_rsp",
+              "ack_ok"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "NORM_WAIT",
+            "actions": []
+          }
+        ],
+        "TILE_RESET": [
+          {
+            "when": "true",
+            "to": "TILE_CONFIG",
+            "actions": [
+              "tile_reset",
+              "launch_tile_config"
+            ]
+          }
+        ],
+        "TILE_CONFIG": [
+          {
+            "when": "true",
+            "to": "SETTLE",
+            "actions": [
+              "tile_config"
+            ]
+          }
+        ],
+        "SETTLE": [
+          {
+            "when": "true",
+            "to": "STAGE_SETUP",
+            "actions": [
+              "prefetch_desc0"
+            ]
+          }
+        ],
+        "STAGE_SETUP": [
+          {
+            "when": "true",
+            "to": "RUN",
+            "actions": [
+              "push_context0",
+              "activate_issue0"
+            ]
+          }
+        ],
+        "RUN": [
+          {
+            "when": "fault",
+            "to": "ERROR_ABORT",
+            "actions": [
+              "suppress_write",
+              "invalidate_context"
+            ]
+          },
+          {
+            "when": "all_reads_issued",
+            "to": "DRAIN",
+            "actions": [
+              "issue_if_due",
+              "push_next_if_due",
+              "commit_if_valid"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "RUN",
+            "actions": [
+              "issue_if_due",
+              "push_next_if_due",
+              "commit_if_valid"
+            ]
+          }
+        ],
+        "DRAIN": [
+          {
+            "when": "fault",
+            "to": "ERROR_ABORT",
+            "actions": [
+              "suppress_write",
+              "invalidate_context"
+            ]
+          },
+          {
+            "when": "drained",
+            "to": "IDLE",
+            "actions": [
+              "done_ok",
+              "stop_cycles"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "DRAIN",
+            "actions": [
+              "commit_if_valid"
+            ]
+          }
+        ],
+        "ERROR_ABORT": [
+          {
+            "when": "true",
+            "to": "RECOVER0",
+            "actions": [
+              "done_error_if_kernel_active",
+              "flush_context_valid",
+              "ack_error_if_pending",
+              "stop_kernel_active"
+            ]
+          }
+        ]
+      }
+    },
+    "host_map": {
+      "initial": "IDLE",
+      "global_rules": [
+        {
+          "when": "reset",
+          "to": "IDLE",
+          "actions": [
+            "clear_valid_selectors"
+          ]
+        }
+      ],
+      "states": {
+        "IDLE": [
+          {
+            "when": "req_fire",
+            "to": "PREP",
+            "actions": [
+              "snapshot_line"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": []
+          }
+        ],
+        "PREP": [
+          {
+            "when": "true",
+            "to": "SERVICE",
+            "actions": [
+              "map_and_latch_phases"
+            ]
+          }
+        ],
+        "SERVICE": [
+          {
+            "when": "last_phase & is_read",
+            "to": "GATHER",
+            "actions": [
+              "read_phase",
+              "capture_previous_read"
+            ]
+          },
+          {
+            "when": "last_phase",
+            "to": "IDLE",
+            "actions": [
+              "write_phase",
+              "request_done"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "SERVICE",
+            "actions": [
+              "service_phase",
+              "capture_previous_read",
+              "advance_phase"
+            ]
+          }
+        ],
+        "GATHER": [
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": [
+              "capture_last_read",
+              "gather_valid",
+              "request_done"
+            ]
+          }
+        ]
+      }
+    },
+    "stage_ctrl": {
+      "initial": "IDLE",
+      "global_rules": [
+        {
+          "when": "reset",
+          "to": "IDLE",
+          "actions": [
+            "clear_queue_valid"
+          ]
+        }
+      ],
+      "states": {
+        "IDLE": [
+          {
+            "when": "kernel_begin",
+            "to": "ARMED",
+            "actions": [
+              "clear_kernel_counters"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": []
+          }
+        ],
+        "ARMED": [
+          {
+            "when": "activate_first & issue_ready",
+            "to": "ACTIVE",
+            "actions": [
+              "push_context0",
+              "fire_stage0"
+            ]
+          },
+          {
+            "when": "activate_first",
+            "to": "ARMED",
+            "actions": [
+              "stage_fault"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "ARMED",
+            "actions": []
+          }
+        ],
+        "ACTIVE": [
+          {
+            "when": "fault",
+            "to": "ACTIVE",
+            "actions": [
+              "suppress_push"
+            ]
+          },
+          {
+            "when": "all_reads_issued",
+            "to": "DRAINING",
+            "actions": [
+              "pop_if_tail"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "ACTIVE",
+            "actions": [
+              "fire_next_at_due_minus1",
+              "pop_if_tail"
+            ]
+          }
+        ],
+        "DRAINING": [
+          {
+            "when": "contexts_empty",
+            "to": "IDLE",
+            "actions": []
+          },
+          {
+            "when": "true",
+            "to": "DRAINING",
+            "actions": [
+              "pop_if_tail"
+            ]
+          }
+        ]
+      }
+    },
+    "cfg_decode": {
+      "initial": "IDLE",
+      "global_rules": [
+        {
+          "when": "reset",
+          "to": "IDLE",
+          "actions": [
+            "clear_valid"
+          ]
+        }
+      ],
+      "states": {
+        "IDLE": [
+          {
+            "when": "fire",
+            "to": "D1",
+            "actions": [
+              "snapshot_cfg"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": []
+          }
+        ],
+        "D1": [
+          {
+            "when": "true",
+            "to": "D2",
+            "actions": [
+              "derive_logm_base_and_mode_ranges"
+            ]
+          }
+        ],
+        "D2": [
+          {
+            "when": "true",
+            "to": "D3",
+            "actions": [
+              "derive_stages_bank_jobs"
+            ]
+          }
+        ],
+        "D3": [
+          {
+            "when": "true",
+            "to": "D4",
+            "actions": [
+              "derive_row_jobs_plane_log"
+            ]
+          }
+        ],
+        "D4": [
+          {
+            "when": "true",
+            "to": "D5",
+            "actions": [
+              "derive_row_exponent_and_rows"
+            ]
+          }
+        ],
+        "D5": [
+          {
+            "when": "true",
+            "to": "IDLE",
+            "actions": [
+              "done_pulse",
+              "params_valid_if_legal"
+            ]
+          }
+        ]
+      }
+    },
+    "issue": {
+      "initial": "EMPTY",
+      "global_rules": [
+        {
+          "when": "reset",
+          "to": "EMPTY",
+          "actions": [
+            "clear_tokens"
+          ]
+        }
+      ],
+      "states": {
+        "EMPTY": [
+          {
+            "when": "stage_fire",
+            "to": "WAIT_DUE",
+            "actions": [
+              "load_stage_and_counters"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "EMPTY",
+            "actions": []
+          }
+        ],
+        "WAIT_DUE": [
+          {
+            "when": "due & last_read & next_stage_fire",
+            "to": "WAIT_DUE",
+            "actions": [
+              "read_first_last",
+              "stage_done",
+              "load_next_stage"
+            ]
+          },
+          {
+            "when": "due & last_read",
+            "to": "EMPTY",
+            "actions": [
+              "read_first_last",
+              "stage_done"
+            ]
+          },
+          {
+            "when": "due",
+            "to": "ISSUE",
+            "actions": [
+              "read_first",
+              "advance"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "WAIT_DUE",
+            "actions": []
+          }
+        ],
+        "ISSUE": [
+          {
+            "when": "last_read & next_stage_fire",
+            "to": "WAIT_DUE",
+            "actions": [
+              "read_last",
+              "stage_done",
+              "load_next_stage"
+            ]
+          },
+          {
+            "when": "last_read",
+            "to": "EMPTY",
+            "actions": [
+              "read_last",
+              "stage_done"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "ISSUE",
+            "actions": [
+              "read_if_slot",
+              "advance"
+            ]
+          }
+        ]
+      }
+    },
+    "tile_lifecycle": {
+      "initial": "COLD",
+      "global_rules": [
+        {
+          "when": "reset",
+          "to": "COLD",
+          "actions": [
+            "clear_inflight_valid_phase"
+          ]
+        }
+      ],
+      "states": {
+        "COLD": [
+          {
+            "when": "cfg_good",
+            "to": "READY",
+            "actions": [
+              "latch_cfg",
+              "phase_zero"
+            ]
+          },
+          {
+            "when": "cfg_bad",
+            "to": "COLD",
+            "actions": [
+              "fault"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "COLD",
+            "actions": []
+          }
+        ],
+        "READY": [
+          {
+            "when": "cfg_good",
+            "to": "READY",
+            "actions": [
+              "latch_cfg",
+              "phase_zero"
+            ]
+          },
+          {
+            "when": "cfg_bad",
+            "to": "COLD",
+            "actions": [
+              "fault_clear_configured"
+            ]
+          },
+          {
+            "when": "packet_fire",
+            "to": "BUSY",
+            "actions": [
+              "reserve"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "READY",
+            "actions": []
+          }
+        ],
+        "BUSY": [
+          {
+            "when": "cfg_any",
+            "to": "BUSY",
+            "actions": [
+              "fault_keep_old_context"
+            ]
+          },
+          {
+            "when": "becomes_empty",
+            "to": "READY",
+            "actions": [
+              "apply_reserve_retire"
+            ]
+          },
+          {
+            "when": "true",
+            "to": "BUSY",
+            "actions": [
+              "apply_reserve_retire"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "status_update_rules": {
+    "default_pulses": "ack_valid,line_rsp_valid,kernel_done,abort_ack default0 each edge; data hold or free-run under separate valid.",
+    "reset": "bus_reset or accepted soft_reset clears done/read_complete/error; soft reset preserves AXI B/R already valid.",
+    "done": "accepted CFG/START clears and dominates old core_done. Otherwise (old_done AND NOT clear_status) OR core_done; new completion wins over ACK.",
+    "read_complete": "accepted CFG/START/LOAD/READ clears. Else (old_complete AND NOT clear_status) OR accepted_READ_line_response.",
+    "error": "accepted CFG/START clears old error. Else old_error OR (core_done AND core_error) OR (accepted_core_ack AND ack_error). ACK does not clear error.",
+    "pending": "frontend state!=FREE; abort replaces old reservation. New MMIO normal command only accepted when frontend FREE and availability guard holds.",
+    "busy_cycles": "kernel_active is set by legal nonidentity START, cleared by DONE/error/abort. kernel_busy=kernel_active AND state in TILE_RESET/TILE_CONFIG/SETTLE/STAGE_SETUP/RUN/DRAIN/ERROR_ABORT. Increment cycles only while old kernel_active1, including DONE edge; hold on host/CFG error; identity0."
+  }
+}

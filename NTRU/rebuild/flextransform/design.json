@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "project": "FlexTransform Rebuild",
+  "design_version": "0.2",
+  "status": "microarchitecture_locked",
+  "rtl_implemented": false,
+  "arithmetic_compatibility_target": "3.1",
+  "reference_baseline": "a_cg_packed4_system160",
+  "profile": {
+    "part": "xc7z020clg400-2",
+    "vivado_comparison_version": "2018.1",
+    "system_clock_mhz": 160,
+    "period_ns": 6.25,
+    "input_jitter_ns": 0.3,
+    "setup_uncertainty_ns": 0.1,
+    "hold_uncertainty_ns": 0.05,
+    "system_lut_target_max": 35000,
+    "dsp_target": 64,
+    "ramb18_target": 48,
+    "tiles": 16,
+    "leaves_per_tile": 4,
+    "leaf_input_bits": 16,
+    "fused_product_bits": 65,
+    "fft_accumulator_bits": 68,
+    "contexts": 1,
+    "tile_modulus_slots": 1,
+    "data_banks": 32,
+    "data_rows": 256,
+    "data_word_bits": 32,
+    "root_banks": 16,
+    "root_rows": 512,
+    "root_word_bits": 32,
+    "read_sources_per_tile_input_max": 4,
+    "descriptor_entries": 10,
+    "descriptor_bits": 46,
+    "write_context_entries": 16,
+    "host_line_bits": 128,
+    "command_payload_bits": 160,
+    "tile_tag_bits": 8,
+    "tile_side_entries": 16,
+    "tile_side_bits": 42,
+    "tile_rsp_backpressure": false,
+    "arbitrary_tile_pause": false,
+    "intertile_multiplier_fusion": false,
+    "write_context_bits": 36,
+    "cfg_context_bits": 128,
+    "epoch_bits": 20,
+    "u_bus_bits": 34,
+    "shared_final_adder_bits": 36
+  },
+  "modes": {
+    "fft_fixed": {
+      "widths": [
+        32,
+        64,
+        128
+      ],
+      "fraction_bits": [
+        16,
+        32,
+        64
+      ],
+      "fmt": [
+        0,
+        1,
+        2
+      ],
+      "complex_multiply": "3M",
+      "ifft_scale": "host_read",
+      "rounding": "nearest_ties_positive_infinity"
+    },
+    "fft_native": {
+      "width": 64,
+      "fraction_bits": 32,
+      "fmt": 1,
+      "multiply_rounding": "floor_after_signed_shift",
+      "inverse_halve": "both_GS_branches_each_layer",
+      "host_final_scale": false
+    },
+    "ntt_scalar": {
+      "montgomery_radix_bits": 32,
+      "q_min": 3,
+      "q_max_exclusive": 2147483648,
+      "odd_q": true,
+      "inverse_root_includes_half": true
+    },
+    "ntt_packed": {
+      "montgomery_radix_bits": 16,
+      "q_min": 3,
+      "q_max_exclusive": 32768,
+      "coefficients_per_word": 2,
+      "butterflies_per_packet": 2,
+      "groups": 2,
+      "packets_per_three_cycles": 2,
+      "shared_t_history_bits": 34,
+      "shared_t_history_depth": 10
+    }
+  },
+  "limits": {
+    "fft_logn_min": 0,
+    "ntt_logn_min": 1,
+    "logn_max": 10,
+    "hmin_max": 2,
+    "jobs_log_max": 4,
+    "plane_log_max": 3,
+    "row_exponent_max": 7
+  },
+  "external_interface": {
+    "top": "ft_axil_top",
+    "core": "ft_core",
+    "register_map_compatibility": "3.1",
+    "axi_data_bits": 32,
+    "axi_addr_bits": 12,
+    "base_address": "0x43C00000",
+    "range_bytes": 4096
+  },
+  "commands": {
+    "CFG": 1,
+    "START": 2,
+    "ROOT": 3,
+    "COMMIT": 4,
+    "DESC": 5,
+    "LOAD": 6,
+    "READ": 7,
+    "RESET": 8,
+    "ACK": 9
+  },
+  "requirements": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "R14",
+    "R15"
+  ],
+  "documents": [
+    "README.md",
+    "PLAN.md",
+    "docs/ARCHITECTURE.md",
+    "spec/01_requirements.md",
+    "spec/02_arithmetic.md",
+    "spec/03_memory_schedule.md",
+    "spec/04_interfaces.md",
+    "spec/05_rtl_blocks.md",
+    "spec/06_verification.md",
+    "rtl/README.md",
+    "verification/README.md",
+    "fpga/README.md",
+    "spec/07_block_interfaces.md",
+    "spec/08_locked_ports.md",
+    "spec/09_locked_cycles.md",
+    "spec/10_locked_fsm.md",
+    "spec/11_liveness_and_lock.md",
+    "docs/MICROARCH_REVIEW.md"
+  ],
+  "reference_cycles_forward": [
+    {
+      "name": "FFT32_N1024",
+      "fft": 1,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "packed": 0,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 454
+    },
+    {
+      "name": "FFT64_N1024",
+      "fft": 1,
+      "fmt": 1,
+      "logn": 10,
+      "hmin": 0,
+      "packed": 0,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 1752
+    },
+    {
+      "name": "FFT128_N1024",
+      "fft": 1,
+      "fmt": 2,
+      "logn": 10,
+      "hmin": 0,
+      "packed": 0,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 6508
+    },
+    {
+      "name": "NTT12289_N1024_packed",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "q": 12289,
+      "packed": 1,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 391
+    },
+    {
+      "name": "NTT3329_N256_packed",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 1,
+      "q": 3329,
+      "packed": 1,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 214
+    },
+    {
+      "name": "NTT2013265921_N1024_scalar",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 10,
+      "hmin": 0,
+      "q": 2013265921,
+      "packed": 0,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 987
+    },
+    {
+      "name": "NTT8380417_N256_scalar",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 8,
+      "hmin": 0,
+      "q": 8380417,
+      "packed": 0,
+      "jobs_log": 0,
+      "native": 0,
+      "cycles": 324
+    },
+    {
+      "name": "NTT12289_N32_packed_batch16",
+      "fft": 0,
+      "fmt": 0,
+      "logn": 5,
+      "hmin": 0,
+      "q": 12289,
+      "packed": 1,
+      "jobs_log": 4,
+      "native": 0,
+      "cycles": 148
+    }
+  ],
+  "rewrite_cycle_checkpoint": {
+    "status": "proposed_target_not_measured",
+    "max_additional_core_cycles": 16,
+    "only_for_listed_reference_workloads": true
+  },
+  "reference_evidence": {
+    "kernel_cases": 1026,
+    "packed_cases": 252,
+    "c_calls": 74,
+    "application_artifacts": 14,
+    "independent_signatures": 4
+  },
+  "output_root": "study/build/flextransform_rebuild",
+  "bundle_layouts": {
+    "cfg_ctx": {
+      "width": 128,
+      "fields": {
+        "mode": [
+          1,
+          0
+        ],
+        "inverse": [
+          2,
+          2
+        ],
+        "native": [
+          3,
+          3
+        ],
+        "fmt": [
+          5,
+          4
+        ],
+        "logn": [
+          9,
+          6
+        ],
+        "hmin": [
+          11,
+          10
+        ],
+        "jobs_log": [
+          14,
+          12
+        ],
+        "logm": [
+          18,
+          15
+        ],
+        "base_log": [
+          21,
+          19
+        ],
+        "bank_jobs_log": [
+          24,
+          22
+        ],
+        "row_jobs_log": [
+          27,
+          25
+        ],
+        "plane_log": [
+          30,
+          28
+        ],
+        "rowlog": [
+          34,
+          31
+        ],
+        "stages": [
+          38,
+          35
+        ],
+        "job_word_log": [
+          42,
+          39
+        ],
+        "rows_per_buffer": [
+          50,
+          43
+        ],
+        "q": [
+          82,
+          51
+        ],
+        "qinv": [
+          114,
+          83
+        ],
+        "reserved": [
+          127,
+          115
+        ]
+      }
+    },
+    "write_ctx": {
+      "width": 36,
+      "fields": {
+        "stage_id": [
+          3,
+          0
+        ],
+        "active_mask": [
+          19,
+          4
+        ],
+        "destination_buffer": [
+          20,
+          20
+        ],
+        "write_far": [
+          21,
+          21
+        ],
+        "internal_layer": [
+          22,
+          22
+        ],
+        "last_stage": [
+          23,
+          23
+        ],
+        "expected_last_tag": [
+          31,
+          24
+        ],
+        "response_owner": [
+          35,
+          32
+        ]
+      }
+    },
+    "fft_mac_meta": {
+      "width": 10,
+      "fields": {
+        "first": [
+          0,
+          0
+        ],
+        "column_last": [
+          1,
+          1
+        ],
+        "emit": [
+          2,
+          2
+        ],
+        "output_limb": [
+          4,
+          3
+        ],
+        "product": [
+          6,
+          5
+        ],
+        "buffer": [
+          9,
+          7
+        ]
+      }
+    },
+    "read_meta": {
+      "width": 30,
+      "fields": {
+        "mask": [
+          29,
+          14
+        ],
+        "tag": [
+          13,
+          6
+        ],
+        "near": [
+          5,
+          5
+        ],
+        "swap": [
+          4,
+          4
+        ],
+        "far": [
+          3,
+          3
+        ],
+        "dummy": [
+          2,
+          2
+        ],
+        "pairing": [
+          1,
+          1
+        ],
+        "first": [
+          0,
+          0
+        ]
+      }
+    },
+    "fft_limb_meta": {
+      "width": 7,
+      "fields": {
+        "buffer": [
+          6,
+          4
+        ],
+        "product": [
+          3,
+          2
+        ],
+        "limb": [
+          1,
+          0
+        ]
+      }
+    },
+    "side_word": {
+      "width": 42,
+      "fields": {
+        "reserved": [
+          41,
+          41
+        ],
+        "pairing": [
+          40,
+          40
+        ],
+        "tag": [
+          39,
+          32
+        ],
+        "data": [
+          31,
+          0
+        ]
+      }
+    }
+  },
+  "microarchitecture_contract": {
+    "version": "0.2",
+    "ports": "microarchitecture/ports.json",
+    "timing": "microarchitecture/timing.json",
+    "fsm": "microarchitecture/fsm.json",
+    "model": "verification/model/liveness.py",
+    "full_report": "study/build/flextransform_rebuild/microarch_0_2/liveness_results.json",
+    "RTL_conformance_required": true,
+    "lock": "microarchitecture/LOCK_0_2.json"
+  },
+  "pipeline_contract": {
+    "status": "locked_contract_0_2_RTL_pending",
+    "raw_leaf_latency": 3,
+    "fused_latency": 5,
+    "mont_engine_latency": 17,
+    "ntt_ct_output_after_accept_edge": 21,
+    "ntt_gs_output_after_accept_edge": 20,
+    "ntt_tile_accept_phases": [
+      0
+    ],
+    "packed_tile_accept_phases": [
+      0,
+      1
+    ],
+    "fft_butterfly_periods": [
+      3,
+      12,
+      45
+    ],
+    "fft_real_product_slots": [
+      1,
+      4,
+      15
+    ],
+    "fft_buffer_counts": [
+      8,
+      4,
+      2
+    ]
+  }
+}

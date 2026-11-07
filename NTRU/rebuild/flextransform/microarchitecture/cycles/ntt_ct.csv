@@ -1,0 +1,24 @@
+edge,action
+0,Tile fire; giữ group/tag/pairing và reserve side slot
+1,IN_REG align; GS pre-addsub capture (CT bypass)
+2,Operand/side write; launch T sau cạnh
+3,Leaf input T capture
+4,Leaf T product FF1
+5,Raw T product FF2
+6,Cross/cat T hoặc packed alignment1
+7,Fused/packed-aligned T; launch m sau cạnh
+8,T_hi/NZ history write; leaf input m capture
+9,Leaf m product FF1
+10,Raw m product FF2
+11,Cross/cat m hoặc packed alignment1
+12,Fused/packed-aligned m; launch mq sau cạnh
+13,Leaf input mq capture
+14,Leaf mq product FF1
+15,Raw mq product FF2
+16,Cross/cat mq hoặc packed alignment1
+17,Fused/packed-aligned mq; T history stage cuối sẵn
+18,Chốt U; consume old history stage9
+19,Chốt correction và side/tag; release side reservation
+20,GS rsp; CT post-addsub stage1
+21,GS bank commit; CT rsp
+22,CT bank commit

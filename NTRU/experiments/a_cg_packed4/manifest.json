@@ -1,0 +1,24 @@
+{
+  "baseline": "a_cg_z020_system160",
+  "candidate": "a_cg_packed4 shared T-high",
+  "part": "xc7z020clg400-2",
+  "p_and_r": false,
+  "source_sha256": {
+    "experiments/a_cg_packed4/rtl/a_cg_axil.v": "cd3137c3af1d48d25b8ce6f2aa6a3f1308f1ea64140da6e8f0d4bbdced807b49",
+    "experiments/a_cg_packed4/rtl/a_cg_fast.sv": "df24d23c1447a1667145cb79e1bd2361075a363abf92cabd378acc6a8c4010d9",
+    "experiments/a_cg_packed4/rtl/mul_ss.v": "5dd89e6e4d1cae0e90d1ed8c9a46e25f68fa663a3dff56aec9022833b066846d",
+    "experiments/a_cg_packed4/rtl/tile_a.sv": "86ad15605627b0aa047ae1ee1b1b134f823e3b9eee0e638492f59e41804f77be",
+    "experiments/a_cg_packed4/planner.py": "204d55f24d6e184e93d76e05f648c35b901e2a2f431a1650cd5e3536f6f9d039",
+    "experiments/a_cg_packed4/extra_cases.py": "3de2791562df052e0fe22874f3ae3c012472cf3fdbc40d10e9e95958c52698cc",
+    "experiments/a_cg_packed4/main.cpp": "1b0ce5300b387115bff9015ca28e1b89af6a48f5ba7ef9d7a09c7d395fa0174f",
+    "experiments/a_cg_packed4/application.py": "ee103c18b6f1b4bf627fbbd43925de707b86bc11d7eb8d7877271a41743f8a0f",
+    "experiments/a_cg_packed4/tb_packed4.sv": "516aeec8b5cc22394510f4589163ca5ef8510ac79b3faf341667ba9386da4ec0",
+    "experiments/a_cg_packed4/clock.xdc": "96fc5ce095e8243b6a86b83aba15b27d4cde96025be7e0701fe75ad89fca0830",
+    "experiments/a_cg_packed4/synth.tcl": "c2b038a240663ae7b97b758d6540f7b84a0e7587a6b8f47ae10eafb43981fb96",
+    "experiments/a_cg_packed4/build_fixtures.py": "9bffabb3610c0201e2ff2ad6358d5d480d3e247f7272520513d796c200facb36",
+    "experiments/a_cg_packed4/run_sim.ps1": "8cd63716c134d56ac12b58b43ae587034b7403bf0a6b77aabd77785c23f05279",
+    "experiments/a_cg_packed4/report.py": "ef4815946d86cbe713504bb8bb03d79c68ef87a05c3f3bb09ac7796d5c4e205e",
+    "experiments/a_cg_packed4/variants/separate_history/tile_a.sv": "51ff42e293f98c15248f05f5ccb13062c8cfd4f4c35e8362d8ce578879404480"
+  },
+  "result_sha256": "81038717dadbf204f520cbcbd7f048db81311618d17380abe8a2ecbf5ac6d3f5"
+}

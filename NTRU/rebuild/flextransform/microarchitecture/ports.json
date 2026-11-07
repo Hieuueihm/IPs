@@ -1,0 +1,2723 @@
+{
+  "schema_version": 1,
+  "contract": "0.2",
+  "ports": {
+    "ft_core": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cmd_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cmd_op",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cmd_payload",
+        "width": 160,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "abort_req",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cmd_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ack_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ack_error",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "abort_ack",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "line_rsp_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "line_rsp_data",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "kernel_busy",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "kernel_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "kernel_error",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "kernel_cycles",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_available",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "load_available",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "read_available",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_cmd_frontend": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "mmio_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "mmio_op",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "mmio_payload",
+        "width": 160,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "soft_reset",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_cmd_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_ack_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_ack_error",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_abort_ack",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_line_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_line_data",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_busy",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_error",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_cycles",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_cfg_available",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_load_available",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "core_read_available",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "clear_status",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "mmio_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cmd_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cmd_op",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cmd_payload",
+        "width": 160,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "abort_req",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "pending",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "done_sticky",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "error_sticky",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "read_complete",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "output_line",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cycles",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "load_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "read_ready",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_cfg_decode": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_word",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "q",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "qi",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "params_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "cfg_error",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_stage_ctrl": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "kernel_begin",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "epoch_reset",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "activate_first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "desc_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "desc_stage",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "desc_data",
+        "width": 46,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "issue_stage_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "issue_stage_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "done_stage",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tail_commit",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_id",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_desc",
+        "width": 46,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_due",
+        "width": 20,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "epoch",
+        "width": 20,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "write_context_credit",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "write_ctx_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "write_ctx",
+        "width": 36,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "all_reads_issued",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "contexts_empty",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_fault",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_issue_ctrl": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "stage_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "stage_id",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "stage_desc",
+        "width": 46,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "stage_due",
+        "width": 20,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "epoch",
+        "width": 20,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "write_context_credit",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "epoch_run",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rd_issue",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "active_mask",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "k",
+        "width": 5,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "plane",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "beat",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "src_buf",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "internal",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "stage_issue_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "done_stage",
+        "width": 4,
+        "signed": false
+      }
+    ],
+    "ft_fft_program": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "accepted_first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "accepted_mask",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "prog_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "prog_product",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "prog_step",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "prog_mask",
+        "width": 16,
+        "signed": false
+      }
+    ],
+    "ft_data_mem": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "ren",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raddr",
+        "width": 256,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wen",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "waddr",
+        "width": 256,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rvalid",
+        "width": 32,
+        "signed": false
+      }
+    ],
+    "ft_root_mem": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "compute_ren",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "compute_addr",
+        "width": 9,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "host_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "dest",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "addr",
+        "width": 9,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "data",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "root_data",
+        "width": 512,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "root_valid",
+        "width": 16,
+        "signed": false
+      }
+    ],
+    "ft_cg_addr": [
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_stage",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_k",
+        "width": 5,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_plane",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_beat",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_buf",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_internal",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "write_ctx",
+        "width": 36,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "out_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rd_row0",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rd_row1",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wr_row0",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wr_row1",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "route_near",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "route_swap",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "route_far",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "route_dummy",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "root_addr",
+        "width": 9,
+        "signed": false
+      }
+    ],
+    "ft_cg_route": [
+      {
+        "direction": "input",
+        "name": "bank_data",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_meta",
+        "width": 30,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "read_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tile_data",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "write_ctx",
+        "width": 36,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "out_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "tile_x",
+        "width": 512,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "tile_y",
+        "width": 512,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "req_meta",
+        "width": 30,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "req_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "routed_wdata",
+        "width": 1024,
+        "signed": false
+      }
+    ],
+    "ft_writeback": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "write_ctx_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "write_ctx",
+        "width": 36,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tile_valid",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tile_data",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tile_tag",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tile_bf_last",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wr_row0",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wr_row1",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "routed_wdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "abort_req",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wen",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "waddr",
+        "width": 256,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "tail_commit",
+        "width": 16,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "out_tag",
+        "width": 8,
+        "signed": false
+      }
+    ],
+    "ft_host_map": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "is_read",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "line",
+        "width": 10,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "data",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_ctx",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "bank_rdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "bank_rvalid",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "req_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ren",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "raddr",
+        "width": 256,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wen",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "waddr",
+        "width": 256,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "wdata",
+        "width": 1024,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "gather_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "gather_data",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "request_done",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_read_normalize": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "in_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "line_data",
+        "width": 128,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "shift",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "normalize",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "out_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "data",
+        "width": 128,
+        "signed": false
+      }
+    ],
+    "ft_tile": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_mode",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_inverse",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_native",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_q",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_qinv",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_data",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_root",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_pairing",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "req_first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "prog_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "prog_product",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "prog_step",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "req_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rsp_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rsp_data",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rsp_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "rsp_bf_last",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "busy",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_leaf_array": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "a",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "b",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "a_signed",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "b_signed",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "raw_p",
+        "width": 132,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fused_p",
+        "width": 65,
+        "signed": false
+      }
+    ],
+    "ft_addsub": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "in_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "a",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "b",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "q",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "ci",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "bi",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "split16",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "plain",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fa",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fb",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wa",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wb",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fci",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "wci",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "out_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "d",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "co_now",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "bo_now",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fs",
+        "width": 33,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ws",
+        "width": 33,
+        "signed": false
+      }
+    ],
+    "ft_reduce_or_sum": [
+      {
+        "direction": "input",
+        "name": "fft_mode",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "split16",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "u_bus",
+        "width": 34,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "q_word",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fft_a",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fft_b",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fft_ci",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "result",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fft_sum",
+        "width": 33,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "underflow",
+        "width": 2,
+        "signed": false
+      }
+    ],
+    "ft_mont_pipe": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "cfg_mode",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "q_word",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "qi_word",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "packet_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "group",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "pairing",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "alloc_addr",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "head_addr",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_rd",
+        "width": 42,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fused_p",
+        "width": 65,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_p",
+        "width": 132,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "corrected",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "leaf_a",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "leaf_b",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "leaf_valid",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "u_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "u_bus",
+        "width": 34,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_wa",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_wd",
+        "width": 42,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_re",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_ra",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "corr_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "corr_data",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "corr_side",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "corr_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "corr_pairing",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_tile_state": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "alloc",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "free_buf",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "free_buf_id",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "ntt_reserve",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "ntt_release",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_wa",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_wd",
+        "width": 42,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_ra",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_wa",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_ra",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_wa",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_ra",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_sum_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_sum_wa",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_sum_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "operand_sum_ra",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_sum_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_sum_wa",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_sum_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "root_sum_ra",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "partial_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "partial_wa",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "partial_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "partial_ra",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "alloc_ready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "alloc_buf",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ntt_alloc_addr",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "ntt_head_addr",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fft_count",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_count",
+        "width": 5,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_rd",
+        "width": 42,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "operand_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "root_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "operand_sum_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "root_sum_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "partial_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "fault",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_fft_accum": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "launch_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "launch_meta",
+        "width": 10,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fused_p",
+        "width": 65,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "native",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "limb_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "limb_data",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "limb_meta",
+        "width": 7,
+        "signed": false
+      }
+    ],
+    "ft_fft_combine": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "limb_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "limb_data",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "limb_meta",
+        "width": 7,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "side_rd",
+        "width": 42,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "partial_rd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "c4_sum",
+        "width": 33,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "c4_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "c4_a",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "c4_b",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "c4_ci",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "side_ra",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "partial_ra",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "partial_we",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "partial_wa",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "partial_wd",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "t_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "t_data",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "t_side",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "t_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "t_last",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "release_buf",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "release_id",
+        "width": 3,
+        "signed": false
+      }
+    ],
+    "ft_native_align": [
+      {
+        "direction": "input",
+        "name": "clk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "rst",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "native",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "inverse",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "fmt",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_xy",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_root",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_buf",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_beat",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "raw_first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_sum",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_diff",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_root",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_buf",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_beat",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "post_first",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "biased_xy",
+        "width": 64,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_valid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_side",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_operand",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_root",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_tag",
+        "width": 8,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_buf",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_beat",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "aligned_first",
+        "width": 1,
+        "signed": false
+      }
+    ],
+    "ft_axil_top": [
+      {
+        "direction": "input",
+        "name": "aclk",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "aresetn",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_awaddr",
+        "width": 12,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_awprot",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_awvalid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_wdata",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_wstrb",
+        "width": 4,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_wvalid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_bready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_araddr",
+        "width": 12,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_arprot",
+        "width": 3,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_arvalid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "input",
+        "name": "s_axi_rready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_awready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_wready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_bresp",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_bvalid",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_arready",
+        "width": 1,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_rdata",
+        "width": 32,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_rresp",
+        "width": 2,
+        "signed": false
+      },
+      {
+        "direction": "output",
+        "name": "s_axi_rvalid",
+        "width": 1,
+        "signed": false
+      }
+    ]
+  },
+  "rules": [
+    "Vector lane t occupies [t*W+:W].",
+    "Ports are bit patterns; sign-select forms signed17 leaf operands, signed extension65 and MAC68. Carry/residue paths unsigned.",
+    "No inout, no rsp_ready on tile, one physical owner per state.",
+    "ft_cg_route outputs are combinational; core owns the route/request register.",
+    "Memory reset clears rvalid only; data/arrays have no reset."
+  ]
+}

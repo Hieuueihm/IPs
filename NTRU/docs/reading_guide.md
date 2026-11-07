@@ -1,5 +1,7 @@
 # Hướng dẫn đọc paper cho FlexTransform
 
+> Sau khi nhận baseline 3.1: xem [đối chiếu kiến trúc hiện hành với bốn bài nền](paper_notes/04_prior_work_vs_baseline31.md), ngày 2026-11-04. Các giả thuyết K=32/ghép liên tile trong note vòng đầu không mô tả RTL đã nhận.
+
 > Cập nhật: 21/10/2026.
 > Mục đích: xây khả năng phân tích kiến trúc trước khi triển khai RTL.
 > Hướng đang khảo sát: FFT đa precision, NTT đổi modulus và phân bổ tài nguyên theo độ rộng.

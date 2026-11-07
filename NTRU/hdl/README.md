@@ -1,6 +1,8 @@
-# Source RTL: bản nào đang dùng?
+# Source RTL trong hdl/ — nhánh lịch sử
 
-## Lõi đang phát triển
+> **Baseline hiện hành từ 2026-11-04:** [a_cg_packed4_system160](../experiments/BASELINE.md), source tại `experiments/a_cg_packed4_system160/rtl/`, contract [3.1](../spec/FlexTransform/3.1/README.md). Các file trong `hdl/` và mô tả bên dưới thuộc nhánh trước; giữ nguyên RTL làm lịch sử, không ghép chúng vào build baseline.
+
+## Lõi cũ trong thư mục này
 
 Đọc theo thứ tự dưới đây. Chạy lệnh từ root repo `D:\IPs\NTRU` để đường dẫn ROM đúng.
 

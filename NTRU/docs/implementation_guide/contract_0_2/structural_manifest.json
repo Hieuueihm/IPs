@@ -1,0 +1,412 @@
+{
+  "guide": "1.2",
+  "figures": [
+    {
+      "id": "S01",
+      "title": "Cổng logic thật: full-adder 1 bit",
+      "module": "primitive",
+      "svg": "S01_primitive.svg",
+      "sha256": "78a599e6ff1112dd47f5af291549c7d391572435580b94f4d8678dcd06be5aa6"
+    },
+    {
+      "id": "S02",
+      "title": "MUX2, EQ/NZ và flip-flop",
+      "module": "primitive",
+      "svg": "S02_primitive.svg",
+      "sha256": "176c99c2f393a24f798af214a3a34b8f716405154d9e1bec761b964fc9195faf"
+    },
+    {
+      "id": "S02B",
+      "title": "MUX2 được mở thành NOT, hai AND và OR",
+      "module": "primitive",
+      "svg": "S02B_primitive.svg",
+      "sha256": "ced8b296cf3e8a9847756a50d6fadb00867b9201691561f454fde7f2f368518b"
+    },
+    {
+      "id": "S02C",
+      "title": "Comparator EQ/NZ: XOR bit-slice và cây OR",
+      "module": "primitive",
+      "svg": "S02C_primitive.svg",
+      "sha256": "21d325e3a5ab4ee5dad64b3d9d31002e32a2c57df89284ae3f353e53d551ef1e"
+    },
+    {
+      "id": "S03",
+      "title": "Cộng/trừ N bit và đường carry",
+      "module": "primitive",
+      "svg": "S03_primitive.svg",
+      "sha256": "962a77dc7d6a8a90fd759218b66bed257be4bba74f3ae091b4bf00c22732d813"
+    },
+    {
+      "id": "S04",
+      "title": "Một leaf16×16: AND dấu → FF → DSP → FF",
+      "module": "ft_leaf_array",
+      "svg": "S04_ft_leaf_array.svg",
+      "sha256": "e35c93d20cbcc7eef629292027ae27a6d13e73b594ea4c2b950969c8114ad2e0"
+    },
+    {
+      "id": "S05",
+      "title": "Bốn raw product → cat/cross FF → fused65",
+      "module": "ft_leaf_array",
+      "svg": "S05_ft_leaf_array.svg",
+      "sha256": "809a19e7dc8ab555bfc7b3eb31e402ebbc9230002662d825cd930d9b0b65f3aa"
+    },
+    {
+      "id": "S06",
+      "title": "ft_addsub: hai raw chain và hai correction chain",
+      "module": "ft_addsub",
+      "svg": "S06_ft_addsub.svg",
+      "sha256": "d08d35f1cc1796fc81e85982fd06e7252301c4e60bd67c6e623cc65040659eac"
+    },
+    {
+      "id": "S07",
+      "title": "ft_addsub: mở bit guard để cắt borrow packed",
+      "module": "ft_addsub",
+      "svg": "S07_ft_addsub.svg",
+      "sha256": "8c1ffcf2710f836f61103f089669e660c67b6ea9b6f2b6a0129212fd844798a1"
+    },
+    {
+      "id": "S07B",
+      "title": "C2/C3: thấy rõ mux operand, adder và mux output",
+      "module": "ft_addsub",
+      "svg": "S07B_ft_addsub.svg",
+      "sha256": "71baea01542951552c3db77406fff6dd27b271ec3d553fc122bf87ee7f5f8258"
+    },
+    {
+      "id": "S08",
+      "title": "ft_reduce_or_sum: một adder36 cho ba chế độ",
+      "module": "ft_reduce_or_sum",
+      "svg": "S08_ft_reduce_or_sum.svg",
+      "sha256": "20ad5aabb3c9c2ba0e9d13e74310c2762829549cc2613bcc76cf285c5fbf70a3"
+    },
+    {
+      "id": "S09",
+      "title": "C4 packed: sơ đồ bit17 và polarity borrow",
+      "module": "ft_reduce_or_sum",
+      "svg": "S09_ft_reduce_or_sum.svg",
+      "sha256": "46d8927cc65a51f919cb27fa23ec1431a0272109f79b3b98f6e9894d3d2c2421"
+    },
+    {
+      "id": "S10",
+      "title": "ft_mont_pipe scalar: feedback T → m → mq",
+      "module": "ft_mont_pipe",
+      "svg": "S10_ft_mont_pipe.svg",
+      "sha256": "9705676b011af38fcf6ebef94e431ef778253413c34a9ea17d49b6e7f4e69318"
+    },
+    {
+      "id": "S11",
+      "title": "ft_mont_pipe packed: dùng cả bốn leaf",
+      "module": "ft_mont_pipe",
+      "svg": "S11_ft_mont_pipe.svg",
+      "sha256": "87fca46490e38dd56ee04d01140d72b70f21db1d8226b2e9cbd4a352e2ab3e6d"
+    },
+    {
+      "id": "S12",
+      "title": "Mont history chung, chọn group và chốt correction",
+      "module": "ft_mont_pipe",
+      "svg": "S12_ft_mont_pipe.svg",
+      "sha256": "f30ee9131f857b30ddd03409332b56025e5769cf718d2bacabf40de73a481c47"
+    },
+    {
+      "id": "S13",
+      "title": "ft_tile_state: RAM thực và sáu cặp cổng riêng",
+      "module": "ft_tile_state",
+      "svg": "S13_ft_tile_state.svg",
+      "sha256": "eee8413c4678d4a95f16ba5683332cc9d4b3cc5f0669e9f77415a45caae3455e"
+    },
+    {
+      "id": "S14",
+      "title": "State: incrementer, comparator và reserve/release",
+      "module": "ft_tile_state",
+      "svg": "S14_ft_tile_state.svg",
+      "sha256": "8a2ebfa615ee779f171b1a81693aa37049baf450487b0b9eded225e852f0c772"
+    },
+    {
+      "id": "S14B",
+      "title": "Counter/pointer: XOR, AND, mux hold và FF",
+      "module": "ft_tile_state",
+      "svg": "S14B_ft_tile_state.svg",
+      "sha256": "d8703dd4da0bcfe7fb4fae41d3da9c787d3ce66647ea93f2f0f09ff65182f552"
+    },
+    {
+      "id": "S15",
+      "title": "ft_fft_accum: mux seed, adder68 và carry cột",
+      "module": "ft_fft_accum",
+      "svg": "S15_ft_fft_accum.svg",
+      "sha256": "97928ae3abd2a38a069b9c97fc66b26ba6aac4bbd9840ec34707cfe5a25c441d"
+    },
+    {
+      "id": "S16",
+      "title": "ft_fft_combine: RAM, C4 và một subtract C5",
+      "module": "ft_fft_combine",
+      "svg": "S16_ft_fft_combine.svg",
+      "sha256": "4d329b7cc1be6cb82b9431156e111aa314340648cd72ffb1c0ec595d8e54e10f"
+    },
+    {
+      "id": "S17",
+      "title": "ft_native_align: increment carry và half64 bằng dây",
+      "module": "ft_native_align",
+      "svg": "S17_ft_native_align.svg",
+      "sha256": "fbceac0d25f27f905e540325aeef5e7c9b39272faab8c71e4c3471a3a5731daa"
+    },
+    {
+      "id": "S18",
+      "title": "ft_tile: ranh giới physical sharing và output FF",
+      "module": "ft_tile",
+      "svg": "S18_ft_tile.svg",
+      "sha256": "7c6781910c710989f5d5e70feacad460caac5eeb76452830339f9b5461def52a"
+    },
+    {
+      "id": "S19",
+      "title": "ft_cfg_decode: comparator và pipeline5 stage",
+      "module": "ft_cfg_decode",
+      "svg": "S19_ft_cfg_decode.svg",
+      "sha256": "91705dc09725fc58be8a226bcc310a29c527960ff11ebab0c65052b5bfb42f56"
+    },
+    {
+      "id": "S20",
+      "title": "ft_data_mem: một bank1R1W, lặp32 lần",
+      "module": "ft_data_mem",
+      "svg": "S20_ft_data_mem.svg",
+      "sha256": "d2f8421b02212e6e7057285942986ea2b4f853f102fcfc5e10fc6ac968ca7c24"
+    },
+    {
+      "id": "S21",
+      "title": "ft_root_mem: AND destination và cổng read đồng bộ",
+      "module": "ft_root_mem",
+      "svg": "S21_ft_root_mem.svg",
+      "sha256": "7398897d303b2b3a810e78ee93d7a9a1c6e26d3a8b96b2590df4f39dbe066ad7"
+    },
+    {
+      "id": "S22",
+      "title": "ft_cg_addr: slice, rotate, XOR và nối row",
+      "module": "ft_cg_addr",
+      "svg": "S22_ft_cg_addr.svg",
+      "sha256": "1bf77367a48fe0544573694406d136467db2ae5c8d368757f8a4aa4e024bcee8"
+    },
+    {
+      "id": "S23",
+      "title": "ft_cg_route: bốn nguồn bằng ba mux2/bus",
+      "module": "ft_cg_route",
+      "svg": "S23_ft_cg_route.svg",
+      "sha256": "555acbc113c26b17287f81f8e7399f0852251bd40718e742257cfb1a8eb9abcc"
+    },
+    {
+      "id": "S24",
+      "title": "ft_fft_program: incrementer, EQ và LUT index",
+      "module": "ft_fft_program",
+      "svg": "S24_ft_fft_program.svg",
+      "sha256": "21e97f284a9bdb82a107adad9bfa4c583d38e3af8e823e486898d4bad36ef15e"
+    },
+    {
+      "id": "S25",
+      "title": "ft_issue_ctrl: bộ đếm và cổng qualify issue",
+      "module": "ft_issue_ctrl",
+      "svg": "S25_ft_issue_ctrl.svg",
+      "sha256": "fe1d9e7b1a610c9ed926e5120887fda04d0239176ca7205b2055b0453103e924"
+    },
+    {
+      "id": "S26",
+      "title": "ft_stage_ctrl: RAM descriptor, timestamp và context",
+      "module": "ft_stage_ctrl",
+      "svg": "S26_ft_stage_ctrl.svg",
+      "sha256": "e330ebdfbe662f8e686d3e31122bd55310e4b42c3ad4ed071c09fb8cd5350bec"
+    },
+    {
+      "id": "S27",
+      "title": "Context FIFO: head/next FF và bypass vật lý",
+      "module": "ft_stage_ctrl",
+      "svg": "S27_ft_stage_ctrl.svg",
+      "sha256": "9282c66e00a6e8c13934a79e71884b9d921b82db830155699faeee12415f4463"
+    },
+    {
+      "id": "S28",
+      "title": "ft_writeback: EQ tag, mask và AND write-enable",
+      "module": "ft_writeback",
+      "svg": "S28_ft_writeback.svg",
+      "sha256": "44d35086487cc75033d2ae356cce00a28a2d92dc94edb2566ef150c1a1221c96"
+    },
+    {
+      "id": "S29",
+      "title": "ft_host_map: so bank, mux phase và gather FF",
+      "module": "ft_host_map",
+      "svg": "S29_ft_host_map.svg",
+      "sha256": "1f4511dc9b4f32b371c6a228398024129a60085bcc70a7a2334d99161710de13"
+    },
+    {
+      "id": "S30",
+      "title": "ft_read_normalize: carry cut và arithmetic shifter",
+      "module": "ft_read_normalize",
+      "svg": "S30_ft_read_normalize.svg",
+      "sha256": "30a865c8f250cc79c30b2b368ce2455eadb28398e9c50e9e087021bde39ab85e"
+    },
+    {
+      "id": "S30B",
+      "title": "Normalizer: arithmetic barrel shifter bằng mux2",
+      "module": "ft_read_normalize",
+      "svg": "S30B_ft_read_normalize.svg",
+      "sha256": "0b535e802958249cb508257940888d67c2bce90b4e3bbd4aa3d18457a7507ad1"
+    },
+    {
+      "id": "S31",
+      "title": "ft_core: state FF, priority và cây drain",
+      "module": "ft_core",
+      "svg": "S31_ft_core.svg",
+      "sha256": "5d7972906c5b92b7bbbb99ff7160fe8054be6279dd60ef5b1b40a507f91aae9c"
+    },
+    {
+      "id": "S32",
+      "title": "ft_cmd_frontend: snapshot FF và token hold",
+      "module": "ft_cmd_frontend",
+      "svg": "S32_ft_cmd_frontend.svg",
+      "sha256": "20137915baee185c0c3b4bdc19df349781c4d202ba19e8dc466c003ee6094533"
+    },
+    {
+      "id": "S33",
+      "title": "Frontend status: AND/OR và reset/clear priority",
+      "module": "ft_cmd_frontend",
+      "svg": "S33_ft_cmd_frontend.svg",
+      "sha256": "db157ad71742b31695cf3cc14cd7b93e9d8c154bc44d0c0fe834faab1bbfb4af"
+    },
+    {
+      "id": "S34",
+      "title": "ft_axil_top: AW/W slots, join và B/R hold",
+      "module": "ft_axil_top",
+      "svg": "S34_ft_axil_top.svg",
+      "sha256": "b03f93b34152f5eb9770ad4268dc63d895f1704d47b32413d6ecae2781271f0a"
+    },
+    {
+      "id": "S35",
+      "title": "AXI byte-enable và cổng merge32",
+      "module": "ft_axil_top",
+      "svg": "S35_ft_axil_top.svg",
+      "sha256": "e17a9f5e8ef7589ae752456e79200cab4e3aa37b5592ca0a373e2347e1c652c2"
+    },
+    {
+      "id": "D01",
+      "title": "Leaf: từng chân sign, D, Q và CLK",
+      "module": "ft_leaf_array",
+      "svg": "D01_ft_leaf_array.svg",
+      "sha256": "a95716d422aa5de0b611bd959142a87a382bdf3e06989808fa0279343b401803"
+    },
+    {
+      "id": "D02",
+      "title": "Leaf: sign-extend tới DSP và hai product FF",
+      "module": "ft_leaf_array",
+      "svg": "D02_ft_leaf_array.svg",
+      "sha256": "3afffa9bb40d7d1b5d27bfb64e38d2c47d464507e8a85b711f7e944b85739fb1"
+    },
+    {
+      "id": "D03",
+      "title": "Fused65: mở ADD3 thành hai adder tổ hợp",
+      "module": "ft_leaf_array",
+      "svg": "D03_ft_leaf_array.svg",
+      "sha256": "4b18da5637d4c45d162bd4ea077afeda688af596451d6848759939920fc48d35"
+    },
+    {
+      "id": "D04",
+      "title": "C2: hai input mux35 và carry-in riêng",
+      "module": "ft_addsub",
+      "svg": "D04_ft_addsub.svg",
+      "sha256": "113e1963b566df8670c5f0e208dfa1ebf16283d4c1d59ea3dbb7faa031c0a601"
+    },
+    {
+      "id": "D05",
+      "title": "C3: hai input mux34 và carry-in riêng",
+      "module": "ft_addsub",
+      "svg": "D05_ft_addsub.svg",
+      "sha256": "f68b9731301b586b91385c8957048c2330ec23d58897524c31fb8807746fb5b0"
+    },
+    {
+      "id": "D06",
+      "title": "C4: chân A36, B36, Cin và decode flags",
+      "module": "ft_reduce_or_sum",
+      "svg": "D06_ft_reduce_or_sum.svg",
+      "sha256": "6bc92daf25d67695b8009bd20dbbc1dd5112e03dfb7897484556382018c5be5e"
+    },
+    {
+      "id": "D07",
+      "title": "Mont U: hai adder17 dùng chung scalar/packed",
+      "module": "ft_mont_pipe",
+      "svg": "D07_ft_mont_pipe.svg",
+      "sha256": "eee0d6ebb8850e55a45237b040e340c002a2d2f99f8eb8d36d0149752eb62508"
+    },
+    {
+      "id": "D08",
+      "title": "History10: vẽ đủ từng stage và cạnh chứa X",
+      "module": "ft_mont_pipe",
+      "svg": "D08_ft_mont_pipe.svg",
+      "sha256": "c9553575c3c38b23b6fdf2e0f16371557ad111de32acc6c6b150b9b858df63ee"
+    },
+    {
+      "id": "D09",
+      "title": "Mont token: từng valid FF và reset",
+      "module": "ft_mont_pipe",
+      "svg": "D09_ft_mont_pipe.svg",
+      "sha256": "6c92b7cceb21c397695c95f52c9a606fac552cbff514dfe02babc5f6f1b1ebf4"
+    },
+    {
+      "id": "D10",
+      "title": "Tile RAM: tách rõ WE, WA, WD, RA, RD",
+      "module": "ft_tile_state",
+      "svg": "D10_ft_tile_state.svg",
+      "sha256": "f167806065772e5498cbae553bfffa7999867d96283278751f31a58d4ad2a7cf"
+    },
+    {
+      "id": "D11",
+      "title": "Credit: D counter, comparator và event qualification",
+      "module": "ft_tile_state",
+      "svg": "D11_ft_tile_state.svg",
+      "sha256": "ceb57b14f0eb6fa516d9905306ec5d06f66fb694bc8262c60fedf1b4c07d3d60"
+    },
+    {
+      "id": "D12",
+      "title": "MAC68: hai đích FF acc và limb từ cùng acc_next",
+      "module": "ft_fft_accum",
+      "svg": "D12_ft_fft_accum.svg",
+      "sha256": "735068abde944b238b171fc87d5fa0a8f1185f410d2ac2b2ef85bec16cd12a05"
+    },
+    {
+      "id": "D13",
+      "title": "C5: đổi operand và chọn borrow đúng phép trừ",
+      "module": "ft_fft_combine",
+      "svg": "D13_ft_fft_combine.svg",
+      "sha256": "44935a298ce5913bbd3651ad3f5064f7ec18c7324d9377e4b435cb530aca20c5"
+    },
+    {
+      "id": "D14",
+      "title": "Native half: ghi rõ từng lát bit low/high",
+      "module": "ft_native_align",
+      "svg": "D14_ft_native_align.svg",
+      "sha256": "52c8df454fe823e36c2f2c102660079a5aadffb880d51d8e4d6251eda278abf5"
+    },
+    {
+      "id": "D15",
+      "title": "Host rounding: carry bị cắt đúng biên giá trị",
+      "module": "ft_read_normalize",
+      "svg": "D15_ft_read_normalize.svg",
+      "sha256": "9fb35524766303274f5a1202064639527ce4e38a23188e8a468efaecc88951ae"
+    },
+    {
+      "id": "D16",
+      "title": "Token và metadata: FF song song, reset khác payload",
+      "module": "ft_fft_accum",
+      "svg": "D16_ft_fft_accum.svg",
+      "sha256": "27f14434222131776e40f8230f2ad15dc0ead6b308dca8719a5830dbd95b175f"
+    },
+    {
+      "id": "D17",
+      "title": "Tile owner: dữ liệu, dấu và valid phải chọn cùng mode",
+      "module": "ft_tile",
+      "svg": "D17_ft_tile.svg",
+      "sha256": "b0e40f150c7644088fb499ab7911456949354b094362d322577210a9e9dfc31c"
+    },
+    {
+      "id": "D18",
+      "title": "AXI: phương trình giữ response và sự kiện commit",
+      "module": "ft_axil_top",
+      "svg": "D18_ft_axil_top.svg",
+      "sha256": "5fc957685b45420eec46caa24f0bf184200dc5f8aaa950b1b63a3f22b96af96c"
+    }
+  ],
+  "not_synthesized_netlist": true
+}

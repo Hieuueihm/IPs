@@ -1,4 +1,6 @@
-# FlexTransform IP — Đặc tả 2.0
+# FlexTransform IP — Đặc tả 2.0 (lịch sử/yêu cầu mở rộng)
+
+> **Từ 2026-11-04:** baseline được nhận là [a_cg_packed4_system160](../../../experiments/BASELINE.md), contract hiện hành ở [3.1](../3.1/README.md). Giao diện/bộ nhớ/slot/scale của bản này có khác biệt, xem [migration 3.1](../3.1/CHANGELOG.md). Nội dung 2.0 bên dưới giữ để đối chiếu yêu cầu, không phải file list hoặc nghiệm thu toàn bộ baseline mới.
 
 | Thuộc tính | Giá trị |
 |---|---|
@@ -55,7 +57,7 @@ python scripts/build_spec2_kernel_assets.py     # vector cấp kernel, cần gcc
 python scripts/check_spec2_kernel_assets.py     # mã giả của 01 = C; q8380417 = đánh giá đa thức trực tiếp
 ```
 
-## Cách dùng với RTL hiện tại
+## Cách dùng với nhánh RTL 2.0 trước đây
 
 1. Bắt đầu ở [tile đang dùng](../../../hdl/tile/MANIFEST.md), rồi đọc
    [core hiện tại](../../../hdl/core_ntt/MANIFEST.md). Không lấy bản nháp `hdl/tile_thu/`
